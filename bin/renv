@@ -1,0 +1,11 @@
+#!/bin/bash
+which ruby
+ruby --version
+which gem
+gem --version
+which rvm
+rvm --version
+which rake
+rake --version
+which rails
+rails --version

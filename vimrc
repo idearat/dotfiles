@@ -166,9 +166,9 @@ set incsearch
 set path=
 set path+=/usr/local/include/**
 set path+=/usr/include/**
-set path+=~/devl/TIBET/**
-set path+=~/devl/teamtibet/**
-set path+=~/devl/workspace/adjustable_columns/front_end/**
+set path+=/usr/local/src/TIBET/**
+set path+=/usr/local/src/teamtibet/**
+set path+=/usr/local/src/claremont/**
 
 " Set the tags files to be the following
 set tags=./tags,tags
@@ -493,12 +493,12 @@ iab Fone      Phone
 " Set up the window colors and size
 "-----------------------------------------------------------------------------
 if has("gui_running")
-    set guifont=Menlo:h11
+    set guifont=Monaco:h11
     if !exists("g:vimrcloaded")
         if ! &diff
-            winsize 178 84
+            winsize 155 68 
         else
-            winsize 178 84 
+            winsize 155 68 
         endif
         let g:vimrcloaded = 1
     endif

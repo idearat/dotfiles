@@ -32,23 +32,14 @@ export ANT_HOME="/usr/local/ant"
 export ANT_OPTS="-Xmx256m"
 
 #	apache
-export APACHE_HOME="/Applications/MAMP"
-
-#	mamp
-export MAMP_HOME="/Applications/MAMP"
-
-#	mysql
-export MYSQL_HOME="/Applications/MAMP/conf"
+export APACHE_HOME="/opt/local/apache2"
 
 #	java
 export JAVA_HOME="/Library/Java/Home"
 export JAVA_OPTS="-Xmx256m"
 
-#	tomcat
-export TOMCAT_HOME="/usr/local/tomcat"
-export BASEDIR="${TOMCAT_HOME}"
-export CATALINA_HOME="${TOMCAT_HOME}"
-export CATALINA_OPTS="-Xmx256m -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1046 -Dgrails.env=development"
+#	mysql
+export MYSQL_HOME="/opt/local/lib/mysql5/"
 
 #	vi(m) setup
 export VISUAL=vim
@@ -60,8 +51,8 @@ export VIMRUNTIME="/opt/local/share/vim/vim73"
 export XMLLINT_INDENT="	"
 
 #	paths
-export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/local/apache/man:/usr/X11R6/man"
-export PATH="$HOME/bin:${MAMP_HOME}/bin:${MAMP_HOME}/Library/bin:${MAMP_HOME}/bin/php5.2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/git/bin:/opt/subversion/bin:/usr/bin:$HOME/bin/marin:/Applications:/AddOns:/usr/local/ant/bin:/usr/local/jdk/bin:/usr/local/apache/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/usr/local/jython:/usr/local/apache/bin:/sw/bin:/cygdrive/c/j2sdk1.4.2_07/bin:/usr/share/tla/bin:/usr/local/tomcat/bin"
+export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
+export PATH="$HOME/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/usr/local/git/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/AddOns:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
 export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
 
 #	---
@@ -74,17 +65,16 @@ alias srcit="source $HOME/.bashrc"
 
 #	cd directory aliases
 alias cdbin="cd $HOME/bin"
-alias cdcgi="cd ${APACHE_HOME}/cgi-bin"
-alias cdconf="cd ${APACHE_HOME}/conf"
+alias cddev="cd /usr/local/src/claremont"
 alias cddown="cd ${HOME}/Downloads"
-alias cddev="cd $HOME/devl"
-alias cdhtml="cd ${APACHE_HOME}/htdocs"
-alias cdlog="cd ${APACHE_HOME}/logs"
-alias cdmsql="cd ${MAMP_HOME}/db/mysql"
 alias cdsrc="cd /usr/local/src"
 alias cdtmp="cd $HOME/tmp"
-alias cdwar="cd $TOMCAT_HOME/webapps"
-alias cdwork="cd $HOME/workspace"
+
+alias cdapache="cd ${APACHE_HOME}"
+alias cdcgi="cd ${APACHE_HOME}/cgi-bin"
+alias cdhtml="cd ${APACHE_HOME}/htdocs"
+
+alias cdmysql="cd ${MYSQL_HOME}"
 
 alias closure="cd /usr/local/src/closure-library/closure/goog"
 alias jquery="cd /usr/local/src/jquery"
@@ -159,27 +149,13 @@ alias tdsstart="cdtds; java TDS.TDS"
 alias tdcstart="cdtds; java TDS.TDS -console"
 
 #	Apache
-alias aprestart="apstop; sleep 5; apstart"
-alias apstart="sudo ${MAMP_HOME}/bin/startApache.sh"
-alias apstop="sudo ${MAMP_HOME}/bin/stopApache.sh"
-
-#	Tomcat
-alias catlogs="cd ${CATALINA_HOME}/logs"
-alias catrestart="catstop; sleep 5; catstart"
-alias catstart="${CATALINA_HOME}/bin/startup.sh"
-alias catstop="${CATALINA_HOME}/bin/shutdown.sh"
+alias aprestart="sudo /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper restart"
+alias apstart="sudo /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper start"
+alias apstop="sudo /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper stop"
 
 #	MySQL
-alias myrestart="mystop; sleep 5; mystart"
-alias mystart="${MAMP_HOME}/bin/startMysql.sh"
-alias mystop="${MAMP_HOME}/bin/stopMysql.sh"
-
-#	MAMP
-alias mampcfg="cd ${MAMP_HOME}/conf"
-alias mamplogs="cd ${MAMP_HOME}/logs"
-alias mamprestart="mampstop; sleep 5; mampstart"
-alias mampstart="mystart; apstart"
-alias mampstop="apstop; mystop"
+alias mystart="sudo /opt/local/etc/LaunchDaemons/org.macports.mysql5/mysql5.wrapper start"
+alias mystop="sudo /opt/local/etc/LaunchDaemons/org.macports.mysql5/mysql5.wrapper stop"
 
 #	---
 #	Java
@@ -201,7 +177,6 @@ alias xalan="java org.apache.xalan.xslt.Process"
 #alias git_diff
 #alias git_missing
 #alias git_modified
-
 #	subversion
 alias svn_added="svn status | grep '^A'"
 alias svn_changed="svn status | grep '^[^\?]'"
@@ -254,14 +229,6 @@ function grepxsl {
 	findem '\.xsl' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
 }
 
-function grepfe {
-	pushd ${MARIN_CURRENT}/front_end > /dev/null
-	grepall "$*"
-}
-function grepmarin {
-	pushd > /dev/null
-	grepall "$*"
-}
 function greptibet {
 	pushd ${TIBET_HOME} > /dev/null
 	grepall "$*"
@@ -278,6 +245,67 @@ function loc {
 source ~/.tibetrc
 
 #	---
+#	prompt
+#	---
+
+c_cyan=`tput setaf 6`
+c_red=`tput setaf 1`
+c_green=`tput setaf 2`
+c_sgr0=`tput sgr0`
+
+trim_pwd ()
+{
+	#   How many characters of the $PWD should be kept
+	local pwdmaxlen=20
+	#   Indicator that there has been directory truncation:
+	#trunc_symbol="<"
+	local trunc_symbol="..."
+	if [ ${#PWD} -gt $pwdmaxlen ]
+	then
+		local pwdoffset=$(( ${#PWD} - $pwdmaxlen ))
+		newPWD="${trunc_symbol}${PWD:$pwdoffset:$pwdmaxlen}"
+	else
+		newPWD=${PWD}
+	fi
+	echo $newPWD
+}
+
+parse_git_branch ()
+{
+	if git rev-parse --git-dir >/dev/null 2>&1
+	then
+		gitver=$(git branch 2>/dev/null| sed -n '/^\*/s/^\* //p')
+	else
+		return 0
+	fi
+	echo -e $gitver
+}
+
+branch_color ()
+{
+	if git rev-parse --git-dir >/dev/null 2>&1
+	then
+		color=""
+		if git diff --quiet 2>/dev/null >&2
+		then
+			color="${c_green}"
+		else
+			color=${c_red}
+		fi
+	else
+		return 0
+	fi
+	echo -ne $color
+}
+
+export PS1='[\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]] \[${c_red}\]$(trim_pwd)\[${c_sgr0}\] $ '
+
+#	---
+#	final scripts
+#	---
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+
+#	---
 #	eof
 #	---
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
