@@ -41,6 +41,9 @@ export JAVA_OPTS="-Xmx256m"
 #	mysql
 export MYSQL_HOME="/opt/local/lib/mysql5/"
 
+#	R
+export R_HOME="/opt/local/bin/R"
+
 #	vi(m) setup
 export VISUAL=vim
 export SVN_EDITOR=vim
@@ -52,7 +55,7 @@ export XMLLINT_INDENT="	"
 
 #	paths
 export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
-export PATH="$HOME/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/usr/local/git/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/AddOns:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
+export PATH=".:$HOME/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
 export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
 
 #	---
@@ -66,6 +69,7 @@ alias srcit="source $HOME/.bashrc"
 #	cd directory aliases
 alias cdbin="cd $HOME/bin"
 alias cddev="cd /usr/local/src/claremont"
+alias cdra="cd /usr/local/src/claremont/rails-app"
 alias cddown="cd ${HOME}/Downloads"
 alias cdsrc="cd /usr/local/src"
 alias cdtmp="cd $HOME/tmp"
@@ -136,8 +140,8 @@ alias vimvi="vi $HOME/.vimrc"
 #	---
 
 #	Chrome
-alias chrome="/AddOns/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-extension-timeline-api --enable-file-cookies --enable-local-storage --allow-file-access-from-files --user-data-dir=$HOME/nacl-chrome-profile"
-alias chromium="/AddOns/Chromium.app/Contents/MacOS/Chromium --enable-extension-timeline-api --enable-file-cookies --enable-local-storage --allow-file-access-from-files --user-data-dir=$HOME/nacl-chrome-profile"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-extension-timeline-api --enable-file-cookies --enable-local-storage --allow-file-access-from-files --user-data-dir=$HOME/nacl-chrome-profile"
+alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium --enable-extension-timeline-api --enable-file-cookies --enable-local-storage --allow-file-access-from-files --user-data-dir=$HOME/nacl-chrome-profile"
 
 #	EJabberd
 alias estart="sudo /opt/local/sbin/ejabberdctl start"
@@ -221,6 +225,9 @@ function grepjs {
 }
 function grepphp {
 	findem '\.php' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
+}
+function greprb {
+	findem '\.rb' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
 }
 function grepxml {
 	findem '\.xml' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0

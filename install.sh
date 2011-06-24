@@ -7,6 +7,7 @@ ln -sfv ~/dotfiles/rvmrc ~/.rvmrc
 ln -sfv ~/dotfiles/screenrc ~/.screenrc 
 ln -sfv ~/dotfiles/tibetrc ~/.tibetrc 
 ln -sfv ~/dotfiles/vimrc ~/.vimrc 
+ln -sfv ~/dotfiles/gvimrc ~/.gvimrc 
 
 mv ~/.vim ~/.vim_orig > /dev/null
 ln -sFv ~/dotfiles/vim/ ~/.vim 

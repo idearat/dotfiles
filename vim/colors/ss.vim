@@ -17,10 +17,14 @@ if version > 580
 endif
 let g:colors_name="desert"
 
-hi Normal	guifg=White guibg=#0b1022
+"hi Normal	guifg=White guibg=#0b1022
+hi Normal	guifg=White guibg=#000000
 
 " highlight groups
-hi Cursor	guibg=khaki guifg=slategrey
+"hi Cursor	guibg=khaki guifg=slategrey
+hi Cursor	guibg=LightGray guifg=black
+hi CursorColumn	guibg=#1f1f1f
+hi CursorLine	guibg=#1f1f1f
 "hi CursorIM
 "hi Directory
 "hi DiffAdd
@@ -28,19 +32,22 @@ hi Cursor	guibg=khaki guifg=slategrey
 "hi DiffDelete
 "hi DiffText
 "hi ErrorMsg
-hi VertSplit	guibg=#c2bfa5 guifg=grey50 gui=none
+"hi VertSplit	guibg=#c2bfa5 guifg=grey50 gui=none
+hi VertSplit	guibg=slategray guifg=black gui=none
 hi Folded	guibg=grey30 guifg=gold
 hi FoldColumn	guibg=grey30 guifg=tan
 hi IncSearch	guifg=slategrey guibg=khaki
-"hi LineNr
+hi LineNr guibg=#1f1f1f guifg=darkgray
 hi ModeMsg	guifg=goldenrod
 hi MoreMsg	guifg=SeaGreen
 hi NonText	guifg=LightBlue guibg=grey30
 hi Question	guifg=springgreen
 hi Search	guibg=peru guifg=wheat
 hi SpecialKey	guifg=yellowgreen
-hi StatusLine	guibg=#c2bfa5 guifg=black gui=none
-hi StatusLineNC	guibg=#c2bfa5 guifg=grey50 gui=none
+"hi StatusLine	guibg=#c2bfa5 guifg=black gui=none
+hi StatusLine	guibg=slategray guifg=black gui=none
+"hi StatusLineNC	guibg=#c2bfa5 guifg=grey50 gui=none
+hi StatusLineNC	guibg=slategray guifg=black gui=none
 hi Title	guifg=indianred
 hi Visual	gui=none guifg=khaki guibg=olivedrab
 "hi VisualNOS
