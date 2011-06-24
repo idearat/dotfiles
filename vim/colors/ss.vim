@@ -15,7 +15,7 @@ if version > 580
 	syntax reset
     endif
 endif
-let g:colors_name="desert"
+let g:colors_name="ss"
 
 "hi Normal	guifg=White guibg=#0b1022
 hi Normal	guifg=White guibg=#000000
