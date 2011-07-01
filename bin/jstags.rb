@@ -29,6 +29,7 @@
 def getFiles(dirs)
   files = []
   for dir in dirs
+    # This is recursive...could use Dir.glob() for local lookups.
     Find.find(dir) do |path|
         files << path if goodPath(path)
     end

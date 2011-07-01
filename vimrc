@@ -36,12 +36,7 @@ set nocompatible
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
-endif
+set nobackup		" do not keep a backup file, use versions instead
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
@@ -584,11 +579,12 @@ nnoremap <c-e> ,
 vnoremap <c-e> ,
 
 " Buffer commands
-noremap <silent> ,bd :bd<CR>
+"noremap <silent> ,bd :bd<CR>
 
 " Edit the vimrc file
-"nmap <silent> ,ev :e $HOME/.vimrc<CR>
-nmap <silent> ,s :so $HOME/.vimrc<CR>
+nmap <silent> ,ev :e $HOME/.vimrc<CR>
+nmap <silent> ,sv :so $HOME/.vimrc<CR>
+nmap <silent> ,eb :e $HOME/.bashrc<CR>
 
 " Make horizontal scrolling easier
 nmap <silent> <C-o> 10zl
@@ -865,8 +861,6 @@ set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab nolist
 
 nmap <leader>l :set list!<CR>
 
-command! -bar -nargs=1 OpenURL :silent !open /Applications/Google\ Chrome.app <args> !
-
 autocmd BufNewFile,BufRead *.json set ft=javascript
 
 set virtualedit=insert
@@ -890,5 +884,8 @@ set diffopt-=iwhite
 
 set synmaxcol=1024
 set wrapmargin=2
+
+" Search google for what's under the visual mode selection.
+vmap ,g "zy:let @z=substitute(substitute(@z,"\\W\\+\\\\|\\<\\w\\>","+","g") ,"[[:space:]]","+","g")<CR>:!open "http://www.google.com/search?q="<C-R>z<CR><CR>:redraw<CR>
 
 "=============================================================================

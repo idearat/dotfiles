@@ -55,7 +55,7 @@ export XMLLINT_INDENT="	"
 
 #	paths
 export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
-export PATH=".:$HOME/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
+export PATH=".:$HOME/bin:$HOME/.rvm/rubies/default/bin:/usr/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/Applications/Araxis/Utilities:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
 export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
 
 #	---
@@ -95,7 +95,6 @@ alias more=less
 alias mv="mv -i"
 alias psw="ps auxww"
 alias rm="rm -i"
-alias ruby="ruby -w"
 alias scp="scp -v"
 
 # vim coolness
@@ -110,10 +109,11 @@ function vack {
 }
 
 #	file cleanup/repair
-alias fixcm="perl -ne 's/\cM//g; print'"
+alias fixcm="perl -ne 's/\cM/\n/g; print'"
 alias fixdos="perl -ne 's/\cM\cJ/\n/g; print'"
 alias fixmac="perl -ne 's/\cM/\n/g; print'"
 alias swapped="find . -name '*.sw[op]' -print"
+alias cleantilde="\rm *~"
 
 #	listings etc
 export LSCOLORS="gxfxcxdxbxegedabagacad"
