@@ -3,12 +3,12 @@
 	email = ss@technicalpursuit.com
 
 [diff]
-	external = /usr/local/bin/araxisgitdiff
+	external = /Applications/Araxis/Utilities/araxisgitdiff
 	renames = true
 	tool = araxis
 
 [mergetool "araxismergetool"]
-	cmd = /usr/local/bin/araxisgitmerge "$PWD/$REMOTE" "$PWD/$BASE" "$PWD/$LOCAL" "$PWD/$MERGED"
+	cmd = /Applications/Araxis/Utilities/araxisgitmerge "$PWD/$REMOTE" "$PWD/$BASE" "$PWD/$LOCAL" "$PWD/$MERGED"
 	trustExitCode = false
 [mergetool]
 	keepBackup = false

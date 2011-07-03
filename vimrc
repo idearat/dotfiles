@@ -840,7 +840,7 @@ endif
 "-----------------------------------------------------------------------------
 
 " Folding
-set foldmethod=indent
+"set foldmethod=indent
 set foldminlines=5
 
 " Spelling

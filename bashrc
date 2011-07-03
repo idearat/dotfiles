@@ -199,7 +199,7 @@ function findem {
 	# subversion or similar directory trees. Prune them (to avoid descent)
 	# and then remove the directory from the resulting file list via grep
 	# -v. Note the trailing sed line which handles filenames with blanks.
-	find . -name .svn -prune -o -name deprecated -prune -o -name "*$1*" | grep -v '\.svn' | grep -v 'deprecated' | grep -v '__metadata__' | grep -v '\.sw[op]' | grep -v '\.class' | sed 's/\ /\\ /g'
+	find . -name .git -prune -o -name deprecated -prune -o -name "*$1*" | grep -v '\.git' | grep -v 'deprecated' | grep -v '__metadata__' | grep -v '\.sw[op]' | grep -v '\.class' | sed 's/\ /\\ /g'
 }
 
 function grepall {
