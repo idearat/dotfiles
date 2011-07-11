@@ -886,6 +886,6 @@ set synmaxcol=1024
 set wrapmargin=2
 
 " Search google for what's under the visual mode selection.
-vmap ,g "zy:let @z=substitute(substitute(@z,"\\W\\+\\\\|\\<\\w\\>","+","g") ,"[[:space:]]","+","g")<CR>:!open "http://www.google.com/search?q="<C-R>z<CR><CR>:redraw<CR>
+"vmap ,g "zy:let @z=substitute(substitute(@z,"\\W\\+\\\\|\\<\\w\\>","+","g") ,"[[:space:]]","+","g")<CR>:!open "http://www.google.com/search?q="<C-R>z<CR><CR>:redraw<CR>
 
 "=============================================================================

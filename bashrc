@@ -41,6 +41,9 @@ export JAVA_OPTS="-Xmx256m"
 #	mysql
 export MYSQL_HOME="/opt/local/lib/mysql5/"
 
+#	RAILS
+export RAILS_ENV="development"
+
 #	R
 export R_HOME="/opt/local/bin/R"
 
@@ -96,6 +99,7 @@ alias mv="mv -i"
 alias psw="ps auxww"
 alias rm="rm -i"
 alias scp="scp -v"
+alias ssh="ssh -v"
 
 # vim coolness
 alias v="mvim --remote-silent $@"
@@ -127,6 +131,9 @@ alias env="env | sort"
 
 #	sizing/counting
 alias sizes="du -s *"
+
+alias md5='md5 -r'
+alias md5sum='md5 -r'
 
 #	vi-related config management
 alias vimcolor="vi $HOME/.vim/colors/ss.vim"
