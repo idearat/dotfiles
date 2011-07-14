@@ -56,6 +56,7 @@ hi WarningMsg	guifg=salmon
 "hi Menu
 "hi Scrollbar
 "hi Tooltip
+hi TabLine guibg=peru guifg=wheat
 
 " syntax highlighting groups
 hi Comment	guifg=SkyBlue

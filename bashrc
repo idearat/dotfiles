@@ -58,7 +58,7 @@ export XMLLINT_INDENT="	"
 
 #	paths
 export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
-export PATH=".:$HOME/bin:$HOME/.rvm/rubies/default/bin:/usr/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/Applications/Araxis/Utilities:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
+export PATH=".:$HOME/bin:$HOME/.rvm/rubies/default/bin:/usr/local/bin:/usr/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/Applications/Araxis/Utilities:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
 export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
 
 #	---

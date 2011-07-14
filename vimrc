@@ -116,7 +116,7 @@ set shiftwidth=4
 set expandtab
 set hidden
 set nojoinspaces
-set listchars=tab:▸\ ,eol:¬
+"set listchars=tab:▸\ ,eol:¬
 set wildmode=longest,list
 "set spelllang=en_gb
 " Put swap files in /tmp file
@@ -144,6 +144,7 @@ command! -nargs=* Maxsize set columns=1000 lines=1000
 " CTags {{{1
 map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
 let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
+let Tlist_WinWidth = 50
 let tlist_markdown_settings='markdown;h:Headings'
 let Tlist_Show_One_File=1
 nmap <Leader>/ :TlistToggle<CR>
@@ -853,6 +854,8 @@ cab hep     help
 let color="true"
 colorscheme ss 
 
+nmap <leader>ec :e $HOME/.vim/colors/ss.vim<CR>
+
 " Tabstops
 set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab nolist
 "set tabstop=4 softtabstop=4 shiftwidth=4 expandtab list
@@ -887,5 +890,8 @@ set wrapmargin=2
 
 " Search google for what's under the visual mode selection.
 "vmap ,g "zy:let @z=substitute(substitute(@z,"\\W\\+\\\\|\\<\\w\\>","+","g") ,"[[:space:]]","+","g")<CR>:!open "http://www.google.com/search?q="<C-R>z<CR><CR>:redraw<CR>
+
+nmap <D-S-Left> :tabp<CR>
+nmap <D-S-Right> :tabn<CR>
 
 "=============================================================================
