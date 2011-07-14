@@ -312,7 +312,7 @@ branch_color ()
 	echo -ne $color
 }
 
-export PS1='[\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]] \[${c_red}\]$(trim_pwd)\[${c_sgr0}\] $ '
+export PS1='\h [\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]] \[${c_red}\]$(trim_pwd)\[${c_sgr0}\] $ '
 
 #	---
 #	final scripts
