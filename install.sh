@@ -5,6 +5,7 @@ ln -sfv ~/dotfiles/gitconfig ~/.gitconfig
 ln -sfv ~/dotfiles/irbrc/irbrc ~/.irbrc 
 ln -sfv ~/dotfiles/rvmrc ~/.rvmrc 
 ln -sfv ~/dotfiles/screenrc ~/.screenrc 
+ln -sfv ~/dotfiles/tmux.conf ~/.tmux.conf 
 ln -sfv ~/dotfiles/tibetrc ~/.tibetrc 
 ln -sfv ~/dotfiles/vimrc ~/.vimrc 
 ln -sfv ~/dotfiles/gvimrc ~/.gvimrc 
