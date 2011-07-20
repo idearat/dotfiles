@@ -4,7 +4,7 @@
 #	exports
 #	---
 
-export TIBET_HOME="/usr/local/src/tpi/TIBET"
+export TIBET_HOME="${TPI_HOME}/TIBET"
 
 #	---
 #	aliases
@@ -17,6 +17,8 @@ alias srctibet="source $HOME/.tibetrc"
 #	cd directory aliases
 alias cdtibet="cd ${TIBET_HOME}"
 alias tibet="cdtibet"
+
+alias cdteam="cd ${TPI_HOME}/TeamTIBET"
 
 alias tpcfg="cd ${TIBET_HOME}/base/cfg"
 alias tpdat="cd ${TIBET_HOME}/base/dat"
