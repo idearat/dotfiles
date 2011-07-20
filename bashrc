@@ -71,7 +71,7 @@ alias srcit="source $HOME/.bashrc"
 
 #	cd directory aliases
 alias cdbin="cd $HOME/bin"
-alias cddev="cd $HOME/devl"
+alias cddev="cd /usr/local/src/tpi"
 alias cdra="cd /usr/local/src/claremont/rails-app"
 alias cddown="cd ${HOME}/Downloads"
 alias cdsrc="cd /usr/local/src"

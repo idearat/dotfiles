@@ -4,7 +4,7 @@
 #	exports
 #	---
 
-export TIBET_HOME="/usr/local/src/TIBET"
+export TIBET_HOME="/usr/local/src/tpi/TIBET"
 
 #	---
 #	aliases
