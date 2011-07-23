@@ -41,13 +41,22 @@ export JAVA_OPTS="-Xmx256m"
 #	mysql
 export MYSQL_HOME="/opt/local/lib/mysql5/"
 
+#	postgresql
+export PGDATA="/usr/local/pgsql/data"
+export PGDATABASE="tpi_develop"
+
 #	RAILS
 export RAILS_ENV="development"
 
 #	R
 export R_HOME="/opt/local/bin/R"
 
+#	TIBET/TPI
 export TPI_HOME="/usr/local/src/TPI"
+
+#	USB 
+export USB_ROOT="/Volumes/Crucial"
+export USB_STASH="$USB_ROOT/gitstash"
 
 #	vi(m) setup
 export VISUAL=vim
@@ -60,7 +69,7 @@ export XMLLINT_INDENT="	"
 
 #	paths
 export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
-export PATH=".:$HOME/bin:$HOME/.rvm/rubies/default/bin:/usr/local/bin:/usr/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/Applications/Araxis/Utilities:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
+export PATH=".:$HOME/bin:$HOME/.rvm/rubies/default/bin:/usr/local/bin:/usr/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/opt/local/lib/postgresql90/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/Applications/Araxis/Utilities:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
 export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
 
 #	---
@@ -73,11 +82,7 @@ alias srcit="source $HOME/.bashrc"
 
 #	cd directory aliases
 alias cdbin="cd $HOME/bin"
-<<<<<<< HEAD
-alias cddev="cd /usr/local/src/tpi"
-=======
 alias cddev="cd $TPI_HOME"
->>>>>>> 9fd55dda4b7918e0c1a20eaa35cf500f44a1b586
 alias cdra="cd /usr/local/src/claremont/rails-app"
 alias cddown="cd ${HOME}/Downloads"
 alias cdsrc="cd /usr/local/src"
@@ -174,6 +179,11 @@ alias apstop="sudo /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wra
 alias mystart="sudo /opt/local/etc/LaunchDaemons/org.macports.mysql5/mysql5.wrapper start"
 alias mystop="sudo /opt/local/etc/LaunchDaemons/org.macports.mysql5/mysql5.wrapper stop"
 
+#	Postgres
+alias pgstart="sudo -u postgres pg_ctl -D ${PGDATA} -l /usr/local/pgsql/log/logfile start"
+alias pgstop="sudo -u postgres pg_ctl stop"
+alias pgtail="sudo -u postgres tail -f /usr/local/pgsql/log/logfile"
+
 #	---
 #	Java
 #	---
@@ -256,6 +266,10 @@ function greptibet {
 
 function loc {
 	find . -name "$*" -exec wc {} \; | wc.pl
+}
+
+function git2usb {
+	git status | egrep '(new file:|modified:)' | awk -F ':   ' '{ printf "%s '"$USB_STASH"'\n", $2}' | xargs -t -n2 cp -f
 }
 
 #	---
