@@ -340,6 +340,8 @@ export PS1='\h [\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]] \[${c_red}\
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 
+source ~/.git-flow-completion.sh
+
 #	---
 #	eof
 #	---

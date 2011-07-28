@@ -1,7 +1,9 @@
 #!/bin/bash
 ln -sfv ~/dotfiles/bash_profile ~/.bash_profile
 ln -sfv ~/dotfiles/bashrc ~/.bashrc 
+ln -sfv ~/dotfiles/.git-flow-completion.bash ~/.git-flow-completion.sh
 ln -sfv ~/dotfiles/gitconfig ~/.gitconfig 
+ln -sfv ~/dotfiles/gitignore ~/.gitignore 
 ln -sfv ~/dotfiles/irbrc/irbrc ~/.irbrc 
 ln -sfv ~/dotfiles/rvmrc ~/.rvmrc 
 ln -sfv ~/dotfiles/screenrc ~/.screenrc 
