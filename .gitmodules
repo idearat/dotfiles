@@ -1,3 +1,6 @@
+[submodule "irbrc"]
+	path = irbrc
+	url = https://github.com/jschank/irbrc.git
 [submodule "vim/bundle/vim-rails"]
 	path = vim/bundle/vim-rails
 	url = git://github.com/tpope/vim-rails.git
@@ -128,3 +131,6 @@
 [submodule "vim/bundle/bufkill"]
 	path = vim/bundle/bufkill
 	url = https://github.com/vim-scripts/bufkill.vim.git
+[submodule "vim/bundle/vim-task"]
+	path = vim/bundle/vim-task
+	url = https://github.com/samsonw/vim-task.git
