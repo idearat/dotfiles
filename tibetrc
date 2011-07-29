@@ -19,6 +19,7 @@ alias cdtibet="cd ${TIBET_HOME}"
 alias tibet="cdtibet"
 
 alias cdteam="cd ${TPI_HOME}/TeamTIBET"
+alias cdtpi="cd ${TPI_HOME}/TechnicalPursuit"
 
 alias tpcfg="cd ${TIBET_HOME}/base/cfg"
 alias tpdat="cd ${TIBET_HOME}/base/dat"
