@@ -857,9 +857,9 @@ colorscheme ss
 nmap <leader>ec :e $HOME/.vim/colors/ss.vim<CR>
 
 " Tabstops
-set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab nolist
+"set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab nolist
 "set tabstop=4 softtabstop=4 shiftwidth=4 expandtab list
-"set tabstop=2 softtabstop=2 shiftwidth=2 expandtab list
+set tabstop=2 softtabstop=2 shiftwidth=2 expandtab nolist
 "set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab nolist
 
 nmap <leader>l :set list!<CR>

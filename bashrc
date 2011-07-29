@@ -41,6 +41,9 @@ export JAVA_OPTS="-Xmx256m"
 #	mysql
 export MYSQL_HOME="/opt/local/lib/mysql5/"
 
+#	node.js
+export NODE_PATH=/usr/local/node/lib/node_modules:~/node_modules:./node_modules
+
 #	postgresql
 export PGDATA="/usr/local/pgsql/data"
 export PGDATABASE="tpi_develop"
