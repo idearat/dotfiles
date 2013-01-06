@@ -14,22 +14,24 @@ shopt -s histappend
 #	exports
 #	---
 
+export DEVL="${HOME}/dev"
+
 export IGNOREEOF=1
 
 #	terminal type
-export TERM=xterm-color
+export TERM=xterm-256color
 
 #	history
-export HISTSIZE=1000
-export HISTFILESIZE=2000
-export HISTCONTROL=ignoredups:ignorespace
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTCONTROL=ignoredups:erasedups:ignorespace
 
 #	localization
 export LC_TYPE="en_US.UTF-8"
 
 #	ant
-export ANT_HOME="/usr/local/ant"
-export ANT_OPTS="-Xmx256m"
+export ANT_HOME="/usr/bin/ant"
+export ANT_OPTS="-Xmx1024M -Xss5120k"
 
 #	apache
 export APACHE_HOME="/opt/local/apache2"
@@ -42,7 +44,7 @@ export JAVA_OPTS="-Xmx256m"
 export MYSQL_HOME="/opt/local/lib/mysql5/"
 
 #	node.js
-export NODE_PATH=/usr/local/node/lib/node_modules:~/node_modules:./node_modules
+export NODE_PATH=${HOME}/.nvm/v0.6.20/lib/node_modules:${HOME}/lib/node_modules:./node_modules
 
 #	postgresql
 export PGDATA="/usr/local/pgsql/data"
@@ -51,20 +53,24 @@ export PGDATABASE="tpi_develop"
 #	RAILS
 export RAILS_ENV="development"
 
-#	R
-export R_HOME="/opt/local/bin/R"
-
-#	TIBET/TPI
+#	TPI
+export IDEARAT_HOME="/usr/local/src/idearat"
 export TPI_HOME="/usr/local/src/TPI"
+alias cdidearat="cd ${IDEARAT_HOME}"
 
 #	USB 
-export USB_ROOT="/Volumes/Crucial"
+export USB_ROOT="/Volumes/secure"
 export USB_STASH="$USB_ROOT/gitstash"
+alias cdpdesk="cd ~/Documents/SHS/Desktop"
+alias cdusb="cd $USB_ROOT"
+
+alias cdnvm="cd $HOME/.nvm/v0.6.20/lib/node_modules"
 
 #	vi(m) setup
 export VISUAL=vim
 export SVN_EDITOR=vim
 export VIMRUNTIME="/opt/local/share/vim/vim73"
+#export VIMRUNTIME="/usr/share/vim/vim70"
 
 #	XML lint config
 #	NB: This is a tab
@@ -72,7 +78,9 @@ export XMLLINT_INDENT="	"
 
 #	paths
 export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
-export PATH=".:$HOME/bin:$HOME/.rvm/rubies/default/bin:/usr/local/bin:/usr/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/opt/local/lib/postgresql90/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/local/bin:/usr/bin:/Applications:/Applications/Araxis/Utilities:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin"
+
+export PATH="$HOME/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/opt/local/libexec:/opt/local/apache2/bin:/opt/local/lib/postgresql91/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/bin:/Applications:/Applications/Araxis/Utilities:/usr/local/scala/bin:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin:/usr/local/src/nodejs/ronnjs/bin:."
+
 export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
 
 #	---
@@ -85,10 +93,13 @@ alias srcit="source $HOME/.bashrc"
 
 #	cd directory aliases
 alias cdbin="cd $HOME/bin"
-alias cddev="cd $TPI_HOME"
-alias cdra="cd /usr/local/src/claremont/rails-app"
+alias d3="cd /usr/local/src/d3"
+alias cddev="cd $DEVL"
+alias cddt="cd ${HOME}/Desktop"
+alias cddot="cd ${HOME}/dotfiles"
 alias cddown="cd ${HOME}/Downloads"
 alias cdsrc="cd /usr/local/src"
+alias cdsvn="cd $HOME/svn"
 alias cdtmp="cd $HOME/tmp"
 
 alias cdapache="cd ${APACHE_HOME}"
@@ -99,9 +110,14 @@ alias cdmysql="cd ${MYSQL_HOME}"
 
 alias closure="cd /usr/local/src/closure-library/closure/goog"
 alias jquery="cd /usr/local/src/jquery"
+alias ylint="yjslint.sh"
+alias ylintdir="yjslint_dir.sh"
+alias glint="gjslint --jslint_error optional_type_marker,well_formed_author,no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level --additional_extensions 'mu' --custom_jsdoc_tags=module,submodule,namespace"
+alias tlint="gjslint --jslint_error optional_type_marker,well_formed_author,no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level --custom_jsdoc_tags=name,synopsis,description,example,returns,todo"
 
 #	command alternatives
-alias cls=clear
+alias cls="clear; ls";
+alias clea=clear
 alias cp="cp -i"
 alias cvs="cvs -z9"
 alias ftp="ftp -i"
@@ -117,11 +133,6 @@ alias ssh="ssh -v"
 
 # vim coolness
 alias v="mvim --remote-silent $@"
-function vt {
-	pushd ${TIBET_HOME} > /dev/null
-	mvim $(ack -g "$@")
-	popd > /dev/null
-}
 function vack {
 	mvim $(ack -g "$@")
 }
@@ -130,16 +141,21 @@ function vack {
 alias fixcm="perl -ne 's/\cM/\n/g; print'"
 alias fixdos="perl -ne 's/\cM\cJ/\n/g; print'"
 alias fixmac="perl -ne 's/\cM/\n/g; print'"
-alias swapped="find . -name '*.sw[op]' -print"
+alias swapped="find ~/tmp -name '*.sw[op]' -print"
 alias cleantilde="\rm *~"
 
 #	listings etc
-export LSCOLORS="gxfxcxdxbxegedabagacad"
+export LS_OPTIONS='--color=auto'
+export CLICOLOR='Yes'
+export LSCOLORS='gxgxfxfxcxdxdxhbadbxbx'
+#export LSCOLORS="gxfxcxdxbxegedabagacad"
+
 alias l="ls -CFG"
 alias la="ls -aFG"
 alias ls="ls -FG"
 alias ll="ls -lFG"
 alias lla="ls -alFG"
+alias rls="ls"
 
 alias env="env | sort"
 
@@ -169,10 +185,6 @@ alias estart="sudo /opt/local/sbin/ejabberdctl start"
 alias estop="sudo /opt/local/sbin/ejabberdctl stop"
 alias estat="sudo /opt/local/sbin/ejabberdctl status"
 
-#	TIBET Development Server
-alias tdsstart="cdtds; java TDS.TDS"
-alias tdcstart="cdtds; java TDS.TDS -console"
-
 #	Apache
 alias aprestart="sudo /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper restart"
 alias apstart="sudo /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper start"
@@ -184,7 +196,7 @@ alias mystop="sudo /opt/local/etc/LaunchDaemons/org.macports.mysql5/mysql5.wrapp
 
 #	Postgres
 alias pgstart="sudo -u postgres pg_ctl -D ${PGDATA} -l /usr/local/pgsql/log/logfile start"
-alias pgstop="sudo -u postgres pg_ctl stop"
+alias pgstop="sudo -u postgres pg_ctl stop -D ${PGDATA}"
 alias pgtail="sudo -u postgres tail -f /usr/local/pgsql/log/logfile"
 
 #	---
@@ -194,19 +206,25 @@ alias pgtail="sudo -u postgres tail -f /usr/local/pgsql/log/logfile"
 alias jess="java jess.Main"
 alias rhino="java org.mozilla.javascript.tools.shell.Main"
 alias xalan="java org.apache.xalan.xslt.Process"
+alias gjscomp="java -D=/usr/local/src/compiler-latest/ -jar compiler.jar"
+alias selenium_firefox="java -Dwebdriver.firefox.profile=default -jar /usr/local/src/selenium/selenium-server-standalone-2.25.0.jar"
+alias selenium_chrome="java -Dwebdriver.chrome.profile=default -jar /usr/local/src/selenium/selenium-server-standalone-2.25.0.jar"
 
 #	---
 #	Source Code Control
 #	---
 
 #	git
-#alias git_added
-#alias git_changed
-#alias git_conflicted
-#alias git_deleted
-#alias git_diff
-#alias git_missing
-#alias git_modified
+alias s="git status --short --branch"
+alias g="git log --oneline --graph --all --date-order --decorate=short"
+alias b="git branch -a"
+alias p="git pull --rebase --no-ff"
+alias f="git fetch upstream"
+alias m="git rebase --no-ff upstream/develop"
+alias t="git branch -l -v -v"
+alias u="git config user.name"
+alias moo="git moo"
+
 #	subversion
 alias svn_added="svn status | grep '^A'"
 alias svn_changed="svn status | grep '^[^\?]'"
@@ -225,47 +243,23 @@ function findem {
 	# subversion or similar directory trees. Prune them (to avoid descent)
 	# and then remove the directory from the resulting file list via grep
 	# -v. Note the trailing sed line which handles filenames with blanks.
-	find . -name .git -prune -o -name deprecated -prune -o -name "*$1*" | grep -v '\.git' | grep -v 'deprecated' | grep -v '__metadata__' | grep -v '\.sw[op]' | grep -v '\.class' | sed 's/\ /\\ /g'
+	find . -name .svn -prune -o -name .git -prune -o -name deprecated -prune -o -name "*$1*" | grep -v '\.svn' | grep -v '\.git' | grep -v 'deprecated' | grep -v '__metadata__' | grep -v '\.sw[op]' | grep -v '\.class' | sed 's/\ /\\ /g'
 }
 
 function grepall {
-	findem | grep -v '\.gif' | grep -v '\.png' | grep -v '\.bmp' | xargs -n 1 egrep -l -m 1 "$@" | xargs -0
+	findem | grep -v '\.gif' | grep -v '\.png' | grep -v '\.bmp' | grep -v '\.jpg' | xargs -n 1 egrep -l -m 1 "$@" | xargs -0
 }
-function grepcss {
-	findem '\.css' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function grephtml {
-	findem '\.html' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function grepini {
-	findem '\.ini' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function grepjar {
-	findem '\.jar' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function grepjava {
-	findem '\.java' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function grepjs {
-	findem '\.js' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function grepphp {
-	findem '\.php' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function greprb {
-	findem '\.rb' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function grepxml {
-	findem '\.xml' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-function grepxsl {
-	findem '\.xsl' | xargs -n 1 egrep -lZ -m 1 "$@" | xargs -0
-}
-
-function greptibet {
-	pushd ${TIBET_HOME} > /dev/null
-	grepall "$*"
-}
+alias ackall='ack -l -a --invert-file-match -G "\.gif|\.png|\.bmp|\.jpg|\.ico"'
+alias ackcss='ack -l --css --invert-file-match -G "node_modules"'
+alias ackhtml='ack -l --html --invert-file-match -G "node_modules"'
+alias ackjava='ack -l --java --invert-file-match -G "node_modules"'
+alias ackjs='ack -l --js --invert-file-match -G "node_modules"'
+alias ackjson='ack -l --json --invert-file-match -G "node_modules"'
+alias ackmu='ack -l --mu --invert-file-match -G "node_modules"'
+alias ackphp='ack -l --php --invert-file-match -G "node_modules"'
+alias ackruby='ack -l --ruby --invert-file-match -G "node_modules"'
+alias ackweb='ack -l --css --html --js --json --mu --xml --invert-file-match -G "node_modules"'
+alias ackxml='ack -l --xml --invert-file-match -G "node_modules"'
 
 function loc {
 	find . -name "$*" -exec wc {} \; | wc.pl
@@ -275,11 +269,26 @@ function git2usb {
 	git status | egrep '(new file:|modified:)' | awk -F ':   ' '{ printf "%s '"$USB_STASH"'\n", $2}' | xargs -t -n2 cp -f
 }
 
+function gitlint {
+	git status | egrep '(new file:|modified:)' | awk -F ':   ' '{ printf "%s\n", $2}' | xargs -t -n2 gjslint
+}
+
+function svnlint {
+	svn status | egrep '\.js' | awk '{ printf "%s\n", $2}' | xargs -t -n2 gjslint
+}
+
+
 #	---
 #	tibet
 #	---
 
 source ~/.tibetrc
+
+#	---
+#	yahoo!
+#	---
+
+source ~/.mojitorc
 
 #	---
 #	prompt
@@ -318,6 +327,17 @@ parse_git_branch ()
 	echo -e $gitver
 }
 
+parse_git_user ()
+{
+	if git rev-parse --git-dir >/dev/null 2>&1
+	then
+        gitusr=$(git config user.name)
+	else
+		return 0
+	fi
+	echo -e $gitusr
+}
+
 branch_color ()
 {
 	if git rev-parse --git-dir >/dev/null 2>&1
@@ -335,16 +355,33 @@ branch_color ()
 	echo -ne $color
 }
 
-export PS1='\h [\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]] \[${c_red}\]$(trim_pwd)\[${c_sgr0}\] $ '
+export PS1='$(parse_git_user) [\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]] \[${c_red}\]$(trim_pwd)\[${c_sgr0}\] $ '
 
 #	---
 #	final scripts
 #	---
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
-
 source ~/.git-flow-completion.sh
+
+# Ensure NVM (Node Version Manager) is properly configured.
+. ~/.nvm/nvm.sh
+
+nvm use v0.6.20 >| /dev/null
+
+#	---
+#	Yahoo!
+#	---
+
+alias cdyahoo="cd ${DEVL}/yahoo"
+export GIT_SSL_NO_VERIFY=true
+
+alias shs="ssh markprobably.corp.yahoo.com"
+alias minime="ssh ss@minime"
 
 #	---
 #	eof
 #	---
+
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

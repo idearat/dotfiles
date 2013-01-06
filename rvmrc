@@ -1,2 +1,2 @@
-export rvm_path="/Users/scotts/.rvm"
+export rvm_path="$HOME/.rvm"
 rvm_archflags="-arch x86_64"

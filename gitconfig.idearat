@@ -1,0 +1,28 @@
+[user]
+    #name = mojit0
+    #email = idearat@yahoo-inc.com
+    name = idearat
+    email = ss@technicalpursuit.com
+
+#[diff]
+#	external = /Applications/Araxis/Utilities/araxisgitdiff
+#	renames = true
+#	tool = araxis
+
+#[mergetool "araxismergetool"]
+#	cmd = /Applications/Araxis/Utilities/araxisgitmerge "$PWD/$REMOTE" "$PWD/$BASE" "$PWD/$LOCAL" "$PWD/$MERGED"
+#	trustExitCode = false
+#[mergetool]
+#	keepBackup = false
+#[merge]
+#	tool = araxismergetool
+[core]
+	excludesfile = /Users/idearat/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[mergetool]
+	keepBackup = true

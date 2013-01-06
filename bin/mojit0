@@ -1,0 +1,6 @@
+rm -rf ~/.ssh
+cp -r ~/.ssh_Yahoo ~/.ssh
+rm -rf ~/.gitconfig
+cp -r ~/dotfiles/gitconfig.mojit0 ~/.gitconfig
+cp -r ~/dotfiles/npmrc.Mojit0 ~/.npmrc
+ssh-add

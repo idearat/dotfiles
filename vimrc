@@ -116,7 +116,8 @@ set shiftwidth=4
 set expandtab
 set hidden
 set nojoinspaces
-"set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬
+"set listchars=tab:▸\ 
 set wildmode=longest,list
 "set spelllang=en_gb
 " Put swap files in /tmp file
@@ -124,7 +125,6 @@ set backupdir=~/tmp
 set directory=~/tmp
 if has("autocmd")
   autocmd FileType html,css,scss,ruby,pml,yaml,coffee,vim setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
   autocmd FileType markdown setlocal wrap linebreak nolist
   autocmd BufNewFile,BufRead *.rss setfiletype xml
   autocmd BufNewFile,BufRead Rakefile,Capfile,Gemfile,Termfile,config.ru setfiletype ruby
@@ -823,13 +823,13 @@ iab Fone      Phone
 "-----------------------------------------------------------------------------
 
 if has("gui_running")
-    set guifont=Inconsolata:h12
+    set guifont=Inconsolata:h14
     "set guifont=Deja Vu Sans Condensed:h11
     if !exists("g:vimrcloaded")
         if ! &diff
-            winsize 187 62 
+            winsize 125 50
         else
-            winsize 187 62
+            winsize 125 50
         endif
         let g:vimrcloaded = 1
     endif
@@ -856,20 +856,13 @@ colorscheme ss
 
 nmap <leader>ec :e $HOME/.vim/colors/ss.vim<CR>
 
-" Tabstops
-"set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab nolist
-"set tabstop=4 softtabstop=4 shiftwidth=4 expandtab list
-set tabstop=2 softtabstop=2 shiftwidth=2 expandtab nolist
-"set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab nolist
+autocmd BufNewFile,BufRead *.json set ft=javascript
 
 nmap <leader>l :set list!<CR>
 
-autocmd BufNewFile,BufRead *.json set ft=javascript
-
 set virtualedit=insert
 
-set history=100		" keep 100 lines of command line history
-set ruler			" show the cursor position all the time
+set history=100		" keep 100 lines of command line history set ruler			" show the cursor position all the time
 set showcmd			" display incomplete commands
 set showmatch		" highlight matching elements on navigation
 set incsearch		" do incremental searching
@@ -879,10 +872,6 @@ set smartcase		" drive case search by the search string
 set shellslash		" don't use backslashes...ever
 set ch=2			" command-line 2 lines high
 
-set path+=/usr/local/src/TIBET/**
-set path+=/usr/local/src/teamtibet/**
-set path+=/usr/local/src/claremont/**
-
 set diffopt-=iwhite
 
 set synmaxcol=1024
@@ -891,7 +880,23 @@ set wrapmargin=2
 " Search google for what's under the visual mode selection.
 "vmap ,g "zy:let @z=substitute(substitute(@z,"\\W\\+\\\\|\\<\\w\\>","+","g") ,"[[:space:]]","+","g")<CR>:!open "http://www.google.com/search?q="<C-R>z<CR><CR>:redraw<CR>
 
+nmap <D-t> :tabe<CR>
+
 nmap <D-S-Left> :tabp<CR>
 nmap <D-S-Right> :tabn<CR>
+
+set t_Co=256
+set clipboard=unnamed
+
+" Tabstops
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+"set list
+set formatoptions=tcq
+set foldlevel=99
+
+match ErrorMsg '\%>80v.\+'
 
 "=============================================================================
