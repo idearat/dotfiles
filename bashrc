@@ -69,8 +69,7 @@ alias cdnvm="cd $HOME/.nvm/v0.6.20/lib/node_modules"
 #	vi(m) setup
 export VISUAL=vim
 export SVN_EDITOR=vim
-export VIMRUNTIME="/opt/local/share/vim/vim73"
-#export VIMRUNTIME="/usr/share/vim/vim70"
+export VIMRUNTIME="/usr/share/vim/vim73"
 
 #	XML lint config
 #	NB: This is a tab
@@ -283,12 +282,6 @@ function svnlint {
 #	---
 
 source ~/.tibetrc
-
-#	---
-#	yahoo!
-#	---
-
-source ~/.mojitorc
 
 #	---
 #	prompt

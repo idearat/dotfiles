@@ -17,6 +17,9 @@ alias cdquiz='cd ${IDEARAT_HOME}/quizunit'
 alias bedney='export TIBET_HOME="${TPI_HOME}/Bedney/TIBET"'
 alias base='export TIBET_HOME="${TPI_HOME}/tibet"'
 
+# work from old codebase for now
+bedney
+
 #	bash environment management
 alias vimtibet="vi $HOME/.tibetrc"
 alias srctibet="source $HOME/.tibetrc"
@@ -26,6 +29,9 @@ alias cdbedney='cd ${TPI_HOME}/Bedney/TIBET'
 alias cdtibet='cd ${TIBET_HOME}'
 alias cdnotes="cd ${TPI_HOME}/notes"
 alias cdtsh='cd ${TIBET_HOME}/tsh'
+
+alias cdtdp='cd ${TIBET_HOME}/tdp'
+alias cdsherpa='cd ${TIBET_HOME}/sherpa'
 
 alias cdtpi='cd ${TPI_HOME}'
 alias cddbsa='cd ${TPI_HOME}/sites/DBSA'

@@ -10,3 +10,4 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
+[[ -s /Users/ss/.nvm/nvm.sh ]] && . /Users/ss/.nvm/nvm.sh # This loads NVM
