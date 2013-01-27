@@ -1,1 +1,0 @@
-/Users/ss/dotfiles/vim/
