@@ -1,0 +1,5 @@
+#!/bin/bash
+
+[[ -s /Users/ss/.login.before ]] && . /Users/ss/.login.before
+[[ -s /Users/ss/.bashrc]] && . /Users/ss/.bashrc
+[[ -s /Users/ss/.login.after ]] && . /Users/ss/.login.after

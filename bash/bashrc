@@ -1,0 +1,5 @@
+#!/bin/bash
+
+[[ -s /Users/ss/.local.before ]] && . /Users/ss/.local.before
+[[ -s /Users/ss/.localrc]] && . /Users/ss/.localrc
+[[ -s /Users/ss/.local.after ]] && . /Users/ss/.local.after

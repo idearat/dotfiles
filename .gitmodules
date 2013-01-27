@@ -131,3 +131,6 @@
 [submodule "vim/bundle/vim-task"]
 	path = vim/bundle/vim-task
 	url = https://github.com/samsonw/vim-task.git
+[submodule "janus"]
+	path = janus
+	url = git@github.com:carlhuda/janus.git
