@@ -1,4 +1,4 @@
 #!/bin/bash
-[[ -s /Users/ss/.local.before ]] && source /Users/ss/.local.before
-[[ -s /Users/ss/.localrc ]] && source /Users/ss/.localrc
-[[ -s /Users/ss/.local.after ]] && source /Users/ss/.local.after
+[[ -s ${HOME}/.local.before ]] && source ${HOME}/.local.before
+[[ -s ${HOME}/.localrc ]] && source ${HOME}/.localrc
+[[ -s ${HOME}/.local.after ]] && source ${HOME}/.local.after

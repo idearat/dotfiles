@@ -1,4 +1,5 @@
 #!/bin/bash
-[[ -s /Users/ss/.login.before ]] && source /Users/ss/.login.before
-[[ -s /Users/ss/.bashrc ]] && source /Users/ss/.bashrc
-[[ -s /Users/ss/.login.after ]] && source /Users/ss/.login.after
+
+[[ -s ${HOME}/.login.before ]] && source ${HOME}/.login.before
+[[ -s ${HOME}/.bashrc ]] && source ${HOME}/.bashrc
+[[ -s ${HOME}/.login.after ]] && source ${HOME}/.login.after
