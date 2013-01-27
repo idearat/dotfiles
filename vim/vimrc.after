@@ -2,4 +2,29 @@
 " vimrc.after
 "-----------------------------------------------------------------------------
 
+" Make sure our local ~/.janus directory is part of the runtime search path.
+set runtimepath+=/Users/sshattuck/.janus
+
+" Put any files (.swp etc) in ~/tmp
+set backupdir=~/tmp
+set directory=~/tmp
+
+set mouse=a
+
+" Update to customizable color scheme.
+"colorscheme ss
+
+" Turn off opening with everything folded.
+set foldlevel=99
+
+" NOTE: This should probably be autocmd / filetype wrapped.
+" Adjust 'non-conforming' whitespace display.
+set listchars=tab:▸\ ,trail:▻,extends:>,precedes:<
+
+" Enable a toggle for viewing whitespace symbols.
+"nmap <leader>l :set list!<CR>
+
+" Colorize lines longer than 80 chars.
+match ErrorMsg '\%>80v.\+'
+
 "=============================================================================

@@ -1,1 +1,5 @@
 #!/bin/bash
+#
+# login.after: run via bash_profile AFTER .bashrc.
+# Effectively means this file runs after ALL others.
+

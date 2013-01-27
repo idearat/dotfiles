@@ -1,6 +1,6 @@
 rm -rf ~/.ssh
-cp -r ~/.ssh_Idearat ~/.ssh
+cp -r ~/.ssh_idearat ~/.ssh
 rm -rf ~/.gitconfig
 cp -r ~/dotfiles/gitconfig.idearat ~/.gitconfig
-cp -r ~/dotfiles/npmrc.Idearat ~/.npmrc
+cp -r ~/dotfiles/npmrc.idearat ~/.npmrc
 ssh-add

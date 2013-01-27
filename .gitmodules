@@ -134,3 +134,6 @@
 [submodule "vim/janus"]
 	path = vim/janus
 	url = git@github.com:carlhuda/janus.git
+[submodule "ruby/irbrc"]
+	path = ruby/irbrc
+	url = https://github.com/logankoester/irbrc.git

@@ -1,14 +1,14 @@
 #!/bin/bash
 
-#	---
-#	exports
-#	---
+# ---
+# exports
+# ---
 
 export TIBET_HOME="${TPI_HOME}/tibet"
 
-#	---
-#	aliases
-#	---
+# ---
+# aliases
+# ---
 
 alias cdfb='cd ${IDEARAT_HOME}/fiscalball'
 alias cdviz='cd ${IDEARAT_HOME}/vizitd'
@@ -20,11 +20,11 @@ alias base='export TIBET_HOME="${TPI_HOME}/tibet"'
 # work from old codebase for now
 bedney
 
-#	bash environment management
+# bash environment management
 alias vimtibet="vi $HOME/.tibetrc"
 alias srctibet="source $HOME/.tibetrc"
 
-#	cd directory aliases
+# cd directory aliases
 alias cdbedney='cd ${TPI_HOME}/Bedney/TIBET'
 alias cdtibet='cd ${TIBET_HOME}'
 alias cdnotes="cd ${TPI_HOME}/notes"
@@ -94,24 +94,24 @@ alias tpyui='cd ${TIBET_HOME}/base/src/yui'
 # ---
 
 function greptibet {
-	pushd ${TIBET_HOME} > /dev/null
-	grepall "$*"
+  pushd ${TIBET_HOME} > /dev/null
+  grepall "$*"
 }
 
 function vt {
-	pushd ${TIBET_HOME} > /dev/null
-	mvim $(ack -g "$@")
-	popd > /dev/null
+  pushd ${TIBET_HOME} > /dev/null
+  mvim $(ack -g "$@")
+  popd > /dev/null
 }
 
 # ---
-#	program execution
+# program execution
 # ---
 
-#	TIBET Development Server
+# TIBET Development Server
 alias tdsstart="cdtds; java TDS.TDS"
 alias tdcstart="cdtds; java TDS.TDS -console"
 
-#	---
-#	eof
-#	---
+# ---
+# eof
+# ---

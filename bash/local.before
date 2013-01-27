@@ -1,3 +1,5 @@
 #!/bin/bash
+#
+# local.before: run via bashrc BEFORE .localrc
 
-export PATH="~/dotbin:$PATH"
+export PATH="~/bin.custom:$PATH"

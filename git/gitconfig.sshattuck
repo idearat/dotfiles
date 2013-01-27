@@ -1,6 +1,6 @@
 [user]
-	name = idearat
-	email = ss@technicalpursuit.com
+	name = Scott Shattuck
+	email = sshattuck@twitter.com
 
 [core]
 	excludesfile = ~/.gitignore
