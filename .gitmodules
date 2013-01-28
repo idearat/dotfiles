@@ -137,3 +137,6 @@
 [submodule "ruby/irbrc"]
 	path = ruby/irbrc
 	url = https://github.com/logankoester/irbrc.git
+[submodule "git/git-flow-completion"]
+	path = git/git-flow-completion
+	url = https://github.com/bobthecow/git-flow-completion.git

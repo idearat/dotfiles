@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# Installs the basic links etc.
 
 export DOTFILE_HOME=`pwd`
 
@@ -18,7 +20,7 @@ ln -sfv ${DOTFILE_HOME}/bash/local.after ~/.local.after
 ln -sv ${DOTFILE_HOME}/bin ~/bin.local
 
 # Git
-ln -sfv ${DOTFILE_HOME}/git/git-flow-completion.sh ~/.git-flow-completion.sh
+ln -sfv ${DOTFILE_HOME}/git/git-flow-completion/git-flow-completion.bash ~/.git-flow-completion.bash
 mv ~/.gitignore ~/.gitignore_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/git/gitignore ~/.gitignore
 
@@ -56,5 +58,4 @@ mv ~/.gvimrc ~/.gvimrc_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/janus/janus/vim/gvimrc ~/.gvimrc
 
 mkdir ~/tmp > /dev/null
-
 

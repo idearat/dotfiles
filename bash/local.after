@@ -13,29 +13,43 @@ shopt -s checkwinsize
 shopt -s histappend
 
 # ---
-# exports
+# shell exports
 # ---
 
-export DEVL="${HOME}/dev"
-
-export IGNOREEOF=1
-
-# terminal type
-export TERM=xterm-256color
-
-# history
+export CLICOLOR=1
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 export HISTCONTROL=ignoredups:erasedups:ignorespace
-
-# localization
+export IGNOREEOF=1
 export LC_TYPE="en_US.UTF-8"
+export LS_OPTIONS='--color=auto'
+export LSCOLORS='gxgxfxfxcxdxdxhbadbxbx'
+#export LSCOLORS="gxfxcxdxbxegedabagacad"
+#export LSCOLORS=gxGxFxdxbxDxDxBxBxExEx # twitter defaults
+export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
+export TERM=xterm-256color
+export VISUAL=vim
+
+# ---
+# path roots
+# ---
+
+export USB_ROOT="/Volumes/secure"
+export USB_STASH="${USB_ROOT}/gitstash"
+
+export DEVL="${HOME}/dev"
+export IDEARAT_HOME="${DEVL}/idearat"
+export TPI_HOME="${DEVL}/TPI"
+
+# ---
+# tool-specific exports
+# ---
 
 # ant
 export ANT_HOME="/usr/bin/ant"
-export ANT_OPTS="-Xmx1024M -Xss5120k"
+export ANT_OPTS="-Xmx512M -Xss5120k"
 
-# apache
+# apache (via macports)
 export APACHE_HOME="/opt/local/apache2"
 
 # java
@@ -43,50 +57,38 @@ export JAVA_HOME="/Library/Java/Home"
 export JAVA_OPTS="-Xmx256m"
 
 # mysql
-export MYSQL_HOME="/opt/local/lib/mysql5/"
+#export MYSQL_HOME="/opt/local/lib/mysql5/"
 
 # node.js
-export NODE_PATH=${HOME}/.nvm/v0.6.20/lib/node_modules:${HOME}/lib/node_modules:./node_modules
+export NODE_VERSION="v0.8.8"
+export NODE_PATH=${HOME}/nvm/${NODE_VERSION}/lib/node_modules:${HOME}/lib/node_modules:./node_modules
 
 # postgresql
 export PGDATA="/usr/local/pgsql/data"
 export PGDATABASE="tpi_develop"
 
-# RAILS
+# python
+#export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
+
+# rails
 export RAILS_ENV="development"
 
-# TPI
-export IDEARAT_HOME="/usr/local/src/idearat"
-export TPI_HOME="/usr/local/src/TPI"
-alias cdidearat="cd ${IDEARAT_HOME}"
+# vim
+export VIMRUNTIME="/usr/local/share/vim/vim73"
 
-# USB 
-export USB_ROOT="/Volumes/secure"
-export USB_STASH="$USB_ROOT/gitstash"
-alias cdpdesk="cd ~/Documents/SHS/Desktop"
-alias cdusb="cd $USB_ROOT"
-
-alias cdnvm="cd $HOME/.nvm/v0.6.20/lib/node_modules"
-
-# vi(m) setup
-export VISUAL=vim
-export SVN_EDITOR=vim
-export VIMRUNTIME="/usr/share/vim/vim73"
-
-# XML lint config
 # NB: This is a tab
 export XMLLINT_INDENT=" "
 
-# paths
-export MANPATH=".:$HOME/man:/usr/local/man:/usr/local/share/man:/usr/man:/usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
-
-export PATH="$HOME/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:${MYSQL_HOME}/bin:/opt/local/libexec:/opt/local/apache2/bin:/opt/local/lib/postgresql91/bin:/usr/local/git/bin:/usr/local/node/bin:/opt/subversion/bin:/usr/bin:/Applications:/Applications/Araxis/Utilities:/usr/local/scala/bin:/usr/local/ant/bin:/usr/local/jdk/bin:/bin:/usr/X11R6/bin:/usr/sbin:/sbin:/sw/bin:/usr/local/src/nodejs/ronnjs/bin:."
-
-export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
 
 # ---
 # aliases
 # ---
+
+alias vi="vim"
+
+alias cdidearat="cd ${IDEARAT_HOME}"
+alias cdpdesk="cd ~/Documents/SHS/Desktop"
+alias cdusb="cd $USB_ROOT"
 
 # bash environment management
 alias vimit="vi $HOME/.local.after"
@@ -97,7 +99,7 @@ alias cdbin="cd $HOME/bin"
 alias d3="cd /usr/local/src/d3"
 alias cddev="cd $DEVL"
 alias cddt="cd ${HOME}/Desktop"
-alias cddot="cd ${HOME}/dotfiles"
+alias cddot="cd ${IDEARAT_HOME}/dotfiles"
 alias cddown="cd ${HOME}/Downloads"
 alias cdsrc="cd /usr/local/src"
 alias cdsvn="cd $HOME/svn"
@@ -108,6 +110,9 @@ alias cdcgi="cd ${APACHE_HOME}/cgi-bin"
 alias cdhtml="cd ${APACHE_HOME}/htdocs"
 
 alias cdmysql="cd ${MYSQL_HOME}"
+
+# node
+alias cdnvm="cd $HOME/.nvm/${NODE_VERSION}/lib/node_modules"
 
 alias closure="cd /usr/local/src/closure-library/closure/goog"
 alias jquery="cd /usr/local/src/jquery"
@@ -145,18 +150,13 @@ alias fixmac="perl -ne 's/\cM/\n/g; print'"
 alias swapped="find ~/tmp -name '*.sw[op]' -print"
 alias cleantilde="\rm *~"
 
-# listings etc
-export LS_OPTIONS='--color=auto'
-export CLICOLOR='Yes'
-export LSCOLORS='gxgxfxfxcxdxdxhbadbxbx'
-#export LSCOLORS="gxfxcxdxbxegedabagacad"
-
 alias l="ls -CFG"
 alias la="ls -aFG"
 alias ls="ls -FG"
 alias ll="ls -lFG"
 alias lla="ls -alFG"
 alias rls="ls"
+alias lnk="lla | grep '@ ->' | cut -c53-1000"
 
 alias env="env | sort"
 
@@ -283,7 +283,7 @@ function svnlint {
 # tibet
 # ---
 
-source ~/.tibetrc
+[[ -s ~/.tibetrc ]] && source ~/.tibetrc
 
 # ---
 # prompt
@@ -354,3 +354,6 @@ export PS1='$(parse_git_user) [\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+[[ -s ~/.git-flow-completion.bash ]] && source ~/.git-flow-completion.bash
+

@@ -3,3 +3,4 @@
 # local.before: run via bashrc BEFORE .localrc
 
 export PATH="~/bin.custom:$PATH"
+
