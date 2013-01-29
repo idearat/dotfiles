@@ -8,8 +8,8 @@ set runtimepath+=/Users/sshattuck/.janus
 " Make it easy to edit this file and re-source it in as well as colorscheme.
 nmap <leader>vv :sp $HOME/.vimrc.after<CR>
 nmap <leader>vs :source $HOME/.vimrc.after<CR>
-nmap <leader>vc :sp $HOME/.janus/ss/colors/ss.vim<CR>
-nmap <leader>vn :sp $HOME/.janus/ss/syntax/javascript.vim<CR>
+nmap <leader>vc :sp $HOME/.janus/idearat/colors/idearat.vim<CR>
+nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<CR>
 
 " Put any files (.swp etc) in ~/tmp
 set backupdir=~/tmp
@@ -21,7 +21,7 @@ set clipboard=unnamed
 
 " Update to personal color scheme. This scheme is part of idearat/dotfiles
 " on Github.
-colorscheme ss
+colorscheme idearat
 
 " Disable visual bell display.
 set visualbell t_vb=

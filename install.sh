@@ -2,29 +2,51 @@
 #
 # Installs the basic links etc.
 
+# NOTE this assumes you're in the dotfiles directory when you run install.sh
 export DOTFILE_HOME=`pwd`
+
+# TODO add flag to turn this off as desired.
+# Initialize submodules. Janus etc. must be updated before we can link them.
+git submodule init
+git submodule update
+pushd vim/janus
+rake
+popd
+
+# Build working directories.
+mkdir ~/tmp > /dev/null
 
 # Bash
 mv ~/.bash_profile ~/.bash_profile_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/bash/bash_profile ~/.bash_profile
 
+[[ -e ~/.bashrc ]] && \cp ~/.bashrc ~/.localrc
 mv ~/.bashrc ~/.bashrc_orig > /dev/null
+mv ~/.localrc ~/.localrc_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/bash/bashrc ~/.bashrc
 
+mv ~/.login.before ~/.login.before_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/bash/login.before ~/.login.before
+mv ~/.login.after ~/.login.after_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/bash/login.after ~/.login.after
+mv ~/.local.before ~/.local.before_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/bash/local.before ~/.local.before
+mv ~/.local.after ~/.local.after_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/bash/local.after ~/.local.after
 
 # Bin
+mv ~/bin.local ~/bin.local_orig > /dev/null
 ln -sv ${DOTFILE_HOME}/bin ~/bin.local
 
 # Git
 ln -sfv ${DOTFILE_HOME}/git/git-flow-completion/git-flow-completion.bash ~/.git-flow-completion.bash
 mv ~/.gitignore ~/.gitignore_orig > /dev/null
-ln -sfv ${DOTFILE_HOME}/git/gitignore ~/.gitignore
+\cp ${DOTFILE_HOME}/git/gitignore ~/.gitignore
+mv ~/.gitconfig ~/.gitconfig_orig > /dev/null
+\cp -sfv ${DOTFILE_HOME}/git/gitconfig ~/.gitconfig
 
 # Node
+
 
 # Ruby
 mv ~/.irbrc ~/.irbrc_orig > /dev/null
@@ -50,12 +72,13 @@ ln -sFv ${DOTFILE_HOME}/vim/janus/janus/vim ~/.vim
 mv ~/.janus ~/.janus_orig > /dev/null
 ln -sFv ${DOTFILE_HOME}/vim/janus.local ~/.janus
 
+mv ~/.vimrc ~/.vimrc_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/janus/janus/vim/vimrc ~/.vimrc
+mv ~/.vimrc.after ~/.vimrc.after_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/vimrc.after ~/.vimrc.after
+mv ~/.vimrc.before ~/.vimrc.before_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/vimrc.before ~/.vimrc.before
 
 mv ~/.gvimrc ~/.gvimrc_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/janus/janus/vim/gvimrc ~/.gvimrc
-
-mkdir ~/tmp > /dev/null
 

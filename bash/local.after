@@ -87,7 +87,6 @@ export XMLLINT_INDENT=" "
 alias vi="vim"
 
 alias cdidearat="cd ${IDEARAT_HOME}"
-alias cdpdesk="cd ~/Documents/SHS/Desktop"
 alias cdusb="cd $USB_ROOT"
 
 # bash environment management
@@ -99,7 +98,7 @@ alias cdbin="cd $HOME/bin"
 alias d3="cd /usr/local/src/d3"
 alias cddev="cd $DEVL"
 alias cddt="cd ${HOME}/Desktop"
-alias cddot="cd ${IDEARAT_HOME}/dotfiles"
+alias cddot="cd ${HOME}/.dotfiles"
 alias cddown="cd ${HOME}/Downloads"
 alias cdsrc="cd /usr/local/src"
 alias cdsvn="cd $HOME/svn"
@@ -156,22 +155,19 @@ alias ls="ls -FG"
 alias ll="ls -lFG"
 alias lla="ls -alFG"
 alias rls="ls"
-alias lnk="lla | grep '@ ->' | cut -c53-1000"
-
-alias env="env | sort"
-
-# sizing/counting
-alias sizes="du -s *"
 
 alias md5='md5 -r'
 alias md5sum='md5 -r'
 
+alias env="env | sort"
+alias lnks="lla | grep '@ ->' | cut -c53-1000"
+alias paths="echo $PATH | awk 'BEGIN{RS=\":\";} {print;}'"
+alias sizes="du -s *"
+
 # vi-related config management
-alias vimcolor="vi $HOME/.vim/colors/ss.vim"
-alias vimex="vi $HOME/.exrc"
-alias vimscr="vi $HOME/.screenrc"
-alias vimsyn="vi $HOME/.vim/syntax/javascript.vim"
-alias vimvi="vi $HOME/.vimrc"
+alias vimcolor="vi $HOME/.janus/idearat/colors/idearat"
+alias vimsyn="vi $HOME/.janus/idearat/syntax/javascript.vim"
+alias vimvi="vi $HOME/.vimrc.after"
 
 # ---
 # Clients/Servers
@@ -216,13 +212,13 @@ alias selenium_chrome="java -Dwebdriver.chrome.profile=default -jar /usr/local/s
 # ---
 
 # git
+alias g="git"
 alias s="git status --short --branch"
-alias g="git log --oneline --graph --all --date-order --decorate=short"
-alias b="git branch -a"
-alias p="git pull --rebase --no-ff"
+alias b="git branch -a | grep -v 'remotes/origin'"
+alias p="git pull"
 alias f="git fetch upstream"
-alias m="git rebase --no-ff upstream/develop"
-alias t="git branch -l -v -v"
+alias m="git merge"
+alias t="git log --oneline --graph --all --date-order --decorate=short"
 alias u="git config user.name"
 alias moo="git moo"
 
@@ -278,12 +274,17 @@ function svnlint {
   svn status | egrep '\.js' | awk '{ printf "%s\n", $2}' | xargs -t -n2 gjslint
 }
 
-
 # ---
 # tibet
 # ---
 
 [[ -s ~/.tibetrc ]] && source ~/.tibetrc
+
+# ---
+# tibet
+# ---
+
+[[ -s ~/.twitterrc ]] && source ~/.twitterrc
 
 # ---
 # prompt
