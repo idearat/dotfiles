@@ -82,3 +82,5 @@ ln -sfv ${DOTFILE_HOME}/vim/vimrc.before ~/.vimrc.before
 mv ~/.gvimrc ~/.gvimrc_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/janus/janus/vim/gvimrc ~/.gvimrc
 
+# TODO: add echo for installing Command-T (gotta build it)
+

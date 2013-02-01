@@ -1,5 +1,563 @@
 #!/bin/bash
 #
 # login.after: run via bash_profile AFTER .bashrc.
-# Effectively means this file runs after ALL others.
+# Effectively means this file runs after ALL others. This file is also
+# the best place for interactive user customizations since it only runs
+# when .bash_profile is executed.
+
+# ---
+# shell options
+# ---
+
+set -o noclobber
+set -o ignoreeof
+set -o vi
+shopt -s checkwinsize
+shopt -s histappend
+
+# ---
+# shell variables
+# ---
+
+export CLICOLOR=1
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTCONTROL=ignoredups:erasedups:ignorespace
+export IGNOREEOF=1
+export LC_TYPE='en_US.UTF-8'
+export LS_OPTIONS='--color=auto'
+export LSCOLORS='gxgxfxfxcxdxdxhbadbxbx'
+export TERM=xterm-256color
+
+# ---
+# aliases
+# ---
+
+# bash environment management
+alias vimit="vi ${HOME}/.local.after"
+alias srcit="source ${HOME}/.bash_profile"
+
+# vi-related config management
+alias vimcolor="vi ${HOME}/.janus/idearat/colors/idearat"
+alias vimsyntax="vi ${HOME}/.janus/idearat/syntax/javascript.vim"
+alias vimvi="vi ${HOME}/.vimrc.after"
+
+# fat-finger protection
+alias clea='clear'
+alias clar='clear'
+alias rls='ls'
+
+# common flag settings
+alias bc='bc -l'
+alias cls='clear; ls'
+alias cp='cp -i'
+alias df='df -H'
+alias du='du -ch'
+alias egrep='egrep --color=auto'
+alias env='env | sort'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias ftp='ftp -i'
+alias ifconfig='ifconfig -a'
+alias jobs='jobs -l'
+alias l='ls'
+alias la='ls -aCFG'
+alias ll='ls -lFG'
+alias lla='ls -alFG'
+alias ln='ln -i'
+alias ls='ls -CFG'
+alias lynx='lynx -vikeys'
+alias md5='md5 -r'
+alias md5sum='md5 -r'
+alias mkdir='mkdir -pv'
+alias mv='mv -i'
+alias ping='ping -c 5'
+alias psw='ps auxww'
+alias rm='rm -i'
+alias scp='scp -v'
+alias ssh='ssh -v'
+alias su='sudo -i'
+alias tail="tail -f"
+alias wget='wget -c'
+
+# common redirections
+alias more='less'
+alias vi='vim'
+
+# common destinations
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+alias cdbin="cd ${HOME}/bin"
+alias cddesk="cd ${HOME}/Desktop"
+alias cddev="cd ${DEVL_HOME}"
+# NB: depends on having cloned into ~/.dotfiles.
+alias cddot="cd ${HOME}/.dotfiles"
+alias cddown="cd ${HOME}/Downloads"
+alias cdsrc='cd /usr/local/src'
+alias cdtmp="cd ${HOME}/tmp"
+alias cdusb="cd ${USB_ROOT}"
+
+# ---
+# utilities
+# ---
+
+# common prompting routine for querying the user with defaults for Y/N.
+# see https://gist.github.com/1965569.
+ask () {
+    while true; do
+        if [ "${2:-}" = "Y" ]; then
+            prompt="Y/n"
+            default=Y
+        elif [ "${2:-}" = "N" ]; then
+            prompt="y/N"
+            default=N
+        else
+            prompt="y/n"
+            default=
+        fi
+
+        # Ask the question
+        read -p "$1 [$prompt] " REPLY
+
+        # Default?
+        if [ -z "$REPLY" ]; then
+            REPLY=$default
+        fi
+
+        # Check if the reply is valid
+        case "$REPLY" in
+            Y*|y*) return 0 ;;
+            N*|n*) return 1 ;;
+        esac
+    done
+}
+
+# test for existence of a command. used for cmd-specific setups later.
+exists () {
+  command -v "$@" &>/dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# Goal here is to get a list of files without all the junk from subversion or
+# similar directory trees. Prune them (to avoid descent) and then remove the
+# directory from the resulting file list via grep -v. Note the trailing sed
+# line which handles filenames with blanks.
+findem () {
+  find . -name .svn -prune -o -name .git -prune -o -name deprecated\
+    -prune -o -name "*$1*" 2<&1 | grep -v '\.svn' | grep -v '\.git' |\
+    grep -v 'Permission denied' |\
+    grep -v 'deprecated' | grep -v '__metadata__' | grep -v '\.sw[op]' |\
+    grep -v '\.class' | sed 's/\ /\\ /g'
+}
+
+# interactively kill listener processes. often needed when shutting down
+# certain systems whose sub-processes don't always die cleanly.
+killem () {
+  local procs=$(listeners "$*")
+  # NB: Preserve this local 'newline' for field separator!
+  local IFS='
+'
+  local last=''
+  for line in $procs; do
+    local pid=$(echo $line | awk '{print $2}')
+    local ident=$(echo $line | awk '{print ("  ", $1, "(", $2, ")") }')
+    if [[ $pid -eq $last ]]; then
+      continue;
+    fi
+    # extra whitespace makes me more comforable reading for kill?
+    echo; echo -e $line; echo;
+    last=$pid
+    if ask "kill -9 $ident ?" N; then
+      kill -9 $pid
+    fi
+  done
+}
+
+# list all processes that are listening on ports. useful for debugging 
+# EADDRINUSE errors.
+listeners () {
+  local cmd='lsof -i -P | grep -i "listen"'
+  if [[ $# > 0 ]];  then
+    cmd="$cmd | grep \"$*\""
+  fi
+  eval $cmd
+}
+
+# dump single link (if found) for a particular file.
+lnk () {
+  ls -la | grep "@ ->" | grep "$*" | cut -c53-1000
+}
+
+# dump list of links in the current directory and where they point.
+alias lnks='ls -la | grep "@ ->" | cut -c53-1000'
+
+# show time/date in easy form
+alias now='date +"%T"'
+alias nowtime='now'
+alias nowdate='date +"%d-%m-%Y"'
+
+# Dump path list split on ':' so it's readable as a list.
+paths () {
+  echo ${PATH} | awk 'BEGIN{RS=":";} {print;}'
+}
+
+# Dump the real version of a command being run. This is 'which' but it will
+# traverse at least one link level to point to a true target executable.
+real () {
+  local path=$(ls -al `which $@` | grep '@ ->' | grep "$*" | cut -c49-1000)
+  if [ ${#path} -ne 0 ]; then
+    echo $path
+  else
+    which "$@"
+  fi
+}
+
+alias sizes='du -s *'
+
+# NB: this relies on vim config to put temp files in ~/tmp
+alias swapped='find ~/tmp -name '"'*.sw[op]'"' -print'
+
+# ---
+# PATH-sensitive installations
+# ---
+
+# Now that our path is complete we can test for existence of various tools and
+# install customizations/extensions as appropriate.
+
+
+# Warn if we haven't got brew installed. We use it to install most everything
+# else.
+if ! exists brew; then
+  echo 'brew not found'
+  echo 'install brew via:'; echo
+  echo 'ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
+fi
+
+# Ack, because grep is just too old :)
+if exists ack; then
+  alias ackall='ack -l -a --invert-file-match -G "\.gif|\.png|\.bmp|\.jpg|\.ico"'
+  alias ackcss='ack -l --css --invert-file-match -G "node_modules"'
+  alias ackhtml='ack -l --html --invert-file-match -G "node_modules"'
+  alias ackjava='ack -l --java --invert-file-match -G "node_modules"'
+  alias ackjs='ack -l --js --invert-file-match -G "node_modules"'
+  alias ackjson='ack -l --json --invert-file-match -G "node_modules"'
+  alias ackmu='ack -l --mu --invert-file-match -G "node_modules"'
+  alias ackphp='ack -l --php --invert-file-match -G "node_modules"'
+  alias ackrb='ack -l --ruby --invert-file-match -G "node_modules" -G "spec/"'
+  alias ackspec='ack -l --ruby --invert-file-match -G "node_modules"'
+  alias ackyaml='ack -l --yaml --invert-file-match -G "node_modules"'
+  alias ackweb='ack -l --css --html --js --json --ruby --mu --xml --yaml\
+    --invert-file-match -G "node_modules"'
+  alias ackxml='ack -l --xml --invert-file-match -G "node_modules"'
+else
+  echo 'ack not found'
+  echo 'install ack via:';echo
+  echo 'brew install ack'
+fi
+
+# Git, and if that's not here, well, that's curious :)
+if exists git; then
+  alias b="git branch -a | grep -v 'remotes/origin'"
+  alias f='git fetch'
+  alias g='git'
+  alias h='git help'
+  alias m='git merge'
+  alias p='git pull'
+  alias s='git status --short --branch'
+  alias t='git log --oneline --graph --all --date-order --decorate=short'
+  alias u='git config user.name'
+
+  [[ -s ~/.git-flow-completion.bash ]] && source ~/.git-flow-completion.bash
+
+  # ---
+  # prompt
+  # ---
+
+  c_cyan=`tput setaf 6`
+  c_red=`tput setaf 1`
+  c_green=`tput setaf 2`
+  c_sgr0=`tput sgr0`
+
+  trim_pwd ()
+  {
+    #   How many characters of the $PWD should be kept
+    local pwdmaxlen=20
+    #   Indicator that there has been directory truncation:
+    #trunc_symbol="<"
+    local trunc_symbol='...'
+    if [ ${#PWD} -gt $pwdmaxlen ]; then
+      local pwdoffset=$(( ${#PWD} - $pwdmaxlen ))
+      newPWD="${trunc_symbol}${PWD:$pwdoffset:$pwdmaxlen}"
+    else
+      newPWD=${PWD}
+    fi
+    echo $newPWD
+  }
+
+  parse_git_branch ()
+  {
+    if git rev-parse --git-dir >/dev/null 2>&1; then
+      gitver=$(git branch 2>/dev/null| sed -n '/^\*/s/^\* //p')
+    else
+      return 0
+    fi
+    echo -e $gitver
+  }
+
+  parse_git_user ()
+  {
+    if git rev-parse --git-dir >/dev/null 2>&1; then
+          gitusr=$(git config user.name)
+    else
+      return 0
+    fi
+    echo -e $gitusr
+  }
+
+  branch_color ()
+  {
+    if git rev-parse --git-dir >/dev/null 2>&1; then
+      color=''
+      if git diff --quiet 2>/dev/null >&2; then
+        color="${c_green}"
+      else
+        color="${c_red}"
+      fi
+    else
+      return 0
+    fi
+    echo -ne $color
+  }
+
+  export PS1='$(parse_git_user) [\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]] \[${c_red}\]$(trim_pwd)\[${c_sgr0}\] $ '
+else
+  echo 'git not found'
+  echo 'install git via:';echo
+  echo 'brew install git'
+fi
+
+# Node. Need this to install JS-related packages like JSHint etc.
+if ! exists node; then
+  echo 'node not found'
+  echo 'install node via:';echo
+  echo 'brew install node'
+fi
+
+# OpenSSL
+if exists openssl; then
+  alias sha1='openssl sha1'
+else
+  echo 'openssl not found'
+  echo 'install openssl via:';echo
+  echo 'brew install openssl'
+fi
+
+# Perl
+if exists perl; then
+  # convert line-endings. probably an easier way now tho.
+  alias fixcm="perl -ne 's/\cM/\n/g; print'"
+  alias fixdos="perl -ne 's/\cM\cJ/\n/g; print'"
+  alias fixmac="perl -ne 's/\cM/\n/g; print'"
+
+  if exists wc.pl; then
+    loc () {
+      find . -name "$*" -exec wc {} \; | wc.pl
+    }
+  fi
+else
+  echo 'perl not found'
+  echo 'install perlbrew via:'; echo
+  echo 'curl -kL http://install.perlbrew.pl | bash'
+  echo 'source ~/perl5/perlbrew/etc/bashrc'
+  echo 'perlbrew'
+fi
+
+# Initialize perlbrew for managing perl installations.
+[[ -s ~/perl5/perlbrew/etc/bashrc ]] && source ~/perl5/perlbrew/etc/bashrc
+
+# Python
+if ! exists python; then
+  echo 'python not found'
+  echo 'install python via:'; echo
+  echo 'brew install python'
+fi
+
+# Console Vim
+if exists vim; then
+  if [[ -e /usr/local/share/vim ]]; then
+    export VIMRUNTIME="/usr/local/share/vim/vim73"
+  else
+    if [[ -e /usr/share/vim ]]; then
+      export VIMRUNTIME="/usr/local/share/vim/vim73"
+    fi
+  fi
+  export VISUAL=vim
+else
+  echo 'vim not found'
+  echo 'install vim via:';echo
+  echo 'brew install vim'
+fi
+
+# TODO: clean up a combination of GCL and JSHint
+# Yahoo! / Crockford JSLint
+if exists yjslint.sh; then
+  alias ylint='yjslint.sh'
+  alias ylintdir='yjslint_dir.sh'
+fi
+
+# Google Closure Linter
+if exists gjslint.py; then
+  gitlint () {
+    \git status | egrep '(new file:|modified:)' |\
+      awk -F ':   ' '{printf "%s\n", $2}' | xargs -t -n2 gjslint
+  }
+
+  alias glint="gjslint.py --jslint_error optional_type_marker,well_formed_author,\
+    no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level\
+    --additional_extensions 'mu' --custom_jsdoc_tags=module,submodule,namespace"
+
+  alias tlint="gjslint.py --jslint_error optional_type_marker,well_formed_author,\
+    no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level\
+    --custom_jsdoc_tags=name,synopsis,description,example,returns,todo"
+else
+  echo 'gjslint.py not found'
+  echo 'install gjslint.py via:';echo
+  echo 'cd /usr/local/src'
+  echo 'svn checkout http://closure-linter.googlecode.com/svn/trunk/ closure-linter-read-only';
+  echo 'cd closure-linter-read-only'
+  echo 'python ./setup.py install'
+fi
+
+# ---
+# /Applications
+# ---
+
+# Chrome
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome\
+  --enable-extension-timeline-api --enable-file-cookies --enable-local-storage\
+  --allow-file-access-from-files --user-data-dir=${HOME}/nacl-chrome-profile"
+alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium\
+  --enable-extension-timeline-api --enable-file-cookies --enable-local-storage\
+  --allow-file-access-from-files --user-data-dir=${HOME}/nacl-chrome-profile"
+
+# TODO: convert to something we can run from Alfred
+[[ -e '/Applications/Marked.app/Contents/MacOS/Marked' ]] && \
+  alias marked='/Applications/Marked.app/Contents/MacOS/Marked'
+
+# ---
+# tool-specific vars
+# ---
+
+# apache (assuming brew install apache...which needs formula.)
+# see: https://github.com/Homebrew/homebrew-apache
+#export APACHE_HOME="/opt/local/apache2"
+#alias cdapache="cd ${APACHE_HOME}"
+#alias cdcgi="cd ${APACHE_HOME}/cgi-bin"
+#alias cdhtml="cd ${APACHE_HOME}/htdocs"
+
+# ---
+# java
+# ---
+
+if exists ant; then
+  export ANT_HOME="$(which ant)"
+  export ANT_OPTS="-Xmx512M -Xss5120k"
+fi
+
+# java
+# TODO: check for libexec, and java
+export JAVA_HOME="$(/usr/libexec/java_home)"
+export JAVA_OPTS="-Xmx256m"
+
+# NB: This is a tab
+export XMLLINT_INDENT="	"
+
+alias jess="java jess.Main"
+
+# Mozilla JavaScript-in-JVM project.
+alias rhino="java org.mozilla.javascript.tools.shell.Main"
+
+alias selenium_firefox="java -Dwebdriver.firefox.profile=default\
+  -jar /usr/local/src/selenium/selenium-server-standalone-2.25.0.jar"
+alias selenium_chrome="java -Dwebdriver.chrome.profile=default\
+  -jar /usr/local/src/selenium/selenium-server-standalone-2.25.0.jar"
+alias xalan="java org.apache.xalan.xslt.Process"
+
+# ---
+# javascript
+# ---
+
+# TODO: check for node and nvm.
+export NODE_VERSION="v0.8.8"
+export NODE_PATH="${HOME}/nvm/${NODE_VERSION}/lib/node_modules:\
+${HOME}/lib/node_modules:./node_modules"
+
+alias cdnvm="cd ${HOME}/.nvm/${NODE_VERSION}/lib/node_modules"
+alias gjscomp="java -D=/usr/local/src/compiler-latest/ -jar compiler.jar"
+
+# Mac JavaScript interpreter from WebKit
+alias jsc="/System/Library/Frameworks/JavaScriptCore.\
+framework/Versions/A/Resources/jsc"
+
+# TODO: phantomjs ?
+# TODO: webdriver ?
+
+# mysql
+#export MYSQL_HOME="/opt/local/lib/mysql5/"
+#alias cdmysql="cd ${MYSQL_HOME}"
+
+# postgresql
+#export PGDATA="/usr/local/pgsql/data"
+#export PGDATABASE="tpi_develop"
+
+# python
+#export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
+
+# rails
+# TODO: check for ruby
+export RAILS_ENV="development"
+
+
+
+# EJabberd
+alias estart="sudo /opt/local/sbin/ejabberdctl start"
+alias estop="sudo /opt/local/sbin/ejabberdctl stop"
+alias estat="sudo /opt/local/sbin/ejabberdctl status"
+
+# Apache
+alias aprestart="sudo\
+  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper restart"
+alias apstart="sudo\
+  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper start"
+alias apstop="sudo\
+  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper stop"
+
+# MySQL
+alias mystart="mysql.server start"
+alias mystop="mysql.server stop"
+
+# Postgres
+alias pgstart="sudo\
+  -u postgres pg_ctl -D ${PGDATA} -l /usr/local/pgsql/log/logfile start"
+alias pgstop="sudo -u postgres pg_ctl stop -D ${PGDATA}"
+alias pgtail="sudo -u postgres tail -f /usr/local/pgsql/log/logfile"
+
+# ---
+# tibet
+# ---
+
+[[ -s ~/.tibetrc ]] && source ~/.tibetrc
+
+# ---
+# twitter
+# ---
+
+[[ -s ~/.twitterrc ]] && source ~/.twitterrc
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+
 [[ -s ${HOME}/.local.before ]] && source ${HOME}/.local.before
 [[ -s ${HOME}/.localrc ]] && source ${HOME}/.localrc
 [[ -s ${HOME}/.local.after ]] && source ${HOME}/.local.after

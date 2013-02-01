@@ -2,6 +2,3 @@
 #
 # local.before: run via bashrc BEFORE .localrc
 
-# Prioritize personal, then /usr/local/bin (Homebrew) paths.
-export PATH="~/bin.custom:/usr/local/bin:$PATH"
-

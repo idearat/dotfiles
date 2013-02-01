@@ -140,3 +140,9 @@
 [submodule "git/git-flow-completion"]
 	path = git/git-flow-completion
 	url = https://github.com/bobthecow/git-flow-completion.git
+[submodule "vim/janus.local/vim-todo"]
+	path = vim/janus.local/vim-todo
+	url = https://github.com/idearat/vim-todo.git
+[submodule "vim/janus.local/command-t"]
+	path = vim/janus.local/command-t
+	url = git://git.wincent.com/command-t.git

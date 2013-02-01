@@ -64,4 +64,8 @@ set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()
 " Ignore ex mode, use for formatting.
 map Q gq
 
+" Map Buffergator / CommandT the way we like them.
+map <leader>t :CommandT<CR>
+map <c-t> :CommandT<CR>
+
 "=============================================================================
