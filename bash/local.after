@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# local.after: run via bashrc AFTER .localrc. This file runs for all
-# shells, so it shouldn't do anything that would cause subshell fails.
+# local.after: run via bashrc AFTER .localrc. This file runs for all shells, so
+# it shouldn't do anything specific to login shells.
 
 # ---
 # path roots
@@ -13,6 +13,13 @@ export USB_ROOT='/Volumes/secure'
 export MANPATH=".:${HOME}/man:/usr/local/man:/usr/local/share/man:/usr/man:\
   /usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
 
-export PATH="${HOME}/bin.local:/usr/local/bin:/usr/local/heroku/bin:$PATH"
+export PATH="${HOME}/bin.local:/usr/local/bin:$PATH"
+export PATH="${PATH}:/Applications/Araxis\ Utilities/"
 export PATH="${PATH}:/usr/local/src/closure-linter-read-only/closure_linter"
+
+# ---
+# twitter
+# ---
+
+[[ -s ~/.twitterrc ]] && source ~/.twitterrc
 

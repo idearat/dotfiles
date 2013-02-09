@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# .tibetrc: This file is triggered by .login.after.
+#
+# This file runs after ALL shell logic so it's got override power. Use wisely :)
+
 
 # ---
 # exports
@@ -91,29 +96,6 @@ alias tpxml='cd ${TIBET_HOME}/base/src/xml'
 alias tpxmpp='cd ${TIBET_HOME}/base/src/xmpp'
 alias tpxs='cd ${TIBET_HOME}/base/src/xs'
 alias tpyui='cd ${TIBET_HOME}/base/src/yui'
-
-# ---
-# functions
-# ---
-
-function greptibet {
-  pushd ${TIBET_HOME} > /dev/null
-  grepall "$*"
-}
-
-function vt {
-  pushd ${TIBET_HOME} > /dev/null
-  mvim $(ack -g "$@")
-  popd > /dev/null
-}
-
-# ---
-# program execution
-# ---
-
-# TIBET Development Server
-alias tdsstart="cdtds; java TDS.TDS"
-alias tdcstart="cdtds; java TDS.TDS -console"
 
 # ---
 # eof

@@ -1,9 +1,10 @@
 #!/bin/bash
 #
-# login.after: run via bash_profile AFTER .bashrc.
-# Effectively means this file runs after ALL others. This file is also
-# the best place for interactive user customizations since it only runs
-# when .bash_profile is executed.
+# login.after: run via .bash_profile AFTER .bashrc.
+# Effectively means this file runs after ALL others.
+#
+# This file is the best place for interactive user customizations since it
+# only runs when .bash_profile is executed, and it runs LAST.
 
 # ---
 # shell options
@@ -34,7 +35,7 @@ export TERM=xterm-256color
 # ---
 
 # bash environment management
-alias vimit="vi ${HOME}/.local.after"
+alias vimit="vi ${HOME}/.login.after"
 alias srcit="source ${HOME}/.bash_profile"
 
 # vi-related config management
@@ -74,11 +75,12 @@ alias mv='mv -i'
 alias ping='ping -c 5'
 alias psw='ps auxww'
 alias rm='rm -i'
-alias scp='scp -v'
-alias ssh='ssh -v'
+#alias scp='scp -v'
+#alias ssh='ssh -v'
 alias su='sudo -i'
 alias tail="tail -f"
 alias wget='wget -c'
+alias x="exit"
 
 # common redirections
 alias more='less'
@@ -274,7 +276,8 @@ if exists git; then
   alias t='git log --oneline --graph --all --date-order --decorate=short'
   alias u='git config user.name'
 
-  [[ -s ~/.git-flow-completion.bash ]] && source ~/.git-flow-completion.bash
+  # git-flow-completion can be slow...uncomment as desired.
+  #[[ -s ~/.git-flow-completion.bash ]] && source ~/.git-flow-completion.bash
 
   # ---
   # prompt
@@ -406,12 +409,6 @@ else
 fi
 
 # TODO: clean up a combination of GCL and JSHint
-# Yahoo! / Crockford JSLint
-if exists yjslint.sh; then
-  alias ylint='yjslint.sh'
-  alias ylintdir='yjslint_dir.sh'
-fi
-
 # Google Closure Linter
 if exists gjslint.py; then
   gitlint () {
@@ -434,6 +431,13 @@ else
   echo 'cd closure-linter-read-only'
   echo 'python ./setup.py install'
 fi
+
+# Yahoo! / Crockford JSLint
+if exists yjslint.sh; then
+  alias ylint='yjslint.sh'
+  alias ylintdir='yjslint_dir.sh'
+fi
+
 
 # ---
 # /Applications
@@ -479,15 +483,19 @@ export JAVA_OPTS="-Xmx256m"
 # NB: This is a tab
 export XMLLINT_INDENT="	"
 
-alias jess="java jess.Main"
+# TODO: requires installation of the closure compiler jar file
+alias gjscomp="java -D=/usr/local/src/compiler-latest/ -jar compiler.jar"
 
-# Mozilla JavaScript-in-JVM project.
+# TODO: requires installation of Mozilla JavaScript-in-JVM project.
 alias rhino="java org.mozilla.javascript.tools.shell.Main"
 
+# TODO: these require installation of selenium
 alias selenium_firefox="java -Dwebdriver.firefox.profile=default\
   -jar /usr/local/src/selenium/selenium-server-standalone-2.25.0.jar"
 alias selenium_chrome="java -Dwebdriver.chrome.profile=default\
   -jar /usr/local/src/selenium/selenium-server-standalone-2.25.0.jar"
+
+# TODO: this requires installation of xalan
 alias xalan="java org.apache.xalan.xslt.Process"
 
 # ---
@@ -500,7 +508,7 @@ export NODE_PATH="${HOME}/nvm/${NODE_VERSION}/lib/node_modules:\
 ${HOME}/lib/node_modules:./node_modules"
 
 alias cdnvm="cd ${HOME}/.nvm/${NODE_VERSION}/lib/node_modules"
-alias gjscomp="java -D=/usr/local/src/compiler-latest/ -jar compiler.jar"
+
 
 # Mac JavaScript interpreter from WebKit
 alias jsc="/System/Library/Frameworks/JavaScriptCore.\
@@ -509,55 +517,35 @@ framework/Versions/A/Resources/jsc"
 # TODO: phantomjs ?
 # TODO: webdriver ?
 
-# mysql
-#export MYSQL_HOME="/opt/local/lib/mysql5/"
-#alias cdmysql="cd ${MYSQL_HOME}"
-
-# postgresql
-#export PGDATA="/usr/local/pgsql/data"
-#export PGDATABASE="tpi_develop"
-
-# python
-#export PYTHONPATH=".:/usr/local/lib/python:/usr/lib/python"
-
 # rails
 # TODO: check for ruby
 export RAILS_ENV="development"
 
 
-
-# EJabberd
-alias estart="sudo /opt/local/sbin/ejabberdctl start"
-alias estop="sudo /opt/local/sbin/ejabberdctl stop"
-alias estat="sudo /opt/local/sbin/ejabberdctl status"
-
 # Apache
-alias aprestart="sudo\
-  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper restart"
-alias apstart="sudo\
-  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper start"
-alias apstop="sudo\
-  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper stop"
+# TODO: validate for brew-installed versions.
+#alias aprestart="sudo\
+#  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper restart"
+#alias apstart="sudo\
+#  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper start"
+#alias apstop="sudo\
+#  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper stop"
 
 # MySQL
+# TODO: validate for brew-installed versions.
 alias mystart="mysql.server start"
 alias mystop="mysql.server stop"
 
 # Postgres
-alias pgstart="sudo\
-  -u postgres pg_ctl -D ${PGDATA} -l /usr/local/pgsql/log/logfile start"
-alias pgstop="sudo -u postgres pg_ctl stop -D ${PGDATA}"
-alias pgtail="sudo -u postgres tail -f /usr/local/pgsql/log/logfile"
+# TODO: validate for brew-installed versions.
+#alias pgstart="sudo\
+#  -u postgres pg_ctl -D ${PGDATA} -l /usr/local/pgsql/log/logfile start"
+#alias pgstop="sudo -u postgres pg_ctl stop -D ${PGDATA}"
+#alias pgtail="sudo -u postgres tail -f /usr/local/pgsql/log/logfile"
 
 # ---
 # tibet
 # ---
 
 [[ -s ~/.tibetrc ]] && source ~/.tibetrc
-
-# ---
-# twitter
-# ---
-
-[[ -s ~/.twitterrc ]] && source ~/.twitterrc
 

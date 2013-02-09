@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# .bash_profile: runs for LOGIN shells only.
 
 [[ -s ${HOME}/.login.before ]] && source ${HOME}/.login.before
 [[ -s ${HOME}/.bashrc ]] && source ${HOME}/.bashrc
