@@ -2,19 +2,22 @@
 #
 # Installs the basic links etc.
 
-# NOTE this assumes you're in the dotfiles directory when you run install.sh
+# NOTE: this assumes you're in the dotfiles directory when you run install.sh
 export DOTFILE_HOME=`pwd`
 
-# TODO add flag to turn this off as desired.
-# Initialize submodules. Janus etc. must be updated before we can link them.
-git submodule init
-git submodule update
-pushd vim/janus
-rake
-popd
+# TODO: add checks for prerequisites:
+#         latest vim (via brew)
+#           which requires mercurial (via brew)
+#             which requires python headers (not sure which version)
+#       others?
 
 # Build working directories.
+mkdir ~/dev > /dev/null
 mkdir ~/tmp > /dev/null
+
+# Apache on OSX 10.8 + doesn't provide the older standard locations for apache.
+sudo ln -s /Library/WebServer/Documents /etc/apache2/htdocs
+sudo ln -s /Library/WebServer/CGI-Executables /etc/apache2/cgi-bin
 
 # Bash
 mv ~/.bash_profile ~/.bash_profile_orig > /dev/null
@@ -47,8 +50,14 @@ mv ~/.gitconfig ~/.gitconfig_orig > /dev/null
 
 # Node
 
+# TODO: ensure proper installation of nvm, then node
 
 # Ruby
+
+# TODO: remove rvm, replace with rbenv, and install.
+# NOTE that installing pre-1.9.x versions requires old GCC from
+# https://github.com/kennethreitz/osx-gcc-installer/downloads
+
 mv ~/.irbrc ~/.irbrc_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/ruby/irbrc/irbrc ~/.irbrc
 mv ~/.rdebugrc ~/.rdebugrc_orig > /dev/null
@@ -67,6 +76,15 @@ mv ~/.tmux.conf ~/.tmux.conf_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/utils/tmux.conf ~/.tmux.conf
 
 # VIM
+
+# TODO add flag to turn this off as desired.
+# Initialize submodules. Janus etc. must be updated before we can link them.
+git submodule init
+git submodule update
+pushd vim/janus
+rake
+popd
+
 mv ~/.vim ~/.vim_orig > /dev/null
 ln -sFv ${DOTFILE_HOME}/vim/janus/janus/vim ~/.vim
 mv ~/.janus ~/.janus_orig > /dev/null

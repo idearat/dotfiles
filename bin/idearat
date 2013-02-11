@@ -1,4 +1,5 @@
-rm -rf ~/.ssh
+rm -rf ~/.ssh.orig
+mv ~/.ssh ~/.ssh.orig
 cp -r ~/.ssh_idearat ~/.ssh
 rm -rf ~/.gitconfig
 cp -r ~/dotfiles/gitconfig.idearat ~/.gitconfig

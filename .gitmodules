@@ -54,7 +54,7 @@
 	url = http://github.com/mattn/gist-vim.git
 [submodule "vim/bundle/vim-markdown-preview"]
 	path = vim/bundle/vim-markdown-preview
-	url = git@github.com:nelstrom/vim-markdown-preview.git
+	url = git://github.com:nelstrom/vim-markdown-preview.git
 [submodule "vim/bundle/vim-rake"]
 	path = vim/bundle/vim-rake
 	url = git://github.com/tpope/vim-rake.git
@@ -84,7 +84,7 @@
 	url = https://github.com/kana/vim-textobj-indent.git
 [submodule "vim/bundle/textobj-rubyblock"]
 	path = vim/bundle/textobj-rubyblock
-	url = git@github.com:nelstrom/vim-textobj-rubyblock.git
+	url = git://github.com:nelstrom/vim-textobj-rubyblock.git
 [submodule "vim/bundle/vimwiki"]
 	path = vim/bundle/vimwiki
 	url = https://github.com/vim-scripts/vimwiki.git
@@ -114,7 +114,7 @@
 	url = https://github.com/kana/vim-textobj-syntax.git
 [submodule "vim/bundle/visual-star-search"]
 	path = vim/bundle/visual-star-search
-	url = git@github.com:nelstrom/vim-visual-star-search.git
+	url = git://github.com:nelstrom/vim-visual-star-search.git
 [submodule "vim/bundle/space"]
 	path = vim/bundle/space
 	url = git://github.com/kongo2002/vim-space.git
@@ -133,7 +133,7 @@
 	url = https://github.com/samsonw/vim-task.git
 [submodule "vim/janus"]
 	path = vim/janus
-	url = git@github.com:carlhuda/janus.git
+	url = https://github.com/carlhuda/janus.git
 [submodule "ruby/irbrc"]
 	path = ruby/irbrc
 	url = https://github.com/logankoester/irbrc.git

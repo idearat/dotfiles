@@ -92,12 +92,10 @@ alias ...='cd ../../../'
 alias ....='cd ../../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
-alias cdbin="cd ${HOME}/bin"
-alias cddesk="cd ${HOME}/Desktop"
+alias cdbin="cd ${HOME}/bin.local"
 alias cddev="cd ${DEVL_HOME}"
 # NB: depends on having cloned into ~/.dotfiles.
 alias cddot="cd ${HOME}/.dotfiles"
-alias cddown="cd ${HOME}/Downloads"
 alias cdsrc='cd /usr/local/src'
 alias cdtmp="cd ${HOME}/tmp"
 alias cdusb="cd ${USB_ROOT}"
@@ -194,11 +192,11 @@ listeners () {
 
 # dump single link (if found) for a particular file.
 lnk () {
-  ls -la | grep "@ ->" | grep "$*" | cut -c53-1000
+  ls -la | grep "@ ->" | grep "$*" | awk '{print $9, $10, $11}'
 }
 
 # dump list of links in the current directory and where they point.
-alias lnks='ls -la | grep "@ ->" | cut -c53-1000'
+alias lnks='ls -la | grep "@ ->" | awk '"'"'{print $9, $10, $11}'"'"
 
 # show time/date in easy form
 alias now='date +"%T"'
@@ -213,7 +211,7 @@ paths () {
 # Dump the real version of a command being run. This is 'which' but it will
 # traverse at least one link level to point to a true target executable.
 real () {
-  local path=$(ls -al `which $@` | grep '@ ->' | grep "$*" | cut -c49-1000)
+  local path=$(ls -al `which $@` | grep '@ ->' | grep "$*" | awk '{print $9, $10, $11}')
   if [ ${#path} -ne 0 ]; then
     echo $path
   else
@@ -347,6 +345,19 @@ else
 fi
 
 # Node. Need this to install JS-related packages like JSHint etc.
+
+# TODO: check for node and nvm.
+[[ -s ~/.nvm/nvm.sh ]] && source ~/.nvm/nvm.sh
+if exists nvm; then
+  nvm use v0.8.8 2 > /dev/null
+
+  # TODO: adjust to the highest one found by default?
+  export NODE_VERSION="v0.8.8"
+  export NODE_PATH="${HOME}/nvm/${NODE_VERSION}/lib/node_modules:\
+    ${HOME}/lib/node_modules:./node_modules"
+  alias cdnvm="cd ${HOME}/.nvm/${NODE_VERSION}/lib/node_modules"
+fi
+
 if ! exists node; then
   echo 'node not found'
   echo 'install node via:';echo
@@ -410,22 +421,22 @@ fi
 
 # TODO: clean up a combination of GCL and JSHint
 # Google Closure Linter
-if exists gjslint.py; then
+if exists gjslint; then
   gitlint () {
     \git status | egrep '(new file:|modified:)' |\
       awk -F ':   ' '{printf "%s\n", $2}' | xargs -t -n2 gjslint
   }
 
-  alias glint="gjslint.py --jslint_error optional_type_marker,well_formed_author,\
+  alias glint="gjslint --jslint_error optional_type_marker,well_formed_author,\
     no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level\
     --additional_extensions 'mu' --custom_jsdoc_tags=module,submodule,namespace"
 
-  alias tlint="gjslint.py --jslint_error optional_type_marker,well_formed_author,\
+  alias tlint="gjslint --jslint_error optional_type_marker,well_formed_author,\
     no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level\
     --custom_jsdoc_tags=name,synopsis,description,example,returns,todo"
 else
-  echo 'gjslint.py not found'
-  echo 'install gjslint.py via:';echo
+  echo 'gjslint not found'
+  echo 'install gjslint via:';echo
   echo 'cd /usr/local/src'
   echo 'svn checkout http://closure-linter.googlecode.com/svn/trunk/ closure-linter-read-only';
   echo 'cd closure-linter-read-only'
@@ -458,13 +469,6 @@ alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium\
 # ---
 # tool-specific vars
 # ---
-
-# apache (assuming brew install apache...which needs formula.)
-# see: https://github.com/Homebrew/homebrew-apache
-#export APACHE_HOME="/opt/local/apache2"
-#alias cdapache="cd ${APACHE_HOME}"
-#alias cdcgi="cd ${APACHE_HOME}/cgi-bin"
-#alias cdhtml="cd ${APACHE_HOME}/htdocs"
 
 # ---
 # java
@@ -502,14 +506,6 @@ alias xalan="java org.apache.xalan.xslt.Process"
 # javascript
 # ---
 
-# TODO: check for node and nvm.
-export NODE_VERSION="v0.8.8"
-export NODE_PATH="${HOME}/nvm/${NODE_VERSION}/lib/node_modules:\
-${HOME}/lib/node_modules:./node_modules"
-
-alias cdnvm="cd ${HOME}/.nvm/${NODE_VERSION}/lib/node_modules"
-
-
 # Mac JavaScript interpreter from WebKit
 alias jsc="/System/Library/Frameworks/JavaScriptCore.\
 framework/Versions/A/Resources/jsc"
@@ -517,31 +513,62 @@ framework/Versions/A/Resources/jsc"
 # TODO: phantomjs ?
 # TODO: webdriver ?
 
+# ---
+# ruby
+# ---
+
+# rbenv
+# TODO: check for rbenv, suggest installing
+[[ -s rbenv ]] && rbenv init - > /dev/null
+
 # rails
 # TODO: check for ruby
 export RAILS_ENV="development"
 
+# ---
+# servers
+# ---
 
-# Apache
-# TODO: validate for brew-installed versions.
-#alias aprestart="sudo\
-#  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper restart"
-#alias apstart="sudo\
-#  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper start"
-#alias apstop="sudo\
-#  /opt/local/etc/LaunchDaemons/org.macports.apache2/apache2.wrapper stop"
+# Apache: MacOSX 10.8+ has Apache in /etc/apache2
+if [[ -e /etc/apache2 ]]; then
+  export APACHE_HOME="/etc/apache2"
+  alias cdapache="cd ${APACHE_HOME}"
+
+  # NOTE these depend on the creation on non-standard links for OSX.
+  alias cdcgi="cd ${APACHE_HOME}/cgi-bin"
+  alias cdhtml="cd ${APACHE_HOME}/htdocs"
+
+  alias aprestart="sudo apachectl restart"
+  alias apstart="sudo apachectl start"
+  alias apstop="sudo apachectl stop"
+fi
+
+# Memcached
+if exists memcached; then
+  alias mem="memcached -d"
+fi
+
 
 # MySQL
-# TODO: validate for brew-installed versions.
-alias mystart="mysql.server start"
-alias mystop="mysql.server stop"
+if exists mysql.server; then
+  alias mystart="mysql.server start"
+  alias mystop="sudo mysql.server stop"
+fi
 
 # Postgres
-# TODO: validate for brew-installed versions.
-#alias pgstart="sudo\
-#  -u postgres pg_ctl -D ${PGDATA} -l /usr/local/pgsql/log/logfile start"
-#alias pgstop="sudo -u postgres pg_ctl stop -D ${PGDATA}"
-#alias pgtail="sudo -u postgres tail -f /usr/local/pgsql/log/logfile"
+if exists pg_ctl; then
+  export PG_HOME="/usr/local/pgsql"
+  export PG_DATA="${PG_HOME}/data"
+  alias pgstart="sudo\
+    -u postgres pg_ctl -D ${PG_DATA} -l ${PG_HOME}/log/logfile start"
+  alias pgstop="sudo -u postgres pg_ctl stop -D ${PG_DATA}"
+  alias pgtail="sudo -u postgres tail -f ${PG_HOME}/log/logfile"
+fi
+
+# Redis
+if exists redis-server; then
+  alias redis="redis-server /usr/local/etc/redis.conf"
+fi
 
 # ---
 # tibet

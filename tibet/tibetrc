@@ -18,7 +18,7 @@ export TIBET_HOME="${TPI_HOME}/tibet"
 # ---
 
 alias cdfb='cd ${IDEARAT_HOME}/fiscalball'
-alias cdme='cd ${IDEARAT_HOME}'
+alias cdidearat='cd ${IDEARAT_HOME}'
 alias cdviz='cd ${IDEARAT_HOME}/vizitd'
 alias cdquiz='cd ${IDEARAT_HOME}/quizunit'
 

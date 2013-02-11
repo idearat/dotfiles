@@ -1,6 +1,7 @@
-rm -rf ~/.ssh
+rm -rf ~/.ssh.orig
+mv ~/.ssh ~/.ssh.orig
 cp -r ~/.ssh_sshattuck ~/.ssh
 rm -rf ~/.gitconfig
-cp -r ~/dotfiles/git/gitconfig.sshattuck ~/.gitconfig
-cp -r ~/dotfiles/node/npmrc.sshattuck ~/.npmrc
+cp -r ~/dotfiles/gitconfig.sshattuck ~/.gitconfig
+cp -r ~/dotfiles/npmrc.sshattuck ~/.npmrc
 ssh-add
