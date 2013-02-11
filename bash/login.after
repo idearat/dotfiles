@@ -265,10 +265,11 @@ fi
 # Git, and if that's not here, well, that's curious :)
 if exists git; then
   alias b="git branch -a | grep -v 'remotes/origin'"
+  alias d='git difftool'
   alias f='git fetch'
   alias g='git'
   alias h='git help'
-  alias m='git merge'
+  alias m='git mergetool'
   alias p='git pull'
   alias s='git status --short --branch'
   alias t='git log --oneline --graph --all --date-order --decorate=short'
@@ -518,8 +519,9 @@ framework/Versions/A/Resources/jsc"
 # ---
 
 # rbenv
-# TODO: check for rbenv, suggest installing
-[[ -s rbenv ]] && rbenv init - > /dev/null
+if exists rbenv; then
+  eval "$(rbenv init -)" > /dev/null
+fi
 
 # rails
 # TODO: check for ruby
