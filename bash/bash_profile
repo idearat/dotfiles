@@ -5,4 +5,3 @@
 [[ -s ${HOME}/.login.before ]] && source ${HOME}/.login.before
 [[ -s ${HOME}/.bashrc ]] && source ${HOME}/.bashrc
 [[ -s ${HOME}/.login.after ]] && source ${HOME}/.login.after
-[[ -s /Users/ss/.nvm/nvm.sh ]] && . /Users/ss/.nvm/nvm.sh # This loads NVM

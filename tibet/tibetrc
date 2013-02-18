@@ -26,7 +26,7 @@ alias bedney='export TIBET_HOME="${TPI_HOME}/Bedney/TIBET"'
 alias base='export TIBET_HOME="${TPI_HOME}/tibet"'
 
 # work from old codebase for now
-bedney
+base
 
 # bash environment management
 alias vimtibet="vi $HOME/.tibetrc"

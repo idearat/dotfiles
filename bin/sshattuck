@@ -1,7 +1,26 @@
-rm -rf ~/.ssh.orig
-mv ~/.ssh ~/.ssh.orig
-cp -r ~/.ssh_sshattuck ~/.ssh
-rm -rf ~/.gitconfig
-cp -r ~/dotfiles/gitconfig.sshattuck ~/.gitconfig
-cp -r ~/dotfiles/npmrc.sshattuck ~/.npmrc
-ssh-add
+#!/bin/bash
+# git
+if [[ -e ~/.dotfiles/git/gitconfig.sshattuck ]]; then
+  echo -n "updating gitconfig..."
+  rm -rf ~/.gitconfig.orig
+  mv ~/.gitconfig ~/.gitconfig.orig
+  cp -r ~/.dotfiles/git/gitconfig.sshattuck ~/.gitconfig
+  echo "done"
+fi
+# npm
+if [[ -e ~/.dotfiles/node/npmrc.sshattuck ]]; then
+  echo -n "updating npmrc..."
+  rm -rf ~/.npmrc.orig
+  mv ~/.npmrc ~/.npmrc.orig
+  cp -r ~/.dotfiles/node/npmrc.sshattuck ~/.npmrc
+  echo "done."
+fi
+# ssh
+if [[ -e /.ssh_sshattuck ]]; then
+  echo -n "updating ssh credentials..."
+  rm -rf ~/.ssh.orig
+  mv ~/.ssh ~/.ssh.orig
+  cp -r ~/.ssh_sshattuck ~/.ssh
+  ssh-add
+  echo "done."
+fi

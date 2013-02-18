@@ -224,6 +224,12 @@ alias sizes='du -s *'
 # NB: this relies on vim config to put temp files in ~/tmp
 alias swapped='find ~/tmp -name '"'*.sw[op]'"' -print'
 
+# test for existence of a varable/export.
+varexists () {
+  local v="$1"
+  [[ ! ${!v} && ${!v-unset} ]] && return 0 || return 1
+}
+
 # ---
 # PATH-sensitive installations
 # ---
@@ -242,7 +248,7 @@ fi
 
 # Ack, because grep is just too old :)
 if exists ack; then
-  alias ackall='ack -l -a --invert-file-match -G "\.gif|\.png|\.bmp|\.jpg|\.ico"'
+  alias ackall='ack -l -a --invert-file-match -G "\.gif|\.png|\.bmp|\.jpg|\.ico|\.log|tags"'
   alias ackcss='ack -l --css --invert-file-match -G "node_modules"'
   alias ackhtml='ack -l --html --invert-file-match -G "node_modules"'
   alias ackjava='ack -l --java --invert-file-match -G "node_modules"'
@@ -347,16 +353,16 @@ fi
 
 # Node. Need this to install JS-related packages like JSHint etc.
 
-# TODO: check for node and nvm.
+# test for nvm and initialize it if found
 [[ -s ~/.nvm/nvm.sh ]] && source ~/.nvm/nvm.sh
 if exists nvm; then
   nvm use v0.8.8 2 > /dev/null
 
   # TODO: adjust to the highest one found by default?
   export NODE_VERSION="v0.8.8"
-  export NODE_PATH="${HOME}/nvm/${NODE_VERSION}/lib/node_modules:\
-    ${HOME}/lib/node_modules:./node_modules"
-  alias cdnvm="cd ${HOME}/.nvm/${NODE_VERSION}/lib/node_modules"
+  export NODE_PATH="${NVM_DIR}/${NODE_VERSION}/lib/node_modules:\
+${HOME}/lib/node_modules:./node_modules"
+  alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
 fi
 
 if ! exists node; then

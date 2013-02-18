@@ -1,7 +1,26 @@
-rm -rf ~/.ssh.orig
-mv ~/.ssh ~/.ssh.orig
-cp -r ~/.ssh_idearat ~/.ssh
-rm -rf ~/.gitconfig
-cp -r ~/dotfiles/gitconfig.idearat ~/.gitconfig
-cp -r ~/dotfiles/npmrc.idearat ~/.npmrc
-ssh-add
+#!/bin/bash
+# git
+if [[ -e ~/.dotfiles/git/gitconfig.idearat ]]; then
+  echo -n "updating gitconfig..."
+  rm -rf ~/.gitconfig.orig
+  mv ~/.gitconfig ~/.gitconfig.orig
+  cp -r ~/.dotfiles/git/gitconfig.idearat ~/.gitconfig
+  echo "done"
+fi
+# npm
+if [[ -e ~/.dotfiles/node/npmrc.idearat ]]; then
+  echo -n "updating npmrc..."
+  rm -rf ~/.npmrc.orig
+  mv ~/.npmrc ~/.npmrc.orig
+  cp -r ~/.dotfiles/node/npmrc.idearat ~/.npmrc
+  echo "done."
+fi
+# ssh
+if [[ -e ~/.ssh_idearat ]]; then
+  echo -n "updating ssh credentials..."
+  rm -rf ~/.ssh.orig
+  mv ~/.ssh ~/.ssh.orig
+  cp -r ~/.ssh_idearat ~/.ssh
+  ssh-add
+  echo "done."
+fi
