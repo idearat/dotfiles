@@ -68,9 +68,9 @@ map Q gq
 map <leader>t :CommandT<CR>
 map <c-t> :CommandT<CR>
 
-" Tell vimwiki to leave markdown alone.
-if janus#is_plugin_enabled("vimwiki")
-  let g:vimwiki_ext2syntax = {}
-endif
+map <Up> :lprev<CR>
+map <Left> :lprev<CR>
+map <Down> :lnext<CR>
+map <Right> :lnext<CR>
 
 "=============================================================================
