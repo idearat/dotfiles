@@ -16,7 +16,7 @@ if [[ -e ~/.dotfiles/node/npmrc.sshattuck ]]; then
   echo "done."
 fi
 # ssh
-if [[ -e /.ssh_sshattuck ]]; then
+if [[ -e ~/.ssh_sshattuck ]]; then
   echo -n "updating ssh credentials..."
   rm -rf ~/.ssh.orig
   mv ~/.ssh ~/.ssh.orig
