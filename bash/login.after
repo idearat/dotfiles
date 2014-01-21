@@ -30,6 +30,9 @@ export LS_OPTIONS='--color=auto'
 export LSCOLORS='gxgxfxfxcxdxdxhbadbxbx'
 export TERM=xterm-256color
 
+export IDEARAT_HOME="${DEVL_HOME}/idearat"
+export PROJECT_HOME="${DEVL_HOME}/idearat"
+
 # ---
 # aliases
 # ---
@@ -41,10 +44,11 @@ alias srcit="source ${HOME}/.bash_profile"
 # vi-related config management
 alias vimcolor="vi ${HOME}/.janus/idearat/colors/idearat"
 alias vimsyntax="vi ${HOME}/.janus/idearat/syntax/javascript.vim"
-alias vimvi="vi ${HOME}/.vimrc.after"
+alias vimvi="vi ${HOME}/.vimrc.final"
 
 # fat-finger protection
 alias clea='clear'
+alias celar='clear'
 alias clar='clear'
 alias rls='ls'
 
@@ -96,8 +100,10 @@ alias cdbin="cd ${HOME}/bin.local"
 alias cddev="cd ${DEVL_HOME}"
 # NB: depends on having cloned into ~/.dotfiles.
 alias cddot="cd ${HOME}/.dotfiles"
+alias cdidearat='cd ${IDEARAT_HOME}'
 alias cdsrc='cd /usr/local/src'
 alias cdtmp="cd ${HOME}/tmp"
+alias cdtri="cd ${HOME}/Documents/SS\ Docs/Triathlon"
 alias cdusb="cd ${USB_ROOT}"
 
 # ---
@@ -248,7 +254,7 @@ fi
 
 # Ack, because grep is just too old :)
 if exists ack; then
-  alias ackall='ack -l -a --invert-file-match -G "\.gif|\.png|\.bmp|\.jpg|\.ico|\.log|tags"'
+  alias ackall='ack -l -a --invert-file-match -G "\.gif|\.png|\.bmp|\.jpg|\.ico|\.log|node_modules"'
   alias ackcss='ack -l --css --invert-file-match -G "node_modules"'
   alias ackhtml='ack -l --html --invert-file-match -G "node_modules"'
   alias ackjava='ack -l --java --invert-file-match -G "node_modules"'
@@ -274,6 +280,7 @@ if exists git; then
   alias d='git difftool'
   alias f='git fetch'
   alias g='git'
+  alias gpo='git push origin'
   alias h='git help'
   alias m='git mergetool'
   alias p='git pull'
@@ -356,10 +363,10 @@ fi
 # test for nvm and initialize it if found
 [[ -s ~/.nvm/nvm.sh ]] && source ~/.nvm/nvm.sh
 if exists nvm; then
-  nvm use v0.8.8 2 > /dev/null
+  nvm use v0.10.24 2 > /dev/null
 
   # TODO: adjust to the highest one found by default?
-  export NODE_VERSION="v0.8.8"
+  export NODE_VERSION="v0.10.24"
   export NODE_PATH="${NVM_DIR}/${NODE_VERSION}/lib/node_modules:\
 ${HOME}/lib/node_modules:./node_modules"
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
@@ -462,16 +469,13 @@ fi
 # ---
 
 # Chrome
-alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome\
-  --enable-extension-timeline-api --enable-file-cookies --enable-local-storage\
-  --allow-file-access-from-files --user-data-dir=${HOME}/nacl-chrome-profile"
-alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium\
-  --enable-extension-timeline-api --enable-file-cookies --enable-local-storage\
-  --allow-file-access-from-files --user-data-dir=${HOME}/nacl-chrome-profile"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+--enable-file-cookies --allow-file-access-from-files \
+--js-flags=\"--debugger true --debug_code --expose-debug-as debug --expose-gc\""
 
 # TODO: convert to something we can run from Alfred
 [[ -e '/Applications/Marked.app/Contents/MacOS/Marked' ]] && \
-  alias marked='/Applications/Marked.app/Contents/MacOS/Marked'
+  alias marked='/Applications/Marked.app/Contents/MacOS/Marked &'
 
 # ---
 # tool-specific vars
@@ -577,6 +581,16 @@ fi
 if exists redis-server; then
   alias redis="redis-server /usr/local/etc/redis.conf"
 fi
+
+# ---
+# ss
+# ---
+
+alias ssbod="pushd ~/dev/idearat/big7; ./ssbod.js; popd"
+sslbs () {
+  # note use of $@ here to send 'unrolled' params.
+  pushd ~/dev/idearat/big7; ./sslbs.js "$@"; popd;
+}
 
 # ---
 # tibet

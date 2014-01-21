@@ -96,6 +96,8 @@ mv ~/.vimrc.after ~/.vimrc.after_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/vimrc.after ~/.vimrc.after
 mv ~/.vimrc.before ~/.vimrc.before_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/vimrc.before ~/.vimrc.before
+mv ~/.vimrc.final ~/.vimrc.final_orig > /dev/null
+ln -sfv ${DOTFILE_HOME}/vim/vimrc.final ~/.vimrc.final
 
 mv ~/.gvimrc ~/.gvimrc_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/janus/janus/vim/gvimrc ~/.gvimrc

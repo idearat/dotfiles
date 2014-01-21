@@ -19,3 +19,5 @@
 [merge]
   tool = araxis
 	stat = true
+[push]
+	default = matching

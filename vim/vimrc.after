@@ -2,75 +2,11 @@
 " vimrc.after
 "-----------------------------------------------------------------------------
 
-" Make sure our local ~/.janus directory is part of the runtime search path.
-set runtimepath+=/Users/sshattuck/.janus
-
-" Make it easy to edit this file and re-source it in as well as colorscheme.
-nmap <leader>vv :sp $HOME/.vimrc.after<CR>
-nmap <leader>vs :source $HOME/.vimrc.after<CR>
-nmap <leader>vc :sp $HOME/.janus/idearat/colors/idearat.vim<CR>
-nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<CR>
-
-" Put any files (.swp etc) in ~/tmp
-set backupdir=~/tmp
-set directory=~/tmp
-
-" Map anonymous clipboard to system clipboard. NOTE that this relies on VIM
-" being compiled with +clipboard (which on Mac means 'brew install vim' :)
-set clipboard=unnamed
-
-" Update to personal color scheme. This scheme is part of idearat/dotfiles
-" on Github.
-colorscheme idearat
-
-" Disable visual bell display.
-set visualbell t_vb=
-
-" Let the mouse work when we're working with splits.
-set mouse=a
-
-" Turn off opening with everything folded.
-set foldlevel=99
-
-" NOTE: This should probably be autocmd / filetype wrapped.
-" Adjust 'non-conforming' whitespace display.
-set listchars=tab:▸\ ,trail:.,extends:>,precedes:<
-
-" Colorize lines longer than 80 chars.
-match ErrorMsg '\%>80v.\+'
-
-" Adjust so it's possible to enter a true tab.
-let g:SuperTabMappingForward='<s-tab>'
-let g:SuperTabMappingBackward='<s-tab>'
-
-" Show numbers, and cursor lines.
-set number
-set cursorline
-set expandtab
-set hidden
-set nojoinspaces
-set wildmode=longest,list
-set showmode
-set mousehide
-set lazyredraw
-
-" Make it easier to debug coloring issues by putting highlight group
-" on the status line.
-function! SyntaxItem()
-    return synIDattr(synID(line("."),col("."),1),"name")
-endfunction
-set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()}
-
-" Ignore ex mode, use for formatting.
-map Q gq
-
-" Map Buffergator / CommandT the way we like them.
-map <leader>t :CommandT<CR>
-map <c-t> :CommandT<CR>
-
-map <Up> :lprev<CR>
-map <Left> :lprev<CR>
-map <Down> :lnext<CR>
-map <Right> :lnext<CR>
+" basically redirect to .vimrc.last because this file loads after Janus but
+" _before_ all other autoload bits. using autoload to load settings means we
+" have the best chance of actually being last.
+augroup idearat
+  au BufReadPost * so ~/.vimrc.final
+augroup end
 
 "=============================================================================

@@ -9,21 +9,24 @@
 # exports
 # ---
 
-export IDEARAT_HOME="${DEVL_HOME}/idearat"
+export FIRSTCLASS_HOME="${PROJECT_HOME}/FirstClass"
 export TPI_HOME="${DEVL_HOME}/TPI"
-export TIBET_HOME="${TPI_HOME}/tibet"
+export TIBET_HOME="${TPI_HOME}/TIBET"
 
 # ---
 # aliases
 # ---
 
-alias cdfb='cd ${IDEARAT_HOME}/fiscalball'
-alias cdidearat='cd ${IDEARAT_HOME}'
-alias cdviz='cd ${IDEARAT_HOME}/vizitd'
-alias cdquiz='cd ${IDEARAT_HOME}/quizunit'
+alias cdfb='cd ${PROJECT_HOME}/fiscalball'
+alias cdfc='cd ${FIRSTCLASS_HOME}'
+alias cdtab='cd ${PROJECT_HOME}/tabmarks'
+alias cdviz='cd ${PROJECT_HOME}/vizitd'
 
 alias bedney='export TIBET_HOME="${TPI_HOME}/Bedney/TIBET"'
-alias base='export TIBET_HOME="${TPI_HOME}/tibet"'
+alias 3='bedney;cdtibet;clear'
+
+alias base='export TIBET_HOME="${TPI_HOME}/TIBET"'
+alias 5='base;cdtibet;clear'
 
 # work from old codebase for now
 base
@@ -42,10 +45,12 @@ alias cdtdp='cd ${TIBET_HOME}/tdp'
 alias cdsherpa='cd ${TIBET_HOME}/sherpa'
 
 alias cdtpi='cd ${TPI_HOME}'
-alias cddbsa='cd ${TPI_HOME}/sites/DBSA'
-alias cdteam='cd ${TPI_HOME}/sites/TeamTIBET'
-alias cdsite='cd ${TPI_HOME}/sites/TechnicalPursuit'
+alias cddbsa='cd ${DEVL_HOME}/DBSA'
+alias cdsite='cd ${TPI_HOME}/sites/technicalpursuit.com'
 alias cdwiki='cd ${TPI_HOME}/sites/TIBET.wiki'
+
+alias site='cd ${TPI_HOME}/sites/technicalpursuit.com'
+alias wiki='cd ${TPI_HOME}/sites/TIBET.wiki'
 
 alias tpcfg='cd ${TIBET_HOME}/base/cfg'
 alias tpdat='cd ${TIBET_HOME}/base/dat'
@@ -63,7 +68,8 @@ alias tsh='cd ${TIBET_HOME}/base/src/tsh'
 
 #alias tpboot='cd ${TIBET_HOME}/sherpa/TIBET-INF/base/lib/tibet/src'
 #alias tpboot='cd ${TPI_HOME}/Bedney/TIBET/sherpa/TIBET-INF/base/lib/tibet/src'
-alias tpboot='cd ${TPI_HOME}/Bedney/TIBET/tdp/TIBET-INF/base/lib/tibet/src'
+#alias tpboot='cd ${TPI_HOME}/Bedney/TIBET/tdp/TIBET-INF/base/lib/tibet/src'
+alias tpboot='cd ${TPI_HOME}/Bedney/TIBET/base/lib/tibet/src'
 
 alias tptdk='cd ${TIBET_HOME}/base/src/tibet'
 
