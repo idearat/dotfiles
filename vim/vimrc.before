@@ -16,4 +16,8 @@ let g:syntastic_check_on_open=1
 " For JS use JSHint.
 let g:syntastic_javascript_checker='jshint'
 
+" Put any files (.swp etc) in ~/tmp
+set backupdir=~/tmp
+set directory=~/tmp
+
 "=============================================================================

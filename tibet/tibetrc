@@ -12,11 +12,13 @@
 export FIRSTCLASS_HOME="${PROJECT_HOME}/FirstClass"
 export TPI_HOME="${DEVL_HOME}/TPI"
 export TIBET_HOME="${TPI_HOME}/TIBET"
+export CODESWARM_HOME="${TPI_HOME}/CodeSwarm"
 
 # ---
 # aliases
 # ---
 
+alias cdcs='cd ${CODESWARM_HOME}'
 alias cdfb='cd ${PROJECT_HOME}/fiscalball'
 alias cdfc='cd ${FIRSTCLASS_HOME}'
 alias cdtab='cd ${PROJECT_HOME}/tabmarks'
@@ -27,6 +29,8 @@ alias 3='bedney;cdtibet;clear'
 
 alias base='export TIBET_HOME="${TPI_HOME}/TIBET"'
 alias 5='base;cdtibet;clear'
+alias cli='base;cdtibet;cd src/cli;clear'
+alias dna='base;cdtibet;cd dna/default;clear'
 
 # work from old codebase for now
 base
@@ -49,8 +53,9 @@ alias cddbsa='cd ${DEVL_HOME}/DBSA'
 alias cdsite='cd ${TPI_HOME}/sites/technicalpursuit.com'
 alias cdwiki='cd ${TPI_HOME}/sites/TIBET.wiki'
 
-alias site='cd ${TPI_HOME}/sites/technicalpursuit.com'
-alias wiki='cd ${TPI_HOME}/sites/TIBET.wiki'
+alias tpi='base;cdtpi;clear'
+alias site='base;cdsite;clear'
+alias wiki='base;cdwiki;clear'
 
 alias tpcfg='cd ${TIBET_HOME}/base/cfg'
 alias tpdat='cd ${TIBET_HOME}/base/dat'
