@@ -3,7 +3,7 @@
 "-----------------------------------------------------------------------------
 
 " Make sure our local ~/.janus directory is part of the runtime search path.
-set runtimepath+=/Users/sshattuck/.janus
+set runtimepath+=/Users/ss/.janus
 
 " Make it easy to edit this file and re-source it in as well as colorscheme.
 nmap <leader>vv :sp $HOME/.vimrc.final<CR>
@@ -46,14 +46,14 @@ let g:SuperTabMappingBackward='<s-tab>'
 " Show numbers, and cursor lines.
 set number
 set cursorline
-set expandtab
 set nohidden
 set nojoinspaces
 set wildmode=longest,list
 set showmode
 set mousehide
 set lazyredraw
-
+set noignorecase
+set wildignore+=node_modules
 set textwidth=80
 
 " Colorize lines longer than 80 chars.
@@ -77,15 +77,14 @@ map <leader>t :CommandT<CR>
 map <c-t> :CommandT<CR>
 
 " Map arrow keys when using syntax checking.
-"map <Up> :lprev<CR>
-"map <Left> :lprev<CR>
-"map <Down> :lnext<CR>
-"map <Right> :lnext<CR>
-
-set expandtab list tabstop=4 softtabstop=4 shiftwidth=4
-set noignorecase
+map <Up> :lprev<CR>
+map <Left> :lprev<CR>
+map <Down> :lnext<CR>
+map <Right> :lnext<CR>
 
 " Open Marked.app on the current file 
 :nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
+
+set tags=./tags,tags;/
 
 "=============================================================================

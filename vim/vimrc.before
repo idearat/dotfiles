@@ -7,8 +7,8 @@ let mapleader=","
 call janus#disable_plugin('vimwiki', 'oh my god, what a mess.')
 call janus#disable_plugin('snipmate', 'too damn frustrating. i use real tabs.')
 call janus#disable_plugin('supertab', 'too damn frustrating. i use real tabs.')
-call janus#disable_plugin('syntastic', 'too damn slow')
 call janus#disable_plugin('ctrlp', 'using command-T, never use this.')
+"call janus#disable_plugin('syntastic', 'too damn slow')
 
 " Force syntax checking on startup.
 let g:syntastic_check_on_open=1
@@ -19,5 +19,9 @@ let g:syntastic_javascript_checker='jshint'
 " Put any files (.swp etc) in ~/tmp
 set backupdir=~/tmp
 set directory=~/tmp
+
+" Default to 4 spaces for tabs. Do this early so editorconfig plugin can
+" override.
+set expandtab list tabstop=4 softtabstop=4 shiftwidth=4
 
 "=============================================================================

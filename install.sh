@@ -44,9 +44,9 @@ ln -sv ${DOTFILE_HOME}/bin ~/bin.local
 # Git
 ln -sfv ${DOTFILE_HOME}/git/git-flow-completion/git-flow-completion.bash ~/.git-flow-completion.bash
 mv ~/.gitignore ~/.gitignore_orig > /dev/null
-\cp ${DOTFILE_HOME}/git/gitignore ~/.gitignore
+\cp ${DOTFILE_HOME}/git/gitignore.idearat ~/.gitignore
 mv ~/.gitconfig ~/.gitconfig_orig > /dev/null
-\cp -sfv ${DOTFILE_HOME}/git/gitconfig ~/.gitconfig
+\cp -sfv ${DOTFILE_HOME}/git/gitconfig.idearat ~/.gitconfig
 
 # Node
 
@@ -103,4 +103,5 @@ mv ~/.gvimrc ~/.gvimrc_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/vim/janus/janus/vim/gvimrc ~/.gvimrc
 
 # TODO: add echo for installing Command-T (gotta build it)
+
 

@@ -4,25 +4,9 @@
 #
 # This file runs after ALL shell logic so it's got override power. Use wisely :)
 
-
-# ---
-# exports
-# ---
-
-export FIRSTCLASS_HOME="${PROJECT_HOME}/FirstClass"
-export TPI_HOME="${DEVL_HOME}/TPI"
-export TIBET_HOME="${TPI_HOME}/TIBET"
-export CODESWARM_HOME="${TPI_HOME}/CodeSwarm"
-
 # ---
 # aliases
 # ---
-
-alias cdcs='cd ${CODESWARM_HOME}'
-alias cdfb='cd ${PROJECT_HOME}/fiscalball'
-alias cdfc='cd ${FIRSTCLASS_HOME}'
-alias cdtab='cd ${PROJECT_HOME}/tabmarks'
-alias cdviz='cd ${PROJECT_HOME}/vizitd'
 
 alias bedney='export TIBET_HOME="${TPI_HOME}/Bedney/TIBET"'
 alias 3='bedney;cdtibet;clear'

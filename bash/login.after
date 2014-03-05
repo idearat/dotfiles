@@ -33,9 +33,27 @@ export TERM=xterm-256color
 export IDEARAT_HOME="${DEVL_HOME}/idearat"
 export PROJECT_HOME="${DEVL_HOME}/idearat"
 
+export FIRSTCLASS_HOME="${PROJECT_HOME}/FirstClass"
+export TPI_HOME="${DEVL_HOME}/TPI"
+export TIBET_HOME="${TPI_HOME}/TIBET"
+export CODESWARM_HOME="${TPI_HOME}/CodeSwarm"
+
+export TWC_HOME="${DEVL_HOME}/TWC"
+
+
 # ---
 # aliases
 # ---
+
+alias cdcs='cd ${CODESWARM_HOME}'
+alias cdfb='cd ${PROJECT_HOME}/fiscalball'
+alias cdfc='cd ${FIRSTCLASS_HOME}'
+alias cdtab='cd ${PROJECT_HOME}/tabmarks'
+alias cdviz='cd ${PROJECT_HOME}/vizitd'
+
+# time-warner cable
+alias twc='cd ${TWC_HOME}'
+alias hnav='cd ${TWC_HOME}/hnavclient'
 
 # bash environment management
 alias vimit="vi ${HOME}/.login.after"
@@ -163,6 +181,29 @@ findem () {
     grep -v '\.class' | sed 's/\ /\\ /g'
 }
 
+jstags () {
+  find . -name '*.js' | grep -v 'node_modules/.*/node_modules' | \
+  ctags -L - -R --langdef=js --langmap=js:.js \
+  --regex-js="/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*\{/\5/,object/" \
+  --regex-js="/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*function[ \t]*\(/\5/,function/" \
+  --regex-js="/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*\[/\5/,array/" \
+  --regex-js="/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*[^\"]'[^']*/\5/,string/" \
+  --regex-js="/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*(true|false)/\5/,boolean/" \
+  --regex-js="/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*[0-9]+/\5/,number/" \
+  --regex-js="/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*.+([,;=]|$)/\5/,variable/" \
+  --regex-js="/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*[ \t]*([,;]|$)/\5/,variable/" \
+  --regex-js="/function[ \t]+([A-Za-z0-9_$]+)[ \t]*\([^)]*\)/\1/,function/" \
+  --regex-js="/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*\{/\2/,object/" \
+  --regex-js="/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*function[ \t]*\(/\2/,function/" \
+  --regex-js="/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*\[/\2/,array/" \
+  --regex-js="/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*[^\"]'[^']*/\2/,string/" \
+  --regex-js="/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*(true|false)/\2/,boolean/" \
+  --regex-js="/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*[0-9]+/\2/,number/" \
+  --regex-js="/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*[^=]+([,;]|$)/\2/,variable/" \
+  "$@"
+}
+
+
 # interactively kill listener processes. often needed when shutting down
 # certain systems whose sub-processes don't always die cleanly.
 killem () {
@@ -272,6 +313,11 @@ else
   echo 'ack not found'
   echo 'install ack via:';echo
   echo 'brew install ack'
+fi
+
+# Bash completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
 fi
 
 # Git, and if that's not here, well, that's curious :)
@@ -597,4 +643,5 @@ sslbs () {
 # ---
 
 [[ -s ~/.tibetrc ]] && source ~/.tibetrc
+[[ -s ~/.twcrc ]] && source ~/.twcrc
 
