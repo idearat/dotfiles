@@ -1,32 +1,107 @@
 # README
 
-Basic bash, vim, etc. support file configuration. Uses a customizable
+Basic bash, vim, git, etc. support file configuration. Uses a customizable
 configuration for bash startup, Janus for the VIM baseline, and a few
-other pre-built dotfiles for common utilities like ack, tmux, etc.
+other pre-built dotfiles for common utilities like ack, git, tmux, etc.
 
 # Installing
 
-## Baseline Install Steps
+Note that the following instructions assume you're running on a relatively
+recent version of Mac OSX. In particular, one that has at least a baseline
+`ruby` executable that will let you install `brew` as described below.
 
-    cd ~
-    git clone https://github.com/idearat/dotfiles .dotfiles
-    cd .dotfiles
-    ./install.sh
+## Prerequisites
+
+### Homebrew (Brew)
+
+You need `brew` to install various other dependencies. Get it via:
+
+```bash
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+```
+
+If you don't have ruby on your machine, well, maybe it's time for a new one ;).
+
+### Gnu make
+
+On a Mac (you _are_ on a Mac right?) install XCode's command line tools via:
+
+```bash
+xcode-select --install
+```
+
+If you've already got XCode installed you can install the command line tools
+from the Preferences -> Downloads panel.
+
+### Git
+
+You'll need git so you can download the dotfiles repo. Once you have `brew`
+installed:
+
+```bash
+brew install git
+``` 
+
+## Dotfiles Install
+
+To install the dotfiles start with a git clone:
+
+```bash
+git clone https://github.com/idearat/dotfiles ~/.dotfiles
+```
+
+Once the repository is in place you can install the various links by running:
+
+```
+~/.dotfiles/install.sh
+```
 
 ## Post-Install Steps  
 
-    vi .gitconfig   # edit name/email to proper values
+Once the install script has run you will have a new set of bash startup scripts,
+aliases, etc. which you can take advantage of. You'll want to source your
+~/.bash_profile to activate those in any open shells, or simply restart your
+terminal application.
+
+```bash
+source ~/.bash_profile
+```
+
+Update your local gitconfig to use the proper username and email for your
+environment.
+
+```bash
+vi ~/.gitconfig   # edit name/email to proper values
+```
+
+Make sure you have a VIM that isn't crippled:
+
+```bash
+vim --version
+```
+
+If you don't see at least version 7.3, or you see -clipboard, or no ruby
+support, then install a new vim using brew:
+
+```bash
+brew install vim
+```
+
+If that fails it may be due to Apple removing/moving python headers. sigh. You
+can try installing python etc. etc. etc. etc. 
 
 # tl;dr
 
 ## General
 
-The install.sh script moves every existing file to an _orig version
-during installation so running it should not cause any data loss. See
-the Cleanup section for how to list/remove these once you're satisfied
-with your overall configuration.
+The install.sh script moves any existing file it will replace to an _orig
+version during installation so running it should not cause any data loss. See
+the Cleanup section for how to list/remove these once you're satisfied with your
+overall configuration.
 
 ## Bash
+
+### Login Shells
 
 The .bash_profile runs:
 
@@ -39,6 +114,8 @@ This allows you to fully customize any login-specific operations. Note
 that .bash_profile is only run when a login shell is invoked. The
 .bashrc file is run for all shells given that it's invoked here.
 
+### All Shells
+
 The .bashrc file runs:
 
     [[ -s ${HOME}/.local.before ]] && source ${HOME}/.local.before
@@ -46,10 +123,11 @@ The .bashrc file runs:
     [[ -s ${HOME}/.local.after ]] && source ${HOME}/.local.after
 
 As with the 'login' variants there are before and after files for local
-configuration, as well as a .localrc file for "core" operations. In
-environments where you must use a company .bashrc file it's a good idea
+configuration, as well as a .localrc file for "core" operations.
+
+In environments where you must use a company .bashrc file it's a good idea
 to rename .bashrc to .localrc (the install script does this for you if
-there's a previous .bashrc in existence.
+there's a previous .bashrc in existence).
 
 It's recommended that you keep your personal bash configuration in the
 local.before and local.after files in case you have to work in a

@@ -37,7 +37,7 @@ set foldlevel=99
 set listchars=tab:▸\ ,trail:.,extends:>,precedes:<
 
 " Remove trailing whitespace in various web files on save.
-autocmd BufWritePre *.js,*.json,*.css,*.less,*.html,*.xhtml,*.xml :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Adjust so it's possible to enter a true tab.
 let g:SuperTabMappingForward='<s-tab>'
@@ -68,7 +68,7 @@ set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()
 
 " Ignore ex mode, use for formatting.
 map Q gq
-set formatoptions=tcroqj
+set formatoptions=tcroq
 
 "set indentexpr=""
 
@@ -82,7 +82,7 @@ map <Left> :lprev<CR>
 map <Down> :lnext<CR>
 map <Right> :lnext<CR>
 
-" Open Marked.app on the current file 
+" Open Marked.app on the current file
 :nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
 
 set tags=./tags,tags;/

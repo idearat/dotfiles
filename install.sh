@@ -1,19 +1,18 @@
 #!/bin/bash
 #
+
 # Installs the basic links etc.
 
 # NOTE: this assumes you're in the dotfiles directory when you run install.sh
 export DOTFILE_HOME=`pwd`
 
-# TODO: add checks for prerequisites:
-#         latest vim (via brew)
-#           which requires mercurial (via brew)
-#             which requires python headers (not sure which version)
-#       others?
-
 # Build working directories.
 mkdir ~/dev > /dev/null
 mkdir ~/tmp > /dev/null
+
+# Prerequisites / Utilities
+brew install ack
+brew install bash-completion
 
 # Apache on OSX 10.8 + doesn't provide the older standard locations for apache.
 sudo ln -s /Library/WebServer/Documents /etc/apache2/htdocs
@@ -48,6 +47,8 @@ mv ~/.gitignore ~/.gitignore_orig > /dev/null
 mv ~/.gitconfig ~/.gitconfig_orig > /dev/null
 \cp -sfv ${DOTFILE_HOME}/git/gitconfig.idearat ~/.gitconfig
 
+git config --global core.excludesfile ~/.gitignore
+
 # Node
 
 # TODO: ensure proper installation of nvm, then node
@@ -76,6 +77,9 @@ mv ~/.tmux.conf ~/.tmux.conf_orig > /dev/null
 ln -sfv ${DOTFILE_HOME}/utils/tmux.conf ~/.tmux.conf
 
 # VIM
+
+# /usr/local/share doesn't always have a vim reference.
+ln -sfv /usr/share/vim /usr/local/share/vim
 
 # TODO add flag to turn this off as desired.
 # Initialize submodules. Janus etc. must be updated before we can link them.

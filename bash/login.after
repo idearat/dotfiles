@@ -416,6 +416,8 @@ if exists nvm; then
   export NODE_PATH="${NVM_DIR}/${NODE_VERSION}/lib/node_modules:\
 ${HOME}/lib/node_modules:./node_modules"
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
+
+  [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 fi
 
 if ! exists node; then
