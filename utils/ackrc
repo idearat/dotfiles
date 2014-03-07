@@ -1,7 +1,3 @@
 --follow
---type-add=css=.scss
---type-add=css=.less
---type-add=html=.haml
---type-add=js=.coffee
---type-set=json=.json
---type-set=mu=.mu
+--type-set=log:ext:log,tap
+--type-set=markdown:ext:md,markdown

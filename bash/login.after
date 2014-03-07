@@ -58,6 +58,7 @@ alias hnav='cd ${TWC_HOME}/hnavclient'
 # bash environment management
 alias vimit="vi ${HOME}/.login.after"
 alias srcit="source ${HOME}/.bash_profile"
+alias vimlocal="vi ${HOME}/.localrc"
 
 # vi-related config management
 alias vimcolor="vi ${HOME}/.janus/idearat/colors/idearat"
@@ -227,7 +228,7 @@ killem () {
   done
 }
 
-# list all processes that are listening on ports. useful for debugging 
+# list all processes that are listening on ports. useful for debugging
 # EADDRINUSE errors.
 listeners () {
   local cmd='lsof -i -P | grep -i "listen"'
@@ -295,20 +296,14 @@ fi
 
 # Ack, because grep is just too old :)
 if exists ack; then
-  alias ackall='ack -l -a --invert-file-match -G "\.gif|\.png|\.bmp|\.jpg|\.ico|\.log|node_modules"'
-  alias ackcss='ack -l --css --invert-file-match -G "node_modules"'
-  alias ackhtml='ack -l --html --invert-file-match -G "node_modules"'
-  alias ackjava='ack -l --java --invert-file-match -G "node_modules"'
-  alias ackjs='ack -l --js --invert-file-match -G "node_modules"'
-  alias ackjson='ack -l --json --invert-file-match -G "node_modules"'
-  alias ackmu='ack -l --mu --invert-file-match -G "node_modules"'
-  alias ackphp='ack -l --php --invert-file-match -G "node_modules"'
-  alias ackrb='ack -l --ruby --invert-file-match -G "node_modules" -G "spec/"'
-  alias ackspec='ack -l --ruby --invert-file-match -G "node_modules"'
-  alias ackyaml='ack -l --yaml --invert-file-match -G "node_modules"'
-  alias ackweb='ack -l --css --html --js --json --ruby --mu --xml --yaml\
-    --invert-file-match -G "node_modules"'
-  alias ackxml='ack -l --xml --invert-file-match -G "node_modules"'
+  alias ackls='ack -l -s --ignore-dir="node_modules"'
+  alias ackall='ack -l -s --nolog --ignore-dir="node_modules"'
+  alias ackcss='ack -l -s --css --sass --less --ignore-dir="node_modules"'
+  alias ackhtml='ack -l -s --html --ignore-dir="node_modules"'
+  alias ackjs='ack -l -s --js --ignore-dir="node_modules"'
+  alias ackjson='ack -l -s --json --ignore-dir="node_modules"'
+  alias ackmd='ack -l -s --markdown --ignore-dir="node_modules"'
+  alias ackxml='ack -l -s --xml --ignore-dir="node_modules"'
 else
   echo 'ack not found'
   echo 'install ack via:';echo
@@ -423,7 +418,8 @@ fi
 if ! exists node; then
   echo 'node not found'
   echo 'install node via:';echo
-  echo 'brew install node'
+  echo 'nvm install {version}'
+  echo 'install nvm from https://github.com/creationix/nvm'
 fi
 
 # OpenSSL
