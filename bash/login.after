@@ -112,9 +112,6 @@ alias vi='vim'
 # common destinations
 alias ..='cd ..'
 alias ...='cd ../../../'
-alias ....='cd ../../../../'
-alias .4='cd ../../../../'
-alias .5='cd ../../../../..'
 alias cdbin="cd ${HOME}/bin.local"
 alias cddev="cd ${DEVL_HOME}"
 # NB: depends on having cloned into ~/.dotfiles.
@@ -182,6 +179,8 @@ findem () {
     grep -v '\.class' | sed 's/\ /\\ /g'
 }
 
+# Regex-driven update of javascript-specific CTAGS data. Prunes nested levels of
+# node_modules but allows for the first level so you can drill down into libs.
 jstags () {
   find . -name '*.js' | grep -v 'node_modules/.*/node_modules' | \
   ctags -L - -R --langdef=js --langmap=js:.js \
@@ -203,7 +202,6 @@ jstags () {
   --regex-js="/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*[^=]+([,;]|$)/\2/,variable/" \
   "$@"
 }
-
 
 # interactively kill listener processes. often needed when shutting down
 # certain systems whose sub-processes don't always die cleanly.
@@ -464,10 +462,10 @@ fi
 # Console Vim
 if exists vim; then
   if [[ -e /usr/local/share/vim ]]; then
-    export VIMRUNTIME="/usr/local/share/vim/vim73"
+    export VIMRUNTIME="/usr/local/share/vim/vim74"
   else
     if [[ -e /usr/share/vim ]]; then
-      export VIMRUNTIME="/usr/local/share/vim/vim73"
+      export VIMRUNTIME="/usr/local/share/vim/vim74"
     fi
   fi
   export VISUAL=vim

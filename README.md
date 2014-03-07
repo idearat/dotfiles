@@ -24,14 +24,18 @@ If you don't have ruby on your machine, well, maybe it's time for a new one ;).
 
 ### Gnu make
 
-On a Mac (you _are_ on a Mac right?) install XCode's command line tools via:
+On a Mac (you _are_ on a Mac right?) install XCode's command line tools. You'll
+need to download the XCode package for your system and then either:
 
 ```bash
-xcode-select --install
+xcode-select -switch /Library/Developer/CommandLineTools
 ```
 
-If you've already got XCode installed you can install the command line tools
-from the Preferences -> Downloads panel.
+OR install them from within XCode via:
+
+```
+Preferences -> Downloads -> Command Line Tools
+```
 
 ### Git
 
@@ -40,7 +44,7 @@ installed:
 
 ```bash
 brew install git
-``` 
+```
 
 ## Dotfiles Install
 
@@ -50,17 +54,23 @@ To install the dotfiles start with a git clone:
 git clone https://github.com/idearat/dotfiles ~/.dotfiles
 ```
 
-Once the repository is in place you can install the various links by running:
+Once the repository is in place run the install script:
 
 ```
 ~/.dotfiles/install.sh
 ```
 
-## Post-Install Steps  
+The `install.sh` file will invoke `brew` to install utilities including `ack`,
+`bash-completion`, and `ctags`. Additional steps include moving various files
+into backup positions, linking in dotfile versions, and checking for other
+tools.
+
+
+## Post-Install Steps
 
 Once the install script has run you will have a new set of bash startup scripts,
 aliases, etc. which you can take advantage of. You'll want to source your
-~/.bash_profile to activate those in any open shells, or simply restart your
+~/.bash\_profile to activate those in any open shells, or simply restart your
 terminal application.
 
 ```bash
@@ -88,7 +98,7 @@ brew install vim
 ```
 
 If that fails it may be due to Apple removing/moving python headers. sigh. You
-can try installing python etc. etc. etc. etc. 
+can try installing python etc. etc. etc. etc.
 
 # tl;dr
 
@@ -170,5 +180,5 @@ You can list the _orig files by running:
 
 You can remove these files by running:
 
-    \ls -a | grep '_orig$' | xargs -n 1 rm 
+    \ls -a | grep '_orig$' | xargs -n 1 rm
 

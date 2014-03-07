@@ -87,4 +87,7 @@ map <Right> :lnext<CR>
 
 set tags=./tags,tags;/
 
+" Make sure Command-T sees ESC as an exit.
+let g:CommandTCancelMap=['<ESC>','<C-c>']
+
 "=============================================================================

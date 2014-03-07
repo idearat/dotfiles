@@ -13,6 +13,11 @@ mkdir ~/tmp > /dev/null
 # Prerequisites / Utilities
 brew install ack
 brew install bash-completion
+brew install ctags
+
+# install macvim/vim and link macvim into Applications dir
+brew install macvim --override-system-vim
+brew linkapps
 
 # Apache on OSX 10.8 + doesn't provide the older standard locations for apache.
 sudo ln -s /Library/WebServer/Documents /etc/apache2/htdocs
@@ -78,8 +83,9 @@ ln -sfv ${DOTFILE_HOME}/utils/tmux.conf ~/.tmux.conf
 
 # VIM
 
+# IF brew install vim is done then don't do this step...
 # /usr/local/share doesn't always have a vim reference.
-ln -sfv /usr/share/vim /usr/local/share/vim
+#ln -sfv /usr/share/vim /usr/local/share/vim
 
 # TODO add flag to turn this off as desired.
 # Initialize submodules. Janus etc. must be updated before we can link them.
