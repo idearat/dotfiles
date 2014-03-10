@@ -19,6 +19,12 @@ brew install ctags
 brew install macvim --override-system-vim
 brew linkapps
 
+# Build the command-t plugin properly so it will load in VIM
+pushd ~/.dotfiles/vim/janus.local/command-t/ruby/command-t
+ruby extconf.rb
+make
+popd
+
 # Apache on OSX 10.8 + doesn't provide the older standard locations for apache.
 sudo ln -s /Library/WebServer/Documents /etc/apache2/htdocs
 sudo ln -s /Library/WebServer/CGI-Executables /etc/apache2/cgi-bin
