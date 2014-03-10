@@ -40,7 +40,6 @@ export CODESWARM_HOME="${TPI_HOME}/CodeSwarm"
 
 export TWC_HOME="${DEVL_HOME}/TWC"
 
-
 # ---
 # aliases
 # ---
@@ -290,6 +289,8 @@ if ! exists brew; then
   echo 'brew not found'
   echo 'install brew via:'; echo
   echo 'ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
+else
+  source `brew --repository`/Library/Contributions/brew_bash_completion.sh
 fi
 
 # Ack, because grep is just too old :)
@@ -469,10 +470,13 @@ if exists vim; then
     fi
   fi
   export VISUAL=vim
+
+  # Turn off flow control. This lets VIM have better access to these keys.
+  stty start undef stop undef
 else
   echo 'vim not found'
   echo 'install vim via:';echo
-  echo 'brew install vim'
+  echo 'brew install macvim --override-system-vim'
 fi
 
 # TODO: clean up a combination of GCL and JSHint
@@ -639,5 +643,4 @@ sslbs () {
 # ---
 
 [[ -s ~/.tibetrc ]] && source ~/.tibetrc
-[[ -s ~/.twcrc ]] && source ~/.twcrc
 
