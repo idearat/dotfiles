@@ -1,13 +1,13 @@
 # README
 
-Basic bash, vim, git, etc. support file configuration. Uses a customizable
-configuration for bash startup, Janus for the VIM baseline, and a few
+My bash, vim, git, etc. support file configuration. Uses a customizable
+configuration for bash and vim, Janus for the VIM baseline, and a few
 other pre-built dotfiles for common utilities like ack, git, tmux, etc.
 
 # Installing
 
 Note that the following instructions assume you're running on a relatively
-recent version of Mac OSX. In particular, one that has at least a baseline
+recent version of Mac OSX. In particular, one that has at least a standard
 `ruby` executable that will let you install `brew` as described below.
 
 ## Prerequisites
@@ -22,19 +22,32 @@ ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
 If you don't have ruby on your machine, well, maybe it's time for a new one ;).
 
-### Gnu make
-
-On a Mac (you _are_ on a Mac right?) install XCode's command line tools. You'll
-need to download the XCode package for your system and then either:
+If you already have `brew` you should ensure it's up to date by running:
 
 ```bash
-xcode-select -switch /Library/Developer/CommandLineTools
+brew update
+brew doctor
 ```
 
-OR install them from within XCode via:
+The `brew doctor` command should run clean before proceeding.
+
+### Gnu make
+
+On a Mac you'll need to install XCode's command line tools. Download the XCode
+package for your system and then either...
+
+Install them from the XCode Download menu:
 
 ```
 Preferences -> Downloads -> Command Line Tools
+```
+
+OR
+
+Install them from the command line:
+
+```bash
+xcode-select -switch /Library/Developer/CommandLineTools
 ```
 
 ### Git
