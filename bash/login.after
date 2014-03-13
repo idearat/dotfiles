@@ -30,29 +30,25 @@ export LS_OPTIONS='--color=auto'
 export LSCOLORS='gxgxfxfxcxdxdxhbadbxbx'
 export TERM=xterm-256color
 
+# ---
+# project roots
+# ---
+
 export IDEARAT_HOME="${DEVL_HOME}/idearat"
 export PROJECT_HOME="${DEVL_HOME}/idearat"
 
 export FIRSTCLASS_HOME="${PROJECT_HOME}/FirstClass"
+
 export TPI_HOME="${DEVL_HOME}/TPI"
 export TIBET_HOME="${TPI_HOME}/TIBET"
 export CODESWARM_HOME="${TPI_HOME}/CodeSwarm"
 
-export TWC_HOME="${DEVL_HOME}/TWC"
-
-# ---
-# aliases
-# ---
-
+# project root jumps
 alias cdcs='cd ${CODESWARM_HOME}'
 alias cdfb='cd ${PROJECT_HOME}/fiscalball'
 alias cdfc='cd ${FIRSTCLASS_HOME}'
 alias cdtab='cd ${PROJECT_HOME}/tabmarks'
 alias cdviz='cd ${PROJECT_HOME}/vizitd'
-
-# time-warner cable
-alias twc='cd ${TWC_HOME}'
-alias hnav='cd ${TWC_HOME}/hnavclient'
 
 # bash environment management
 alias vimit="vi ${HOME}/.login.after"
@@ -64,11 +60,6 @@ alias vimcolor="vi ${HOME}/.janus/idearat/colors/idearat"
 alias vimsyntax="vi ${HOME}/.janus/idearat/syntax/javascript.vim"
 alias vimvi="vi ${HOME}/.vimrc.final"
 
-# fat-finger protection
-alias clea='clear'
-alias celar='clear'
-alias clar='clear'
-alias rls='ls'
 
 # common flag settings
 alias bc='bc -l'
@@ -78,9 +69,9 @@ alias df='df -H'
 alias du='du -ch'
 alias egrep='egrep --color=auto'
 alias env='env | sort'
-alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias ftp='ftp -i'
+alias grep='grep --color=auto'
 alias ifconfig='ifconfig -a'
 alias jobs='jobs -l'
 alias l='ls'
@@ -97,8 +88,6 @@ alias mv='mv -i'
 alias ping='ping -c 5'
 alias psw='ps auxww'
 alias rm='rm -i'
-#alias scp='scp -v'
-#alias ssh='ssh -v'
 alias su='sudo -i'
 alias tail="tail -f"
 alias wget='wget -c'
@@ -166,20 +155,20 @@ exists () {
   fi
 }
 
-# Goal here is to get a list of files without all the junk from subversion or
+# Goal here is to get a list of files by name without junk from subversion or
 # similar directory trees. Prune them (to avoid descent) and then remove the
 # directory from the resulting file list via grep -v. Note the trailing sed
 # line which handles filenames with blanks.
 findem () {
-  find . -name .svn -prune -o -name .git -prune -o -name deprecated\
+  find . -name .svn -prune -o -name .git -prune -o -name node_modules\
     -prune -o -name "*$1*" 2<&1 | grep -v '\.svn' | grep -v '\.git' |\
-    grep -v 'Permission denied' |\
-    grep -v 'deprecated' | grep -v '__metadata__' | grep -v '\.sw[op]' |\
+    grep -v 'Permission denied' | grep -v '\.sw[op]' |\
     grep -v '\.class' | sed 's/\ /\\ /g'
 }
 
 # Regex-driven update of javascript-specific CTAGS data. Prunes nested levels of
 # node_modules but allows for the first level so you can drill down into libs.
+# Run this in the directory you want searched.
 jstags () {
   find . -name '*.js' | grep -v 'node_modules/.*/node_modules' | \
   ctags -L - -R --langdef=js --langmap=js:.js \
@@ -226,7 +215,7 @@ killem () {
 }
 
 # list all processes that are listening on ports. useful for debugging
-# EADDRINUSE errors.
+# EADDRINUSE errors. leveraged by killem() to provide input for kill.
 listeners () {
   local cmd='lsof -i -P | grep -i "listen"'
   if [[ $# > 0 ]];  then
@@ -235,7 +224,7 @@ listeners () {
   eval $cmd
 }
 
-# dump single link (if found) for a particular file.
+# dump link (if found) for a particular pattern
 lnk () {
   ls -la | grep "@ ->" | grep "$*" | awk '{print $9, $10, $11}'
 }
@@ -264,6 +253,22 @@ real () {
   fi
 }
 
+# Find a directory containing a specific file. Useful for locating a "starting
+# directory" for various operations within project directories.
+root () {
+  file="$1"
+  dir=$PWD
+  while [[ $dir != '/' ]]; do
+    if [[ -e $dir/$file ]]; then
+      echo $dir
+      break
+    else
+      dir=`dirname $dir`
+    fi
+  done
+}
+
+# Output decent size information
 alias sizes='du -s *'
 
 # NB: this relies on vim config to put temp files in ~/tmp
@@ -291,18 +296,19 @@ if ! exists brew; then
   echo 'ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
 else
   source `brew --repository`/Library/Contributions/brew_bash_completion.sh
+  # TODO: do we want brew doctor here?
 fi
 
-# Ack, because grep is just too old :)
+# Ack for common file types in web development.
 if exists ack; then
-  alias ackls='ack -l -s --ignore-dir="node_modules"'
-  alias ackall='ack -l -s --nolog --ignore-dir="node_modules"'
-  alias ackcss='ack -l -s --css --sass --less --ignore-dir="node_modules"'
-  alias ackhtml='ack -l -s --html --ignore-dir="node_modules"'
-  alias ackjs='ack -l -s --js --ignore-dir="node_modules"'
-  alias ackjson='ack -l -s --json --ignore-dir="node_modules"'
-  alias ackmd='ack -l -s --markdown --ignore-dir="node_modules"'
-  alias ackxml='ack -l -s --xml --ignore-dir="node_modules"'
+  alias ackls='ack -l -s --ignore-dir="node_modules" --ignore-file="is:tags"'
+  alias ackall='ack -l -s --nolog --ignore-dir="node_modules" --ignore-file="is:tags"'
+  alias ackcss='ack -l -s --css --sass --less --ignore-dir="node_modules" --ignore-file="is:tags"'
+  alias ackhtml='ack -l -s --html --ignore-dir="node_modules" --ignore-file="is:tags"'
+  alias ackjs='ack -l -s --js --ignore-dir="node_modules" --ignore-file="is:tags"'
+  alias ackjson='ack -l -s --json --ignore-dir="node_modules" --ignore-file="is:tags"'
+  alias ackmd='ack -l -s --markdown --ignore-dir="node_modules" --ignore-file="is:tags"'
+  alias ackxml='ack -l -s --xml --ignore-dir="node_modules" --ignore-file="is:tags"'
 else
   echo 'ack not found'
   echo 'install ack via:';echo
@@ -312,21 +318,19 @@ fi
 # Bash completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
+else
+  echo 'bash completion not found'
+  echo 'install via:';echo
+  echo 'brew install bash-completion'
 fi
 
 # Git, and if that's not here, well, that's curious :)
 if exists git; then
-  alias b="git branch -a | grep -v 'remotes/origin'"
+  alias b="git branch -a"
   alias d='git difftool'
-  alias f='git fetch'
-  alias g='git'
-  alias gpo='git push origin'
-  alias h='git help'
   alias m='git mergetool'
-  alias p='git pull'
   alias s='git status --short --branch'
   alias t='git log --oneline --graph --all --date-order --decorate=short'
-  alias u='git config user.name'
 
   # git-flow-completion can be slow...uncomment as desired.
   #[[ -s ~/.git-flow-completion.bash ]] && source ~/.git-flow-completion.bash
@@ -503,12 +507,45 @@ else
   echo 'python ./setup.py install'
 fi
 
-# Yahoo! / Crockford JSLint
-if exists yjslint.sh; then
-  alias ylint='yjslint.sh'
-  alias ylintdir='yjslint_dir.sh'
-fi
+# relativize a path. $1 is the root, $2 is the path to relativize
+function relative () {
+  echo $2 | sed "s@$1@.@g"
+}
 
+# Lint just the files which have changed since the last commit. Designed to be
+# run from anywhere within the project so you don't have to CD around.
+function hintem () {
+  # find the directory at/above us with the .git directory
+  dir=$(root '.git')
+  pushd $dir &>/dev/null
+
+  # look for custom lint (for increased strictness hopefully ;))
+  if [[ -e .jshintrc_local ]]; then
+    rules='.jshintrc_local'
+  else
+    rules='.jshintrc'
+  fi
+
+  files=`git diff --name-only master | grep --color=never '\.js'`
+  for f in $files; do
+    jshint --config $rules $f
+  done
+  popd &>/dev/null
+}
+
+# Google Closure Linter, minus things we'll rely on from jshint settings or
+# which are effectively non-bug/style concerns.
+function glintem () {
+  # find the directory at/above us with the .git directory
+  dir=$(root '.git')
+  pushd $dir &>/dev/null
+
+  files=`git diff --name-only master | grep --color=never '\.js'`
+  for f in $files; do
+    gjslint $f | grep -v "Extra space after \"function" | grep -v "Line too long" | grep -v "Single-quoted string"
+  done
+  popd &>/dev/null
+}
 
 # ---
 # /Applications

@@ -1,23 +1,18 @@
 [user]
-	name = idearat
-	email = ss@technicalpursuit.com
-
+  name = {{username}}
+  email = {{email}}
 [core]
-	excludesfile = ~/.gitignore
-	whitespace = trailing-space,space-before-tab
+  excludesfile = ~/.gitignore
+[credential]
+  helper = osxkeychain
 [mergetool]
-  tool = araxis
-	keepBackup = false
-[color]
-	ui = auto
+
 [diff]
   tool = araxis
-	renames = copies
-	mnemonicprefix = true
-[branch]
-	autosetupmerge = true
+[difftool "araxis"]
+  path = compare
 [merge]
   tool = araxis
-	stat = true
-[push]
-	default = matching
+[mergetool "araxis"]
+  path = compare
+  keepBackup = false

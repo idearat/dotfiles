@@ -107,7 +107,7 @@ If you don't see at least version 7.3, or you see -clipboard, or no ruby
 support, then install a new vim using brew:
 
 ```bash
-brew install vim
+brew install macvim --override-system-vim
 ```
 
 If that fails it may be due to Apple removing/moving python headers. sigh. You
@@ -134,7 +134,7 @@ The .bash_profile runs:
 
 By default the .login.before and .login.after files are empty.
 This allows you to fully customize any login-specific operations. Note
-that .bash_profile is only run when a login shell is invoked. The
+that .bash\_profile is only run when a login shell is invoked. The
 .bashrc file is run for all shells given that it's invoked here.
 
 ### All Shells
@@ -160,24 +160,32 @@ The .local.after file provided is significantly customized to match my
 personal preferences. A few minor configuration items are found in the
 .local.before file as well.
 
+You can edit the most meaningful of these files by using the two aliases 'vimit'
+and 'vimlocal' which open the .login.after and .localrc files respectively.
+
 ## VIM
 
-This configuration is built on top of the excellent Janus baseline.
+This configuration is built on top of the Janus vim setup baseline.
 Configuration of Janus is managed largely by putting your customizations
 in a ~/.janus folder. There's a default version of this folder
 containing 'idearat' content which represents my personal 'bundle'.
-See https://github.com/carlhuda/janus for complete information.
+See https://github.com/carlhuda/janus for complete information on customizing
+janus and vim.
 
-The default .vimrc file is a Janus file which load:
+The default .vimrc file is a Janus file which loads:
 
     ~/.vim/core/before/plugin/janus.vim
     ~/.vimrc.before
     ... pathogen bundles ...
     ~/.vimrc.after
 
-The .vimrc.after file provided is significantly customized to match
-my personal preferences. A few minor configuration items are found in
-the .vimrc.before file as well.
+The .vimrc.after file provided is a bit quirky. Because vim can load any number
+of plugins or file-type customizations the vimrc.after file I use adds an
+autocmd group and a BufReadPost rule to trigger running ~/.vimrc.final. This
+file _should_ be the last thing loaded by VIM other than anything triggered by
+the rules/settings in that file itself. It's all a little complex, but the vimvi
+alias will load the vimrc.final file for your edits. You don't need to mess with
+most of the other setup.
 
 ## Others
 
