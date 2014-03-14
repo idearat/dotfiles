@@ -91,10 +91,9 @@ alias rm='rm -i'
 alias su='sudo -i'
 alias tail="tail -f"
 alias wget='wget -c'
-alias x="exit"
+alias x="exit"  # don't want X-Quartz anyway ;)
 
 # common redirections
-alias mx='tmux'
 alias more='less'
 alias vi='vim'
 

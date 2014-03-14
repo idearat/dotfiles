@@ -4,7 +4,7 @@
 # Installs the basic links etc.
 
 # NOTE: this assumes you're in the dotfiles directory when you run install.sh
-export DOTFILE_HOME=`pwd`
+export DOTFILE_HOME="$HOME/.dotfiles"
 
 # Build working directories.
 mkdir ~/dev > /dev/null
@@ -14,6 +14,7 @@ mkdir ~/tmp > /dev/null
 brew install ack
 brew install bash-completion
 brew install ctags
+brew install reattach-to-user-namespace
 
 # install macvim/vim and link macvim into Applications dir
 brew install macvim --override-system-vim
