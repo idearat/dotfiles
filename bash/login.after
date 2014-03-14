@@ -72,6 +72,7 @@ alias env='env | sort'
 alias fgrep='fgrep --color=auto'
 alias ftp='ftp -i'
 alias grep='grep --color=auto'
+alias h='history'
 alias ifconfig='ifconfig -a'
 alias jobs='jobs -l'
 alias l='ls'
@@ -326,11 +327,12 @@ fi
 
 # Git, and if that's not here, well, that's curious :)
 if exists git; then
-  alias b="git branch -a"
+  alias b="git branch"
+  alias ba="git branch -a"
   alias d='git difftool'
   alias m='git mergetool'
   alias s='git status --short --branch'
-  alias t='git log --oneline --graph --all --date-order --decorate=short'
+  alias t='git log --oneline --graph --all --date-order --first-parent --decorate=short'
 
   # git-flow-completion can be slow...uncomment as desired.
   #[[ -s ~/.git-flow-completion.bash ]] && source ~/.git-flow-completion.bash
@@ -486,11 +488,6 @@ fi
 # TODO: clean up a combination of GCL and JSHint
 # Google Closure Linter
 if exists gjslint; then
-  gitlint () {
-    \git status | egrep '(new file:|modified:)' |\
-      awk -F ':   ' '{printf "%s\n", $2}' | xargs -t -n2 gjslint
-  }
-
   alias glint="gjslint --jslint_error optional_type_marker,well_formed_author,\
     no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level\
     --additional_extensions 'mu' --custom_jsdoc_tags=module,submodule,namespace"
@@ -528,6 +525,7 @@ function hintem () {
 
   files=`git diff --name-only master | grep --color=never '\.js'`
   for f in $files; do
+    echo "----- jshint --config $rules $f -----"
     jshint --config $rules $f
   done
   popd &>/dev/null
@@ -542,10 +540,13 @@ function glintem () {
 
   files=`git diff --name-only master | grep --color=never '\.js'`
   for f in $files; do
-    gjslint $f | grep -v "Extra space after \"function" | grep -v "Line too long" | grep -v "Single-quoted string"
+    glint $f | grep -v "Extra space after \"function" | grep -v "Line too long" | grep -v "Single-quoted string"
   done
   popd &>/dev/null
 }
+
+# Run both jshint and google's linter to get a complete picture.
+alias lintem="hintem; glintem"
 
 # ---
 # /Applications

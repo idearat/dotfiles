@@ -15,6 +15,7 @@ brew install ack
 brew install bash-completion
 brew install ctags
 brew install reattach-to-user-namespace
+brew install python # for pip/powerline etc.
 
 # install macvim/vim and link macvim into Applications dir
 brew install macvim --override-system-vim
@@ -65,6 +66,15 @@ git config --global core.excludesfile ~/.gitignore
 
 # TODO: ensure proper installation of nvm, then node
 
+# Python
+# NB: this is a patch file, necessary for things like pip installs. It shouldn't
+# be in place full-time if you want things to work right, but it must be for
+# some steps
+#mv ~/.pydistutils.cfg ~/.pydistutils.cfg_orig > /dev/null
+#\cp -sfv ${DOTFILE_HOME}/utils/pydistutils.cfg ~/.pydistutils.cfg
+
+#pip install --user git+git://github.com/Lokaltog/powerline
+
 # Ruby
 
 # TODO: remove rvm, replace with rbenv, and install.
@@ -90,7 +100,6 @@ ln -sfv ${DOTFILE_HOME}/utils/tmux.conf ~/.tmux.conf
 
 # VIM
 
-# IF brew install vim is done then don't do this step...
 # /usr/local/share doesn't always have a vim reference.
 #ln -sfv /usr/share/vim /usr/local/share/vim
 
