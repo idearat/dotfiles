@@ -94,6 +94,7 @@ alias wget='wget -c'
 alias x="exit"
 
 # common redirections
+alias mx='tmux'
 alias more='less'
 alias vi='vim'
 
@@ -162,7 +163,7 @@ exists () {
 findem () {
   find . -name .svn -prune -o -name .git -prune -o -name node_modules\
     -prune -o -name "*$1*" 2<&1 | grep -v '\.svn' | grep -v '\.git' |\
-    grep -v 'Permission denied' | grep -v '\.sw[op]' |\
+    grep -v 'node_modules' | grep -v 'Permission denied' | grep -v '\.sw[op]' |\
     grep -v '\.class' | sed 's/\ /\\ /g'
 }
 
