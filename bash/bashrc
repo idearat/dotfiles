@@ -1,7 +1,0 @@
-#!/bin/bash
-#
-# .bashrc: runs for ALL shells (provided .bash_profile invokes it).
-
-[[ -s ${HOME}/.local.before ]] && source ${HOME}/.local.before
-[[ -s ${HOME}/.localrc ]] && source ${HOME}/.localrc
-[[ -s ${HOME}/.local.after ]] && source ${HOME}/.local.after

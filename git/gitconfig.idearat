@@ -1,18 +1,33 @@
 [user]
-  name = {{username}}
-  email = {{email}}
+  email = ss@technicalpursuit.com
+  name = idearat
+
 [core]
+  editor = vim
   excludesfile = ~/.gitignore
+  pager = less
+
 [credential]
   helper = osxkeychain
-[mergetool]
+
+[color]
+  ui = true
+
+[commit]
+  template = ~/.gitmessage.txt
 
 [diff]
   tool = araxis
+
 [difftool "araxis"]
   path = compare
+
 [merge]
   tool = araxis
+
 [mergetool "araxis"]
   path = compare
   keepBackup = false
+
+[push]
+  default = simple

@@ -1,5 +1,0 @@
-#!/bin/bash
-#
-# login.before: run via .bash_profile BEFORE .bashrc.
-# Effectively means this file runs before ANY other.
-

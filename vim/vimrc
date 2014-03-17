@@ -1,0 +1,34 @@
+"=============================================================================
+" vimrc
+"-----------------------------------------------------------------------------
+
+" Make sure our local ~/.vim directory is part of the runtime search path.
+set runtimepath+=~/.vim
+
+" Put any working files (.swp etc) in ~/tmp
+set backupdir=~/tmp
+set directory=~/tmp
+
+" Activate pathogen to load any installed plugins. Plugins are found in the
+" ~/.vim/bundle directory.
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
+" Generate help for the loaded plugins.
+execute pathogen#helptags()
+
+" Redirect remaining work into an 'after' file by using an autocmd so we come in
+" after any pathogen plugins are loaded. This lets us override settings more
+" consistently. Note that things like the color scheme or anything triggered by
+" the after file itself will still load last and could override things so it's
+" better to keep that file's content to primarily set/map and not autocmd etc.
+augroup idearat
+  au BufReadPost * so ~/.vimrc.after
+
+  " For some reason this has to be last or vim-airline doesn't init properly.
+  " It'll start, but the font-based icons won't display until insert/split.
+  colorscheme idearat
+augroup end
+
+"=============================================================================

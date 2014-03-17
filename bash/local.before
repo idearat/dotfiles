@@ -1,5 +1,0 @@
-#!/bin/bash
-#
-# local.before: run via bashrc BEFORE .localrc. This file runs for all shells, so
-# it shouldn't do anything specific to login shells.
-
