@@ -227,5 +227,11 @@ echo 'Installation complete.'; echo
 
 echo 'Post-installation options:'; echo
 
-# if you want to make zsh your default shell...
+echo 'To make zsh your default shell (and you should now):'
+echo 'chsh -s /usr/local/bin/zsh'; echo
 
+echo 'To remove _orig files use:'
+echo "\ls -a | grep \'_orig$\' | xargs -n 1 rm -rf"; echo
+
+echo 'For best results close all terminals now and reopen them.'
+echo 'Enjoy!'
