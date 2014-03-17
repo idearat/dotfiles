@@ -23,9 +23,9 @@ else
 fi
 
 echo 'Updating git submodules...'
-#git submodule init
-#git submodule update
-#git submodule foreach 'git fetch origin; git checkout $(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx'
+git submodule init
+git submodule update
+git submodule foreach 'git fetch origin; git checkout $(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx'
 
 # ---
 # Shell Etc.
@@ -164,57 +164,57 @@ echo 'Checking legacy apache2 links...'
 [[ -e /etc/apache2/cgi-bin ]] || (sudo ln -s /Library/WebServer/CGI-Executables /etc/apache2/cgi-bin > /dev/null 2>&1)
 
 # bin directory
-mv ~/bin ~/bin_orig > /dev/null 2>&1
+\mv -f ~/bin ~/bin_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/bin ~/bin
 
 # ack
-mv ~/.ackrc ~/.ackrc_orig > /dev/null 2>&1
+\mv -f ~/.ackrc ~/.ackrc_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/ack/ackrc ~/.ackrc
 
 # git
-mv ~/.gitconfig ~/.gitconfig_orig > /dev/null 2>&1
+\mv -f ~/.gitconfig ~/.gitconfig_orig > /dev/null 2>&1
 \cp -fv ${DOTFILES}/git/gitconfig.idearat ~/.gitconfig
 
-mv ~/.gitignore ~/.gitignore_orig > /dev/null 2>&1
+\mv -f ~/.gitignore ~/.gitignore_orig > /dev/null 2>&1
 \cp -fv ${DOTFILES}/git/gitignore.idearat ~/.gitignore
 
-mv ~/.gitmessage.txt ~/.gitmessage.txt_orig > /dev/null 2>&1
+\mv -f ~/.gitmessage.txt ~/.gitmessage.txt_orig > /dev/null 2>&1
 \cp -fv ${DOTFILES}/git/gitmessage.txt.idearat ~/.gitmessage.txt
 
 # ruby
-mv ~/.irbrc ~/.irbrc_orig > /dev/null 2>&1
+\mv -f ~/.irbrc ~/.irbrc_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/ruby/irbrc ~/.irbrc
 
-mv ~/.rdebugrc ~/.rdebugrc_orig > /dev/null 2>&1
+\mv -f ~/.rdebugrc ~/.rdebugrc_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/ruby/rdebugrc ~/.rdebugrc
 
 # tmux
-mv ~/.tmux.conf ~/.tmux.conf_orig > /dev/null 2>&1
+\mv -f ~/.tmux.conf ~/.tmux.conf_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/tmux/tmux.conf ~/.tmux.conf
 
 # vim
-mv ~/.editorconfig ~/.editorconfig_orig > /dev/null 2>&1
+\mv -f ~/.editorconfig ~/.editorconfig_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/vim/editorconfig ~/.editorconfig
 
-mv ~/.gvimrc ~/.gvimrc_orig > /dev/null 2>&1
+\mv -f ~/.gvimrc ~/.gvimrc_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/vim/vim/gvimrc ~/.gvimrc
 
-mv ~/.vim ~/.vim_orig > /dev/null 2>&1
+\mv -f ~/.vim ~/.vim_orig > /dev/null 2>&1
 ln -sFv ${DOTFILES}/vim/vim ~/.vim
 
-mv ~/.vimrc ~/.vimrc_orig > /dev/null 2>&1
+\mv -f ~/.vimrc ~/.vimrc_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/vim/vimrc ~/.vimrc
 
-mv ~/.vimrc.after ~/.vimrc.after_orig > /dev/null 2>&1
+\mv -f ~/.vimrc.after ~/.vimrc.after_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/vim/vimrc.after ~/.vimrc.after
 
-mv ~/.zshrc ~/.zshrc_orig > /dev/null 2>&1
+\mv -f ~/.zshrc ~/.zshrc_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/zsh/zshrc ~/.zshrc
 
-mv ~/.oh-my-zsh ~/.oh-my-zsh_orig > /dev/null 2>&1
+\mv -f ~/.oh-my-zsh ~/.oh-my-zsh_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/zsh/oh-my-zsh ~/.oh-my-zsh
 
-mv ~/.tibetrc ~/.tibetrc_orig > /dev/null 2>&1
+\mv -f ~/.tibetrc ~/.tibetrc_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/tibet/tibetrc ~/.tibetrc
 
 # ---
