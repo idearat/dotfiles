@@ -165,7 +165,7 @@ echo 'Checking legacy apache2 links...'
 
 # bin directory
 \mv -f ~/bin ~/bin_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/bin ~/bin
+ln -sFv ${DOTFILES}/bin ~/bin
 
 # ack
 \mv -f ~/.ackrc ~/.ackrc_orig > /dev/null 2>&1
@@ -212,7 +212,7 @@ ln -sfv ${DOTFILES}/vim/vimrc.after ~/.vimrc.after
 ln -sfv ${DOTFILES}/zsh/zshrc ~/.zshrc
 
 \mv -f ~/.oh-my-zsh ~/.oh-my-zsh_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/zsh/oh-my-zsh ~/.oh-my-zsh
+ln -sFv ${DOTFILES}/zsh/oh-my-zsh ~/.oh-my-zsh
 
 \mv -f ~/.tibetrc ~/.tibetrc_orig > /dev/null 2>&1
 ln -sfv ${DOTFILES}/tibet/tibetrc ~/.tibetrc
