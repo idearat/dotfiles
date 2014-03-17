@@ -54,3 +54,9 @@
 	path = vim/vim/bundle/vim-bufferline
 	url = https://github.com/bling/vim-bufferline
   ignore = dirty
+[submodule "util/powerline"]
+	path = util/powerline
+	url = https://github.com/Lokaltog/powerline.git
+[submodule "util/powerline-fonts"]
+	path = util/powerline-fonts
+	url = https://github.com/Lokaltog/powerline-fonts.git
