@@ -10,6 +10,8 @@ else
     echo 'Homebrew not found.'
 fi
 
+
+
 export DOTFILES="$HOME/.dotfiles"
 
 # Build working directories.
@@ -17,7 +19,6 @@ export DOTFILES="$HOME/.dotfiles"
 mkdir ~/dev > /dev/null
 mkdir ~/tmp > /dev/null
 
-# pull down custom oh-my-zsh repo fork
 
 
 # Install and activate ZSH.
