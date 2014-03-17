@@ -1,6 +1,14 @@
 #!/bin/bash
 
-# Installs the basic links etc. needed to leverage the dotfile setup.
+# Installs the various tools leveraged by my standard configuration files and
+# links those configuration files into place.
+
+# Verify brew exists. If not then stop right now.
+if [[ which brew ]]; then
+    echo 'Homebrew found. Proceeding with install.'
+else
+    echo 'Homebrew not found.'
+fi
 
 export DOTFILES="$HOME/.dotfiles"
 
@@ -8,6 +16,9 @@ export DOTFILES="$HOME/.dotfiles"
 
 mkdir ~/dev > /dev/null
 mkdir ~/tmp > /dev/null
+
+# pull down custom oh-my-zsh repo fork
+
 
 # Install and activate ZSH.
 brew install zsh
@@ -67,8 +78,8 @@ mv ~/.ackrc ~/.ackrc_orig > /dev/null
 ln -sfv ${DOTFILES}/ack/ackrc ~/.ackrc
 
 # local bin
-mv ~/bin.local ~/bin.local_orig > /dev/null
-ln -sfv ${DOTFILES}/bin ~/bin.local
+mv ~/bin ~/bin_orig > /dev/null
+ln -sfv ${DOTFILES}/bin ~/bin
 
 # git
 mv ~/.gitconfig ~/.gitconfig_orig > /dev/null
