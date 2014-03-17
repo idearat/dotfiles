@@ -1,0 +1,20 @@
+#!/usr/local/bin/zsh
+
+# Top-level ZSH configuration file which runs on startup of a ZSH instance.
+# Points to customized fork and startup files based off the defaults from the
+# oh-my-zsh plugin/environment manager for ZSH.
+
+# Reference here is to the default ~/.oh-my-zsh directory.
+export ZSH="${HOME}/.oh-my-zsh"
+
+# Basically a copy of the default. But now customizable as 'idearat'.
+export ZSH_THEME="idearat"
+
+# Define the list of plugins. The list is extensive and can be found at
+# https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins.
+# TODO: add plugins for node etc.
+plugins=(git tmux jira)
+
+# Activate the environment. Loads plugins, calls $ZSH/custom/*.zsh, etc.
+source $ZSH/oh-my-zsh.sh
+

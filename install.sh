@@ -4,13 +4,18 @@
 # links those configuration files into place.
 
 # Verify brew exists. If not then stop right now.
-if [[ which brew ]]; then
+if [[ $(which brew) ]]; then
     echo 'Homebrew found. Proceeding with install.'
 else
     echo 'Homebrew not found.'
 fi
 
+exit
 
+# Ensure submodules are checked out, updated, and set to their HEAD properly.
+git submodule init
+git submodule update
+git submodule foreach 'git fetch origin; git checkout $(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx'
 
 export DOTFILES="$HOME/.dotfiles"
 

@@ -1,11 +1,4 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/Users/ss/.dotfiles/vim/vim/bundle/tmuxline.vim'
-let g:netrw_dirhist_2='/Users/ss/.dotfiles/vim/vim/bundle/tmuxline.vim/plugin'
-let g:netrw_dirhist_3='/Users/ss/.dotfiles/vim/vim/bundle/tmuxline.vim'
-let g:netrw_dirhist_4='/Users/ss/.dotfiles/vim/vim/bundle/tmuxline.vim/plugin'
-let g:netrw_dirhist_5='/Users/ss/.dotfiles/vim/vim/bundle/tmuxline.vim'
-let g:netrw_dirhist_6='/Users/ss/.dotfiles/vim/vim/bundle/tmuxline.vim/plugin'
-let g:netrw_dirhist_7='/Users/ss'
-let g:netrw_dirhist_8='/Users/ss/.dotfiles'
-let g:netrw_dirhist_9='/Users/ss/.dotfiles/zsh'
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/Users/sshattuck/.dotfiles/zsh'
+let g:netrw_dirhist_2='/Users/sshattuck/.dotfiles'

@@ -1,3 +1,42 @@
 [submodule "zsh/oh-my-zsh"]
 	path = zsh/oh-my-zsh
 	url = https://github.com/idearat/oh-my-zsh.git
+[submodule "vim/vim/bundle/command-t"]
+	path = vim/vim/bundle/command-t
+	url = https://github.com/wincent/Command-T.git
+[submodule "vim/vim/bundle/editorconfig-vim"]
+	path = vim/vim/bundle/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule "vim/vim/bundle/gundo.vim"]
+	path = vim/vim/bundle/gundo.vim
+	url = https://github.com/sjl/gundo.vim
+[submodule "vim/vim/bundle/syntastic"]
+	path = vim/vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "vim/vim/bundle/vim-buffergator"]
+	path = vim/vim/bundle/vim-buffergator
+	url = https://github.com/jeetsukumaran/vim-buffergator.git
+[submodule "vim/vim/bundle/vim-dispatch"]
+	path = vim/vim/bundle/vim-dispatch
+	url = https://github.com/tpope/vim-dispatch.git
+[submodule "vim/vim/bundle/vim-fugitive"]
+	path = vim/vim/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim/vim/bundle/vim-json"]
+	path = vim/vim/bundle/vim-json
+	url = https://github.com/elzr/vim-json.git
+[submodule "vim/vim/bundle/vim-scriptease"]
+	path = vim/vim/bundle/vim-scriptease
+	url = https://github.com/tpope/vim-scriptease.git
+[submodule "vim/vim/bundle/tmuxline.vim"]
+	path = vim/vim/bundle/tmuxline.vim
+	url = https://github.com/edkolev/tmuxline.vim
+[submodule "vim/vim/bundle/vim-airline"]
+	path = vim/vim/bundle/vim-airline
+	url = https://github.com/bling/vim-airline
+[submodule "vim/vim/bundle/vim-signify"]
+	path = vim/vim/bundle/vim-signify
+	url = https://github.com/mhinz/vim-signify
+[submodule "vim/vim/bundle/vim-bufferline"]
+	path = vim/vim/bundle/vim-bufferline
+	url = https://github.com/bling/vim-bufferline
