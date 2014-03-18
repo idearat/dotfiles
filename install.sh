@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Installs the various tools leveraged by my standard configuration files and
+# Installs the various tools leveraged by idearat's configuration files and
 # links those configuration files into place.
 
 # ---
@@ -104,15 +104,20 @@ echo 'Checking for python...'
 [[ $(brew list python) ]] > /dev/null 2>&1 || \
 (echo 'Installing python via brew...' && brew install python)
 
-# Install rbenv (rather than rvm) and use it to install Ruby.
+# Install rbenv (rather than rvm) and use it to install Ruby. One thing to be
+# aware of is that on Mac you need 1.9.3 greater than a certain patch level or
+# the ruby-build step will fail. So I go with the highest one at the time of
+# this writing.
 echo 'Checking for rbenv and ruby...'
 [[ $(brew list rbenv) ]] > /dev/null 2>&1 || \
 (echo 'Installing rbenv via brew...' && \
 brew install rbenv && \
 rbenv init - > /dev/null 2>&1 && \
 brew install ruby-build && \
-rbenv install 1.9.3-p0 && \
-rbenv local 1.9.3-p0 && \
+brew tap homebrew/dupes && \
+brew install apple-gcc42 && \
+rbenv install 1.8.7-p357 && \
+rbenv local 1.8.7-p357 && \
 rbenv rehash)
 
 # ---
@@ -144,6 +149,7 @@ echo 'Checking for tmux macosx clipboard patches...'
 echo 'Checking for powerline-font installation...'
 if [[ ! -e /Library/Fonts/Inconsolata\ for\ Powerline.otf ]]; then
   echo 'Installing powerline-font fonts in /Library/Fonts...'
+  find ${DOTFILES}/util/powerline -name "*.otf" -exec cp '{}' /Library/Fonts \;
   find ${DOTFILES}/util/powerline-fonts -name "*.otf" -exec cp '{}' /Library/Fonts \;
 fi
 
@@ -193,7 +199,7 @@ ln -sfv ${DOTFILES}/tmux/tmux.conf ~/.tmux.conf
 ln -sfv ${DOTFILES}/vim/editorconfig ~/.editorconfig
 
 \mv -f ~/.gvimrc ~/.gvimrc_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/vim/vim/gvimrc ~/.gvimrc
+ln -sfv ${DOTFILES}/vim/gvimrc ~/.gvimrc
 
 \mv -f ~/.vim ~/.vim_orig > /dev/null 2>&1
 ln -sFv ${DOTFILES}/vim/vim ~/.vim
@@ -228,13 +234,6 @@ echo 'chsh -s /usr/local/bin/zsh'; echo
 
 echo 'To remove _orig files use:'
 echo "\ls -a | grep \'_orig$\' | xargs -n 1 rm -rf"; echo
-
-# Build the command-t plugin properly so it will load in VIM (after Ruby)
-echo 'To (re)build command-t plugin via ruby/make...'
-echo 'pushd ${DOTFILES}/vim/vim/bundle/command-t/ruby/command-t'
-echo 'ruby extconf.rb'
-echo 'make'
-echo 'popd';echo
 
 echo 'For best results close all terminals now and reopen them.'
 echo 'Enjoy!'
