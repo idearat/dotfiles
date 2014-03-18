@@ -7,6 +7,9 @@
 # Pre-Install
 # ---
 
+# Set a path we can count on. Otherwise things can get strange/circular.
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
 # Verify brew exists. If not then stop right now.
 if [[ $(which brew) ]]; then
     echo 'Homebrew (brew) found. Verifying brew installation...'
@@ -25,7 +28,7 @@ fi
 echo 'Updating git submodules...'
 git submodule init
 git submodule update
-git submodule foreach 'git fetch origin; git checkout $(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx'
+git submodule foreach 'git fetch origin; git checkout $(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx; git checkout $(git rev-parse --abbrev-ref HEAD)'
 
 # ---
 # Shell Etc.
@@ -144,13 +147,6 @@ if [[ ! -e /Library/Fonts/Inconsolata\ for\ Powerline.otf ]]; then
   find ${DOTFILES}/util/powerline-fonts -name "*.otf" -exec cp '{}' /Library/Fonts \;
 fi
 
-# Build the command-t plugin properly so it will load in VIM (after Ruby)
-echo 'Rebuilding command-t plugin via ruby/make...'
-pushd ${DOTFILES}/vim/vim/bundle/command-t/ruby/command-t
-ruby extconf.rb
-make
-popd
-
 # ---
 # Links
 # ---
@@ -232,6 +228,13 @@ echo 'chsh -s /usr/local/bin/zsh'; echo
 
 echo 'To remove _orig files use:'
 echo "\ls -a | grep \'_orig$\' | xargs -n 1 rm -rf"; echo
+
+# Build the command-t plugin properly so it will load in VIM (after Ruby)
+echo 'To (re)build command-t plugin via ruby/make...'
+echo 'pushd ${DOTFILES}/vim/vim/bundle/command-t/ruby/command-t'
+echo 'ruby extconf.rb'
+echo 'make'
+echo 'popd';echo
 
 echo 'For best results close all terminals now and reopen them.'
 echo 'Enjoy!'

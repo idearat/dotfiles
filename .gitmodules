@@ -1,7 +1,6 @@
 [submodule "zsh/oh-my-zsh"]
 	path = zsh/oh-my-zsh
 	url = https://github.com/idearat/oh-my-zsh.git
-  ignore = dirty
 [submodule "vim/vim/bundle/command-t"]
 	path = vim/vim/bundle/command-t
 	url = https://github.com/wincent/Command-T.git
