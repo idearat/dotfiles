@@ -83,11 +83,8 @@ map <Right> :lnext<CR>
 
 set tags=./tags,tags;/
 
-" Map Buffergator / CommandT the way we like them.
-map <leader>t :CommandT<CR>
-map <c-t> :CommandT<CR>
+map <leader>t :CtrlPMixed<CR>
 
-" Make sure Command-T sees ESC as an exit.
-let g:CommandTCancelMap=['<ESC>','<C-c>']
+au VimLeave * if filereadable("~/vim/vim/.netrwhist")|call delete("[path here]/.netrwhist")|endif
 
 "=============================================================================

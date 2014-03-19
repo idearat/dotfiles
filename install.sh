@@ -25,6 +25,11 @@ else
     echo 'ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
 fi
 
+# Install the node version manager and use it to install node.js/npm.
+echo 'Checking for nvm and node.js...'
+[[ $(brew list nvm) ]] > /dev/null 2>&1 || \
+(echo 'Installing nvm via brew...' && brew install nvm && nvm install 0.10)
+
 echo 'Updating git submodules...'
 git submodule init
 git submodule update
@@ -70,13 +75,9 @@ echo 'Checking for ctags...'
 (echo 'Installing ctags via brew...' && brew install ctags)
 
 # gh (GitHub CLI)
-echo 'Checking for gh (Github CLI)...'
-[[ $(brew list gh) ]] > /dev/null 2>&1 || \
-(echo 'Installing gh via brew...' && \
-brew tap jingweno/gh && \
-brew install gh && \
-brew install --build-from-source gh && \
-brew install --build-from-source --HEAD gh)
+echo 'Checking for gh (GitHub CLI)...'
+[[ $(npm info gh) ]] > /dev/null 2>&1 || \
+(echo 'Installing gh via npm...' &&  npm install -g gh)
 
 # Some cut/paste installs rely on wget so install it.
 echo 'Checking for wget...'
@@ -88,11 +89,6 @@ echo 'Checking for wget...'
 # ---
 
 echo 'Verifying language support...'
-
-# Install the node version manager and use it to install node.js.
-echo 'Checking for nvm and node.js...'
-[[ $(brew list nvm) ]] > /dev/null 2>&1 || \
-(echo 'Installing nvm via brew...' && brew install nvm && nvm install 0.10)
 
 # Install PhantomJS for web testing.
 echo 'Checking for phantomjs...'
