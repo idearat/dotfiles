@@ -145,8 +145,8 @@ echo 'Checking for tmux macosx clipboard patches...'
 echo 'Checking for powerline-font installation...'
 if [[ ! -e /Library/Fonts/Inconsolata\ for\ Powerline.otf ]]; then
   echo 'Installing powerline-font fonts in /Library/Fonts...'
-  find ${DOTFILES}/util/powerline -name "*.otf" -exec cp '{}' /Library/Fonts \;
-  find ${DOTFILES}/util/powerline-fonts -name "*.otf" -exec cp '{}' /Library/Fonts \;
+  find $DOTFILES/util/powerline -name "*.otf" -exec cp '{}' /Library/Fonts \;
+  find $DOTFILES/util/powerline-fonts -name "*.otf" -exec cp '{}' /Library/Fonts \;
 fi
 
 # ---
@@ -163,57 +163,57 @@ echo 'Checking legacy apache2 links...'
 
 # bin directory
 \mv -f ~/bin ~/bin_orig > /dev/null 2>&1
-ln -sFv ${DOTFILES}/bin ~/bin
+ln -sFv $DOTFILES/bin ~/bin
 
 # ack
 \mv -f ~/.ackrc ~/.ackrc_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/ack/ackrc ~/.ackrc
+ln -sfv $DOTFILES/ack/ackrc ~/.ackrc
 
 # git
 \mv -f ~/.gitconfig ~/.gitconfig_orig > /dev/null 2>&1
-\cp -fv ${DOTFILES}/git/gitconfig.idearat ~/.gitconfig
+\cp -fv $DOTFILES/git/gitconfig.idearat ~/.gitconfig
 
 \mv -f ~/.gitignore ~/.gitignore_orig > /dev/null 2>&1
-\cp -fv ${DOTFILES}/git/gitignore.idearat ~/.gitignore
+\cp -fv $DOTFILES/git/gitignore.idearat ~/.gitignore
 
 \mv -f ~/.gitmessage.txt ~/.gitmessage.txt_orig > /dev/null 2>&1
-\cp -fv ${DOTFILES}/git/gitmessage.txt.idearat ~/.gitmessage.txt
+\cp -fv $DOTFILES/git/gitmessage.txt.idearat ~/.gitmessage.txt
 
 # ruby
 \mv -f ~/.irbrc ~/.irbrc_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/ruby/irbrc ~/.irbrc
+ln -sfv $DOTFILES/ruby/irbrc ~/.irbrc
 
 \mv -f ~/.rdebugrc ~/.rdebugrc_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/ruby/rdebugrc ~/.rdebugrc
+ln -sfv $DOTFILES/ruby/rdebugrc ~/.rdebugrc
 
 # tmux
 \mv -f ~/.tmux.conf ~/.tmux.conf_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/tmux/tmux.conf ~/.tmux.conf
+ln -sfv $DOTFILES/tmux/tmux.conf ~/.tmux.conf
 
 # vim
 \mv -f ~/.editorconfig ~/.editorconfig_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/vim/editorconfig ~/.editorconfig
+ln -sfv $DOTFILES/vim/editorconfig ~/.editorconfig
 
 \mv -f ~/.gvimrc ~/.gvimrc_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/vim/gvimrc ~/.gvimrc
+ln -sfv $DOTFILES/vim/gvimrc ~/.gvimrc
 
 \mv -f ~/.vim ~/.vim_orig > /dev/null 2>&1
-ln -sFv ${DOTFILES}/vim/vim ~/.vim
+ln -sFv $DOTFILES/vim/vim ~/.vim
 
 \mv -f ~/.vimrc ~/.vimrc_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/vim/vimrc ~/.vimrc
+ln -sfv $DOTFILES/vim/vimrc ~/.vimrc
 
 \mv -f ~/.vimrc.after ~/.vimrc.after_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/vim/vimrc.after ~/.vimrc.after
+ln -sfv $DOTFILES/vim/vimrc.after ~/.vimrc.after
 
 \mv -f ~/.zshrc ~/.zshrc_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/zsh/zshrc ~/.zshrc
+ln -sfv $DOTFILES/zsh/zshrc ~/.zshrc
 
 \mv -f ~/.oh-my-zsh ~/.oh-my-zsh_orig > /dev/null 2>&1
-ln -sFv ${DOTFILES}/zsh/oh-my-zsh ~/.oh-my-zsh
+ln -sFv $DOTFILES/zsh/oh-my-zsh ~/.oh-my-zsh
 
 \mv -f ~/.tibetrc ~/.tibetrc_orig > /dev/null 2>&1
-ln -sfv ${DOTFILES}/tibet/tibetrc ~/.tibetrc
+ln -sfv $DOTFILES/tibet/tibetrc ~/.tibetrc
 
 # ---
 # Post-Install
