@@ -29,11 +29,11 @@ fi
 echo 'Checking for nvm and node.js...'
 [[ $(brew list nvm) ]] > /dev/null 2>&1 || \
 (echo 'Installing nvm via brew...' && brew install nvm && nvm install 0.10)
+source $(brew --prefix nvm)/nvm.sh && nvm use 0.10
 
 echo 'Updating git submodules...'
 git submodule init
-git submodule update
-git submodule foreach 'git fetch origin; git checkout $(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx; git checkout $(git rev-parse --abbrev-ref HEAD)'
+git submodule update --recursive
 
 # ---
 # Shell Etc.
@@ -163,7 +163,8 @@ echo 'Checking legacy apache2 links...'
 
 # bin directory
 \mv -f ~/bin ~/bin_orig > /dev/null 2>&1
-ln -sFv $DOTFILES/bin ~/bin
+ln -sfFv $DOTFILES/bin ~/
+rm -rf bin/bin > /dev/null 2>&1
 
 # ack
 \mv -f ~/.ackrc ~/.ackrc_orig > /dev/null 2>&1
@@ -198,7 +199,8 @@ ln -sfv $DOTFILES/vim/editorconfig ~/.editorconfig
 ln -sfv $DOTFILES/vim/gvimrc ~/.gvimrc
 
 \mv -f ~/.vim ~/.vim_orig > /dev/null 2>&1
-ln -sFv $DOTFILES/vim/vim ~/.vim
+ln -sfFv $DOTFILES/vim/vim ~/.vim
+rm -rf vim/vim/.vim > /dev/null 2>&1
 
 \mv -f ~/.vimrc ~/.vimrc_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/vim/vimrc ~/.vimrc
@@ -210,7 +212,8 @@ ln -sfv $DOTFILES/vim/vimrc.after ~/.vimrc.after
 ln -sfv $DOTFILES/zsh/zshrc ~/.zshrc
 
 \mv -f ~/.oh-my-zsh ~/.oh-my-zsh_orig > /dev/null 2>&1
-ln -sFv $DOTFILES/zsh/oh-my-zsh ~/.oh-my-zsh
+ln -sfFv $DOTFILES/zsh/oh-my-zsh ~/.oh-my-zsh
+rm -rf zsh/oh-my-zsh/.oh-my-zsh > /dev/null 2>&1
 
 \mv -f ~/.tibetrc ~/.tibetrc_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/tibet/tibetrc ~/.tibetrc
