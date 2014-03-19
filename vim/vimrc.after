@@ -5,6 +5,16 @@
 " remap to , for command prefix
 let mapleader=","
 
+" override any file types we care about
+augroup filetypedetect
+  " No, I don't edit modula2 very often, thanks ;).
+  autocmd BufNewFile,BufRead *.markdown set filetype=markdown
+  autocmd BufNewFile,BufRead *.md set filetype=markdown
+augroup END
+
+" Force system to re-detect using new filetype mappings.
+filetype detect
+
 " Map anonymous clipboard to system clipboard. NOTE that this relies on VIM
 " being compiled with +clipboard (which on Mac means 'brew install vim' :)
 set clipboard=unnamed
@@ -17,8 +27,6 @@ set mouse=a
 
 " I'm not a fan of folds. Turn off opening with everything folded.
 set foldlevel=99
-
-
 
 "" Make it easy to edit this file and re-source it in as well as colorscheme.
 nmap <leader>vv :sp $HOME/.vimrc.after<CR>
@@ -79,7 +87,8 @@ map <Left> :lprev<CR>
 map <Right> :lnext<CR>
 
 " Open Marked.app on the current file
-:nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
+":nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
+:nnoremap <leader>m :silent !open -a Google\ Chrome.app '%:p'<cr>
 
 set tags=./tags,tags;/
 

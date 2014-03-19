@@ -34,6 +34,7 @@ source $(brew --prefix nvm)/nvm.sh && nvm use 0.10
 echo 'Updating git submodules...'
 git submodule init
 git submodule update --recursive
+git submodule foreach 'git fetch origin; git checkout master; git pull'
 
 # ---
 # Shell Etc.
