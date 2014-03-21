@@ -64,6 +64,11 @@ set wildignore+=node_modules
 " Let vim know where node.js looks for files so we can gf to require()'s.
 :let &path.=join(reverse(split($NODE_PATH, ":")), ",")
 
+" Open the file under the cursor, even if it's in a node lookup path. Note that
+" this currently depends on idearat's fork of vim-node and proper settings for
+" suffixesadd and path which point into the local codebase.
+nmap <leader>o :NodeGotoFile<cr>
+
 " Buffer traversal via movement keys.
 map <C-J> :bnext<cr>
 map <C-K> :bprev<cr>
