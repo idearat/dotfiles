@@ -1,3 +1,6 @@
 --follow
---type-set=log:ext:log,tap
---type-set=markdown:ext:md,markdown
+--ignore-file=is:tags
+--ignore-file=is:TAGS
+--type-add=log:ext:log,tap
+--type-add=markdown:ext:md,markdown
+--type-add=vim:ext:vim

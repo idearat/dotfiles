@@ -1,70 +1,114 @@
-"=============================================================================
+" =============================================================================
 " vimrc.after
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 
-" remap to , for command prefix
+" ---
+" Controls
+" ---
+
+" Map , to command prefix.
 let mapleader=","
-
-" override any file types we care about
-augroup filetypedetect
-  " No, I don't edit modula2 very often, thanks ;).
-  autocmd BufNewFile,BufRead *.markdown set filetype=markdown
-  autocmd BufNewFile,BufRead *.md set filetype=markdown
-augroup END
-
-" Force system to re-detect using new filetype mappings.
-filetype detect
 
 " Map anonymous clipboard to system clipboard. NOTE that this relies on VIM
 " being compiled with +clipboard (which on Mac means 'brew install vim' :)
 set clipboard=unnamed
 
-" Disable visual bell display
+" Disable visual bell display.
 set visualbell t_vb=
 
-" Let the mouse work when we're working with splits.
+" Let the mouse work.
 set mouse=a
 
-" I'm not a fan of folds. Turn off opening with everything folded.
+" Make it easy to edit this file and re-source it in (and other vim configs).
+nmap <leader>vv :sp $HOME/.vimrc.after<cr>
+nmap <leader>vs :source $HOME/.vimrc.after<cr>
+nmap <leader>vc :sp $HOME/.janus/idearat/colors/idearat.vim<cr>
+nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<cr>
+
+" ---
+" Layout / Viewing
+" ---
+
+" I'm not a fan of folds on startup, I like to see the whole file on open.
 set foldlevel=99
 
-"" Make it easy to edit this file and re-source it in as well as colorscheme.
-nmap <leader>vv :sp $HOME/.vimrc.after<CR>
-nmap <leader>vs :source $HOME/.vimrc.after<CR>
-nmap <leader>vc :sp $HOME/.janus/idearat/colors/idearat.vim<CR>
-nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<CR>
+" Make preview area slightly bigger (default is 12). This helps things like
+" fugitive and buffergator to show more by default.
+set previewheight=24
 
-" Configure vim-airline plugin.
-set rtp+=/usr/local/src/powerline/powerline/bindings/vim
-let g:airline_powerline_fonts = 1
-let g:bufferline_echo = 0
-set laststatus=2
-set ttimeoutlen=50
-
-" Default to 4 space indents. Do this early so editorconfig can override.
-set expandtab list tabstop=4 softtabstop=4 shiftwidth=4
-
-" Adjust 'non-conforming' whitespace display.
-set listchars=tab:▸\ ,trail:.,extends:>,precedes:<
-
-" Remove trailing whitespace on save by default.
-autocmd BufWritePre * :%s/\s\+$//e
-
-" Show numbers, and cursor lines.
+" Show numbers, and cursor lines to help my old tired eyes find the cursor.
 set number
 set cursorline
+
 set nohidden
 set nojoinspaces
+
 set wildmode=longest,list
 set showmode
+
 set mousehide
 set lazyredraw
-set noignorecase
+
 set wildignore+=node_modules
+
+"set indentexpr=""
+
+
+" ---
+" Navigation
+" ---
+
+" Let vim know about typical suffices in node.js require() calls.
+:set suffixesadd+=.js,.json
+
+" Let vim know where node.js looks for files so we can gf to require()'s.
+:let &path.=join(reverse(split($NODE_PATH, ":")), ",")
+
+" Buffer traversal via movement keys.
+map <C-J> :bnext<cr>
+map <C-K> :bprev<cr>
+map <C-L> :tabn<cr>
+map <C-H> :tabp<cr>
+
+" Echo current file name in status line when not visible.
+:noremap <leader>f :echo @%<cr>
+
+" ---
+" Searching
+" ---
+
+" Get vim help on word under cursor.
+map <leader>h :help <c-r><c-w><cr>
+
+set incsearch
+set hlsearch
+set ignorecase "TODO: explore smartcase and/or a toggle for this.
+:noremap <leader>hs :set hlsearch! hlsearch?<cr>
+
+" ---
+" Style
+" ---
+
+" Ignore ex mode, use for formatting.
+map Q gq
+
+" Make sure we get autowrapping etc.
+set formatoptions=tcroq
+
 set textwidth=80
+
+" Default to 4 space indents. Filetype mappings and editorconfig should override
+" when they have explicit mappings.
+set expandtab list tabstop=4 softtabstop=4 shiftwidth=4
+
+" Adjust 'non-conforming' whitespace display so things jump out.
+set listchars=tab:▸\ ,trail:.,extends:>,precedes:<
 
 " Colorize lines longer than 80 chars.
 match ErrorMsg '\%>80v.\+'
+
+" Remove trailing whitespace on save by default.
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Make it easier to debug coloring issues by putting highlight group
 " on the status line.
@@ -73,27 +117,97 @@ function! SyntaxItem()
 endfunction
 set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()}
 
-" Ignore ex mode, use for formatting.
-map Q gq
-set formatoptions=tcroq
-
-"set indentexpr=""
-
-" Tell syntastic to update the location list.
-let g:syntastic_always_populate_loc_list = 1
-
-" Map arrow keys when using syntax checking.
-map <Left> :lprev<CR>
-map <Right> :lnext<CR>
+" ---
+" Applications
+" ---
 
 " Open Marked.app on the current file
 ":nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
 :nnoremap <leader>m :silent !open -a Google\ Chrome.app '%:p'<cr>
 
+" ---
+" vim-airline
+" ---
+
+" Configure vim-airline plugin.
+set rtp+=/usr/local/src/powerline/powerline/bindings/vim
+let g:airline_powerline_fonts = 1
+let g:bufferline_echo = 0
+set laststatus=2
+set ttimeoutlen=50
+
+" ---
+" Buffergator
+" ---
+
+" Configure buffergator the way I like it.
+let g:buffergator_viewport_split_policy = 'T'
+
+" Don't close buffer window on selection, rely on ,b toggle.
+let g:buffergator_autodismiss_on_select = 0
+
+" Use ,b to toggle the buffer selection window.
+map <leader>b :BuffergatorToggle<cr>
+
+" ---
+" Ctags etc.
+" ---
+
 set tags=./tags,tags;/
 
-map <leader>t :CtrlPMixed<CR>
+" Open the tag stack quickly.
+map <leader>t :tselect<cr>
 
-au VimLeave * if filereadable("~/vim/vim/.netrwhist")|call delete("[path here]/.netrwhist")|endif
+" ---
+" vim-fugitive
+" ---
+
+" Map some nicer fugitive key bindings.
+nmap <leader>gb :Gblame<cr>
+nmap <leader>gg Ggrep<cr>
+nmap <leader>gs :Gstatus<cr>
+
+" ---
+" Syntastic
+" ---
+
+" Tell syntastic to update the location list.
+let g:syntastic_always_populate_loc_list = 1
+
+" Map arrow keys when using syntax checking.
+map <Left> :lprev<cr>
+map <Right> :lnext<cr>
+
+" ---
+" File types
+" ---
+
+" override any file types we care about
+augroup filetypedetect
+  " No, I don't edit modula2 very often, thanks ;).
+  autocmd BufNewFile,BufRead *.markdown set filetype=markdown
+  autocmd BufNewFile,BufRead *.md set filetype=markdown
+
+  " Gemfile, Isolate, Vagrantfile and config.ru are ruby
+  autocmd BufNewFile,BufRead Gemfile     setfiletype ruby
+  autocmd BufNewFile,BufRead Isolate     setfiletype ruby
+  autocmd BufNewFile,BufRead Vagrantfile setfiletype ruby
+  autocmd BufNewFile,BufRead config.ru   setfiletype ruby
+
+  autocmd BufNewFile,BufRead ~/.vim/*  setfiletype vim
+  autocmd BufNewFile,BufRead .vim* setfiletype vim
+augroup END
+
+" don't show whitespace in help files, it's distracting :).
+autocmd FileType help set nolist
+
+" I really don't like these files :)
+autocmd VimLeave * if filereadable("~/vim/vim/.netrwhist")|call delete("[path here]/.netrwhist")|endif
+
+" Force system to re-detect using new filetype mappings.
+filetype detect
+
+" Allow any local changes to override.
+source ~/.vimrc.local
 
 "=============================================================================
