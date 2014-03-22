@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Installs the various tools leveraged by idearat's configuration files and
-# links those configuration files into place.
+# Installs the various tools leveraged by the configuration files in this
+# collection and links those configuration files into place.
 
 # ---
 # Pre-Install
@@ -25,12 +25,16 @@ else
     echo 'ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
 fi
 
-# Install the node version manager and use it to install node.js/npm.
+# Install the node version manager and use it to install node.js/npm. Note that
+# the 'nvm use' here adds to the start of our path for subsequent node calls.
 echo 'Checking for nvm and node.js...'
 [[ $(brew list nvm) ]] > /dev/null 2>&1 || \
 (echo 'Installing nvm via brew...' && brew install nvm && nvm install 0.10)
 source $(brew --prefix nvm)/nvm.sh && nvm use 0.10
 
+# We use a lot of submodules in the vim section in particular. The most
+# important one is the zsh/oh-my-zsh submodule which pulls in the main zsh
+# profile files. Note we checkout master to avoid detached HEAD conditions.
 echo 'Updating git submodules...'
 git submodule init
 git submodule update --recursive
@@ -40,7 +44,7 @@ git submodule foreach 'git fetch origin; git checkout master; git pull'
 # Shell Etc.
 # ---
 
-# Configure a root we can simply our paths with.
+# Configure a root we can simplify our references in this script with.
 export DOTFILES="$HOME/.dotfiles"
 
 echo 'Creating working directories...'
@@ -52,6 +56,7 @@ echo 'Verifying zsh installation...'
 (echo 'Installing zsh via brew...' && brew install zsh)
 
 # Normally this would run next, but we'll be linking in from ./zsh/oh-my-zsh.
+# Retained here more for reference.
 #curl -L http://install.ohmyz.sh | sh
 
 # ---
@@ -70,17 +75,19 @@ echo 'Checking for ag...'
 [[ $(brew list ag) ]] > /dev/null 2>&1 || \
 (echo 'Installing ag via brew...' && brew install ag)
 
-# Install CTAGS to provide support for jstags operation.
+# Install CTAGS to provide support for jstags alias in zsh config.
 echo 'Checking for ctags...'
 [[ $(brew list ctags) ]] > /dev/null 2>&1 || \
 (echo 'Installing ctags via brew...' && brew install ctags)
 
+# TODO: I branched this repo to add enterprise support. Update when that's ready
+# so we install my branch rather than the npm module (until changes merge ;)).
 # gh (GitHub CLI)
 echo 'Checking for gh (GitHub CLI)...'
 [[ $(npm info gh) ]] > /dev/null 2>&1 || \
 (echo 'Installing gh via npm...' &&  npm install -g gh)
 
-# Some cut/paste installs rely on wget so install it.
+# Some cut/paste installs from the web rely on wget so install it.
 echo 'Checking for wget...'
 [[ $(brew list wget) ]] > /dev/null 2>&1 || \
 (echo 'Installing wget via brew...' && brew install wget)
@@ -103,8 +110,7 @@ echo 'Checking for python...'
 
 # Install rbenv (rather than rvm) and use it to install Ruby. One thing to be
 # aware of is that on Mac you need 1.9.3 greater than a certain patch level or
-# the ruby-build step will fail. So I go with the highest one at the time of
-# this writing.
+# the ruby-build step will fail unless you use the apple-gcc42 found here.
 echo 'Checking for rbenv and ruby...'
 [[ $(brew list rbenv) ]] > /dev/null 2>&1 || \
 (echo 'Installing rbenv via brew...' && \
@@ -142,7 +148,7 @@ echo 'Checking for tmux macosx clipboard patches...'
 
 # TODO: powerline configuration
 
-# Install powerline fonts so we see what we want in the vim and tmux status bars.
+# Install powerline fonts so we see what we want in vim and tmux status bars.
 echo 'Checking for powerline-font installation...'
 if [[ ! -e /Library/Fonts/Inconsolata\ for\ Powerline.otf ]]; then
   echo 'Installing powerline-font fonts in /Library/Fonts...'
@@ -157,7 +163,7 @@ fi
 echo 'Linking in profile configuration files...'
 
 # Patch up Apache legacy links to match historical aliases.
-# Apache on OSX 10.8 + doesn't provide the older standard locations. link them.
+# Apache on OSX 10.8 + doesn't provide the older standard locations.
 echo 'Checking legacy apache2 links...'
 [[ -e /etc/apache2/htdocs ]] || (sudo ln -s /Library/WebServer/Documents /etc/apache2/htdocs > /dev/null 2>&1)
 [[ -e /etc/apache2/cgi-bin ]] || (sudo ln -s /Library/WebServer/CGI-Executables /etc/apache2/cgi-bin > /dev/null 2>&1)
@@ -233,7 +239,9 @@ echo 'To make zsh your default shell (and you should now):'
 echo 'chsh -s /usr/local/bin/zsh'; echo
 
 echo 'To remove _orig files use:'
-echo "\ls -a | grep \'_orig$\' | xargs -n 1 rm -rf"; echo
+echo "\ls -a | grep \'_orig$\' | xargs -n 1 rm -rf";
+echo "or 'rmorig' from your home directory if safe."; echo
 
 echo 'For best results close all terminals now and reopen them.'
 echo 'Enjoy!'
+
