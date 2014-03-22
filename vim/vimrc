@@ -2,10 +2,16 @@
 " vimrc
 "-----------------------------------------------------------------------------
 
+" This file bootstraps our vim configuration. This file has three goals:
+" - Preconfigure core vim paths for lookups and temp files.
+" - Load all pathogen plugins and their related help info.
+" - Load the 'real' vim configuration found in ~/.vimrc.after.
+" Using an 'after' file via autocmd lets us override plugin settings.
+
 " Make sure our local ~/.vim directory is part of the runtime search path.
 set runtimepath+=~/.vim
 
-" Put any working files (.swp etc) in ~/tmp
+" Put any working files (.swp etc) in ~/tmp.
 set backupdir=~/tmp
 set directory=~/tmp
 

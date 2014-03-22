@@ -2,6 +2,13 @@
 " vimrc.after
 " -----------------------------------------------------------------------------
 
+" This file is loaded after pathogen plugins have loaded by virtue of an autocmd
+" configured for BufReadPost on all files (see ~/.vimrc). Content here can still
+" be overridden by anything that loads as a result of the commands in this file
+" so try to keep content here to set/let/map operations and don't load code. If
+" you need to load things it's best to put them into a plugin format and place
+" them in the ~/.vim/bundle directory.
+
 " ---
 " Controls
 " ---
@@ -13,17 +20,38 @@ let mapleader=","
 " being compiled with +clipboard (which on Mac means 'brew install vim' :)
 set clipboard=unnamed
 
-" Disable visual bell display.
-set visualbell t_vb=
-
 " Let the mouse work.
 set mouse=a
+
+" Turn off mouse while typing.
+set mousehide
 
 " Make it easy to edit this file and re-source it in (and other vim configs).
 nmap <leader>vv :sp $HOME/.vimrc.after<cr>
 nmap <leader>vs :source $HOME/.vimrc.after<cr>
 nmap <leader>vc :sp $HOME/.janus/idearat/colors/idearat.vim<cr>
 nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<cr>
+
+" ---
+" Buffers
+" ---
+
+" Turn off buffer hiding. I prefer to assume I'm done when I close a buffer.
+set nohidden
+
+" Echo full file name in status line.
+:noremap <leader>f :echo @%<cr>
+
+" ---
+" Editing
+" ---
+
+" Set the function/expression used to determine indent.
+" TODO: Write something that doesn't frustrate me too much :)
+set indentexpr=""
+
+" Make text joining work a bit more code-like and avoid spaces.
+set nojoinspaces
 
 " ---
 " Layout / Viewing
@@ -36,23 +64,19 @@ set foldlevel=99
 " fugitive and buffergator to show more by default.
 set previewheight=24
 
-" Show numbers, and cursor lines to help my old tired eyes find the cursor.
+" Show numbers, and cursor lines to help my old tired eyes find their place.
 set number
 set cursorline
 
-set nohidden
-set nojoinspaces
-
-set wildmode=longest,list
+" Show the current mode. Yeah yeah, modes are the root of all evil. Whatever.
 set showmode
 
-set mousehide
+" Don't overdo the redraw thing when running macros etc. We can always use
+" Ctrl-L when we need to.
 set lazyredraw
 
-set wildignore+=node_modules
-
-"set indentexpr=""
-
+" Disable visual bell display.
+set visualbell t_vb=
 
 " ---
 " Navigation
@@ -75,9 +99,6 @@ map <C-K> :bprev<cr>
 map <C-L> :tabn<cr>
 map <C-H> :tabp<cr>
 
-" Echo current file name in status line when not visible.
-:noremap <leader>f :echo @%<cr>
-
 " ---
 " Searching
 " ---
@@ -85,50 +106,67 @@ map <C-H> :tabp<cr>
 " Get vim help on word under cursor.
 map <leader>h :help <c-r><c-w><cr>
 
+" Jump quickly to help show there's a potential match, and highlight it.
 set incsearch
 set hlsearch
-set ignorecase "TODO: explore smartcase and/or a toggle for this.
+
+" Make it easy to toggle the search highlighting setting.
 :noremap <leader>hs :set hlsearch! hlsearch?<cr>
+
+" In general I don't want to miss potential matches so ignore case.
+"TODO: explore smartcase and/or a toggle for this.
+set ignorecase
+
+" Configure tab completion to match my typical preference.
+set wildmode=longest,list
+set wildignore+=node_modules
 
 " ---
 " Style
 " ---
 
-" Ignore ex mode, use for formatting.
+" Ignore ex mode mapping of this key, use if for formatting.
 map Q gq
 
 " Make sure we get autowrapping etc.
 set formatoptions=tcroq
 
+" Colorize lines longer than 80 chars.
+match ErrorMsg '\%>80v.\+'
+
+" Set to match our long-line colorizing rule.
 set textwidth=80
 
-" Default to 4 space indents. Filetype mappings and editorconfig should override
-" when they have explicit mappings.
+" Default to 4 space indents (TIBET style). Filetype mappings and editorconfig
+" should override when they have explicit mappings.
 set expandtab list tabstop=4 softtabstop=4 shiftwidth=4
 
 " Adjust 'non-conforming' whitespace display so things jump out.
 set listchars=tab:▸\ ,trail:.,extends:>,precedes:<
 
-" Colorize lines longer than 80 chars.
-match ErrorMsg '\%>80v.\+'
+" Make it easy to work across various files/formats by toggling settings.
+map <leader>l :set list!<cr>
+map <leader>x :set expandtab!<cr>
+
+" Make it easy to adjust indent/tab sizes for a specific file.
+function! Indent(size)
+  let l:size = str2nr(a:size)
+  let &tabstop = eval(l:size)
+  let &softtabstop = eval(l:size)
+  let &shiftwidth = eval(l:size)
+endfunction
+command! -nargs=1 -buffer Indent :call Indent <args>
 
 " Remove trailing whitespace on save by default.
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Make it easier to debug coloring issues by putting highlight group
 " on the status line.
+" TODO: add this to the updated powerline-based status bar config.
 function! SyntaxItem()
     return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
 set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()}
-
-" ---
-" Applications
-" ---
-
-" Open Marked.app on the current file
-":nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
-:nnoremap <leader>m :silent !open -a Google\ Chrome.app '%:p'<cr>
 
 " ---
 " vim-airline
@@ -137,7 +175,6 @@ set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()
 " Configure vim-airline plugin.
 set rtp+=/usr/local/src/powerline/powerline/bindings/vim
 let g:airline_powerline_fonts = 1
-let g:bufferline_echo = 0
 set laststatus=2
 set ttimeoutlen=50
 
@@ -207,12 +244,13 @@ augroup END
 autocmd FileType help set nolist
 
 " I really don't like these files :)
-autocmd VimLeave * if filereadable("~/vim/vim/.netrwhist")|call delete("[path here]/.netrwhist")|endif
+autocmd VimLeave * if filereadable("~/.vim/vim/.netrwhist")|call delete("[path here]/.netrwhist")|endif
 
 " Force system to re-detect using new filetype mappings.
 filetype detect
 
-" Allow any local changes to override.
-source ~/.vimrc.local
+" Allow any local changes to override. This allows for configuration specific to
+" a particular work environment or machine (company laptop etc.)
+if filereadable("~/.vimrc.local")|source ~/.vimrc.local|endif
 
 "=============================================================================
