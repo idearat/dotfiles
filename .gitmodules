@@ -45,10 +45,6 @@
 	path = vim/vim/bundle/vim-signify
 	url = https://github.com/mhinz/vim-signify
   ignore = dirty
-[submodule "util/powerline"]
-	path = util/powerline
-	url = https://github.com/Lokaltog/powerline.git
-  ignore = dirty
 [submodule "util/powerline-fonts"]
 	path = util/powerline-fonts
 	url = https://github.com/Lokaltog/powerline-fonts.git
@@ -68,3 +64,6 @@
 [submodule "vim/vim/bundle/promptline.vim"]
 	path = vim/vim/bundle/promptline.vim
 	url = https://github.com/idearat/promptline.vim.git
+[submodule "util/powerline"]
+	path = util/powerline
+	url = https://github.com/Lokaltog/powerline.git
