@@ -60,6 +60,8 @@
 [submodule "vim/vim/bundle/vim-node"]
 	path = vim/vim/bundle/vim-node
 	url = https://github.com/idearat/vim-node.git
+  ignore = dirty
 [submodule "vim/vim/bundle/nerdtree"]
 	path = vim/vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
+  ignore = dirty
