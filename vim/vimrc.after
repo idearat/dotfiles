@@ -42,6 +42,32 @@ set nohidden
 " Echo full file name in status line.
 :noremap <leader>f :echo @%<cr>
 
+" Run commands and output them into a scratch buffer for easier viewing.
+function! s:Scratch (command, ...)
+   redir => lines
+   let saveMore = &more
+   set nomore
+   execute a:command
+   redir END
+   let &more = saveMore
+   call feedkeys("\<cr>")
+   new | setlocal buftype=nofile bufhidden=hide noswapfile
+   put=lines
+   if a:0 > 0
+      execute 'vglobal/'.a:1.'/delete'
+   endif
+   if a:command == 'scriptnames'
+      %substitute#^[[:space:]]*[[:digit:]]\+:[[:space:]]*##e
+   endif
+   silent %substitute/\%^\_s*\n\|\_s*\%$
+   let height = line('$') + 3
+   execute 'normal! z'.height."\<cr>"
+   0
+endfunction
+
+command! -nargs=? Scriptnames call <sid>Scratch('scriptnames', <f-args>)
+command! -nargs=+ Scratch call <sid>Scratch(<f-args>)
+
 " ---
 " Editing
 " ---
@@ -111,14 +137,14 @@ set incsearch
 set hlsearch
 
 " Make it easy to toggle the search highlighting setting.
-:noremap <leader>hs :set hlsearch! hlsearch?<cr>
+:noremap <leader>s :set hlsearch! hlsearch?<cr>
 
 " In general I don't want to miss potential matches so ignore case.
 "TODO: explore smartcase and/or a toggle for this.
 set ignorecase
 
 " Configure tab completion to match my typical preference.
-set wildmode=longest,list
+set wildmode=longest,list:full
 set wildignore+=node_modules
 
 " ---
@@ -160,26 +186,32 @@ command! -nargs=1 -buffer Indent :call Indent <args>
 " Remove trailing whitespace on save by default.
 autocmd BufWritePre * :%s/\s\+$//e
 
+" ---
+" vim-airline (nice powerline-inspired vim status line)
+" ---
+
+" Configure vim-airline plugin. NB: some settings are done in the ~/.vimrc file
+" to force them to be read when the plugin first loads.
+let g:airline_powerline_fonts = 1
+
+set rtp+=/usr/local/src/powerline/powerline/bindings/vim
+
 " Make it easier to debug coloring issues by putting highlight group
 " on the status line.
 " TODO: add this to the updated powerline-based status bar config.
 function! SyntaxItem()
     return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
-set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()}
+
+let g:airline_section_x = airline#section#create_right([ '%{SyntaxItem()} %y' ])
+let g:airline_section_y = airline#section#create_right([ '%l:%c 0x%B' ])
+let g:airline_section_z = airline#section#create_right([ '%n' ])
+
+"set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()}
+
 
 " ---
-" vim-airline
-" ---
-
-" Configure vim-airline plugin.
-set rtp+=/usr/local/src/powerline/powerline/bindings/vim
-let g:airline_powerline_fonts = 1
-set laststatus=2
-set ttimeoutlen=50
-
-" ---
-" Buffergator
+" Buffergator (show/traverse buffer list)
 " ---
 
 " Configure buffergator the way I like it.
@@ -192,7 +224,7 @@ let g:buffergator_autodismiss_on_select = 0
 map <leader>b :BuffergatorToggle<cr>
 
 " ---
-" Ctags etc.
+" Ctags etc. (jump to definitions across files)
 " ---
 
 set tags=./tags,tags;/
@@ -201,7 +233,7 @@ set tags=./tags,tags;/
 map <leader>t :tselect<cr>
 
 " ---
-" vim-fugitive
+" vim-fugitive (the ultimate vim/git integration tool)
 " ---
 
 " Map some nicer fugitive key bindings.
@@ -210,7 +242,35 @@ nmap <leader>gg Ggrep<cr>
 nmap <leader>gs :Gstatus<cr>
 
 " ---
-" Syntastic
+" Gundo (access the vim 7.0+ undo tree)
+" ---
+
+" Toggle the undo tree.
+map <leader>u :GundoToggle<CR>
+
+" ---
+" NERDTree (access the file system)
+" ---
+
+" Toggle the file/directory tree.
+map <leader>n :NERDTreeToggle<CR>
+
+" ---
+" promptline (build nice zsh prompts)
+" ---
+
+let g:promptline_powerline_symbols = 1
+let g:promptline_theme = 'airline'
+let g:promptline_preset = {
+    \'a' : [ promptline#slices#host() ],
+    \'b' : [ promptline#slices#user() ],
+    \'c' : [ promptline#slices#cwd() ],
+    \'x' : [ promptline#slices#jobs() ],
+    \'y' : [ promptline#slices#vcs_branch(), promptline#slices#git_status() ],
+    \'warn' : [ promptline#slices#last_exit_code(), promptline#slices#battery() ]}
+
+" ---
+" Syntastic (dynamic syntax checking)
 " ---
 
 " Tell syntastic to update the location list.
@@ -236,6 +296,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead Vagrantfile setfiletype ruby
   autocmd BufNewFile,BufRead config.ru   setfiletype ruby
 
+  " Configuration files for vim should be vim types.
   autocmd BufNewFile,BufRead ~/.vim/*  setfiletype vim
   autocmd BufNewFile,BufRead .vim* setfiletype vim
 augroup END
@@ -244,7 +305,7 @@ augroup END
 autocmd FileType help set nolist
 
 " I really don't like these files :)
-autocmd VimLeave * if filereadable("~/.vim/vim/.netrwhist")|call delete("[path here]/.netrwhist")|endif
+autocmd VimLeave * if filereadable("~/.vim/.netrwhist")|call delete("~/.vim/.netrwhist")|endif
 
 " Force system to re-detect using new filetype mappings.
 filetype detect
