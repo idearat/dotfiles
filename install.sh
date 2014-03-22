@@ -198,6 +198,9 @@ ln -sfv $DOTFILES/ruby/rdebugrc ~/.rdebugrc
 \mv -f ~/.tmux.conf ~/.tmux.conf_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/tmux/tmux.conf ~/.tmux.conf
 
+\mv -f ~/.tmux_status.conf ~/.tmux_status.conf_orig > /dev/null 2>&1
+ln -sfv $DOTFILES/tmux/tmux_status.conf ~/.tmux_status.conf
+
 # vim
 \mv -f ~/.editorconfig ~/.editorconfig_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/vim/editorconfig ~/.editorconfig
