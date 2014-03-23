@@ -101,6 +101,10 @@ set showmode
 " Ctrl-L when we need to.
 set lazyredraw
 
+" Map a quick command key to redraw since using tmux etc. can often cause a
+" blank screen and at least in tmux situations Ctrl-L gndn's.
+map <leader>r :redraw!<cr>
+
 " Disable visual bell display.
 set visualbell t_vb=
 
