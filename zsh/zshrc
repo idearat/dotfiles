@@ -13,7 +13,7 @@ export ZSH_THEME="idearat"
 # Define the list of plugins. The list is extensive and can be found at
 # https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins.
 # TODO: add plugins for node etc.
-plugins=(git tmux jira)
+plugins=(git jira)
 
 # Activate the environment. Loads plugins, calls $ZSH/custom/*.zsh, etc.
 source $ZSH/oh-my-zsh.sh
