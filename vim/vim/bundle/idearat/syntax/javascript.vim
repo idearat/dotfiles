@@ -85,7 +85,7 @@ syntax keyword javaScriptPrototype      prototype
 
 "" Program Keywords
 syntax keyword javaScriptSource         import export
-syntax keyword javaScriptType           const undefined var void yield 
+syntax keyword javaScriptType           const undefined var void yield
 syntax keyword javaScriptOperator       delete new in instanceof let typeof
 syntax keyword javaScriptBoolean        true false
 syntax keyword javaScriptNull           null
@@ -158,7 +158,7 @@ syntax cluster javaScriptExpression2 contains=javaScriptComment,javaScriptLineCo
 syntax cluster javaScriptAll       contains=@javaScriptExpression2,javaScriptLabel,javaScriptConditional,javaScriptRepeat,javaScriptBranch,javaScriptStatement,javaScriptTernaryIf
 syntax region  javaScriptBracket   matchgroup=javaScriptBracket transparent start="\[" end="\]" contains=@javaScriptAll,javaScriptParensErrB,javaScriptParensErrC,javaScriptBracket,javaScriptParen,javaScriptBlock,@htmlPreproc
 syntax region  javaScriptParen     matchgroup=javaScriptParen   transparent start="("  end=")"  contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrC,javaScriptParen,javaScriptBracket,javaScriptBlock,@htmlPreproc
-syntax region  javaScriptBlock     matchgroup=javaScriptBlock   transparent start="{"  end="}"  contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock,@htmlPreproc 
+syntax region  javaScriptBlock     matchgroup=javaScriptBlock   transparent start="{"  end="}"  contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock,@htmlPreproc
 syntax region  javaScriptTernaryIf matchgroup=javaScriptTernaryIfOperator start=+?+  end=+:+  contains=@javaScriptExpression2
 
 "" catch errors caused by wrong parenthesis
