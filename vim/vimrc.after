@@ -281,6 +281,21 @@ map <Left> :lprev<cr>
 map <Right> :lnext<cr>
 
 " ---
+" Tmuxline
+" ---
+
+let g:tmuxline_theme = 'airline'
+let g:tmuxline_preset = {
+      \'a'    : '#(curl ipv4.icanhazip.com)',
+      \'b'    : '#S',
+      \'c'    : '#P',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '%a',
+      \'y'    : '%d-%b-%y',
+      \'z'    : '%H:%M'}
+
+" ---
 " File types
 " ---
 
