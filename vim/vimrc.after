@@ -292,6 +292,11 @@ let g:tmuxline_preset = {
       \'y'    : '%d-%b-%y',
       \'z'    : '%H:%M'}
 
+" Maintain the same line in/out of vim and tmux.
+if exists (":Tmuxline")
+  Tmuxline
+endif
+
 " ---
 " File types
 " ---
@@ -325,8 +330,5 @@ filetype detect
 " Allow any local changes to override. This allows for configuration specific to
 " a particular work environment or machine (company laptop etc.)
 if filereadable("~/.vimrc.local")|source ~/.vimrc.local|endif
-
-" Maintain the same line in/out of vim and tmux.
-Tmuxline
 
 "=============================================================================
