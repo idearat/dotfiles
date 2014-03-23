@@ -38,7 +38,7 @@ execute pathogen#helptags()
 " the after file itself will still load last and could override things so it's
 " better to keep that file's content to primarily set/map and not autocmd etc.
 augroup idearat
-  au BufReadPost * so ~/.vimrc.after
+  au VimEnter * so ~/.vimrc.after
 
   " For some reason this has to be last or vim-airline doesn't init properly.
   " It'll start, but the font-based icons won't display until insert/split.
