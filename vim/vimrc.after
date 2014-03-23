@@ -203,12 +203,9 @@ function! SyntaxItem()
     return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
 
-let g:airline_section_x = airline#section#create_right([ '%{SyntaxItem()} %y' ])
-let g:airline_section_y = airline#section#create_right([ '%l:%c 0x%B' ])
-let g:airline_section_z = airline#section#create_right([ '%n' ])
-
-"set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]\ %{SyntaxItem()}
-
+let g:airline_section_x = airline#section#create([ '%{SyntaxItem()} %y' ])
+let g:airline_section_y = airline#section#create([ '%l:%c 0x%B' ])
+let g:airline_section_z = airline#section#create([ '%n' ])
 
 " ---
 " Buffergator (show/traverse buffer list)
@@ -328,5 +325,8 @@ filetype detect
 " Allow any local changes to override. This allows for configuration specific to
 " a particular work environment or machine (company laptop etc.)
 if filereadable("~/.vimrc.local")|source ~/.vimrc.local|endif
+
+" Maintain the same line in/out of vim and tmux.
+Tmuxline
 
 "=============================================================================
