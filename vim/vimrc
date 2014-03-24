@@ -23,6 +23,10 @@ let g:airline#extensions#default#section_truncate_width = {}
 set laststatus=2
 set ttimeoutlen=50
 
+" Default to 4 space indents (TIBET style). Filetype mappings and editorconfig
+" should override when they have explicit mappings.
+set expandtab list tabstop=4 softtabstop=4 shiftwidth=4
+
 " Activate pathogen to load any installed plugins. Plugins are found in the
 " ~/.vim/bundle directory.
 execute pathogen#infect()

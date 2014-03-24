@@ -43,29 +43,21 @@ set nohidden
 :noremap <leader>f :echo @%<cr>
 
 " Run commands and output them into a scratch buffer for easier viewing.
-function! s:Scratch (command, ...)
+function! s:Scratch (...)
    redir => lines
    let saveMore = &more
    set nomore
-   execute a:command
+   execute join(a:000, ' ')
    redir END
    let &more = saveMore
    call feedkeys("\<cr>")
    new | setlocal buftype=nofile bufhidden=hide noswapfile
    put=lines
-   if a:0 > 0
-      execute 'vglobal/'.a:1.'/delete'
-   endif
-   if a:command == 'scriptnames'
-      %substitute#^[[:space:]]*[[:digit:]]\+:[[:space:]]*##e
-   endif
-   silent %substitute/\%^\_s*\n\|\_s*\%$
    let height = line('$') + 3
    execute 'normal! z'.height."\<cr>"
    0
 endfunction
 
-command! -nargs=? Scriptnames call <sid>Scratch('scriptnames', <f-args>)
 command! -nargs=+ Scratch call <sid>Scratch(<f-args>)
 
 " ---
@@ -141,7 +133,7 @@ set incsearch
 set hlsearch
 
 " Make it easy to toggle the search highlighting setting.
-:noremap <leader>s :set hlsearch! hlsearch?<cr>
+:noremap <leader>hs :set hlsearch! hlsearch?<cr>
 
 " In general I don't want to miss potential matches so ignore case.
 "TODO: explore smartcase and/or a toggle for this.
@@ -166,10 +158,6 @@ match ErrorMsg '\%>80v.\+'
 
 " Set to match our long-line colorizing rule.
 set textwidth=80
-
-" Default to 4 space indents (TIBET style). Filetype mappings and editorconfig
-" should override when they have explicit mappings.
-set expandtab list tabstop=4 softtabstop=4 shiftwidth=4
 
 " Adjust 'non-conforming' whitespace display so things jump out.
 set listchars=tab:▸\ ,trail:.,extends:>,precedes:<
@@ -207,9 +195,11 @@ function! SyntaxItem()
     return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
 
+" Rebuild the right side of the status line.
 let g:airline_section_x = airline#section#create([ '%{SyntaxItem()} %y' ])
 let g:airline_section_y = airline#section#create([ '%l:%c 0x%B' ])
 let g:airline_section_z = airline#section#create([ '%n' ])
+let g:airline_section_warning = airline#section#create([ 'syntastic', 'whitespace' ])
 
 " ---
 " Buffergator (show/traverse buffer list)
@@ -274,8 +264,42 @@ let g:promptline_preset = {
 " Syntastic (dynamic syntax checking)
 " ---
 
+" Run when we open the file.
+let g:syntastic_check_on_open = 1
+
 " Tell syntastic to update the location list.
-let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list=1
+
+" Sensible debug default.
+let g:syntastic_debug = 0
+
+" Adapt the jshintrc file used based on the best match found.
+function! s:find_jshintrc(dir)
+    let l:found = globpath(a:dir, '.jshintrc')
+    if filereadable(l:found)
+        return l:found
+    endif
+
+    let l:parent = fnamemodify(a:dir, ':h')
+    if l:parent != a:dir
+        return s:find_jshintrc(l:parent)
+    endif
+
+    return "~/.jshintrc"
+endfunction
+
+" Trigger update of the jshintrc file.
+function! UpdateJsHintConf()
+    let l:dir = expand('%:p:h')
+    let l:jshintrc = s:find_jshintrc(l:dir)
+    let g:syntastic_javascript_jshint_conf = l:jshintrc
+endfunction
+au BufEnter *.js call UpdateJsHintConf()
+
+" Map :Errors into something that'll give us a real location list.
+map <leader>e :Errors<cr>
+
+map <leader>s :SyntasticToggleMode<cr>
 
 " Map arrow keys when using syntax checking.
 map <Left> :lprev<cr>
