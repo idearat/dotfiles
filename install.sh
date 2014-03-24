@@ -225,6 +225,9 @@ ln -sfv $DOTFILES/zsh/zshrc ~/.zshrc
 ln -sfFv $DOTFILES/zsh/oh-my-zsh ~/.oh-my-zsh
 rm -rf zsh/oh-my-zsh/.oh-my-zsh > /dev/null 2>&1
 
+\mv -f ~/.shell_prompt.sh ~/.shell_prompt_orig.sh > /dev/null 2>&1
+ln -sfv $DOTFILES/zsh/shell_prompt.sh ~/.shell_prompt.sh
+
 \mv -f ~/.tibetrc ~/.tibetrc_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/tibet/tibetrc ~/.tibetrc
 
