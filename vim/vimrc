@@ -17,6 +17,11 @@ set runtimepath+=~/.vim
 set backupdir=~/tmp
 set directory=~/tmp
 
+" Map , to command prefix. Do this before loading plugins to ensure they pick up
+" the proper leader setting for any keymappings they may do. (seems some
+" mappings end up on \ if we don't do this early).
+let mapleader=","
+
 " The airline plugin reads this early and so we can't set it after the plugin
 " has loaded if we want it to take effect.
 let g:airline#extensions#default#section_truncate_width = {}

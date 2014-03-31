@@ -13,9 +13,6 @@
 " Controls
 " ---
 
-" Map , to command prefix.
-let mapleader=","
-
 " Map anonymous clipboard to system clipboard. NOTE that this relies on VIM
 " being compiled with +clipboard (which on Mac means 'brew install vim' :)
 set clipboard=unnamed
@@ -163,7 +160,6 @@ set textwidth=80
 set listchars=tab:▸\ ,trail:.,extends:>,precedes:<
 
 " Make it easy to work across various files/formats by toggling settings.
-map <leader>l :set list!<cr>
 map <leader>x :set expandtab!<cr>
 
 " Make it easy to adjust indent/tab sizes for a specific file.
