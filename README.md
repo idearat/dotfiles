@@ -92,6 +92,10 @@ environment.
 vi ~/.gitconfig   # edit name/email to proper values
 ```
 
+If you use iTerm or Terminal (of course you do!) you'll want to ensure that you
+set your font to a Powerline-compatible font. This will help you see the full
+display from any Powerline status line improvements etc.
+
 ## Cleanup
 
 You can list the _orig files by running:

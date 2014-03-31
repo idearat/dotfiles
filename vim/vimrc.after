@@ -40,7 +40,7 @@ nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<cr>
 set nohidden
 
 " Echo full file name in status line.
-:noremap <leader>f :echo @%<cr>
+:noremap <leader>f :echo expand('%:p')<cr>
 
 " Run commands and output them into a scratch buffer for easier viewing.
 function! s:Scratch (...)
