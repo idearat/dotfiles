@@ -67,3 +67,6 @@
 [submodule "util/powerline"]
 	path = util/powerline
 	url = https://github.com/Lokaltog/powerline.git
+[submodule "vim/vim/bundle/vim-togglelist"]
+	path = vim/vim/bundle/vim-togglelist
+	url = https://github.com/idearat/vim-togglelist.git
