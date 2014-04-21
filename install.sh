@@ -28,15 +28,25 @@ fi
 # Install the node version manager and use it to install node.js/npm. Note that
 # the 'nvm use' here adds to the start of our path for subsequent node calls.
 echo 'Checking for nvm and node.js...'
-[[ $(which nvm) ]] > /dev/null 2>&1 || \
-  (echo 'Installing nvm via curl...' )
-curl https://raw.github.com/creationix/nvm/v0.4.0/install.sh | sh
+if [[ $(which nvm) ]]; then
+    echo 'Found nvm.'
+else
+  echo 'Installing nvm via curl...'
+  curl https://raw.github.com/creationix/nvm/v0.4.0/install.sh | sh
+fi
+
 echo 'Installing latest 0.11.x node.js...'
 nvm install 0.11
 
-# We use a lot of submodules in the vim section in particular. The most
-# important one is the zsh/oh-my-zsh submodule which pulls in the main zsh
-# profile files. Note we checkout master to avoid detached HEAD conditions.
+
+
+exit
+
+
+
+
+# We use a lot of submodules in the vim section in particular.
+# Note we checkout master to avoid detached HEAD conditions.
 echo 'Updating git submodules...'
 git submodule init
 git submodule update --recursive
@@ -56,10 +66,6 @@ echo 'Creating working directories...'
 echo 'Verifying zsh installation...'
 [[ $(brew list zsh) ]] > /dev/null 2>&1 || \
 (echo 'Installing zsh via brew...' && brew install zsh)
-
-# Normally this would run next, but we'll be linking in from ./zsh/oh-my-zsh.
-# Retained here more for reference.
-#curl -L http://install.ohmyz.sh | sh
 
 # ---
 # Command-line utilities
@@ -232,10 +238,6 @@ ln -sfv $DOTFILES/vim/vimrc.after ~/.vimrc.after
 
 \mv -f ~/.zshrc ~/.zshrc_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/zsh/zshrc ~/.zshrc
-
-\mv -f ~/.oh-my-zsh ~/.oh-my-zsh_orig > /dev/null 2>&1
-ln -sfFv $DOTFILES/zsh/oh-my-zsh ~/.oh-my-zsh
-rm -rf zsh/oh-my-zsh/.oh-my-zsh > /dev/null 2>&1
 
 \mv -f ~/.shell_prompt.sh ~/.shell_prompt_orig.sh > /dev/null 2>&1
 ln -sfv $DOTFILES/zsh/shell_prompt.sh ~/.shell_prompt.sh
