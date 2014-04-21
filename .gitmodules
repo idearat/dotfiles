@@ -70,6 +70,3 @@
 [submodule "vim/vim/bundle/requirejs.vim"]
 	path = vim/vim/bundle/requirejs.vim
 	url = https://github.com/idearat/requirejs.vim.git
-[submodule "vim/vim/bundle/vim-jsbeautify"]
-	path = vim/vim/bundle/vim-jsbeautify
-	url = https://github.com/maksimr/vim-jsbeautify.git

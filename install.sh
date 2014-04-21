@@ -118,8 +118,9 @@ echo 'Checking for ruby-install'
 brew install ruby-install)
 
 echo 'Installing Ruby baseline'
-ruby-install ruby 1.9.3
-ruby-install ruby 2.0
+ruby-install ruby 1.9.3 --no-reinstall
+# This currently fails to compile.
+#ruby-install ruby 2.0 --no-reinstall
 
 echo 'Checking for chruby...'
 [[ $(brew list chruby) ]] > /dev/null 2>&1 || \

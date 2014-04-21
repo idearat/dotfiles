@@ -39,6 +39,8 @@ set nohidden
 " Echo full file name in status line.
 :noremap <leader>f :echo expand('%:p')<cr>
 
+nnoremap <leader>j :%!js-beautify -j -q -B -f -<CR>
+
 " Run commands and output them into a scratch buffer for easier viewing.
 function! s:Scratch (...)
    redir => lines
