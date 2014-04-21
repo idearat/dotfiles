@@ -64,9 +64,12 @@
 [submodule "vim/vim/bundle/promptline.vim"]
 	path = vim/vim/bundle/promptline.vim
 	url = https://github.com/idearat/promptline.vim.git
-[submodule "util/powerline"]
-	path = util/powerline
-	url = https://github.com/Lokaltog/powerline.git
 [submodule "vim/vim/bundle/vim-togglelist"]
 	path = vim/vim/bundle/vim-togglelist
 	url = https://github.com/idearat/vim-togglelist.git
+[submodule "util/powerline"]
+	path = util/powerline
+	url = https://github.com/Lokaltog/powerline.git
+[submodule "vim/vim/bundle/requirejs.vim"]
+	path = vim/vim/bundle/requirejs.vim
+	url = https://github.com/idearat/requirejs.vim.git

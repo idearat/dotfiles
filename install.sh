@@ -188,6 +188,9 @@ ln -sfv $DOTFILES/ack/ackrc ~/.ackrc
 \cp -fv $DOTFILES/git/gitmessage.txt.idearat ~/.gitmessage.txt
 
 # ruby
+\mv -f ~/.gemrc ~/.gemrc_orig > /dev/null 2>&1
+ln -sfv $DOTFILES/ruby/gemrc ~/.gemrc
+
 \mv -f ~/.irbrc ~/.irbrc_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/ruby/irbrc ~/.irbrc
 
