@@ -28,7 +28,7 @@ fi
 # Install the node version manager and use it to install node.js/npm. Note that
 # the 'nvm use' here adds to the start of our path for subsequent node calls.
 echo 'Checking for nvm and node.js...'
-if [[ $(which nvm) ]]; then
+if [[ -d ~/.nvm ]]; then
     echo 'Found nvm.'
 else
   echo 'Installing nvm via curl...'
@@ -36,14 +36,9 @@ else
 fi
 
 echo 'Installing latest 0.11.x node.js...'
+source ~/.nvm/nvm.sh > /dev/null 2>&1
 nvm install 0.11
-
-
-
-exit
-
-
-
+nvm use 0.11
 
 # We use a lot of submodules in the vim section in particular.
 # Note we checkout master to avoid detached HEAD conditions.
@@ -120,7 +115,7 @@ echo 'Checking for python...'
 echo 'Checking for ruby-install'
 [[ $(brew list ruby-install) ]] > /dev/null 2>&1 || \
 (echo 'Installing ruby-install via brew...' && \
-brew install ruby-install
+brew install ruby-install)
 
 echo 'Installing Ruby baseline'
 ruby-install ruby 1.9.3
@@ -129,7 +124,7 @@ ruby-install ruby 2.0
 echo 'Checking for chruby...'
 [[ $(brew list chruby) ]] > /dev/null 2>&1 || \
 (echo 'Installing chruby via brew...' && \
-brew install chruby
+brew install chruby)
 
 echo 'Ruby versions:'
 chruby
@@ -137,7 +132,7 @@ chruby
 echo 'Checking for chgems...'
 [[ $(brew list chgems) ]] > /dev/null 2>&1 || \
 (echo 'Installing chgems via brew...' && \
-brew install chgems
+brew install https://raw.github.com/postmodern/chgems/master/homebrew/chgems.rb)
 
 # ---
 # Applications

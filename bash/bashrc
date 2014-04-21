@@ -1,3 +1,4 @@
 #!/bin/bash
 
-export PS1=' $ '
+# Not a typo, sharing a single file.
+source ~/.zshrc

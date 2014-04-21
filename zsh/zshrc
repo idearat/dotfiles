@@ -3,3 +3,5 @@
 # Top-level ZSH configuration file which runs on startup of a ZSH instance.
 #
 source ~/.dotfiles/zsh/idearat.zsh
+
+[ -s "/Users/ss/.nvm/nvm.sh" ] && . "/Users/ss/.nvm/nvm.sh" # This loads nvm
