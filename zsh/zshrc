@@ -17,4 +17,3 @@ plugins=(git jira)
 
 # Activate the environment. Loads plugins, calls $ZSH/custom/*.zsh, etc.
 source $ZSH/oh-my-zsh.sh
-

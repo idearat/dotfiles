@@ -28,9 +28,11 @@ fi
 # Install the node version manager and use it to install node.js/npm. Note that
 # the 'nvm use' here adds to the start of our path for subsequent node calls.
 echo 'Checking for nvm and node.js...'
-[[ $(brew list nvm) ]] > /dev/null 2>&1 || \
-(echo 'Installing nvm via brew...' && brew install nvm && nvm install 0.10)
-source $(brew --prefix nvm)/nvm.sh && nvm use 0.10
+[[ $(which nvm) ]] > /dev/null 2>&1 || \
+  (echo 'Installing nvm via curl...' )
+curl https://raw.github.com/creationix/nvm/v0.4.0/install.sh | sh
+echo 'Installing latest 0.11.x node.js...'
+nvm install 0.11
 
 # We use a lot of submodules in the vim section in particular. The most
 # important one is the zsh/oh-my-zsh submodule which pulls in the main zsh
@@ -108,20 +110,28 @@ echo 'Checking for python...'
 [[ $(brew list python) ]] > /dev/null 2>&1 || \
 (echo 'Installing python via brew...' && brew install python)
 
-# Install rbenv (rather than rvm) and use it to install Ruby. One thing to be
-# aware of is that on Mac you need 1.9.3 greater than a certain patch level or
-# the ruby-build step will fail unless you use the apple-gcc42 found here.
-echo 'Checking for rbenv and ruby...'
-[[ $(brew list rbenv) ]] > /dev/null 2>&1 || \
-(echo 'Installing rbenv via brew...' && \
-brew install rbenv && \
-rbenv init - > /dev/null 2>&1 && \
-brew install ruby-build && \
-brew tap homebrew/dupes && \
-brew install apple-gcc42 && \
-rbenv install 1.8.7-p357 && \
-rbenv local 1.8.7-p357 && \
-rbenv rehash)
+# Install chruby and ruby-install to manage any Ruby code.
+echo 'Checking for ruby-install'
+[[ $(brew list ruby-install) ]] > /dev/null 2>&1 || \
+(echo 'Installing ruby-install via brew...' && \
+brew install ruby-install
+
+echo 'Installing Ruby baseline'
+ruby-install ruby 1.9.3
+ruby-install ruby 2.0
+
+echo 'Checking for chruby...'
+[[ $(brew list chruby) ]] > /dev/null 2>&1 || \
+(echo 'Installing chruby via brew...' && \
+brew install chruby
+
+echo 'Ruby versions:'
+chruby
+
+echo 'Checking for chgems...'
+[[ $(brew list chgems) ]] > /dev/null 2>&1 || \
+(echo 'Installing chgems via brew...' && \
+brew install chgems
 
 # ---
 # Applications
@@ -131,9 +141,8 @@ echo 'Verifying application support...'
 
 # Install (Mac)VIM and link MacVIM into Applications dir.
 echo 'Checking for macvim and vim...'
-[[ $(brew list rbenv) ]] > /dev/null 2>&1 || \
-[[ $(brew list macvin) ]] > /dev/null 2>&1 || \
-(echo 'Installing macvin via brew...' && \
+[[ $(brew list macvim) ]] > /dev/null 2>&1 || \
+(echo 'Installing macvim via brew...' && \
 brew install macvim --override-system-vim && \
 brew linkapps)
 
@@ -188,6 +197,9 @@ ln -sfv $DOTFILES/ack/ackrc ~/.ackrc
 \cp -fv $DOTFILES/git/gitmessage.txt.idearat ~/.gitmessage.txt
 
 # ruby
+\mv -f ~/.gemrc ~/.gemrc_orig > /dev/null 2>&1
+ln -sfv $DOTFILES/ruby/gemrc ~/.gemrc
+
 \mv -f ~/.irbrc ~/.irbrc_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/ruby/irbrc ~/.irbrc
 
