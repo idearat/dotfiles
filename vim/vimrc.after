@@ -115,10 +115,10 @@ set visualbell t_vb=
 nmap <leader>o :NodeGotoFile<cr>
 
 " Buffer traversal via movement keys.
-map <C-J> :bnext<cr>
-map <C-K> :bprev<cr>
-map <C-L> :tabn<cr>
-map <C-H> :tabp<cr>
+"map <C-J> :bnext<cr>
+"map <C-K> :bprev<cr>
+"map <C-L> :tabn<cr>
+"map <C-H> :tabp<cr>
 
 " ---
 " Searching
@@ -355,6 +355,6 @@ filetype detect
 
 " Allow any local changes to override. This allows for configuration specific to
 " a particular work environment or machine (company laptop etc.)
-if filereadable("~/.vimrc.local")|source ~/.vimrc.local|endif
+source ~/.vimrc.local
 
 "=============================================================================

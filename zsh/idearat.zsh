@@ -113,7 +113,7 @@ alias vimdot="vi ${HOME}/.dotfiles/install.sh"
 alias vimgit="vi ${HOME}/.gitconfig"
 alias vimtmux="vi ${HOME}/.tmux.conf"
 
-alias vimvi="vi ${HOME}/.vimrc.after"
+alias vimvi="vi ${HOME}/.vimrc.local"
 alias vimlocal="vi ${HOME}/.localrc"
 alias vimcolor="vi ${HOME}/.vim/bundle/idearat/colors/idearat"
 alias vimsyntax="vi ${HOME}/.vim/bundle/idearat/syntax/javascript.vim"
@@ -169,6 +169,8 @@ alias cdbin="cd ${HOME}/bin"
 alias cddev="cd ${DEVL_HOME}"
 # NB: depends on having cloned into ${HOME}/.dotfiles.
 alias cdidearat='cd ${IDEARAT_HOME}'
+alias cdforks='cd ${IDEARAT_HOME}/forks'
+alias cdfluff='cd ${HOME}/tmp/fluffy'
 alias cdsrc='cd /usr/local/src'
 alias cdtmp="cd ${HOME}/tmp"
 alias cdtri="cd ${HOME}/Documents/SS\ Docs/Triathlon"
