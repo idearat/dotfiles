@@ -1,10 +1,5 @@
 #!/usr/local/bin/zsh
 
-# This file is executed indirectly via the oh-my-zsh.sh script which processes
-# any files ending in .zsh which are found in the 'custom' directory. The file
-# ${HOME}/.zshrc is a trivial wrapper which leverages that script after
-# configuring zsh plugins including those for git and tmux in particular.
-
 # ---
 # path roots
 # ---
@@ -250,9 +245,6 @@ function detached () {
   # ## master...origin/master
   # Entering 'vim/vim/bundle/vim-fugitive'
   # ## HEAD (no branch)
-  # Entering 'zsh/oh-my-zsh'
-  # ## master...origin/master
-  #  M custom/idearat.zsh
 
   for line in $data; do
     if [[ $line =~ "^Entering" ]]; then
@@ -524,10 +516,10 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use v0.10.24 2 > /dev/null
+  nvm use v0.11.12 2 > /dev/null
 
   # TODO: adjust to the highest one found by default?
-  export NODE_VERSION="v0.10.24"
+  export NODE_VERSION="v0.11.12"
   export NODE_PATH="${NVM_DIR}/${NODE_VERSION}/lib/node_modules:\
 ${HOME}/lib/node_modules:./node_modules"
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
