@@ -105,9 +105,8 @@ alias cdviz='cd ${PROJECT_HOME}/vizitd'
 
 alias cddot="cd ${HOME}/.dotfiles"
 alias cdvim='cd ${HOME}/.vim/bundle'
-alias cdzsh='cd ${HOME}/.oh-my-zsh/plugins'
 
-alias vimit="vi ${HOME}/.oh-my-zsh/custom/idearat.zsh"
+alias vimit="vi ${HOME}/.dotfiles/zsh/idearat.zsh"
 alias srcit="source ${HOME}/.zshrc"
 
 alias vimdot="vi ${HOME}/.dotfiles/install.sh"
