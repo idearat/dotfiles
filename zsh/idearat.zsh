@@ -175,6 +175,7 @@ alias cdusb="cd ${USB_ROOT}"
 
 alias hours="vim ~/Dropbox/hours.md"
 alias todo="vim ~/Dropbox/todo.md"
+alias notes="vim ~/Dropbox/notes.md"
 alias more='less'
 alias vi='vim'
 
