@@ -4,17 +4,14 @@
 # path roots
 # ---
 
-# do these first since it prepends to the path and we don't want anything in
-# front of ~/bin. we want to retain ultimate override ability.
-source $(brew --prefix nvm)/nvm.sh > /dev/null 2>&1
-
-# now set it manually thank you very much so ~/bin can always override.
-export PATH="${HOME}/bin:${HOME}/.nvm/v0.10.24/bin"
+export PATH="${HOME}/bin"
 export PATH="${PATH}:/usr/local/bin:/usr/local/bin/araxis"
 export PATH="${PATH}:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 
 source $(brew --prefix chruby)/share/chruby/chruby.sh > /dev/null 2>&1
-chruby 2 > /dev/null 2>&1
+chruby 1.9.3 > /dev/null 2>&1
+
+source ~/.nvm/nvm.sh > /dev/null 2>&1
 
 export MANPATH=".:${HOME}/man:/usr/local/man:/usr/local/share/man:/usr/man:\
   /usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
@@ -108,7 +105,8 @@ alias vimdot="vi ${HOME}/.dotfiles/install.sh"
 alias vimgit="vi ${HOME}/.gitconfig"
 alias vimtmux="vi ${HOME}/.tmux.conf"
 
-alias vimvi="vi ${HOME}/.vimrc.local"
+alias vimvi="vi ${HOME}/.vimrc.after"
+alias vimvilocal="vi ${HOME}/.vimrc.local"
 alias vimlocal="vi ${HOME}/.localrc"
 alias vimcolor="vi ${HOME}/.vim/bundle/idearat/colors/idearat"
 alias vimsyntax="vi ${HOME}/.vim/bundle/idearat/syntax/javascript.vim"
@@ -659,8 +657,8 @@ alias lintem="hintem; glintem"
 #alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
 #--enable-file-cookies --allow-file-access-from-files \
 #--js-flags=\"--debugger true --debug_code --expose-debug-as debug --expose-gc\""
-alias chrome="open -a Google\ Chrome --args --disable-web-security \
-  --allow-file-access --allow-file-access-from-files"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+  --disable-web-security \ --allow-file-access --allow-file-access-from-files"
 
 # TODO: convert to something we can run from Alfred
 [[ -e '/Applications/Marked.app/Contents/MacOS/Marked' ]] && \

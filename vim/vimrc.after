@@ -39,9 +39,6 @@ set nohidden
 " Echo full file name in status line.
 :noremap <leader>f :echo expand('%:p')<cr>
 
-" Map js-beautify to a key for quick json/javascript formatting.
-nnoremap <leader>j :%!js-beautify -s 3 -f -<CR>
-
 " Run commands and output them into a scratch buffer for easier viewing.
 function! s:Scratch (...)
    redir => lines
@@ -137,7 +134,7 @@ set hlsearch
 
 " In general I don't want to miss potential matches so ignore case.
 "TODO: explore smartcase and/or a toggle for this.
-set ignorecase
+set noignorecase
 
 " Configure tab completion to match my typical preference.
 set wildmode=longest,list:full
@@ -226,10 +223,8 @@ map <leader>t :tselect<cr>
 " vim-fugitive (the ultimate vim/git integration tool)
 " ---
 
-" Map some nicer fugitive key bindings.
-nmap <leader>gb :Gblame<cr>
-nmap <leader>gg Ggrep<cr>
-nmap <leader>gs :Gstatus<cr>
+" Map blame since we do that a lot to check for ownership
+nmap <leader>g :Gblame<cr>
 
 " ---
 " Gundo (access the vim 7.0+ undo tree)
