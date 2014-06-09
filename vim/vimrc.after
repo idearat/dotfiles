@@ -26,6 +26,7 @@ set mousehide
 " Make it easy to edit this file and re-source it in (and other vim configs).
 nmap <leader>vv :sp $HOME/.vimrc.after<cr>
 nmap <leader>vs :source $HOME/.vimrc.after<cr>
+
 nmap <leader>vc :sp $HOME/.janus/idearat/colors/idearat.vim<cr>
 nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<cr>
 
@@ -135,6 +136,7 @@ set hlsearch
 " In general I don't want to miss potential matches so ignore case.
 "TODO: explore smartcase and/or a toggle for this.
 set noignorecase
+map <leader>i :set ignorecase! ignorecase?<cr>
 
 " Configure tab completion to match my typical preference.
 set wildmode=longest,list:full

@@ -415,16 +415,16 @@ fi
 
 # Ack for common file types in web development.
 if exists ack; then
-  alias ackls='ack -l -s --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
-  alias ackall='ack -l -s --nolog --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
-  alias ackcss='ack -l -s --css --sass --less --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackhtml='ack -l -s --html --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjs='ack -l -s --js --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjsish='ack -l -s --js --json --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjson='ack -l -s --json --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackmd='ack -l -s --markdown --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackxml='ack -l -s --xml --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackvim='ack -l -s --vim --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackls='ack -l -s --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
+  alias ackall='ack -l -s --nolog --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
+  alias ackcss='ack -l -s --css --sass --less --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackhtml='ack -l -s --html --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjs='ack -l -s --js --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjsish='ack -l -s --js --json --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjson='ack -l -s --json --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackmd='ack -l -s --markdown --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackxml='ack -l -s --xml --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackvim='ack -l -s --vim --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
 else
   echo 'ack not found'
   echo 'install ack via:';echo
@@ -435,7 +435,8 @@ fi
 if exists git; then
   alias b="git branch"
   alias ba="git branch -a"
-  alias d='git diff'
+  alias d='git diff --name-status HEAD..master'
+  alias moo="git moo"
   alias s='git status --short --branch'
   alias t='git log --oneline --graph --all --date-order --first-parent --decorate=short'
 
@@ -515,10 +516,10 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use v0.11.12 2 > /dev/null
+  nvm use v0.10.28 2 > /dev/null
 
   # TODO: adjust to the highest one found by default?
-  export NODE_VERSION="v0.11.12"
+  export NODE_VERSION="v0.10.28"
   export NODE_PATH="${NVM_DIR}/${NODE_VERSION}/lib/node_modules:\
 ${HOME}/lib/node_modules:./node_modules"
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
@@ -566,6 +567,7 @@ if ! exists python; then
   echo 'install python via:'; echo
   echo 'brew install python'
 fi
+export PYTHONPATH="/usr/local/Cellar/python/2.7.6_1/Frameworks/Python.framework/Versions/2.7/lib/python2.7:/usr/local/lib/python2.7:/usr/local/Cellar/git/1.8.0.2/lib/python2.7"
 
 # Console Vim
 if exists vim; then
@@ -792,3 +794,4 @@ alias hide_hidden="defaults write com.apple.Finder AppleShowAllFiles NO && killa
 # airline-promptline shell prompt file, if used.
 [[ -s ${HOME}/.shell_prompt.sh ]] && source ${HOME}/.shell_prompt.sh
 
+source ~/Dropbox/Documents/TWC/.localrc

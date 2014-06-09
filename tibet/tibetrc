@@ -25,7 +25,6 @@ alias srctibet="source $HOME/.tibetrc"
 # cd directory aliases
 alias cdtibet='cd ${TIBET_HOME}'
 alias cdnotes="cd ${TPI_HOME}/notes"
-alias cdtsh='cd ${TIBET_HOME}/tsh'
 
 alias cdtdp='cd ${TIBET_HOME}/tdp'
 alias cdsherpa='cd ${TIBET_HOME}/sherpa'
