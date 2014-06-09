@@ -101,7 +101,7 @@ set your font to a Powerline-compatible font. This will help you see the full
 display from any Powerline status line improvements etc.
 
 ```bash
-defaults write com.apple.Finder AppleShowAllFiles YES
+defaults write com.apple.finder AppleShowAllFiles -boolean true
 killall Finder
 ```
 
