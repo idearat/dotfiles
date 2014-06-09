@@ -32,13 +32,13 @@ if [[ -d ~/.nvm ]]; then
     echo 'Found nvm.'
 else
   echo 'Installing nvm via curl...'
-  curl https://raw.github.com/creationix/nvm/v0.4.0/install.sh | sh
+  curl https://raw.github.com/creationix/nvm/v0.7.0/install.sh | sh
 fi
 
-echo 'Installing latest 0.11.x node.js...'
+echo 'Installing latest 0.10.28 node.js...'
 source ~/.nvm/nvm.sh > /dev/null 2>&1
-nvm install 0.11
-nvm use 0.11
+nvm install 0.10.28
+nvm use 0.10.28
 
 # We use a lot of submodules in the vim section in particular.
 # Note we checkout master to avoid detached HEAD conditions.
@@ -141,7 +141,8 @@ brew install https://raw.github.com/postmodern/chgems/master/homebrew/chgems.rb)
 
 echo 'Verifying application support...'
 
-# Install (Mac)VIM and link MacVIM into Applications dir.
+# Install (Mac)VIM and link MacVIM into Applications dir. NOTE this requires
+# XCode, full XCode, not just command line tools.
 echo 'Checking for macvim and vim...'
 [[ $(brew list macvim) ]] > /dev/null 2>&1 || \
 (echo 'Installing macvim via brew...' && \
