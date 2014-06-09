@@ -31,10 +31,10 @@ brew doctor
 
 The `brew doctor` command should run clean before proceeding.
 
-### Gnu make
+### XCode
 
-On a Mac you'll need to install XCode's command line tools. Download the XCode
-package for your system and then install them from the XCode Download menu:
+On a Mac you'll need to install XCode and XCode's command line tools. Download the
+XCode package for your system and then install them from the XCode Download menu:
 
 ```
 Preferences -> Downloads -> Command Line Tools
