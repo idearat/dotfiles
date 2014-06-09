@@ -77,9 +77,13 @@ along with MacVim and overrides your standard system version of VIM.
 ## Post-Install Steps
 
 Once the install script has run you will have a new set of zsh startup scripts,
-aliases, etc. which you can take advantage of. You'll want to source your
-~/.zshrc file to activate those in any open shells, or simply restart your
-terminal application.
+aliases, etc. which you can take advantage of.
+
+For everything to work properly you may need to edit /etc/shells to place an entry
+for /usr/local/bin/zsh there to allow you to make it your default shell.
+
+Once your default shell has been set you'll want to source your ~/.zshrc file to
+activate your profile in any open shells, or simply restart your terminal app(s).
 
 ```bash
 source ~/.zshrc
