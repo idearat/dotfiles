@@ -599,12 +599,12 @@ if exists gjslint; then
     no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level\
     --custom_jsdoc_tags=name,synopsis,description,example,returns,todo"
 else
-  echo 'gjslint not found'
-  echo 'install gjslint via:';echo
-  echo 'cd /usr/local/src'
-  echo 'svn checkout http://closure-linter.googlecode.com/svn/trunk/ closure-linter-read-only';
-  echo 'cd closure-linter-read-only'
-  echo 'python ./setup.py install'
+#  echo 'gjslint not found'
+#  echo 'install gjslint via:';echo
+#  echo 'cd /usr/local/src'
+#  echo 'svn checkout http://closure-linter.googlecode.com/svn/trunk/ closure-linter-read-only';
+#  echo 'cd closure-linter-read-only'
+#  echo 'python ./setup.py install'
 fi
 
 # TODO: write something that actually works. This doesn't really work.
