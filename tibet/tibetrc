@@ -10,10 +10,9 @@
 
 alias base='export TIBET_HOME="${TPI_HOME}/TIBET"'
 alias base3='export TIBET_HOME="${TPI_HOME}/TIBET3"'
+
 alias 3='base3;cdtibet;clear'
 alias 5='base;cdtibet;clear'
-alias cli='5;cd src/cli;clear'
-alias dna='5;cd dna/default;clear'
 
 # work from old codebase for now
 base
@@ -22,72 +21,64 @@ base
 alias vimtibet="vi $HOME/.tibetrc"
 alias srctibet="source $HOME/.tibetrc"
 
-# cd directory aliases
-alias cdtibet='cd ${TIBET_HOME}'
-alias cdnotes="cd ${TPI_HOME}/notes"
+alias forms='cd ${DEVL_HOME}/WebSanity/formsanity-ng;clear'
 
-alias cdtdp='cd ${TIBET_HOME}/tdp'
-alias cdsherpa='cd ${TIBET_HOME}/sherpa'
-
-alias cdtpi='cd ${TPI_HOME}'
-alias cddbsa='cd ${DEVL_HOME}/DBSA'
 alias cdsite='cd ${TPI_HOME}/technicalpursuit.com'
-alias cdwiki='cd ${TPI_HOME}/TIBET.wiki'
-
-alias tpi='base;cdtpi;clear'
 alias site='base;cdsite;clear'
+alias cdtpi='cd ${TPI_HOME}'
+alias tpi='base;cdtpi;clear'
+alias cdwiki='cd ${TPI_HOME}/TIBET.wiki'
 alias wiki='base;cdwiki;clear'
+alias cdpages='cd ${TPI_HOME}/TechnicalPursuit.github.io'
+alias pages='base;cdpages;clear'
 
-alias tpcfg='cd ${TIBET_HOME}/base/cfg'
-alias tpdat='cd ${TIBET_HOME}/base/dat'
-alias tpdemo='cd ${TIBET_HOME}/base/doc/demo'
-alias tpdoc='cd ${TIBET_HOME}/base/doc'
-alias tpetc='cd ${TIBET_HOME}/base/etc'
-alias tplib='cd ${TIBET_HOME}/base/lib'
-alias tpsrc='cd ${TIBET_HOME}/base/src'
-alias tptst='cd ${TIBET_HOME}/base/tst'
+alias cddbsa='cd ${DEVL_HOME}/DBSA'
+alias cdtibet='cd ${TIBET_HOME}'
+
+alias d2d='cd ~/tmp/d2d'
+alias tdc='cd ${TIBET_HOME}/src/tibet/tools/tdc'
+alias tds='cd ${TIBET_HOME}/etc/tds/'
+alias sherpa='cd ${TIBET_HOME}/src/tibet/tools/sherpa'
+
+alias cli='5;cd src/tibet/cli;clear'
+alias dna='5;cd dna;clear'
+
+alias tpcfg='cd ${TIBET_HOME}/lib/cfg'
+alias tplib='cd ${TIBET_HOME}/lib'
+alias tpsrc='cd ${TIBET_HOME}/src'
+alias tptst='cd ${TIBET_HOME}/test'
 
 alias chsh='cd ${TIBET_HOME}/chsh'
 
-alias tns='cd ${TIBET_HOME}/base/src'
-alias tsh='cd ${TIBET_HOME}/base/src/tsh'
+alias tpboot='5;cd src/tibet/boot'
+alias tpdist='5;cd build'
 
-#alias tpboot='cd ${TIBET_HOME}/sherpa/TIBET-INF/base/lib/tibet/src'
-#alias tpboot='cd ${DEVL_HOME}/Bedney/TIBET/sherpa/TIBET-INF/base/lib/tibet/src'
-#alias tpboot='cd ${DEVL_HOME}/Bedney/TIBET/tdp/TIBET-INF/base/lib/tibet/src'
-alias tpboot='3;cd base/lib/tibet/src'
+alias tptdk='cd ${TIBET_HOME}/src/tibet'
 
-alias tptdk='cd ${TIBET_HOME}/base/src/tibet'
+alias tpcss='cd ${TIBET_HOME}/lib/styles'
+alias tpdat='cd ${TIBET_HOME}/lib/dat'
+alias tphtml='cd ${TIBET_HOME}/lib/html'
+alias tpxsl='cd ${TIBET_HOME}/lib/xsl'
 
-alias tpcss='cd ${TIBET_HOME}/base/lib/tibet/css'
-alias tphtml='cd ${TIBET_HOME}/base/lib/tibet/html'
-alias tpxsl='cd ${TIBET_HOME}/base/lib/tibet/html'
+alias tpkernel='cd ${TIBET_HOME}/src/tibet/kernel'
+alias tpshell='cd ${TIBET_HOME}/src/tibet/shells'
+alias tpstorage='cd ${TIBET_HOME}/src/tibet/storage'
+alias tptesting='cd ${TIBET_HOME}/src/tibet/testing'
 
-alias tpeffects='cd ${TIBET_HOME}/base/src/tibet/effects'
-alias tpkernel='cd ${TIBET_HOME}/base/src/tibet/kernel'
-alias tpserv='cd ${TIBET_HOME}/base/src/tibet/services'
-alias tpshell='cd ${TIBET_HOME}/base/src/tibet/shells'
-alias tpsnip='cd ${TIBET_HOME}/base/doc/snippets'
-alias tpstorage='cd ${TIBET_HOME}/base/src/tibet/storage'
-
-alias tpacl='cd ${TIBET_HOME}/base/src/acl'
-alias tpamz='cd ${TIBET_HOME}/base/src/amz'
-alias tpbpel='cd ${TIBET_HOME}/base/src/bpel'
-alias tpcssml='cd ${TIBET_HOME}/base/src/css'
-alias tpdnd='cd ${TIBET_HOME}/base/src/dnd'
-alias tpev='cd ${TIBET_HOME}/base/src/ev'
-alias tpgoog='cd ${TIBET_HOME}/base/src/goog'
-alias tpsig='cd ${TIBET_HOME}/base/src/sig'
-alias tpsmil='cd ${TIBET_HOME}/base/src/smil'
-alias tpsvg='cd ${TIBET_HOME}/base/src/svg'
-alias tptibet='cd ${TIBET_HOME}/base/src/tibet'
-alias tptsh='cd ${TIBET_HOME}/base/src/tsh'
-alias tpxctrls='cd ${TIBET_HOME}/base/src/xctrls'
-alias tpxhtml='cd ${TIBET_HOME}/base/src/xhtml'
-alias tpxml='cd ${TIBET_HOME}/base/src/xml'
-alias tpxmpp='cd ${TIBET_HOME}/base/src/xmpp'
-alias tpxs='cd ${TIBET_HOME}/base/src/xs'
-alias tpyui='cd ${TIBET_HOME}/base/src/yui'
+alias tpacl='cd ${TIBET_HOME}/src/acl'
+alias tpamz='cd ${TIBET_HOME}/src/amz'
+alias tpev='cd ${TIBET_HOME}/src/ev'
+alias tpgoog='cd ${TIBET_HOME}/src/goog'
+alias tpsig='cd ${TIBET_HOME}/src/sig'
+alias tpsmil='cd ${TIBET_HOME}/src/smil'
+alias tpsvg='cd ${TIBET_HOME}/src/svg'
+alias tptibet='cd ${TIBET_HOME}/src/tibet'
+alias tptsh='cd ${TIBET_HOME}/src/tsh'
+alias tpxctrls='cd ${TIBET_HOME}/src/xctrls'
+alias tpxhtml='cd ${TIBET_HOME}/src/xhtml'
+alias tpxml='cd ${TIBET_HOME}/src/xml'
+alias tpxmpp='cd ${TIBET_HOME}/src/xmpp'
+alias tpxs='cd ${TIBET_HOME}/src/xs'
 
 # ---
 # eof
