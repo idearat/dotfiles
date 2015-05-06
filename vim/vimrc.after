@@ -87,6 +87,9 @@ set previewheight=24
 set number
 set cursorline
 
+" Keep cursorline centered in the vertical space of the current window.
+"set scrolloff=999
+
 " Show the current mode. Yeah yeah, modes are the root of all evil. Whatever.
 set showmode
 
@@ -138,7 +141,7 @@ set hlsearch
 
 " In general I don't want to miss potential matches so ignore case.
 "TODO: explore smartcase and/or a toggle for this.
-set noignorecase
+set ignorecase
 map <leader>i :set ignorecase! ignorecase?<cr>
 
 " Configure tab completion to match my typical preference.
@@ -262,6 +265,9 @@ let g:promptline_preset = {
 " ---
 " Syntastic (dynamic syntax checking)
 " ---
+
+" Prefer eslint
+let g:syntastic_javascript_checkers = ['eslint']
 
 " Run when we open the file.
 let g:syntastic_check_on_open = 1

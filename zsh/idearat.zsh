@@ -19,6 +19,8 @@ export MANPATH=".:${HOME}/man:/usr/local/man:/usr/local/share/man:/usr/man:\
 export DEVL_HOME="${HOME}/dev"
 export USB_ROOT='/Volumes/secure'
 
+export COUCH='http://0.0.0.0:5984'
+
 # ---
 # shell options
 # ---
@@ -136,6 +138,7 @@ alias ftp='ftp -i'
 alias grep='grep --color=auto'
 alias h='history'
 alias ifconfig='ifconfig -a'
+alias irc='irssi'
 alias jobs='jobs -l'
 alias ln='ln -i'
 alias lynx='lynx -vikeys'
@@ -157,13 +160,15 @@ alias x="exit"  # don't want X-Quartz anyway ;)
 # ---
 
 alias ..='cd ..'
-alias ...='cd ../../../'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 alias cdbin="cd ${HOME}/bin"
 alias cddev="cd ${DEVL_HOME}"
 # NB: depends on having cloned into ${HOME}/.dotfiles.
 alias cdidearat='cd ${IDEARAT_HOME}'
 alias cdforks='cd ${IDEARAT_HOME}/forks'
 alias cdfluff='cd ${HOME}/tmp/fluffy'
+alias cdzippy='cd ${HOME}/tmp/zippy'
 alias cdsrc='cd /usr/local/src'
 alias cdtmp="cd ${HOME}/tmp"
 alias cdtri="cd ${HOME}/Documents/SS\ Docs/Triathlon"
@@ -173,11 +178,13 @@ alias cdusb="cd ${USB_ROOT}"
 # utility Aliases
 # ---
 
-alias hours="vim ~/Dropbox/hours.md"
-alias todo="vim ~/Dropbox/todo.md"
-alias notes="vim ~/Dropbox/notes.md"
+alias hours="vim ~/DroppedBox/hours.md"
+alias todo="vim ~/tmp/todo.md"
+alias notes="vim ~/DroppedBox/notes.md"
 alias more='less'
 alias vi='vim'
+
+alias lint="eslint .; jshint .";
 
 alias myip="curl ipv4.icanhazip.com"
 # Show time/date in easy form.
@@ -272,11 +279,12 @@ function exists () {
 # line which handles filenames with blanks.
 function findem () {
   find . -name .svn -prune -o -name .git -prune -o -name node_modules\
-    -prune -o -name "*$1*" 2<&1 | grep -v '\.svn' | grep -v '\.git' |\
+    -prune -o -iname "*$1*" 2<&1 | grep -v '\.svn' | grep -v '\.git' |\
     grep -v 'node_modules' | grep -v 'thirdParty' |\
     grep -v 'Permission denied' | grep -v '\.sw[op]' |\
     grep -v '\.class' | grep -v '\.scssc' | grep -v '\.tap' | sed 's/\ /\\ /g'
 }
+alias findme=findem
 
 # Regex-driven update of javascript-specific CTAGS data. Prunes nested levels of
 # node_modules but allows for the first level so you can drill down into libs.
@@ -415,16 +423,16 @@ fi
 
 # Ack for common file types in web development.
 if exists ack; then
-  alias ackls='ack -l -s --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
-  alias ackall='ack -l -s --nolog --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
-  alias ackcss='ack -l -s --css --sass --less --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackhtml='ack -l -s --html --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjs='ack -l -s --js --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjsish='ack -l -s --js --json --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjson='ack -l -s --json --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackmd='ack -l -s --markdown --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackxml='ack -l -s --xml --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackvim='ack -l -s --vim --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackls='ack -l -i -s --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
+  alias ackall='ack -l -i -s --nolog --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
+  alias ackcss='ack -l -i -s --css --sass --less --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackhtml='ack -l -i -s --html --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjs='ack -l -i -s --js --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjsish='ack -l -i -s --js --json --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjson='ack -l -i -s --json --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackmd='ack -l -i -s --markdown --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackxml='ack -l -i -s --xml --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackvim='ack -l -i -s --vim --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
 else
   echo 'ack not found'
   echo 'install ack via:';echo
@@ -437,8 +445,11 @@ if exists git; then
   alias ba="git branch -a"
   alias d='git diff --name-status HEAD..master'
   alias moo="git moo"
+  alias m="moo"
   alias s='git status --short --branch'
+  alias sl='git stash list'
   alias t='git log --oneline --graph --all --date-order --first-parent --decorate=short'
+  alias lb="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
 
   # Display the files which are considered changed in any form.
   function changed () {
@@ -516,12 +527,12 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use v0.10.28 2 > /dev/null
+  nvm use v0.10.36 2 > /dev/null
 
   # TODO: adjust to the highest one found by default?
-  export NODE_VERSION="v0.10.28"
-  export NODE_PATH="${NVM_DIR}/${NODE_VERSION}/lib/node_modules:\
-${HOME}/lib/node_modules:./node_modules"
+  export NODE_VERSION="v0.10.36"
+  #export NODE_PATH="${NVM_DIR}/${NODE_VERSION}/lib/node_modules:\
+#//${HOME}/lib/node_modules:./node_modules"
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
 fi
 
@@ -657,11 +668,10 @@ alias lintem="hintem; glintem"
 # ---
 
 # Chrome
-#alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-#--enable-file-cookies --allow-file-access-from-files \
-#--js-flags=\"--debugger true --debug_code --expose-debug-as debug --expose-gc\""
-alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --disable-web-security \ --allow-file-access --allow-file-access-from-files"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security --allow-file-access-from-files"
+alias cleanroom="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security --allow-file-access-from-files --user-data-dir=/dev/null"
+alias canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --disable-web-security --allow-file-access-from-files"
+
 
 # TODO: convert to something we can run from Alfred
 [[ -e '/Applications/Marked.app/Contents/MacOS/Marked' ]] && \
@@ -775,6 +785,10 @@ alias ssbod="pushd ${HOME}/dev/idearat/big7; ./ssbod.js; popd"
 function sslbs () {
   # note use of $@ here to send 'unrolled' params.
   pushd ${HOME}/dev/idearat/big7 > /dev/null 2>&1; ./sslbs.js "$@"; popd > /dev/null 2>&1;
+}
+function ssmet () {
+  # note use of $@ here to send 'unrolled' params.
+  pushd ${HOME}/dev/idearat/big7 > /dev/null 2>&1; ./ssmet.js "$@"; popd > /dev/null 2>&1;
 }
 
 # ---
