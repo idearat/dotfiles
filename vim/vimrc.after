@@ -62,6 +62,9 @@ command! -nargs=+ Scratch call <sid>Scratch(<f-args>)
 " Editing
 " ---
 
+" Make sure delete key lets you delete as you like.
+set backspace=indent,start,eol
+
 " Set the function/expression used to determine indent.
 " TODO: Write something that doesn't frustrate me too much :)
 set indentexpr=""
@@ -318,7 +321,7 @@ let g:tmuxline_preset = {
 
 " Maintain the same line in/out of vim and tmux.
 if exists (":Tmuxline")
-  Tmuxline
+  "Tmuxline
 endif
 
 " ---

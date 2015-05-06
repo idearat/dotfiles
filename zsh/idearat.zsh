@@ -794,4 +794,4 @@ alias hide_hidden="defaults write com.apple.Finder AppleShowAllFiles NO && killa
 # airline-promptline shell prompt file, if used.
 [[ -s ${HOME}/.shell_prompt.sh ]] && source ${HOME}/.shell_prompt.sh
 
-source ~/Dropbox/Documents/TWC/.localrc
+source ~/Dropbox/zsh.localrc

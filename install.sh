@@ -22,7 +22,7 @@ if [[ $(which brew) ]]; then
 else
     echo 'Homebrew (brew) not found. Install brew and retry.'
     echo 'install brew via:'; echo
-    echo 'ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
+    echo 'ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
 fi
 
 # Install the node version manager and use it to install node.js/npm. Note that
@@ -32,7 +32,7 @@ if [[ -d ~/.nvm ]]; then
     echo 'Found nvm.'
 else
   echo 'Installing nvm via curl...'
-  curl https://raw.github.com/creationix/nvm/v0.7.0/install.sh | sh
+  curl https://raw.githubusercontent.com/creationix/nvm/v0.25.1/install.sh | bash
 fi
 
 echo 'Installing latest 0.10.28 node.js...'
@@ -77,6 +77,11 @@ echo 'Checking for ack...'
 echo 'Checking for ag...'
 [[ $(brew list ag) ]] > /dev/null 2>&1 || \
 (echo 'Installing ag via brew...' && brew install ag)
+
+# Install cloc (lines of code) utility for sizing codebases.
+echo 'Checking for cloc...'
+[[ $(brew list cloc) ]] > /dev/null 2>&1 || \
+(echo 'Installing cloc via brew...' && brew install cloc)
 
 # Install CTAGS to provide support for jstags alias in zsh config.
 echo 'Checking for ctags...'
@@ -147,6 +152,9 @@ echo 'Checking for macvim and vim...'
 [[ $(brew list macvim) ]] > /dev/null 2>&1 || \
 (echo 'Installing macvim via brew...' && \
 brew install macvim --override-system-vim && \
+brew linkapps)
+
+brew install vim --override-system-vim && \
 brew linkapps)
 
 # Install TMUX support and MacOSX patches for clipboard.
@@ -233,6 +241,8 @@ ln -sfv $DOTFILES/vim/vimrc ~/.vimrc
 \mv -f ~/.vimrc.after ~/.vimrc.after_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/vim/vimrc.after ~/.vimrc.after
 
+ln -sfv ~/Dropbox/vimrc.local ~/.vimrc.local
+
 \mv -f ~/.zshrc ~/.zshrc_orig > /dev/null 2>&1
 ln -sfv $DOTFILES/zsh/zshrc ~/.zshrc
 
@@ -254,6 +264,9 @@ echo 'Post-installation options:'; echo
 
 echo 'To make zsh your default shell (and you should now):'
 echo 'chsh -s /usr/local/bin/zsh'; echo
+
+echo 'To change your hostname display:'; echo
+echo 'sudo scutil --set HostName name-you-want'; echo
 
 echo 'To remove _orig files use:'
 echo "\ls -a | grep \'_orig$\' | xargs -n 1 rm -rf";

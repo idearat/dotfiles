@@ -1,5 +1,6 @@
 # README
 
+
 My zsh, vim, tmux, etc. support file configuration. Uses a customizable
 configuration for zsh and vim, Pathogen for VIM components, and a few
 other pre-built dotfiles for common utilities like ack, git, etc.
@@ -17,7 +18,7 @@ recent version of Mac OSX. In particular, one that has at least a standard
 You need `brew` to install various other dependencies. Get it via:
 
 ```bash
-ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 If you don't have ruby on your machine, well, maybe it's time for a new one ;).
@@ -81,6 +82,11 @@ aliases, etc. which you can take advantage of.
 
 For everything to work properly you may need to edit /etc/shells to place an entry
 for /usr/local/bin/zsh there to allow you to make it your default shell.
+
+You can set the default shell by typing:
+``` bash
+chsh -s /usr/local/bin/zsh
+```
 
 Once your default shell has been set you'll want to source your ~/.zshrc file to
 activate your profile in any open shells, or simply restart your terminal app(s).
