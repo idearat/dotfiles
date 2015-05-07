@@ -35,10 +35,10 @@ else
   curl https://raw.githubusercontent.com/creationix/nvm/v0.25.1/install.sh | bash
 fi
 
-echo 'Installing latest 0.10.28 node.js...'
+echo 'Installing latest 0.10.36 node.js...'
 source ~/.nvm/nvm.sh > /dev/null 2>&1
-nvm install 0.10.28
-nvm use 0.10.28
+nvm install 0.10.36
+nvm use 0.10.36
 
 # We use a lot of submodules in the vim section in particular.
 # Note we checkout master to avoid detached HEAD conditions.
