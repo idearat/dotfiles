@@ -154,6 +154,7 @@ echo 'Checking for macvim and vim...'
 brew install macvim --override-system-vim && \
 brew linkapps)
 
+(echo 'Installing vim via brew...' && \
 brew install vim --override-system-vim && \
 brew linkapps)
 
