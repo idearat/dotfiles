@@ -88,6 +88,12 @@ You can set the default shell by typing:
 chsh -s /usr/local/bin/zsh
 ```
 
+For npm completion to work effectively you may want to execute the following:
+
+```bash
+npm completion >> ~/.zshrc
+```
+
 Once your default shell has been set you'll want to source your ~/.zshrc file to
 activate your profile in any open shells, or simply restart your terminal app(s).
 

@@ -159,7 +159,7 @@ map Q gq
 set formatoptions=tcroq
 
 " Colorize lines longer than 80 chars.
-match ErrorMsg '\%>80v.\+'
+match WarningMsg '\%>80v.\+'
 
 " Set to match our long-line colorizing rule.
 set textwidth=80
@@ -270,7 +270,7 @@ let g:promptline_preset = {
 let g:syntastic_javascript_checkers = ['eslint']
 
 " Run when we open the file.
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 
 " Tell syntastic to update the location list.
 let g:syntastic_always_populate_loc_list=1
@@ -278,28 +278,7 @@ let g:syntastic_always_populate_loc_list=1
 " Sensible debug default.
 let g:syntastic_debug = 0
 
-" Adapt the jshintrc file used based on the best match found.
-function! s:find_jshintrc(dir)
-    let l:found = globpath(a:dir, '.jshintrc')
-    if filereadable(l:found)
-        return l:found
-    endif
-
-    let l:parent = fnamemodify(a:dir, ':h')
-    if l:parent != a:dir
-        return s:find_jshintrc(l:parent)
-    endif
-
-    return "~/.jshintrc"
-endfunction
-
-" Trigger update of the jshintrc file.
-function! UpdateJsHintConf()
-    let l:dir = expand('%:p:h')
-    let l:jshintrc = s:find_jshintrc(l:dir)
-    let g:syntastic_javascript_jshint_conf = l:jshintrc
-endfunction
-au BufEnter *.js call UpdateJsHintConf()
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 
 " Map :Errors into something that'll give us a real location list.
 map <leader>e :Errors<cr>
@@ -351,6 +330,21 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead .vim* setfiletype vim
 augroup END
 
+" Set iterm2 tab and window title to current file name.
+set t_ts=]1;
+set t_fs=
+set title
+function! Title()
+  set titleold=Shell
+  let tstr = expand('%:t')
+  if (strlen(tstr) > 15)
+    let tstr = '...' . strpart(tstr, strlen(tstr) - 15, 15)
+  endif
+  let &titlestring =  ' ' . tstr
+  set title
+endfunction
+autocmd BufEnter,BufFilePost,BufNewFile,BufRead,FileReadPost * call Title()
+
 " don't show whitespace in help files, it's distracting :).
 autocmd FileType help set nolist
 
@@ -363,5 +357,7 @@ filetype detect
 " Allow any local changes to override. This allows for configuration specific to
 " a particular work environment or machine (company laptop etc.)
 source ~/.vimrc.local
+
+call Title()
 
 "=============================================================================

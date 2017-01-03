@@ -59,7 +59,7 @@ hi WarningMsg	guifg=salmon
 hi TabLine guibg=peru guifg=wheat
 
 " syntax highlighting groups
-hi Comment	guifg=SkyBlue
+hi Comment	guifg=darkgrey
 hi Constant	guifg=#ffa0a0
 hi Identifier	guifg=palegreen
 hi Statement	guifg=khaki
@@ -95,7 +95,7 @@ hi DiffAdd	ctermbg=4
 hi DiffChange	ctermbg=5
 hi DiffDelete	cterm=bold ctermfg=4 ctermbg=6
 hi DiffText	cterm=bold ctermbg=1
-hi Comment	ctermfg=darkcyan
+hi Comment	ctermfg=darkgrey
 hi Constant	ctermfg=brown
 hi Special	ctermfg=5
 hi Identifier	ctermfg=6

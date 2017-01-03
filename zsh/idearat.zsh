@@ -6,7 +6,7 @@
 
 export PATH="${HOME}/bin"
 export PATH="${PATH}:/usr/local/bin:/usr/local/bin/araxis"
-export PATH="${PATH}:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
+export PATH="${PATH}:/usr/texbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 
 source $(brew --prefix chruby)/share/chruby/chruby.sh > /dev/null 2>&1
 chruby 1.9.3 > /dev/null 2>&1
@@ -19,7 +19,8 @@ export MANPATH=".:${HOME}/man:/usr/local/man:/usr/local/share/man:/usr/man:\
 export DEVL_HOME="${HOME}/dev"
 export USB_ROOT='/Volumes/secure'
 
-export COUCH='http://0.0.0.0:5984'
+#export COUCH='http://0.0.0.0:5984'
+#export COUCH_URL="http://localhost:5984"
 
 # ---
 # shell options
@@ -82,6 +83,7 @@ HISTSIZE=SAVEHIST=10000
 export IDEARAT_HOME="${DEVL_HOME}/idearat"
 export PROJECT_HOME="${DEVL_HOME}/idearat"
 
+export NGINX_HOME="/usr/local/etc/nginx"
 export TPI_HOME="${DEVL_HOME}/TPI"
 export TIBET_HOME="${TPI_HOME}/TIBET"
 export CODESWARM_HOME="${TPI_HOME}/CodeSwarm"
@@ -90,6 +92,7 @@ export FIRSTCLASS_HOME="${PROJECT_HOME}/FirstClass"
 alias cdcs='cd ${CODESWARM_HOME}'
 alias cdfb='cd ${PROJECT_HOME}/fiscalball'
 alias cdfc='cd ${FIRSTCLASS_HOME}'
+alias cdnginx='cd ${NGINX_HOME}'
 alias cdtab='cd ${PROJECT_HOME}/tabmarks'
 alias cdviz='cd ${PROJECT_HOME}/vizitd'
 
@@ -105,6 +108,7 @@ alias srcit="source ${HOME}/.zshrc"
 
 alias vimdot="vi ${HOME}/.dotfiles/install.sh"
 alias vimgit="vi ${HOME}/.gitconfig"
+alias vimng="vi /usr/local/etc/nginx/nginx.conf"
 alias vimtmux="vi ${HOME}/.tmux.conf"
 
 alias vimvi="vi ${HOME}/.vimrc.after"
@@ -167,19 +171,21 @@ alias cddev="cd ${DEVL_HOME}"
 # NB: depends on having cloned into ${HOME}/.dotfiles.
 alias cdidearat='cd ${IDEARAT_HOME}'
 alias cdforks='cd ${IDEARAT_HOME}/forks'
-alias cdfluff='cd ${HOME}/tmp/fluffy'
-alias cdzippy='cd ${HOME}/tmp/zippy'
+alias cdfluff='cd ${HOME}/temporary/fluffy'
+alias cdzippy='cd ${HOME}/temporary/zippy'
 alias cdsrc='cd /usr/local/src'
-alias cdtmp="cd ${HOME}/tmp"
+alias cdtmp="cd ${HOME}/temporary"
 alias cdtri="cd ${HOME}/Documents/SS\ Docs/Triathlon"
 alias cdusb="cd ${USB_ROOT}"
+
+alias ang="cd ${HOME}/temporary/angular-quickstart"
 
 # ---
 # utility Aliases
 # ---
 
 alias hours="vim ~/DroppedBox/hours.md"
-alias todo="vim ~/tmp/todo.md"
+alias todo="vim ~/temporary/todo.md"
 alias notes="vim ~/DroppedBox/notes.md"
 alias more='less'
 alias vi='vim'
@@ -198,8 +204,11 @@ alias rmzcomp="\\ls -a | grep 'zcompdump' | xargs -n 1 rm -rf"
 # Output decent size information
 alias sizes='du -s *'
 
-# NB: this relies on vim config to put temp files in ${HOME}/tmp
-alias swapped='find ${HOME}/tmp -name '"'*.sw[op]'"' -print'
+# NB: this relies on vim config to put temp files in ${HOME}/temporary
+alias swapped='find ${HOME}/temporary -name '"'*.sw[op]'"' -print'
+
+alias killcrash='sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist'
+alias slapcamera='sudo killall VDCAssistant'
 
 # ---
 # utility functions
@@ -423,16 +432,17 @@ fi
 
 # Ack for common file types in web development.
 if exists ack; then
-  alias ackls='ack -l -i -s --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
-  alias ackall='ack -l -i -s --nolog --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
-  alias ackcss='ack -l -i -s --css --sass --less --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackhtml='ack -l -i -s --html --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjs='ack -l -i -s --js --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjsish='ack -l -i -s --js --json --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjson='ack -l -i -s --json --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackmd='ack -l -i -s --markdown --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackxml='ack -l -i -s --xml --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackvim='ack -l -i -s --vim --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackt='ack --ignore-dir lib/src --ignore-dir deps/'
+  alias ackls='ack -l -s --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
+  alias ackall='ack -l -s --nolog --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
+  alias ackcss='ack -l -s --css --sass --less --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackhtml='ack -l -s --html --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjs='ack -l -s --js --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjsish='ack -l -s --js --json --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackjson='ack -l -s --json --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackmd='ack -l -s --markdown --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackxml='ack -l -s --xml --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  alias ackvim='ack -l -s --vim --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
 else
   echo 'ack not found'
   echo 'install ack via:';echo
@@ -448,8 +458,9 @@ if exists git; then
   alias m="moo"
   alias s='git status --short --branch'
   alias sl='git stash list'
-  alias t='git log --oneline --graph --all --date-order --first-parent --decorate=short'
+  alias t='git log --oneline --graph --all --date-order --first-parent --decorate=short --simplify-by-decoration'
   alias lb="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+  alias gl="git log --graph --all --oneline --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 
   # Display the files which are considered changed in any form.
   function changed () {
@@ -527,7 +538,7 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use v0.10.36 2 > /dev/null
+  nvm use v4 2 > /dev/null
 
   # TODO: adjust to the highest one found by default?
   export NODE_VERSION="v0.10.36"
@@ -609,7 +620,7 @@ if exists gjslint; then
   alias tlint="gjslint --jslint_error optional_type_marker,well_formed_author,\
     no_braces_around_inherit_doc,braces_around_type,blank_lines_at_top_level\
     --custom_jsdoc_tags=name,synopsis,description,example,returns,todo"
-else
+#else
 #  echo 'gjslint not found'
 #  echo 'install gjslint via:';echo
 #  echo 'cd /usr/local/src'
@@ -695,6 +706,8 @@ fi
 export JAVA_HOME="$(/usr/libexec/java_home)"
 export JAVA_OPTS="-Xmx256m"
 
+export SCALA_HOME="/usr/local/share/scala"
+
 # NB: This is a tab
 export XMLLINT_INDENT="	"
 
@@ -755,11 +768,16 @@ if exists memcached; then
   alias mem="memcached -d"
 fi
 
-
 # MySQL
 if exists mysql.server; then
   alias mystart="mysql.server start"
   alias mystop="sudo mysql.server stop"
+fi
+
+# Memcached
+if exists memcached; then
+  alias ngstart="sudo nginx"
+  alias ngstop="sudo nginx -s stop"
 fi
 
 # Postgres
@@ -809,3 +827,18 @@ alias hide_hidden="defaults write com.apple.Finder AppleShowAllFiles NO && killa
 [[ -s ${HOME}/.shell_prompt.sh ]] && source ${HOME}/.shell_prompt.sh
 
 source ~/Dropbox/zsh.localrc
+
+export PATH="$PATH:$SCALA_HOME/bin"
+
+# Only show the current directory's name in the tab
+export DISABLE_AUTO_TITLE="true"
+function precmd() {
+  print -Pn "\e]1;${PWD##*/}\a"
+}
+
+#echo kern.maxfiles=65536 | sudo tee -a /etc/sysctl.conf
+#echo kern.maxfilesperproc=2048 | sudo tee -a /etc/sysctl.conf
+#sudo sysctl -w kern.maxfiles=65536
+#sudo sysctl -w kern.maxfilesperproc=2048
+ulimit -n 65536
+ulimit -u 2048

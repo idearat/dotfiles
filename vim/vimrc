@@ -13,9 +13,9 @@
 " Make sure our local ~/.vim directory is part of the runtime search path.
 set runtimepath+=~/.vim
 
-" Put any working files (.swp etc) in ~/tmp.
-set backupdir=~/tmp
-set directory=~/tmp
+" Put any working files (.swp etc) in ~/temporary.
+set backupdir=~/temporary
+set directory=~/temporary
 
 " Map , to command prefix. Do this before loading plugins to ensure they pick up
 " the proper leader setting for any keymappings they may do. (seems some
