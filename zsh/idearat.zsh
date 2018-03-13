@@ -5,11 +5,11 @@
 # ---
 
 export PATH="${HOME}/bin"
-export PATH="${PATH}:/usr/local/bin:/usr/local/bin/araxis"
+export PATH="${PATH}:/usr/local/bin:/usr/local/bin/araxis:/usr/local/sbin"
 export PATH="${PATH}:/usr/texbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 
 source $(brew --prefix chruby)/share/chruby/chruby.sh > /dev/null 2>&1
-chruby 1.9.3 > /dev/null 2>&1
+chruby 2.2.3 > /dev/null 2>&1
 
 source ~/.nvm/nvm.sh > /dev/null 2>&1
 
@@ -125,6 +125,7 @@ alias l='ls -Fh'
 alias la='ls -aFh'
 alias ll='ls -lFh'
 alias lla='ls -laFh'
+alias l1='ls -C1'
 
 # ---
 # common flags
@@ -156,7 +157,9 @@ alias rm='rm -i'
 alias su='sudo -i'
 alias tail="tail -f"
 alias tmux="tmux -2"
+alias v="vim"
 alias wget='wget -c'
+alias x="exit"  # don't want X-Quartz anyway ;)
 alias x="exit"  # don't want X-Quartz anyway ;)
 
 # ---
@@ -208,7 +211,10 @@ alias sizes='du -s *'
 alias swapped='find ${HOME}/temporary -name '"'*.sw[op]'"' -print'
 
 alias killcrash='sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist'
-alias slapcamera='sudo killall VDCAssistant'
+alias killjenkins="sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist"
+
+alias fixcamera='sudo killall VDCAssistant'
+alias fixscreen='sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.screensharing.plist &&  sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist'
 
 # ---
 # utility functions
@@ -288,7 +294,7 @@ function exists () {
 # line which handles filenames with blanks.
 function findem () {
   find . -name .svn -prune -o -name .git -prune -o -name node_modules\
-    -prune -o -iname "*$1*" 2<&1 | grep -v '\.svn' | grep -v '\.git' |\
+    -prune -o -iname "*$1*" -print 2<&1 | grep -v '\.svn' | grep -v '\.git' |\
     grep -v 'node_modules' | grep -v 'thirdParty' |\
     grep -v 'Permission denied' | grep -v '\.sw[op]' |\
     grep -v '\.class' | grep -v '\.scssc' | grep -v '\.tap' | sed 's/\ /\\ /g'
@@ -538,12 +544,9 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use v4 2 > /dev/null
+  nvm use v6 2 > /dev/null
 
-  # TODO: adjust to the highest one found by default?
-  export NODE_VERSION="v0.10.36"
-  #export NODE_PATH="${NVM_DIR}/${NODE_VERSION}/lib/node_modules:\
-#//${HOME}/lib/node_modules:./node_modules"
+  export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
 fi
 
@@ -594,10 +597,10 @@ export PYTHONPATH="/usr/local/Cellar/python/2.7.6_1/Frameworks/Python.framework/
 # Console Vim
 if exists vim; then
   if [[ -e /usr/local/share/vim ]]; then
-    export VIMRUNTIME="/usr/local/share/vim/vim74"
+    export VIMRUNTIME="/usr/local/share/vim/vim80"
   else
     if [[ -e /usr/share/vim ]]; then
-      export VIMRUNTIME="/usr/share/vim/vim74"
+      export VIMRUNTIME="/usr/share/vim/vim80"
     fi
   fi
   export VISUAL=vim
@@ -705,6 +708,10 @@ fi
 # TODO: check for libexec, and java
 export JAVA_HOME="$(/usr/libexec/java_home)"
 export JAVA_OPTS="-Xmx256m"
+export CLASSPATH="~/etc/*.jar;${CLASSPATH}"
+
+export ANDROID_HOME="${HOME}/Library/Android/sdk"
+export PATH="${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/build-tools/25.0.2"
 
 export SCALA_HOME="/usr/local/share/scala"
 
@@ -826,7 +833,7 @@ alias hide_hidden="defaults write com.apple.Finder AppleShowAllFiles NO && killa
 # airline-promptline shell prompt file, if used.
 [[ -s ${HOME}/.shell_prompt.sh ]] && source ${HOME}/.shell_prompt.sh
 
-source ~/Dropbox/zsh.localrc
+#source ~/Dropbox/zsh.localrc
 
 export PATH="$PATH:$SCALA_HOME/bin"
 

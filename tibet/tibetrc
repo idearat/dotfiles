@@ -21,7 +21,7 @@ base
 alias vimtibet="vi $HOME/.tibetrc"
 alias srctibet="source $HOME/.tibetrc"
 
-alias forms='cd ${DEVL_HOME}/WebSanity/formsanity-ng;clear'
+alias forms='cd ${DEVL_HOME}/WebSanity/formsanity;clear'
 
 alias cdsite='cd ${TPI_HOME}/technicalpursuit.com'
 alias site='base;cdsite;clear'
@@ -35,18 +35,22 @@ alias pages='base;cdpages;clear'
 alias cddbsa='cd ${DEVL_HOME}/DBSA'
 alias cdtibet='cd ${TIBET_HOME}'
 
+alias dbtest='cd ~/temporary/dbtest'
 alias d2d='cd ~/temporary/d2d'
+alias hello='cd ~/temporary/hello'
 alias t2='cd ~/temporary/t2'
 alias todo='cd ~/temporary/todomvc'
+alias tws='tibet tws'
 
 alias tdc='cd ${TIBET_HOME}/src/tibet/tools/tdc'
-alias tds='cd ${TIBET_HOME}/etc/tds/'
+alias tds='cd ${TIBET_HOME}/tds/'
 alias sherpa='cd ${TIBET_HOME}/src/tibet/tools/sherpa'
 
 alias cli='5;cd src/tibet/cli;clear'
 alias dna='5;cd dna;clear'
 
 alias tpcfg='cd ${TIBET_HOME}/lib/cfg'
+alias tpcmd='cd ${TIBET_HOME}/cmd/make'
 alias tpdoc='cd ${TIBET_HOME}/doc/markdown'
 alias tpetc='cd ${TIBET_HOME}/etc/'
 alias tplib='cd ${TIBET_HOME}/lib'

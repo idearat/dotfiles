@@ -30,6 +30,10 @@ nmap <leader>vs :source $HOME/.vimrc.after<cr>
 nmap <leader>vc :sp $HOME/.janus/idearat/colors/idearat.vim<cr>
 nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<cr>
 
+if &diff
+    colorscheme solarized
+endif
+
 " ---
 " Buffers
 " ---
@@ -42,18 +46,18 @@ set nohidden
 
 " Run commands and output them into a scratch buffer for easier viewing.
 function! s:Scratch (...)
-   redir => lines
-   let saveMore = &more
-   set nomore
-   execute join(a:000, ' ')
-   redir END
-   let &more = saveMore
-   call feedkeys("\<cr>")
-   new | setlocal buftype=nofile bufhidden=hide noswapfile
-   put=lines
-   let height = line('$') + 3
-   execute 'normal! z'.height."\<cr>"
-   0
+    redir => lines
+    let saveMore = &more
+    set nomore
+    execute join(a:000, ' ')
+    redir END
+    let &more = saveMore
+    call feedkeys("\<cr>")
+    new | setlocal buftype=nofile bufhidden=hide noswapfile
+    put=lines
+    let height = line('$') + 3
+    execute 'normal! z'.height."\<cr>"
+    0
 endfunction
 
 command! -nargs=+ Scratch call <sid>Scratch(<f-args>)
@@ -88,7 +92,7 @@ set number
 set cursorline
 
 " Keep cursorline centered in the vertical space of the current window.
-"set scrolloff=999
+set scrolloff=5
 
 " Show the current mode. Yeah yeah, modes are the root of all evil. Whatever.
 set showmode
@@ -172,10 +176,10 @@ map <leader>x :set expandtab!<cr>
 
 " Make it easy to adjust indent/tab sizes for a specific file.
 function! Indent(size)
-  let l:size = str2nr(a:size)
-  let &tabstop = eval(l:size)
-  let &softtabstop = eval(l:size)
-  let &shiftwidth = eval(l:size)
+    let l:size = str2nr(a:size)
+    let &tabstop = eval(l:size)
+    let &softtabstop = eval(l:size)
+    let &shiftwidth = eval(l:size)
 endfunction
 command! -nargs=1 -buffer Indent :call Indent <args>
 
@@ -198,6 +202,8 @@ set rtp+=/usr/local/src/powerline/powerline/bindings/vim
 function! SyntaxItem()
     return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
+
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
 " Rebuild the right side of the status line.
 let g:airline_section_x = airline#section#create([ '%{SyntaxItem()} %y' ])
@@ -280,6 +286,8 @@ let g:syntastic_debug = 0
 
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 
+let g:syntastic_stl_format = '[%E{E:%e(#%fe)}%B{,}%W{W:%w(#%fw)}]'
+
 " Map :Errors into something that'll give us a real location list.
 map <leader>e :Errors<cr>
 
@@ -359,5 +367,7 @@ filetype detect
 source ~/.vimrc.local
 
 call Title()
+
+set shortmess="atI"
 
 "=============================================================================
