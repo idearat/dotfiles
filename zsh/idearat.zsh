@@ -403,7 +403,7 @@ function root () {
 function subup () {
   echo 'Updating git submodules...'
   git submodule init
-  git submodule update --recursive
+  git submodule update --recursive --force
   git submodule foreach 'git fetch origin; git checkout master; git pull'
 }
 
@@ -847,5 +847,5 @@ function precmd() {
 #echo kern.maxfilesperproc=2048 | sudo tee -a /etc/sysctl.conf
 #sudo sysctl -w kern.maxfiles=65536
 #sudo sysctl -w kern.maxfilesperproc=2048
-ulimit -n 65536
-ulimit -u 2048
+#ulimit -n 65536
+#ulimit -u 2048

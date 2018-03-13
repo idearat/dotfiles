@@ -1,63 +1,48 @@
 [submodule "vim/vim/bundle/editorconfig-vim"]
 	path = vim/vim/bundle/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
-  ignore = dirty
 [submodule "vim/vim/bundle/gundo.vim"]
 	path = vim/vim/bundle/gundo.vim
 	url = https://github.com/sjl/gundo.vim
-  ignore = dirty
 [submodule "vim/vim/bundle/syntastic"]
 	path = vim/vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
-  ignore = dirty
 [submodule "vim/vim/bundle/vim-buffergator"]
 	path = vim/vim/bundle/vim-buffergator
 	url = https://github.com/jeetsukumaran/vim-buffergator.git
-  ignore = dirty
 [submodule "vim/vim/bundle/vim-dispatch"]
 	path = vim/vim/bundle/vim-dispatch
 	url = https://github.com/tpope/vim-dispatch.git
-  ignore = dirty
 [submodule "vim/vim/bundle/vim-fugitive"]
 	path = vim/vim/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-  ignore = dirty
 [submodule "vim/vim/bundle/vim-json"]
 	path = vim/vim/bundle/vim-json
 	url = https://github.com/elzr/vim-json.git
-  ignore = dirty
 [submodule "vim/vim/bundle/vim-scriptease"]
 	path = vim/vim/bundle/vim-scriptease
 	url = https://github.com/tpope/vim-scriptease.git
-  ignore = dirty
 [submodule "vim/vim/bundle/tmuxline.vim"]
 	path = vim/vim/bundle/tmuxline.vim
 	url = https://github.com/edkolev/tmuxline.vim
-  ignore = dirty
 [submodule "vim/vim/bundle/vim-airline"]
 	path = vim/vim/bundle/vim-airline
 	url = https://github.com/bling/vim-airline
-  ignore = dirty
 [submodule "vim/vim/bundle/vim-signify"]
 	path = vim/vim/bundle/vim-signify
 	url = https://github.com/mhinz/vim-signify
-  ignore = dirty
 [submodule "util/powerline-fonts"]
 	path = util/powerline-fonts
 	url = https://github.com/Lokaltog/powerline-fonts.git
-  ignore = dirty
 [submodule "vim/vim/bundle/ctrlp.vim"]
 	path = vim/vim/bundle/ctrlp.vim
 	url = https://github.com/kien/ctrlp.vim.git
-  ignore = dirty
 [submodule "vim/vim/bundle/vim-node"]
 	path = vim/vim/bundle/vim-node
 	url = https://github.com/idearat/vim-node.git
-  ignore = dirty
 [submodule "vim/vim/bundle/nerdtree"]
 	path = vim/vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-  ignore = dirty
 [submodule "vim/vim/bundle/promptline.vim"]
 	path = vim/vim/bundle/promptline.vim
 	url = https://github.com/idearat/promptline.vim.git
@@ -73,3 +58,12 @@
 [submodule "vim/vim/bundle/vim-extradite"]
 	path = vim/vim/bundle/vim-extradite
 	url = https://github.com/int3/vim-extradite.git
+[submodule "vim/vim/bundle/kotlin-vim"]
+  path = "vim/vim/bundle/kotlin-vim"
+  url = https://github.com/udalov/kotlin-vim
+[submodule "vim/vim/bundle/typescript-vim"]
+  path = "vim/vim/bundle/typescript-vim"
+  url = https://github.com/leafgarland/typescript-vim
+[submodule "vim/vim/bundle/vim-colors-solarized"]
+  path = "vim/vim/bundle/vim-colors-solarized"
+  url = https://github.com/altercation/vim-colors-solarized
