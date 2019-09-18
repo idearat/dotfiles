@@ -561,7 +561,7 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use v8 2 > /dev/null
+  nvm use v10 2 > /dev/null
 
   export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
