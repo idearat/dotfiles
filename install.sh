@@ -106,11 +106,6 @@ echo 'Checking for wget...'
 
 echo 'Verifying language support...'
 
-# Install PhantomJS for web testing.
-echo 'Checking for phantomjs...'
-[[ $(brew list phantomjs) ]] > /dev/null 2>&1 || \
-(echo 'Installing phantomjs via brew...' && brew install phantomjs)
-
 # Install updated python for pip, powerline, etc.
 echo 'Checking for python...'
 [[ $(brew list python) ]] > /dev/null 2>&1 || \

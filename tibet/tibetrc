@@ -25,6 +25,7 @@ alias forms='cd ${DEVL_HOME}/WebSanity/formsanity;clear'
 
 alias cdsite='cd ${TPI_HOME}/technicalpursuit.com'
 alias site='base;cdsite;clear'
+alias sitedoc='base;cdsite;cd doc/sources;clear'
 alias cdtpi='cd ${TPI_HOME}'
 alias tpi='base;cdtpi;clear'
 alias cdwiki='cd ${TPI_HOME}/TIBET.wiki'

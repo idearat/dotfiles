@@ -87,18 +87,20 @@ export NGINX_HOME="/usr/local/etc/nginx"
 export TPI_HOME="${DEVL_HOME}/TPI"
 export TIBET_HOME="${TPI_HOME}/TIBET"
 export CODESWARM_HOME="${TPI_HOME}/CodeSwarm"
-export FIRSTCLASS_HOME="${PROJECT_HOME}/FirstClass"
 export GOGO_HOME="${DEVL_HOME}/Gogo"
 
+alias cdaws='cd ${PROJECT_HOME}/aws'
 alias cdcs='cd ${CODESWARM_HOME}'
 alias cdfb='cd ${PROJECT_HOME}/fiscalball'
-alias cdfc='cd ${FIRSTCLASS_HOME}'
+alias fb='cd ${PROJECT_HOME}/fiscalball'
 alias cdnginx='cd ${NGINX_HOME}'
 alias cdtab='cd ${PROJECT_HOME}/tabmarks'
 alias cdviz='cd ${PROJECT_HOME}/vizitd'
+alias vz='cd ${PROJECT_HOME}/vizitd'
 alias react='cd ${DEVL_HOME}/react'
 alias gogo='cd ${GOGO_HOME}'
 alias writing='cd ~/Documents/SS\ Docs/Writing'
+alias k='cd ~/Documents/SS\ Docs/Writing; vi ./Personal/Kimberly/transcript.md'
 alias rr='cd ~/Documents/SS\ Docs/Writing; vi ./Personal/RR/transcript.md'
 alias ss='cd ~/Documents/SS\ Docs/Writing/Personal/SS'
 alias journal='ss; vi journal.md'
@@ -225,6 +227,9 @@ alias swapped='find ${HOME}/temporary -name '"'*.sw[op]'"' -print'
 
 alias killcrash='sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist'
 alias loadcrash='sudo launchctl load /Library/LaunchDaemons/com.crashplan.engine.plist'
+
+alias killsophos='sudo launchctl unload /Library/LaunchDaemons/com.sophos.common.servicemanager.plist'
+alias loadsophos='sudo launchctl load /Library/LaunchDaemons/com.sophos.common.servicemanager.plist'
 
 alias killjenkins="sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist"
 
@@ -561,7 +566,7 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use v10 2 > /dev/null
+  nvm use 0.10 2 > /dev/null
 
   export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"

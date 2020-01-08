@@ -80,10 +80,39 @@ along with MacVim and overrides your standard system version of VIM.
 Once the install script has run you will have a new set of zsh startup scripts,
 aliases, etc. which you can take advantage of.
 
-For everything to work properly you may need to edit /etc/shells to place an entry
-for /usr/local/bin/zsh there to allow you to make it your default shell.
+Update any submodules to be sure they're available (mostly for vim):
+```
+subup
+```
 
-You can set the default shell by typing:
+Install the powerline-fonts:
+```
+~/.dotfiles/util/powerline-fonts/install.sh
+```
+
+
+Update iTerm2 (or Terminal) to use 'Inconsolata for Powerline' by editing the
+proper text preferences in that application.
+
+
+Install vim via brew to be sure you have clipboard support etc.
+```
+brew install vim
+```
+
+Update the VIMRUNTIME value in your startup scripts (via `vimit`). The default
+value is probably something like `/usr/local/share/vim/vim82` but you should
+change that last portion to point to the version you installed.
+```
+export VIMRUNTIME="/usr/local/share/vim/vim82"
+```
+
+Edit `/etc/shells` to ensure the brew-installed `zsh` is available:
+```
+sudo vi /etc/shells
+```
+
+Set `zsh` to be the default shell by typing:
 ``` bash
 chsh -s /usr/local/bin/zsh
 ```
