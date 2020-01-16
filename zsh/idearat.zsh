@@ -619,10 +619,10 @@ export PYTHONPATH="/usr/local/bin/python"
 # Console Vim
 if exists vim; then
   if [[ -e /usr/local/share/vim ]]; then
-    export VIMRUNTIME="/usr/local/share/vim/vim80"
+    export VIMRUNTIME="/usr/local/share/vim/vim82"
   else
     if [[ -e /usr/share/vim ]]; then
-      export VIMRUNTIME="/usr/share/vim/vim80"
+      export VIMRUNTIME="/usr/share/vim/vim82"
     fi
   fi
   export VISUAL=vim

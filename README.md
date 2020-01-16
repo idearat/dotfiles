@@ -30,16 +30,13 @@ brew update
 brew doctor
 ```
 
-The `brew doctor` command should run clean before proceeding.
+The `brew doctor` command should run cleanly before you proceed.
 
 ### XCode
 
-On a Mac you'll need to install XCode and XCode's command line tools. Download the
-XCode package for your system and then install them from the XCode Download menu:
+On a Mac you'll need to install XCode and XCode's command line tools.
 
-```
-Preferences -> Downloads -> Command Line Tools
-```
+There are a couple of options for doing this from installing XCode to running `xcode-select --install`. Use whatever approach works best for your version of MacOS.
 
 ### Git
 
@@ -58,7 +55,7 @@ To install the dotfiles start with a git clone:
 git clone https://github.com/idearat/dotfiles ~/.dotfiles
 ```
 
-Once the repository is in place run the install script:
+Once the repository is in place run the install script from your home directory:
 
 ```
 ~/.dotfiles/install.sh
@@ -80,16 +77,60 @@ along with MacVim and overrides your standard system version of VIM.
 Once the install script has run you will have a new set of zsh startup scripts,
 aliases, etc. which you can take advantage of.
 
-Update any submodules to be sure they're available (mostly for vim):
+To properly use the new `zsh` instance you'll need to do a couple of preliminary
+steps using the Terminal application.
+
+### Install iTerm2
+
+If you're not already running iTerm2 I recommend installing it as a replacement
+for the standard MacOS Terminal application.
+
+```
+https://www.iterm2.com/downloads.html
+```
+
+### Update your default shell
+
+Regardless of your choice of terminal open a new terminal and edit `/etc/shells`
+to ensure the brew-installed `zsh` is available.
+
+You'll want to verify the  path (typically `/usr/local/bin/zsh`).
+
+```
+$ which zsh
+/usr/local/bin/zsh
+```
+
+Once you have the right path edit `/etc/shells` and add the path:
+
+```
+sudo vi /etc/shells
+```
+
+Once you've added the `zsh` to your shell options set `zsh` to be the default
+shell by typing:
+
+``` bash
+chsh -s /usr/local/bin/zsh
+```
+
+With that change in place exit any terminals so you get a clean login that will
+execute the dotfiles-installed startup scripts. This should give you a set of
+new aliases which let you complete the rest of the steps here.
+
+### Update your vim-related git submodules
+
+Update any submodules to be sure they're available (mostly for vim) using the
+`subup` alias:
+
 ```
 subup
 ```
 
-Install the powerline-fonts:
+Install the powerline-fonts so you can use them in iTerm2 or Terminal:
 ```
 ~/.dotfiles/util/powerline-fonts/install.sh
 ```
-
 
 Update iTerm2 (or Terminal) to use 'Inconsolata for Powerline' by editing the
 proper text preferences in that application.
@@ -105,16 +146,6 @@ value is probably something like `/usr/local/share/vim/vim82` but you should
 change that last portion to point to the version you installed.
 ```
 export VIMRUNTIME="/usr/local/share/vim/vim82"
-```
-
-Edit `/etc/shells` to ensure the brew-installed `zsh` is available:
-```
-sudo vi /etc/shells
-```
-
-Set `zsh` to be the default shell by typing:
-``` bash
-chsh -s /usr/local/bin/zsh
 ```
 
 For npm completion to work effectively you may want to execute the following:
