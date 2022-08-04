@@ -225,10 +225,10 @@ alias rmzcomp="\\ls -a | grep 'zcompdump' | xargs -n 1 rm -rf"
 alias sizes='du -s *'
 
 # NB: this relies on vim config to put temp files in ${HOME}/temporary
-alias swapped='find ${HOME}/temporary -name '"'*.sw[op]'"' -print'
+alias swapped='find ${HOME}/temporary/vimswap -name '"'*.sw[opnm]'"' -print'
 
-alias killcrash='sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist'
-alias loadcrash='sudo launchctl load /Library/LaunchDaemons/com.crashplan.engine.plist'
+alias killcrash='sudo launchctl unload /Library/LaunchDaemons/com.code42.service.plist'
+alias loadcrash='sudo launchctl load /Library/LaunchDaemons/com.code42.service.plist'
 
 alias killsophos='sudo launchctl unload /Library/LaunchDaemons/com.sophos.common.servicemanager.plist'
 alias loadsophos='sudo launchctl load /Library/LaunchDaemons/com.sophos.common.servicemanager.plist'
@@ -462,7 +462,8 @@ fi
 
 # Ack for common file types in web development.
 if exists ack; then
-  alias ackt='ack --ignore-dir lib/src --ignore-dir deps/'
+  # in theory this filter works: ack -g '^((?!TIBET-INF\/tibet).)*$' | ack -x *$
+  alias ackt='ack --ignore-dir lib/src --ignore-dir deps --ignore-dir build --ignore-dir TIBET-INF/tibet/lib/src --ignore-dir TIBET-INF/tibet/deps --ignore-dir TIBET-INF/tibet/build --ignore-dir node_modules'
   alias ackls='ack -l -s --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
   alias ackall='ack -l -s --nolog --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
   alias ackcss='ack -l -s --css --sass --less --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
@@ -568,7 +569,7 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use 0.10 2 > /dev/null
+  nvm use 16 2> /dev/null
 
   export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"

@@ -191,7 +191,12 @@ function __promptline_battery {
       local current_capacity=${ioreg_output#*CurrentCapacity\"\ \=}
       current_capacity=${current_capacity%%\ \"*}
 
-      local battery_level=$(($current_capacity * 100 / $battery_capacity))
+      # if 0 then appears to be on power or it's a desktop mini etc.
+      if [[ $battery_capacity > 0 ]]; then
+        local battery_level=$(($current_capacity * 100 / $battery_capacity))
+      else
+        local battery_level=100
+      fi
       [[ $battery_level -gt $threshold ]] && return 1
 
       printf "%s" "${battery_symbol}${battery_level}${percent_sign}"
