@@ -87,8 +87,9 @@ export PROJECT_HOME="${DEVL_HOME}/idearat"
 
 export NGINX_HOME="/usr/local/etc/nginx"
 export TPI_HOME="${DEVL_HOME}/TPI"
+export CODERATS_HOME="${DEVL_HOME}/CodeRats"
 export TIBET_HOME="${TPI_HOME}/TIBET"
-export CODESWARM_HOME="${TPI_HOME}/CodeSwarm"
+
 export GOGO_HOME="${DEVL_HOME}/Gogo"
 
 alias cdaws='cd ${PROJECT_HOME}/aws'
@@ -225,10 +226,10 @@ alias rmzcomp="\\ls -a | grep 'zcompdump' | xargs -n 1 rm -rf"
 alias sizes='du -s *'
 
 # NB: this relies on vim config to put temp files in ${HOME}/temporary
-alias swapped='find ${HOME}/temporary -name '"'*.sw[op]'"' -print'
+alias swapped='find ${HOME}/temporary/vimswap -name '"'*.sw[opnm]'"' -print'
 
-alias killcrash='sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist'
-alias loadcrash='sudo launchctl load /Library/LaunchDaemons/com.crashplan.engine.plist'
+alias killcrash='sudo launchctl unload /Library/LaunchDaemons/com.code42.service.plist'
+alias loadcrash='sudo launchctl load /Library/LaunchDaemons/com.code42.service.plist'
 
 alias killsophos='sudo launchctl unload /Library/LaunchDaemons/com.sophos.common.servicemanager.plist'
 alias loadsophos='sudo launchctl load /Library/LaunchDaemons/com.sophos.common.servicemanager.plist'
@@ -318,7 +319,7 @@ function exists () {
 # line which handles filenames with blanks.
 function findem () {
   find . -name .svn -prune -o -name .git -prune -o -name node_modules\
-    -prune -o -iname "*$1*" -print 2<&1 | grep -v '\.svn' | grep -v '\.git' |\
+    -prune -o -iname "*$1*" -print 2<&1 | grep -v '\.svn' | grep -v '\.git$' |\
     grep -v 'node_modules' | grep -v 'thirdParty' |\
     grep -v 'Permission denied' | grep -v '\.sw[op]' |\
     grep -v '\.class' | grep -v '\.scssc' | grep -v '\.tap' | sed 's/\ /\\ /g'
@@ -462,17 +463,18 @@ fi
 
 # Ack for common file types in web development.
 if exists ack; then
-  alias ackt='ack --ignore-dir lib/src --ignore-dir deps/'
-  alias ackls='ack -l -s --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
-  alias ackall='ack -l -s --nolog --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules" --ignore-file=ext:map'
-  alias ackcss='ack -l -s --css --sass --less --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir=".sass-cache" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackhtml='ack -l -s --html --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjs='ack -l -s --js --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjsish='ack -l -s --js --json --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackjson='ack -l -s --json --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackmd='ack -l -s --markdown --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackxml='ack -l -s --xml --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
-  alias ackvim='ack -l -s --vim --ignore-dir lib/src --ignore-dir deps/ --ignore-dir="build" --ignore-dir="thirdParty" --ignore-dir="node_modules"'
+  # in theory this filter works: ack -g '^((?!TIBET-INF\/tibet).)*$' | ack -x *$
+  alias ack='ack --ignore-dir lib/src --ignore-dir deps --ignore-dir thirdParty --ignore-dir .sass-cache --ignore-dir build --ignore-dir TIBET-INF/tibet/lib/src --ignore-dir TIBET-INF/tibet/deps --ignore-dir TIBET-INF/tibet/build --ignore-dir node_modules --ignore-dir .next'
+  alias ackls='ack -l -s --ignore-file=ext:map'
+  alias ackall='ack -l -s --nolog --ignore-file=ext:map'
+  alias ackcss='ack -l -s --css --sass --less'
+  alias ackhtml='ack -l -s --html'
+  alias ackjs='ack -l -s --js'
+  alias ackjsish='ack -l -s --js --json'
+  alias ackjson='ack -l -s --json'
+  alias ackmd='ack -l -s --markdown'
+  alias ackxml='ack -l -s --xml'
+  alias ackvim='ack -l -s --vim'
 else
   echo 'ack not found'
   echo 'install ack via:';echo
@@ -568,10 +570,10 @@ fi
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use 0.10 2 > /dev/null
+  nvm use v16 2> /dev/null
 
   export NODE_VERSION=`node --version`
-  alias cdnvm="cd ${NVM_DIR}/${NODE_VERSION}/lib/node_modules"
+  alias cdnvm="cd ${NVM_DIR}/versions/node/${NODE_VERSION}/lib/node_modules"
 fi
 
 if ! exists node; then
@@ -766,8 +768,12 @@ alias xalan="java org.apache.xalan.xslt.Process"
 alias jsc="/System/Library/Frameworks/JavaScriptCore.\
 framework/Versions/A/Resources/jsc"
 
-# TODO: phantomjs ?
-# TODO: webdriver ?
+# ---
+# puppeteer
+# ---
+
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+export PUPPETEER_EXECUTABLE_PATH=`which chromium`
 
 # ---
 # ruby

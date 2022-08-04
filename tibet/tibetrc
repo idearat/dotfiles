@@ -8,14 +8,22 @@
 # aliases
 # ---
 
-alias base='export TIBET_HOME="${TPI_HOME}/TIBET"'
-alias base3='export TIBET_HOME="${TPI_HOME}/TIBET3"'
+alias base='export TIBET_HOME="${CODERATS_HOME}/TIBET"'
+alias base3='export TIBET_HOME="${TPI_HOME}/GITHUB/TIBET3"'
+alias base5='export TIBET_HOME="${TPI_HOME}/TIBET"'
 
+alias 0='base;cdtibet;clear'
 alias 3='base3;cdtibet;clear'
-alias 5='base;cdtibet;clear'
+alias 5='base5;cdtibet;clear'
 
 # work from old codebase for now
 base
+
+alias coderats='cd ${CODERATS_HOME}/coderats-llc'
+alias getsherpa='cd ${CODERATS_HOME}/getsherpa-app'
+alias sherpa='cd ${CODERATS_HOME}/sherpa'
+alias cf='cd ${CODERATS_HOME}/command-flow'
+alias cdtibet='cd ${TIBET_HOME};clear'
 
 # bash environment management
 alias vimtibet="vi $HOME/.tibetrc"
@@ -23,32 +31,36 @@ alias srctibet="source $HOME/.tibetrc"
 
 alias forms='cd ${DEVL_HOME}/WebSanity/formsanity;clear'
 
-alias cdsite='cd ${TPI_HOME}/technicalpursuit.com'
-alias site='base;cdsite;clear'
-alias sitedoc='base;cdsite;cd doc/sources;clear'
-alias cdtpi='cd ${TPI_HOME}'
-alias tpi='base;cdtpi;clear'
+alias cdsite='cd ${TPI_HOME}/technicalpursuit-com'
+alias site='cdsite;clear'
+alias sitedoc='cdsite;cd doc/sources;clear'
+alias tpi='cdtpi;clear'
 alias cdwiki='cd ${TPI_HOME}/TIBET.wiki'
-alias wiki='base;cdwiki;clear'
-alias cdpages='cd ${TPI_HOME}/TechnicalPursuit.github.io'
-alias pages='base;cdpages;clear'
+alias wiki='cdwiki;clear'
+alias cdpages='cd ${TPI_HOME}/GITHUB/TechnicalPursuit.github.io'
+alias pages='cdpages;clear'
+alias examples='cd ${TPI_HOME}/TIBET-Examples'
+alias pizza='examples; cd pizza'
 
 alias cddbsa='cd ${DEVL_HOME}/DBSA'
-alias cdtibet='cd ${TIBET_HOME}'
+alias cdtpi='cd ${TPI_HOME}'
+alias cdrats='cd ${CODERATS_HOME}'
 
 alias dbtest='cd ~/temporary/dbtest'
 alias d2d='cd ~/temporary/d2d'
 alias hello='cd ~/temporary/hello'
+alias elect='cd ~/temporary/electron'
 alias t2='cd ~/temporary/t2'
 alias todo='cd ~/temporary/todomvc'
 alias tws='tibet tws'
 
 alias tdc='cd ${TIBET_HOME}/src/tibet/tools/tdc'
 alias tds='cd ${TIBET_HOME}/tds/'
-alias sherpa='cd ${TIBET_HOME}/src/tibet/tools/sherpa'
+alias lama='cd ${TIBET_HOME}/src/tibet/tools/lama'
+alias lamadev='cd ${TIBET_HOME}/src/tibet/tools/tibet-lama-extension'
 
-alias cli='5;cd src/tibet/cli;clear'
-alias dna='5;cd dna;clear'
+alias cli='cd ${TIBET_HOME}/src/tibet/cli;clear'
+alias dna='cd ${TIBET_HOME}/dna;clear'
 
 alias tpcfg='cd ${TIBET_HOME}/lib/cfg'
 alias tpcmd='cd ${TIBET_HOME}/cmd/make'
@@ -61,8 +73,8 @@ alias tptest='cd ${TIBET_HOME}/test'
 
 alias chsh='cd ${TIBET_HOME}/chsh'
 
-alias tpboot='5;cd src/tibet/boot'
-alias tpdist='5;cd build'
+alias tpboot='cd ${TIBET_HOME}/src/tibet/boot'
+alias tpdist='cd ${TIBET_HOME}/build'
 
 alias tptdk='cd ${TIBET_HOME}/src/tibet'
 
@@ -90,6 +102,8 @@ alias tpxhtml='cd ${TIBET_HOME}/src/xhtml'
 alias tpxml='cd ${TIBET_HOME}/src/xml'
 alias tpxmpp='cd ${TIBET_HOME}/src/xmpp'
 alias tpxs='cd ${TIBET_HOME}/src/xs'
+
+alias xctrls='cd ${TIBET_HOME}/src/xctrls'
 
 # ---
 # tibet
