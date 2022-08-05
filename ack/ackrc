@@ -5,3 +5,7 @@
 --type-add=log:ext:log,tap
 --type-add=markdown:ext:md,markdown
 --type-add=vim:ext:vim
+#--ignore-directory=is:tibet-lama-extension
+#--type-set=tibetext:match:/^((?!TIBET-INF).)*$/
+#--ignore-set=tibetext:match:/^((?!TIBET-INF).)*$/
+#--ignore-file=is:tibetext

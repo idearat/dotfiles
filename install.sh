@@ -8,7 +8,7 @@
 # ---
 
 # Set a path we can count on. Otherwise things can get strange/circular.
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 # Verify brew exists. If not then stop right now.
 if [[ $(which brew) ]]; then
@@ -23,6 +23,7 @@ else
     echo 'Homebrew (brew) not found. Install brew and retry.'
     echo 'install brew via:'; echo
     echo 'ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+    exit
 fi
 
 # Install the node version manager and use it to install node.js/npm. Note that
@@ -35,10 +36,10 @@ else
   curl https://raw.githubusercontent.com/creationix/nvm/v0.25.1/install.sh | bash
 fi
 
-echo 'Installing latest 0.10.36 node.js...'
+echo 'Installing latest 16.10.0 node.js...'
 source ~/.nvm/nvm.sh > /dev/null 2>&1
-nvm install 0.10.36
-nvm use 0.10.36
+nvm install v16.10.0
+nvm use v16.10.0
 
 # We use a lot of submodules in the vim section in particular.
 # Note we checkout master to avoid detached HEAD conditions.
@@ -118,9 +119,7 @@ echo 'Checking for ruby-install'
 brew install ruby-install)
 
 echo 'Installing Ruby baseline'
-ruby-install ruby 1.9.3 --no-reinstall
-# This currently fails to compile.
-#ruby-install ruby 2.0 --no-reinstall
+ruby-install ruby 3.1.0 --no-reinstall
 
 echo 'Checking for chruby...'
 [[ $(brew list chruby) ]] > /dev/null 2>&1 || \
@@ -146,12 +145,10 @@ echo 'Verifying application support...'
 echo 'Checking for macvim and vim...'
 [[ $(brew list macvim) ]] > /dev/null 2>&1 || \
 (echo 'Installing macvim via brew...' && \
-brew install macvim --override-system-vim && \
-brew linkapps)
+brew install --cask macvim)
 
 (echo 'Installing vim via brew...' && \
-brew install vim --override-system-vim && \
-brew linkapps)
+brew install --cask vim)
 
 # Install TMUX support and MacOSX patches for clipboard.
 echo 'Checking for tmux...'

@@ -368,6 +368,9 @@ source ~/.vimrc.local
 
 call Title()
 
+" Define what languages should be 'fenced' in Markdown
+let g:vim_markdown_fenced_languages = ['xml']
+
 set shortmess="atI"
 
 "=============================================================================

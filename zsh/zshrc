@@ -4,7 +4,7 @@
 #
 source ~/.dotfiles/zsh/idearat.zsh
 
-[ -s "/Users/ss/.nvm/nvm.sh" ] && . "/Users/ss/.nvm/nvm.sh" # This loads nvm
+[ -s "${HOME}/.nvm/nvm.sh" ] && . "${HOME}/.nvm/nvm.sh" # This loads nvm
 ###-begin-npm-completion-###
 #
 # npm command completion script
