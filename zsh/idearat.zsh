@@ -90,7 +90,7 @@ export TPI_HOME="${DEVL_HOME}/TPI"
 export CODERATS_HOME="${DEVL_HOME}/CodeRats"
 export TIBET_HOME="${TPI_HOME}/TIBET"
 
-export GOGO_HOME="${DEVL_HOME}/Gogo"
+export GOGO_HOME="${DEVL_HOME}/Clients/Gogo"
 
 alias cdaws='cd ${PROJECT_HOME}/aws'
 alias cdcs='cd ${CODESWARM_HOME}'

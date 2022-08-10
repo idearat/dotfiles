@@ -85,7 +85,7 @@ set foldlevel=99
 
 " Make preview area slightly bigger (default is 12). This helps things like
 " fugitive and buffergator to show more by default.
-set previewheight=24
+set previewheight=20
 
 " Show numbers, and cursor lines to help my old tired eyes find their place.
 set number

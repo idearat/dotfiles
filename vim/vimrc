@@ -14,13 +14,17 @@
 set runtimepath+=~/.vim
 
 " Put any working files (.swp etc) in ~/temporary.
-set backupdir=~/temporary
-set directory=~/temporary
+set backupdir=~/temporary/vimswap
+set directory=~/temporary/vimswap
 
 " Map , to command prefix. Do this before loading plugins to ensure they pick up
 " the proper leader setting for any keymappings they may do. (seems some
 " mappings end up on \ if we don't do this early).
 let mapleader=","
+
+" Long file names etc. will cause 'Press ENTER...' messages if they wrap in the
+" status line. Setting cmdheight so it has room for text avoids this problem.
+set cmdheight=2
 
 " The airline plugin reads this early and so we can't set it after the plugin
 " has loaded if we want it to take effect.
