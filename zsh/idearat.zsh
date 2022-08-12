@@ -6,7 +6,6 @@
 
 export PATH="${HOME}/bin"
 export PATH="${PATH}:/opt/homebrew/bin"
-export PATH="${PATH}:/opt/homebrew/opt/python@3.9/libexec/bin"
 export PATH="${PATH}:/usr/local/bin:/usr/local/bin/araxis:/usr/local/sbin"
 export PATH="${PATH}:/usr/texbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 
@@ -89,8 +88,6 @@ export NGINX_HOME="/usr/local/etc/nginx"
 export TPI_HOME="${DEVL_HOME}/TPI"
 export CODERATS_HOME="${DEVL_HOME}/CodeRats"
 export TIBET_HOME="${TPI_HOME}/TIBET"
-
-export GOGO_HOME="${DEVL_HOME}/Clients/Gogo"
 
 alias cdaws='cd ${PROJECT_HOME}/aws'
 alias cdcs='cd ${CODESWARM_HOME}'
@@ -464,7 +461,7 @@ fi
 # Ack for common file types in web development.
 if exists ack; then
   # in theory this filter works: ack -g '^((?!TIBET-INF\/tibet).)*$' | ack -x *$
-  alias ack='ack --ignore-dir lib/src --ignore-dir deps --ignore-dir thirdParty --ignore-dir .sass-cache --ignore-dir build --ignore-dir TIBET-INF/tibet/lib/src --ignore-dir TIBET-INF/tibet/deps --ignore-dir TIBET-INF/tibet/build --ignore-dir node_modules --ignore-dir .next'
+  alias ack='ack --ignore-dir lib/src --ignore-dir deps --ignore-dir thirdParty --ignore-dir .sass-cache --ignore-dir build --ignore-dir TIBET-INF/tibet/lib/src --ignore-dir TIBET-INF/tibet/deps --ignore-dir TIBET-INF/tibet/build --ignore-dir node_modules --ignore-dir .next --ignore-dir tibet-lama-extension'
   alias ackls='ack -l -s --ignore-file=ext:map'
   alias ackall='ack -l -s --nolog --ignore-file=ext:map'
   alias ackcss='ack -l -s --css --sass --less'
@@ -613,12 +610,25 @@ else
 fi
 
 # Python
+if ! exists pyenv; then
+  echo 'pyenv not found'
+  echo 'install pyenv via:';echo
+  echo 'brew install pyenv'
+  echo 'see https://github.com/pyenv/pyenv'
+fi
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+# alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+
+export PATH=${PYENV_ROOT}/shims:/${HOME}/go/bin:$PATH
+
 if ! exists python; then
   echo 'python not found'
   echo 'install python via:'; echo
-  echo 'brew install python'
+  echo 'pyenv install '
 fi
-export PYTHONPATH="/opt/homebrew/bin/python"
 
 # Console Vim
 if exists vim; then
@@ -880,3 +890,4 @@ function precmd() {
 #sudo sysctl -w kern.maxfilesperproc=2048
 #ulimit -n 65536
 #ulimit -u 2048
+#
