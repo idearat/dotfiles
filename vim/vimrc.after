@@ -247,7 +247,7 @@ map <leader>t :tselect<cr>
 " ---
 
 " Map blame since we do that a lot to check for ownership
-nmap <leader>g :Gblame<cr>
+nmap <leader>g :Git blame<cr>
 
 " ---
 " Gundo (access the vim 7.0+ undo tree)
