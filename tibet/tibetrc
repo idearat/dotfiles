@@ -8,9 +8,9 @@
 # aliases
 # ---
 
-alias base='export TIBET_HOME="${CODERATS_HOME}/TIBET"'
+alias base='export TIBET_HOME="${CODERATS_HOME}/GITHUB/TIBET"'
 alias base3='export TIBET_HOME="${TPI_HOME}/GITHUB/TIBET3"'
-alias base5='export TIBET_HOME="${TPI_HOME}/TIBET"'
+alias base5='export TIBET_HOME="${TPI_HOME}/GITHUB/TIBET"'
 
 alias 0='base;cdtibet;clear'
 alias 3='base3;cdtibet;clear'
@@ -19,10 +19,10 @@ alias 5='base5;cdtibet;clear'
 # work from old codebase for now
 base
 
-alias coderats='cd ${CODERATS_HOME}/coderats-llc'
-alias getsherpa='cd ${CODERATS_HOME}/getsherpa-app'
-alias sherpa='cd ${CODERATS_HOME}/sherpa'
-alias cf='cd ${CODERATS_HOME}/command-flow'
+alias coderats='cd ${CODERATS_HOME}/GITHUB/coderats-llc'
+alias getsherpa='cd ${CODERATS_HOME}/GITHUB/getsherpa-app'
+alias sherpa='cd ${CODERATS_HOME}/GITHUB/sherpa'
+alias cf='cd ${CODERATS_HOME}/GITHUB/command-flow'
 alias cdtibet='cd ${TIBET_HOME};clear'
 
 # bash environment management
@@ -31,15 +31,15 @@ alias srctibet="source $HOME/.tibetrc"
 
 alias forms='cd ${DEVL_HOME}/WebSanity/formsanity;clear'
 
-alias cdsite='cd ${TPI_HOME}/technicalpursuit-com'
+alias cdsite='cd ${TPI_HOME}/GITHUB/technicalpursuit.com'
 alias site='cdsite;clear'
 alias sitedoc='cdsite;cd doc/sources;clear'
 alias tpi='cdtpi;clear'
-alias cdwiki='cd ${TPI_HOME}/TIBET.wiki'
+alias cdwiki='cd ${TPI_HOME}/GITHUB/TIBET.wiki'
 alias wiki='cdwiki;clear'
 alias cdpages='cd ${TPI_HOME}/GITHUB/TechnicalPursuit.github.io'
 alias pages='cdpages;clear'
-alias examples='cd ${TPI_HOME}/TIBET-Examples'
+alias examples='cd ${TPI_HOME}/GITHUB/TIBET-Examples'
 alias pizza='examples; cd pizza'
 
 alias cddbsa='cd ${DEVL_HOME}/DBSA'

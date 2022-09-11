@@ -1,4 +1,4 @@
---follow
+--no-follow
 --ignore-file=ext:map
 --ignore-file=is:tags
 --ignore-file=is:TAGS
