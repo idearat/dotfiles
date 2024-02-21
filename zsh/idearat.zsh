@@ -4,8 +4,10 @@
 # path roots
 # ---
 
-export PATH="${HOME}/bin"
+export PATH="${HOME}/bin:${HOME}/.local/bin"
 export PATH="${PATH}:/opt/homebrew/bin"
+export PATH="${PATH}:/opt/homebrew/opt/ruby@3.2/bin"
+export PATH="${PATH}:/opt/homebrew/opt/postgresql@15/bin"
 export PATH="${PATH}:/usr/local/bin:/usr/local/bin/araxis:/usr/local/sbin"
 export PATH="${PATH}:/usr/texbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 
@@ -14,11 +16,15 @@ chruby 2.2.3 > /dev/null 2>&1
 
 source ~/.nvm/nvm.sh > /dev/null 2>&1
 
+source ~/.gvm/scripts/gvm > /dev/null 2>&1
+
 export MANPATH=".:${HOME}/man:/usr/local/man:/usr/local/share/man:/usr/man:\
   /usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
 
 export DEVL_HOME="${HOME}/dev"
 export USB_ROOT='/Volumes/secure'
+
+source "$HOME/.cargo/env" > /dev/null 2>&1
 
 #export COUCH='http://0.0.0.0:5984'
 #export COUCH_URL="http://localhost:5984"
@@ -36,6 +42,8 @@ set -o vi
 # ---
 
 export CLICOLOR=1
+export EDITOR='nvim'
+export LAUNCH_EDITOR='code'
 export IGNOREEOF=1
 export LC_TYPE='en_US.UTF-8'
 export LESS=FRSX
@@ -48,8 +56,12 @@ export TERM=xterm-256color
 # ---
 
 if [[ "$SHELL" =~ 'zsh$' ]]; then
-  autoload -U compinit
-  compinit
+  if type brew &>/dev/null; then
+      FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+      autoload -Uz compinit
+      compinit
+  fi
 
   setopt completeinword
 
@@ -76,6 +88,7 @@ export REPORTTIME=10
 
 HISTFILE=${HOME}/.zhistory
 HISTSIZE=SAVEHIST=10000
+HISTCONTROL=erasedups
 
 # ---
 # project roots
@@ -86,23 +99,12 @@ export PROJECT_HOME="${DEVL_HOME}/idearat"
 
 export NGINX_HOME="/usr/local/etc/nginx"
 export TPI_HOME="${DEVL_HOME}/TPI"
-export CODERATS_HOME="${DEVL_HOME}/CodeRats"
+export CODERATS_HOME="${DEVL_HOME}/coderats"
 export TIBET_HOME="${TPI_HOME}/TIBET"
+export CMDFLOW_HOME="${CODERATS_HOME}/viziflow/cmdflow"
+export VIZITD_HOME="${CODERATS_HOME}/viziflow/vizitd"
 
-alias cdaws='cd ${PROJECT_HOME}/aws'
-alias cdcs='cd ${CODESWARM_HOME}'
-alias cdfb='cd ${PROJECT_HOME}/fiscalball'
-alias fb='cd ${PROJECT_HOME}/fiscalball'
-alias cdnginx='cd ${NGINX_HOME}'
-alias cdtab='cd ${PROJECT_HOME}/tabmarks'
-alias cdviz='cd ${PROJECT_HOME}/vizitd'
-alias vz='cd ${PROJECT_HOME}/vizitd'
-alias react='cd ${DEVL_HOME}/react'
-alias gogo='cd ${GOGO_HOME}'
 alias writing='cd ~/Documents/SS\ Docs/Writing'
-alias k='cd ~/Documents/SS\ Docs/Writing; vi ./Personal/Kimberly/transcript.md'
-alias rr='cd ~/Documents/SS\ Docs/Writing; vi ./Personal/RR/transcript.md'
-alias ss='cd ~/Documents/SS\ Docs/Writing/Personal/SS'
 alias journal='ss; vi journal.md'
 alias inspire='ss; vi inspirations.md'
 alias mantras='ss; vi mantras.md'
@@ -114,10 +116,14 @@ alias docs='cd ~/Documents/SS\ Docs/'
 # ---
 
 alias cddot="cd ${HOME}/.dotfiles"
-alias cdvim='cd ${HOME}/.vim/bundle'
+alias cdvim='cd ${HOME}/.config/idearat'
+alias cdlv='cd ${HOME}/.config/lvim'
 
 alias vimit="vi ${HOME}/.dotfiles/zsh/idearat.zsh"
 alias srcit="source ${HOME}/.zshrc"
+
+alias vimpk="vi ${HOME}/.p10k.zsh"
+alias srcpk="source ${HOME}/.p10k.zsh"
 
 alias vimdot="vi ${HOME}/.dotfiles/install.sh"
 alias vimgit="vi ${HOME}/.gitconfig"
@@ -134,10 +140,12 @@ alias vimsyntax="vi ${HOME}/.vim/bundle/idearat/syntax/javascript.vim"
 # listings
 # ---
 
+alias ls='ls -H'
 alias l='ls -Fh'
 alias la='ls -aFh'
 alias ll='ls -lFh'
 alias lla='ls -laFh'
+alias lsd='ls -laFh **/**'
 alias l1='ls -C1'
 
 # ---
@@ -164,13 +172,15 @@ alias md5='md5 -r'
 alias md5sum='md5 -r'
 alias mkdir='mkdir -pv'
 alias mv='mv -i'
+alias p="pnpm"
+alias px="pnpm dlx"
 alias ping='ping -c 5'
 alias psw='ps auxww'
+alias ql='qlmanage -p 2>/dev/null'
 alias rm='rm -i'
 alias su='sudo -i'
 alias tail="tail -f"
 alias tmux="tmux -2"
-alias v="vim"
 alias wget='wget -c'
 alias x="exit"  # don't want X-Quartz anyway ;)
 alias x="exit"  # don't want X-Quartz anyway ;)
@@ -184,9 +194,13 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias cdbin="cd ${HOME}/bin"
 alias cddev="cd ${DEVL_HOME}"
+
+alias cdref="cd ${DEVL_HOME}/Reference"
+
 # NB: depends on having cloned into ${HOME}/.dotfiles.
 alias cdidearat='cd ${IDEARAT_HOME}'
 alias cdforks='cd ${IDEARAT_HOME}/forks'
+alias cdhello='cd ${HOME}/temporary/hello'
 alias cdfluff='cd ${HOME}/temporary/fluffy'
 alias cdzippy='cd ${HOME}/temporary/zippy'
 alias cdsrc='cd /usr/local/src'
@@ -204,7 +218,14 @@ alias hours="vim ~/DroppedBox/hours.md"
 alias todo="vim ~/temporary/todo.md"
 alias notes="vim ~/DroppedBox/notes.md"
 alias more='less'
-alias vi='vim'
+
+alias v="nvim-idea"
+alias nv="nvim-idea"
+alias vi='nvim-idea'
+alias vim='nvim-idea'
+alias lv=lvim
+
+alias z="/opt/homebrew/etc/profile.d/z.sh"
 
 alias lint="eslint .; jshint .";
 
@@ -218,6 +239,8 @@ alias nowdate='date +"%d-%m-%Y"'
 
 alias rmorig="\\ls -a | grep '_orig$' | xargs -n 1 rm -rf"
 alias rmzcomp="\\ls -a | grep 'zcompdump' | xargs -n 1 rm -rf"
+
+alias server="http-server" # npm install -g http-server
 
 # Output decent size information
 alias sizes='du -s *'
@@ -377,7 +400,7 @@ function killem () {
 # List all processes that are listening on ports. Useful for debugging
 # EADDRINUSE errors. Leveraged by killem() to provide input for kill.
 function listeners () {
-  local cmd='lsof -i -P | grep -i "listen"'
+  local cmd='lsof -i -n -P | grep -i "listen"'
   if [[ $# > 0 ]];  then
     cmd="$cmd | grep \"$*\""
   fi
@@ -455,7 +478,6 @@ if ! exists brew; then
   echo 'ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"'
 else
   # TODO: do we want brew doctor here?
-  echo
 fi
 
 # Ack for common file types in web development.
@@ -464,6 +486,7 @@ if exists ack; then
   alias ack='ack --ignore-dir lib/src --ignore-dir deps --ignore-dir thirdParty --ignore-dir .sass-cache --ignore-dir build --ignore-dir TIBET-INF/tibet/lib/src --ignore-dir TIBET-INF/tibet/deps --ignore-dir TIBET-INF/tibet/build --ignore-dir node_modules --ignore-dir .next --ignore-dir tibet-lama-extension'
   alias ackls='ack -l -s --ignore-file=ext:map'
   alias ackall='ack -l -s --nolog --ignore-file=ext:map'
+  alias ackit='ack -l -s --nolog --ignore-file=ext:map --ignore-dir TIBET-INF/tibet'
   alias ackcss='ack -l -s --css --sass --less'
   alias ackhtml='ack -l -s --html'
   alias ackjs='ack -l -s --js'
@@ -478,17 +501,32 @@ else
   echo 'brew install ack'
 fi
 
+# Docker and Docker Compose
+if exists docker; then
+  alias d='docker'
+  alias dps='docker ps'
+  alias dc='docker-compose'
+  alias dce='docker-compose exec'
+  alias dcr='docker-compose run'
+fi
+alias ldocker='lazydocker'
+
+if exists kubectl; then
+  alias k="kubectl"
+fi
+alias lk='lazykube'
+
 # Git, and if that's not here, well, that's curious :)
 if exists git; then
-  alias b="git branch"
-  alias ba="git branch -a"
-  alias d='git diff --name-status HEAD..master'
+  alias gb="git branch"
+  alias gba="git branch -a"
+  alias gd='git diff --name-status HEAD..master'
   alias moo="git moo"
-  alias m="moo"
-  alias s='git status --short --branch'
-  alias sl='git stash list'
-  alias t='git log --oneline --graph --all --date-order --first-parent --decorate=short --simplify-by-decoration'
-  alias lb="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+  alias gm="moo"
+  alias gs='git status --short --branch'
+  alias gsl='git stash list'
+  alias gtt='git log --oneline --graph --all --date-order --first-parent --decorate=short --simplify-by-decoration'
+  alias glb="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
   alias gl="git log --graph --all --oneline --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 
   # Display the files which are considered changed in any form.
@@ -563,11 +601,16 @@ else
   echo 'brew install git'
 fi
 
+# Go
+if exists gvm; then
+  gvm use go1.21.4
+fi
+
 # Node. Need this to install JS-related packages like JSHint etc.
 
 # test for nvm and initialize it if found
 if exists nvm; then
-  nvm use v16 2> /dev/null
+  nvm use --silent v18
 
   export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/versions/node/${NODE_VERSION}/lib/node_modules"
@@ -622,7 +665,7 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 # alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
 
-export PATH=${PYENV_ROOT}/shims:/${HOME}/go/bin:$PATH
+export PATH=${PYENV_ROOT}/shims:$PATH
 
 if ! exists python; then
   echo 'python not found'
@@ -632,17 +675,23 @@ fi
 
 # Console Vim
 if exists vim; then
-  if [[ -e /opt/homebrew/share/vim ]]; then
-    export VIMRUNTIME="/opt/homebrew/share/vim/vim90"
-  else
-    if [[ -e /opt/share/vim ]]; then
-      export VIMRUNTIME="/opt/share/vim/vim90"
-    fi
-  fi
+
+  # neovim
+  export VIMRUNTIME="/opt/homebrew/share/nvim/runtime"
+
+   # classic vim
+#  if [[ -e /opt/homebrew/share/vim ]]; then
+#    export VIMRUNTIME="/opt/homebrew/share/vim/vim90"
+#  else
+#    if [[ -e /opt/share/vim ]]; then
+#      export VIMRUNTIME="/opt/share/vim/vim90"
+#    fi
+#  fi
+
   export VISUAL=vim
 
   # Turn off flow control. This lets VIM have better access to these keys.
-  stty start undef stop undef
+  stty start undef stop undef 2> /dev/null
 else
   echo 'vim not found'
   echo 'install vim via:';echo
@@ -718,9 +767,9 @@ alias lintem="hintem; glintem"
 # ---
 
 # Chrome
-alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security --allow-file-access-from-files"
-alias cleanroom="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security --allow-file-access-from-files --user-data-dir=/dev/null"
-alias canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --disable-web-security --allow-file-access-from-files"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security --allow-file-access-from-files --user-data-dir=/tmp/user-data-dir"
+alias cleanroom="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security --allow-file-access-from-files --user-data-dir=/tmp/user-data-dir"
+alias canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --disable-web-security --allow-file-access-from-files --user-data-dir=/tmp/user-data-dir"
 
 
 # TODO: convert to something we can run from Alfred
@@ -730,6 +779,25 @@ alias canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Ch
 # ---
 # tool-specific vars
 # ---
+
+alias lnpm='lazynpm'
+
+# ---
+# git
+# ---
+
+lg()
+{
+    export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+
+    lazygit "$@"
+
+    if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
+            cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
+            rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
+    fi
+}
+alias lgit='lg'
 
 # ---
 # java
@@ -743,12 +811,13 @@ fi
 # java
 # TODO: check for libexec, and java
 export JAVA_HOME="$(/usr/libexec/java_home)"
+export JRE="$(/usr/libexec/java_home)"
 export JAVA_OPTS="-Xmx256m"
+
 export CLASSPATH="~/etc/*.jar;${CLASSPATH}"
-export GOPATH=$HOME/go/bin
 
 export ANDROID_HOME="${HOME}/Library/Android/sdk"
-export PATH="$GOPATH:${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/build-tools/25.0.2"
+export PATH="$GOPATH/bin:${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/build-tools/25.0.2"
 
 export SCALA_HOME="/usr/local/share/scala"
 
@@ -789,59 +858,33 @@ export PUPPETEER_EXECUTABLE_PATH=`which chromium`
 # ruby
 # ---
 
-# rails
-# TODO: check for ruby
 export RAILS_ENV="development"
 
 # ---
-# servers
+# nvim
 # ---
 
-# Apache: MacOSX 10.8+ has Apache in /etc/apache2
-if [[ -e /etc/apache2 ]]; then
-  export APACHE_HOME="/etc/apache2"
-  alias cdapache="cd ${APACHE_HOME}"
-
-  # NOTE these depend on the creation on non-standard links for OSX.
-  alias cdcgi="cd ${APACHE_HOME}/cgi-bin"
-  alias cdhtml="cd ${APACHE_HOME}/htdocs"
-
-  alias aprestart="sudo apachectl restart"
-  alias apstart="sudo apachectl start"
-  alias apstop="sudo apachectl stop"
-fi
-
-# Memcached
-if exists memcached; then
-  alias mem="memcached -d"
-fi
-
-# MySQL
-if exists mysql.server; then
-  alias mystart="mysql.server start"
-  alias mystop="sudo mysql.server stop"
-fi
-
-# Memcached
-if exists memcached; then
-  alias ngstart="sudo nginx"
-  alias ngstop="sudo nginx -s stop"
-fi
-
-# Postgres
-if exists pg_ctl; then
-  export PG_HOME="/usr/local/pgsql"
-  export PG_DATA="${PG_HOME}/data"
-  alias pgstart="sudo\
-    -u postgres pg_ctl -D ${PG_DATA} -l ${PG_HOME}/log/logfile start"
-  alias pgstop="sudo -u postgres pg_ctl stop -D ${PG_DATA}"
-  alias pgtail="sudo -u postgres tail -f ${PG_HOME}/log/logfile"
-fi
-
-# Redis
-if exists redis-server; then
-  alias redis="redis-server /usr/local/etc/redis.conf"
-fi
+# per https://github.com/elijahmanor/dotfiles/blob/master/zsh/.zshrc
+alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+alias nvim-chad="NVIM_APPNAME=NvChad nvim"
+alias nvim-idea="NVIM_APPNAME=idearat nvim"
+alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
+function nvims() {
+  items=("clean" "AstroNvim" "idearat" "LazyVim" "LunarVim" "NvChad")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+  cmd="nvim"
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "LunarVim" ]]; then
+    config=""
+    cmd="lvim"
+  elif [[ $config == "clean" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config $cmd $@
+}
+bindkey -s  "nvims\n"
 
 # ---
 # ss
@@ -868,13 +911,13 @@ alias hide_hidden="defaults write com.apple.Finder AppleShowAllFiles NO && killa
 # other rc files
 # ---
 
-[[ -s ${HOME}/.localrc ]] && source ${HOME}/.localrc
-[[ -s ${HOME}/.tibetrc ]] && source ${HOME}/.tibetrc
+[[ -s ${HOME}/.localrc ]] && source ${HOME}/.localrc > /dev/null 2>&1
+[[ -s ${HOME}/.tibetrc ]] && source ${HOME}/.tibetrc > /dev/null 2>&1
 
 # airline-promptline shell prompt file, if used.
-[[ -s ${HOME}/.shell_prompt.sh ]] && source ${HOME}/.shell_prompt.sh
+[[ -s ${HOME}/.shell_prompt.sh ]] && source ${HOME}/.shell_prompt.sh > /dev/null 2>&1
 
-#source ~/Dropbox/zsh.localrc
+#source ~/Dropbox/zsh.localrc > /dev/null 2>&1
 
 export PATH="$PATH:$SCALA_HOME/bin"
 
@@ -884,10 +927,15 @@ function precmd() {
   print -Pn "\e]1;${PWD##*/}\a"
 }
 
-#echo kern.maxfiles=65536 | sudo tee -a /etc/sysctl.conf
-#echo kern.maxfilesperproc=2048 | sudo tee -a /etc/sysctl.conf
-#sudo sysctl -w kern.maxfiles=65536
-#sudo sysctl -w kern.maxfilesperproc=2048
-#ulimit -n 65536
-#ulimit -u 2048
-#
+# colormap for powerlevel10k
+function colormap() {
+  for i in {0..255};
+    do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'};
+  done
+}
+
+export ENABLE_FLUTTER_DESKTOP=true
+
+export BAT_THEME="Coldark-Dark"
+
+source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme > /dev/null 2>&1

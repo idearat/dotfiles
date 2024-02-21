@@ -31,7 +31,7 @@ nmap <leader>vc :sp $HOME/.janus/idearat/colors/idearat.vim<cr>
 nmap <leader>vn :sp $HOME/.janus/idearat/syntax/javascript.vim<cr>
 
 if &diff
-    colorscheme solarized
+    colorscheme rose-pine-moon
 endif
 
 " ---
@@ -218,7 +218,7 @@ let g:airline_section_warning = airline#section#create([ 'syntastic', 'whitespac
 
 " Configure buffergator the way I like it.
 let g:buffergator_autoupdate=1
-let g:buffergator_hsplit_size=10
+let g:buffergator_hsplit_size=5
 let g:buffergator_viewport_split_policy = 'T'
 
 " Don't close buffer window on selection, rely on ,b toggle.
@@ -232,6 +232,7 @@ map <leader>b :BuffergatorToggle<cr>
 " ---
 
 let g:ctrlp_use_caching = 0
+let g:ctrlp_custom_ignore = 'dist/\|build/\|DS_Store\|lib/src'
 
 " ---
 " Ctags etc. (jump to definitions across files)
@@ -262,7 +263,7 @@ map <leader>u :GundoToggle<CR>
 
 " Toggle the file/directory tree.
 map <leader>n :NERDTreeToggle<CR>
-let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinPos = "left"
 
 " ---
 " promptline (build nice zsh prompts)
@@ -334,8 +335,8 @@ endif
 " override any file types we care about
 augroup filetypedetect
   " No, I don't edit modula2 very often, thanks ;).
-  autocmd BufNewFile,BufRead *.markdown set filetype=markdown
   autocmd BufNewFile,BufRead *.md set filetype=markdown
+  autocmd BufNewFile,BufRead *.markdown set filetype=markdown
 
   " Gemfile, Isolate, Vagrantfile and config.ru are ruby
   autocmd BufNewFile,BufRead Gemfile     setfiletype ruby
@@ -360,6 +361,8 @@ function! Title()
   set title
 endfunction
 autocmd BufEnter,BufFilePost,BufNewFile,BufRead,FileReadPost * call Title()
+
+autocmd BufEnter *.md
 
 " don't show whitespace in help files, it's distracting :).
 autocmd FileType help set nolist

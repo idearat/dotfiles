@@ -8,30 +8,40 @@
 # aliases
 # ---
 
-alias base='export TIBET_HOME="${CODERATS_HOME}/TIBET"'
+alias base='export TIBET_HOME="${CODERATS_HOME}/archives/TIBET"'
 alias base3='export TIBET_HOME="${TPI_HOME}/GITHUB/TIBET3"'
 alias base5='export TIBET_HOME="${TPI_HOME}/TIBET"'
+
+alias cdtibet='cd ${TIBET_HOME};clear'
 
 alias 0='base;cdtibet;clear'
 alias 3='base3;cdtibet;clear'
 alias 5='base5;cdtibet;clear'
 
-# work from old codebase for now
+alias ts='source ~/tmp/tdsconfig.sh; tibet start'
+
+# work from latest codebase
 base
 
-alias coderats='cd ${CODERATS_HOME}/coderats-llc'
-alias getsherpa='cd ${CODERATS_HOME}/getsherpa-app'
-alias sherpa='cd ${CODERATS_HOME}/sherpa'
-alias cf='cd ${CODERATS_HOME}/command-flow'
-alias cdtibet='cd ${TIBET_HOME};clear'
+alias cdeventual='cd ${CODERATS_HOME}/products/eventualdb'
+alias cdflow='cd ${CODERATS_HOME}/products/cmdflow'
+alias cdresearch='cd ${CODERATS_HOME}/products/research'
+alias cdsherpa='cd ${CODERATS_HOME}/products/sherpa'
+
+alias cdtibetjs='cd ${CODERATS_HOME}/products/tibetjs'
+
+alias cdarchive='cd ${CODERATS_HOME}/archives'
+alias cdparts='cd ${CODERATS_HOME}/parts'
+alias cdtemplates='cd ${CODERATS_HOME}/templates'
+alias cdpocket='cdparts; cd pocketbase'
+alias cdwails='cd ${CODERATS_HOME}/parts/wails'
+alias cdv3='cdwails; cd v3'
 
 # bash environment management
 alias vimtibet="vi $HOME/.tibetrc"
 alias srctibet="source $HOME/.tibetrc"
 
-alias forms='cd ${DEVL_HOME}/WebSanity/formsanity;clear'
-
-alias cdsite='cd ${TPI_HOME}/technicalpursuit-com'
+alias cdsite='cd ${CODERATS_HOME}/domains/coderats-llc'
 alias site='cdsite;clear'
 alias sitedoc='cdsite;cd doc/sources;clear'
 alias tpi='cdtpi;clear'
@@ -39,19 +49,18 @@ alias cdwiki='cd ${TPI_HOME}/TIBET.wiki'
 alias wiki='cdwiki;clear'
 alias cdpages='cd ${TPI_HOME}/GITHUB/TechnicalPursuit.github.io'
 alias pages='cdpages;clear'
-alias examples='cd ${TPI_HOME}/TIBET-Examples'
 alias pizza='examples; cd pizza'
 
 alias cddbsa='cd ${DEVL_HOME}/DBSA'
 alias cdtpi='cd ${TPI_HOME}'
 alias cdrats='cd ${CODERATS_HOME}'
 
-alias dbtest='cd ~/temporary/dbtest'
-alias d2d='cd ~/temporary/d2d'
-alias hello='cd ~/temporary/hello'
-alias elect='cd ~/temporary/electron'
-alias t2='cd ~/temporary/t2'
-alias todo='cd ~/temporary/todomvc'
+alias dbtest='cd ~/temporary/examples/dbtest'
+alias d2d='cd ~/temporary/examples/d2d'
+alias hello='cd ~/temporary/examples/hello'
+alias elect='cd ~/temporary/examples/electron'
+alias t2='cd ~/temporary/examples/t2'
+alias todo='cd ~/temporary/examples/todomvc'
 alias tws='tibet tws'
 
 alias tdc='cd ${TIBET_HOME}/src/tibet/tools/tdc'
@@ -96,6 +105,7 @@ alias tpsf='cd ${TIBET_HOME}/src/sf'
 alias tpsvg='cd ${TIBET_HOME}/src/svg'
 alias tptibet='cd ${TIBET_HOME}/src/tibet'
 alias tptsh='cd ${TIBET_HOME}/src/tsh'
+alias tpux='cd ${TIBET_HOME}/src/ux'
 alias tpxctrls='cd ${TIBET_HOME}/src/xctrls'
 alias tpxhtml='cd ${TIBET_HOME}/src/xhtml'
 alias tpxml='cd ${TIBET_HOME}/src/xml'
@@ -103,6 +113,14 @@ alias tpxmpp='cd ${TIBET_HOME}/src/xmpp'
 alias tpxs='cd ${TIBET_HOME}/src/xs'
 
 alias xctrls='cd ${TIBET_HOME}/src/xctrls'
+
+alias domains='cd ${CODERATS_HOME}/domains'
+alias forms='cd ${DEVL_HOME}/WebSanity/formsanity;clear'
+alias lofg='cd ${IDEARAT_HOME}/go/ForTheLoveOfGo'
+alias re='cdresearch;cd re-search'
+alias tjs='cdtibetjs;clear'
+alias tui='cd ${CODERATS_HOME}/parts/tui'
+alias v3='cdv3'
 
 # ---
 # tibet

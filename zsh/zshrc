@@ -1,10 +1,18 @@
 #!/usr/local/bin/zsh
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Top-level ZSH configuration file which runs on startup of a ZSH instance.
 #
 source ~/.dotfiles/zsh/idearat.zsh
 
 [ -s "${HOME}/.nvm/nvm.sh" ] && . "${HOME}/.nvm/nvm.sh" # This loads nvm
+
 ###-begin-npm-completion-###
 #
 # npm command completion script
@@ -58,3 +66,22 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+
+# pnpm
+export PNPM_HOME="/Users/ss/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh > /dev/null 2>&1
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+
+# bun completions
+[ -s "/Users/ss/.bun/_bun" ] && source "/Users/ss/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

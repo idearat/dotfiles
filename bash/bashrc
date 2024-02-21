@@ -2,3 +2,4 @@
 
 # Not a typo, sharing a single file.
 source ~/.zshrc
+. "$HOME/.cargo/env"

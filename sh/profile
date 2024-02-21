@@ -2,3 +2,6 @@
 
 # Not a typo, sharing a single file.
 source ~/.zshrc
+. "$HOME/.cargo/env"
+
+[[ -s "/Users/ss/.gvm/scripts/gvm" ]] && source "/Users/ss/.gvm/scripts/gvm"
