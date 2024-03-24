@@ -3,6 +3,10 @@
 # Installs the various tools leveraged by the configuration files in this
 # collection and links those configuration files into place.
 
+# TODO:
+# brew install sox (GpChat whisper functionality)
+
+
 # ---
 # Pre-Install
 # ---

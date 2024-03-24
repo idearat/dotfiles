@@ -1,0 +1,149 @@
+# ==============================================================================
+# tmux.conf
+# ------------------------------------------------------------------------------
+
+# ---
+# command/control
+# ---
+
+# unbind C-b to free it up, we're not gonna be using it.
+unbind C-b
+
+# set Ctrl-a as the default prefix key combination.
+set -g prefix C-a
+bind C-a send-prefix
+
+# shorten command delay
+set -sg escape-time 0
+
+# reload ~/.tmux.conf using PREFIX r
+bind r source-file ~/.tmux.conf \; display "Reloaded!"
+
+# enable mouse control, it's built into the laptop after all.
+setw -g mode-mouse on
+
+# ---
+# display
+# ---
+
+# use UTF8
+set -g utf8
+set-window-option -g utf8 on
+
+# make tmux display things in 256 colors
+set -g default-terminal "screen-256color"
+
+# visual notification of activity in other windows
+setw -g monitor-activity on
+set -g visual-activity on
+
+# ---
+# history
+# ---
+
+# set scrollback history to 10000 (10k)
+set -g history-limit 10000
+
+# clear the current pane, and copy/scrollback buffer using Ctrl-K. This is
+# marginal but better than nothing. You can still end up seeing content if
+# you scroll back using the mouse. NOTE that to get actual Ctrl-K mapping you
+# have to map 'Ctrl-a k' in iTerm2 via the key mapping page: hex "0x01 0x6B".
+bind k send-keys C-u \; send-keys C-k \; send-keys " clear && tmux clear-history" \; send-keys "Enter" \; run-shell "sleep .3s" \; send-keys "Up" \; send-keys C-u
+
+# ---
+# window/pane mgmt
+# ---
+
+set-window-option -g automatic-rename on
+
+# use PREFIX | to split window horizontally and PREFIX - to split vertically
+bind | split-window -h
+bind - split-window -v
+
+# map Vi movement keys as pane movement keys
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# resize panes using PREFIX H, J, K, L
+bind H resize-pane -L 5
+bind J resize-pane -D 5
+bind K resize-pane -U 5
+bind L resize-pane -R 5
+
+# let the mouse contribute to panel management
+set -g mouse-select-pane on
+set -g mouse-resize-pane on
+set -g mouse-select-window on
+
+# ---------------------
+# copy/paste
+# ---------------------
+
+# use a more vim-style escape key.
+unbind-key [
+bind-key Escape copy-mode
+
+# provide access to the clipboard for pbpaste, pbcopy. note that you must have
+# installed reattach-to-user-namespace via brew for this to work.
+set-option -g default-command "reattach-to-user-namespace -l /usr/local/bin/zsh"
+set-option -g default-shell /usr/local/bin/zsh
+
+# use vim keybindings in copy mode
+set-window-option -g xterm-keys on
+set-window-option -g mode-keys vi
+set-option -g status-keys vi
+
+# setup 'v' to begin selection as in Vim
+bind-key -T vi-copy v begin-selection
+bind-key -T vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+
+bind C-c run "tmux show-buffer | reattach-to-user-namespace pbcopy"
+bind C-v run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
+
+# update default binding of 'Enter' to also use copy-pipe
+unbind-key -T vi-copy Enter
+bind-key -T vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
+
+bind y run 'tmux save-buffer - | reattach-to-user-namespace pbcopy '
+#bind C-y run 'tmux save-buffer - | reattach-to-user-namespace pbcopy '
+bind C-y save-buffer /tmp/tmux-buffer \; run-shell "reattach-to-user-namespace -l zsh -c 'cat /tmp/tmux-buffer|pbcopy'"
+
+# ---
+# colorize
+# ---
+
+# set pane colors - hilight the active pane
+set-option -g pane-border-fg colour235 #base02
+set-option -g pane-active-border-fg colour240 #base01
+
+# colorize messages in the command line
+set-option -g message-bg black #base02
+set-option -g message-fg brightred #orange
+
+# set window list colors - red for active and cyan for inactive
+set-window-option -g window-status-fg brightblue #base0
+set-window-option -g window-status-bg colour236
+set-window-option -g window-status-attr dim
+
+set-window-option -g window-status-current-fg brightred #orange
+set-window-option -g window-status-current-bg colour236
+set-window-option -g window-status-current-attr bright
+
+# ---
+# status
+# ---
+
+set-option -g status on                # turn the status bar on
+set -g status-utf8 on                  # set utf-8 for the status bar
+set -g status-interval 15              # set update frequency
+set -g status-justify centre           # center window list for clarity
+
+# powerline configuration baseline.
+source ~/.dotfiles/util/powerline/powerline/bindings/tmux/powerline.conf
+
+# generated from the Tmuxline utility.
+source ~/.tmux_status.conf
+
+# ==============================================================================

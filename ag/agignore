@@ -1,0 +1,15 @@
+.git
+.cache
+.sass-cache
+
+.idea
+.vscode
+
+.next
+.tibet
+
+DS_Store
+
+node_modules
+build
+dist
