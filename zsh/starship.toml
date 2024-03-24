@@ -1,0 +1,109 @@
+format = "$hostname$directory$fill$all$sudo$username$character"
+
+# ---
+# Nerd Fonts Preset (Subset)
+# ---
+
+[aws]
+format = "[$symbol$profile$region](yellow) "
+symbol = " "
+disabled = true
+
+[cmd_duration]
+format = "[$duration](162) "
+show_milliseconds = true
+min_time = 1000
+
+[docker_context]
+symbol = " "
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch](green) "
+
+[git_commit]
+commit_hash_length = 7
+only_detached = false
+tag_disabled = false
+style = "green"
+
+[golang]
+format = "[$symbol$version](blue) "
+symbol = " "
+
+[java]
+format = "[$symbol$version](blue) "
+symbol = " "
+
+[lua]
+format = "[$symbol$version](blue) "
+symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+format = "[$symbol$version](blue) "
+symbol = " "
+
+[os.symbols]
+Amazon = " "
+Android = " "
+Macos = " "
+NixOS = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "󰍲 "
+
+[package]
+format = "[$symbol$version](green) "
+symbol = "󰏗 "
+disabled = true
+
+[perl]
+format = "[$symbol$version](blue) "
+symbol = " "
+
+[python]
+format = "[$symbol$version](blue) "
+symbol = " "
+
+[ruby]
+format = "[$symbol$version](blue) "
+symbol = " "
+
+[rust]
+format = "[$symbol$version](blue) "
+symbol = " "
+
+# ---
+# Final Prompt
+# ---
+
+[character]
+success_symbol = " [](bold #31748f)"
+error_symbol = " [󰁔](bold #eb6f92)"
+
+[directory]
+format = "[$path](yellow)"
+read_only = " 󰌾"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[fill]
+symbol = " "
+
+[hostname]
+format = "[$hostname](#888888) "
+ssh_only = false
+ssh_symbol = " "
+
+[sudo]
+disabled = false
+
+[username]
+format = "[$user](#999999)"
+show_always = true
