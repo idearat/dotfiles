@@ -5,6 +5,7 @@
 
 # TODO:
 # brew install sox (GpChat whisper functionality)
+# brew install pngpaste (Obsidian image paste functionality)
 
 
 # ---
