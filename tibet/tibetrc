@@ -5,6 +5,16 @@
 # This file runs after ALL shell logic so it's got override power. Use wisely :)
 
 # ---
+# path roots
+# ---
+
+export TPI_HOME="${DEVL_HOME}/TPI"
+export CODERATS_HOME="${DEVL_HOME}/coderats"
+
+export CMDFLOW_HOME="${CODERATS_HOME}/viziflow/cmdflow"
+export VIZITD_HOME="${CODERATS_HOME}/viziflow/vizitd"
+
+# ---
 # aliases
 # ---
 
