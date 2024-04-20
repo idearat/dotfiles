@@ -5,6 +5,13 @@
 # This file runs after ALL shell logic so it's got override power. Use wisely :)
 
 # ---
+# zsh config
+# ---
+
+alias vimtibet="vi $HOME/.tibetrc"
+alias srctibet="source $HOME/.tibetrc"
+
+# ---
 # path roots
 # ---
 
@@ -46,10 +53,6 @@ alias cdtemplates='cd ${CODERATS_HOME}/templates'
 alias cdpocket='cdparts; cd pocketbase'
 alias cdwails='cd ${CODERATS_HOME}/parts/wails'
 alias cdv3='cdwails; cd v3'
-
-# bash environment management
-alias vimtibet="vi $HOME/.tibetrc"
-alias srctibet="source $HOME/.tibetrc"
 
 alias cdsite='cd ${CODERATS_HOME}/domains/coderats-llc'
 alias site='cdsite;clear'
