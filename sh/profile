@@ -4,4 +4,4 @@
 source ~/.zshrc
 . "$HOME/.cargo/env"
 
-[[ -s "/Users/ss/.gvm/scripts/gvm" ]] && source "/Users/ss/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"

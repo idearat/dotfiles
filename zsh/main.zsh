@@ -23,6 +23,10 @@ export MANPATH=".:${HOME}/man:/usr/local/man:/usr/local/share/man:/usr/man:\
 export DEVL_HOME="${HOME}/dev"
 export NGINX_HOME="/usr/local/etc/nginx"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # ---
 # shell options
 # ---
@@ -728,7 +732,7 @@ export RAILS_ENV="development"
 # vi / vim / nvim
 # ---
 
-alias v='vim'
+alias v='nvim'
 alias vi='v'
 alias vim='v'
 
