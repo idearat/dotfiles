@@ -1,4 +1,4 @@
-# primary zsh customizations 
+# primary zsh customizations
 #
 
 # ---
@@ -497,7 +497,7 @@ if exists lazygit; then
       fi
   }
   alias lgit='lg'
-else 
+else
   echo 'lazygit not found'
   echo 'install lazygit via:';echo
   echo 'brew install jesseduffield/lazygit/lazygit'
@@ -505,7 +505,7 @@ fi
 
 if exists lazykube; then
   alias lkube='lazykube'
-else 
+else
   echo 'lazykube not found'
   echo 'install lazykube via:';echo
   echo 'brew install tnk-studio/tools/lazykube'
@@ -644,7 +644,7 @@ else
   echo 'install ranger via:';echo
   echo 'brew install ranger'
 echo
-fi 
+fi
 
 if exists rg; then
   alias rgu="rg -uuu"
@@ -803,7 +803,7 @@ bindkey '^l' vi-forward-word        # originally clear-screen
 
 # NOTE: C-y is one of only a few keys that'll also work within vim for this.
 # and using iTerm2 to map C-CR to send 0x19 means we can use C-CR to complete.
-bindkey '^y' autosuggest-execute    # originally self-insert 
+bindkey '^y' autosuggest-execute    # originally self-insert
 
 
 # ---
