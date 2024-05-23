@@ -27,6 +27,9 @@ only_detached = false
 tag_disabled = false
 style = "green"
 
+[gcloud]
+disabled = true
+
 [golang]
 format = "[$symbol$version](blue) "
 symbol = " "
