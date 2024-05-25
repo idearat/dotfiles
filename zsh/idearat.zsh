@@ -259,6 +259,8 @@ alias killjenkins="sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.p
 alias fixcamera='sudo killall VDCAssistant'
 alias fixscreen='sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.screensharing.plist &&  sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist'
 
+alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+
 alias unlock='rm -rf package-lock.json'
 
 # ---
