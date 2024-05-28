@@ -62,6 +62,7 @@ HISTCONTROL=erasedups
 # config files
 # ---
 
+alias cdconfig="cd ${HOME}/.config"
 alias cddot="cd ${HOME}/.dotfiles"
 
 alias vimdot="vi ${HOME}/.dotfiles/install.sh"

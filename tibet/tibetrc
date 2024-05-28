@@ -54,7 +54,7 @@ alias cdpocket='cdparts; cd pocketbase'
 alias cdwails='cd ${CODERATS_HOME}/parts/wails'
 alias cdv3='cdwails; cd v3'
 
-alias cdsite='cd ${CODERATS_HOME}/domains/coderats-llc'
+alias cdsite='cd ${CODERATS_HOME}/domains/www-coderats-llc'
 alias site='cdsite;clear'
 alias sitedoc='cdsite;cd doc/sources;clear'
 alias tpi='cdtpi;clear'
