@@ -22,11 +22,14 @@ local palette = {
 return {
     "rose-pine/neovim",
     name="rose-pine",
+    lazy = false,
+    priority = 1000,
     opts = {
-      variant = "auto", -- auto, main, moon, or dawn
+      variant = "main", -- auto, main, moon, or dawn
       dark_variant = "main", -- main, moon, or dawn
       dim_inactive_windows = false,
       extend_background_behind_borders = true,
+      dim_float_background = true,
 
       enable = {
           terminal = true,
@@ -37,7 +40,7 @@ return {
       styles = {
           bold = true,
           italic = true,
-          transparency = false,
+          transparent = true,
       },
 
       groups = {
