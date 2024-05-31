@@ -1,3 +1,57 @@
+-- ---
+-- Helper functions
+-- ---
+
+--- Create a button for the alpha window
+--- @param sc string
+--- @param txt string
+--- @param keybind string?
+--- @param keybind_opts table?
+--- @param opts table?
+--- @return table
+local function button(sc, txt, keybind, keybind_opts, opts)
+  local on_press = nil
+  local def_opts = {
+    cursor = 3,
+    align_shortcut = "right",
+    hl_shortcut = "AlphaButtonShortcut",
+    hl = "AlphaButton",
+    width = 35,
+    position = "center",
+  }
+  opts = opts and vim.tbl_extend("force", def_opts, opts) or def_opts
+  opts.shortcut = sc
+  local sc_ = sc:gsub("%s", ""):gsub("LDR", "<space>")
+  if type(keybind) == "function" then
+    on_press = keybind
+  else
+      on_press = function()
+      local key = vim.api.nvim_replace_termcodes(keybind or sc_ .. "<Ignore>", true, false, true)
+      vim.api.nvim_feedkeys(key, "t", false)
+    end
+    if keybind then
+      keybind_opts = vim.F.if_nil(keybind_opts, { noremap = true, silent = true, nowait = true })
+      opts.keymap = { "n", sc_, keybind, keybind_opts }
+    end
+  end
+  return { type = "button", val = txt, on_press = on_press, opts = opts }
+end
+
+-- Check if there are words before the cursor. Used by the cmp plugin to control
+-- how to handle things like Tab/Shift-Tab when no chars precede insert point.
+local function has_words_before()
+  local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+end
+
+local function load_last_session()
+  require("resession").load(
+    vim.fn.getcwd(),
+    { dir = "dirsession", silence_errors = true }
+  )
+end
+
+
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
 
@@ -19,14 +73,62 @@ return {
   {
     "goolord/alpha-nvim",
     opts = function(_, opts)
-      -- customize the dashboard header
+      local fortune = require "alpha.fortune"
+      local get_icon = require("astroui").get_icon
+
       opts.section.header.val = {
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
+[[                        .           ]],
+[[                       .:.          ]],
+[[                     .:::::.        ]],
+[[                    .:::::::.       ]],
+[[                     .:::::.        ]],
+[[                      :::::         ]],
+[[                     .:::::.        ]],
+[[          _         .:::::::.       ]],
+[[        :@%@:        .:::::.        ]],
+[[      .@@@%@@@.       :::::         ]],
+[[       .@@%@@.       .:::::.        ]],
+[[      =:#@%@#:=       :::::         ]],
+[[        -@%@-        .:::::.        ]],
+[[        :@%@:        :::::::        ]],
+[[        :@%@:       .:::::::.       ]],
+[[       :@@%@@:     .:::::::::.      ]],
+[[      .%@%%%@%.   .:::::::::::.     ]],
+[[     .%@%%%%%@%. :::::::::::::::.   ]],
+[[     %@@%%%%%@@%-::::::::::::::::   ]],
+[[   :@@@%%%%%%%@@@:--------``        ]],
+[[   @@@%%%%%%%%%@@@---``             ]],
       }
+
+      opts.section.buttons.val = {
+        button("s", get_icon("Refresh", 2, true) .. "Session  ", load_last_session),
+        button("r", get_icon("DefaultFile", 2, true) .. "Recents  ", ":Telescope oldfiles<cr>"),
+        button("n", get_icon("FileNew", 2, true) .. "New File  ", ":ene <bar> startinsert <cr>"),
+      }
+
+      -- local quote = table.concat(fortune(), "\n")
+      local quote = fortune()
+      opts.section.quotation = { type = "text", val = quote, opts = { position = "center", width = 35 } }
+
+
+      -- Customize the layout, leaving out 'footer'. If footer EXISTS, no matter
+      -- what you set it to, AstroNvim will flush it and put in it's own footer.
+      opts.config.layout = {
+        { type = "padding", val = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.1) } },
+        opts.section.header,
+        { type = "padding", val = 3 },
+        opts.section.buttons,
+        { type = "padding", val = 2 },
+        opts.section.quotation,
+      }
+
+      -- Customize the colorscheme. Note the button colors are set in the
+      -- `button` function above.
+      opts.section.header.opts.hl = "AlphaHeader"
+      opts.section.quotation.opts.hl = "AlphaQuote"
+
+      opts.opts.noautocmd = true
+
       return opts
     end,
   },
