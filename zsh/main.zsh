@@ -577,7 +577,7 @@ if exists nvim; then
     NVIM_APPNAME=$config $cmd $@
   }
 
-  alias vi='nvim-idea'
+  alias v='nvim-astro'
 
   # Turn off flow control. This lets VIM have better access to these keys.
   stty start undef stop undef 2> /dev/null
@@ -735,7 +735,7 @@ export RAILS_ENV="development"
 
 alias v4="NVIM_APPNAME=AstroNvim nvim"
 
-alias v='nvim'
+alias v='nvim-astro'
 alias vi='v'
 alias vim='v'
 
