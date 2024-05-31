@@ -733,6 +733,8 @@ export RAILS_ENV="development"
 # vi / vim / nvim
 # ---
 
+alias v4="NVIM_APPNAME=AstroNvim nvim"
+
 alias v='nvim'
 alias vi='v'
 alias vim='v'
