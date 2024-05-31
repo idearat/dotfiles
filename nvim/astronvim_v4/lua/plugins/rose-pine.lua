@@ -84,13 +84,14 @@ return {
 
         FloatBorder = { bg = "#000000", fg = palette.gold, blend=0 },
         TelescopeBorder = { bg = "#000000", fg = palette.gold, blend=0 },
+        TelescopeNormal = { bg = "#000000" },
 
         TelescopeSelectionCaret = { bg = "#000000", fg = palette.gold, blend=0 },
-        TelescopeSelection = { bg = "#000000", fg = palette.gold, blend=20 },
-        TelescopeMatching = { bg = "#000000", fg = palette.love, blend=20 },
+        TelescopeSelection = { bg = "#000000", fg = palette.gold, blend=50 },
+        TelescopeMatching = { bg = "#000000", fg = palette.love, blend=50 },
 
-        TelescopePreviewLine = { fg = "#000000", bg = palette.love, blend=20 },
-        TelescopeResultsLineNr = { fg = "#000000", bg = palette.love, blend=20 },
+        TelescopePreviewLine = { fg = "#000000", bg = palette.love, blend=50 },
+        TelescopeResultsLineNr = { fg = "#000000", bg = palette.love, blend=50 },
 
         ChatGPTTotalTokens= { bg = "#000000", fg = palette.gold, blend=0 },
         ChatGPTTotalTokensBorder = { bg = "#000000", fg = palette.gold, blend=0 },
