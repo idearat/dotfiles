@@ -2,6 +2,26 @@ local M = {}
 
 -- M.inspect = require "user.inspect"
 
+-- TODO:
+-- M.formatting = astronvim.user_opts("lsp.formatting", { format_on_save = { enabled = true }, disabled = {} })
+-- if type(M.formatting.format_on_save) == "boolean" then
+--   M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
+-- end
+--
+-- M.format_opts = vim.deepcopy(M.formatting)
+-- M.format_opts.disabled = nil
+-- M.format_opts.format_on_save = nil
+-- M.format_opts.filter = function(client)
+--   local filter = M.formatting.filter
+--   local disabled = M.formatting.disabled or {}
+--   -- check if client is fully disabled or filtered by function
+--   return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
+-- end
+--
+-- M.formatopts = function()
+--   return M.format_opts
+-- end
+
 vim.api.nvim_create_user_command("CloseFloatingWindows", function(opts)
   for _, window_id in ipairs(vim.api.nvim_list_wins()) do
     -- If window is floating
