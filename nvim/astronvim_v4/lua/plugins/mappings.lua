@@ -400,7 +400,7 @@ local function enhance_maps(maps)
   }
 
   maps.n["<C-=>"] =
-    { function() vim.lsp.buf.format(helpers.formatopts()) end, desc = "Format Buffer ³" }
+    { function() vim.lsp.buf.format() end, desc = "Format Buffer ³" }
 
   -- NOTE: these don't appear to work properly (they just use [ or ] mapping)
   -- maps.n["<C-{>"] = { desc = "" }
@@ -762,7 +762,7 @@ local function enhance_maps(maps)
 
   -- maps.n["<Leader>="] = { desc = "" }
   maps.n["<Leader>="] =
-    { function() vim.lsp.buf.format(helpers.formatopts()) end, desc = "Format Buffer" }
+    { function() vim.lsp.buf.format() end, desc = "Format Buffer" }
 
   -- maps.n["<Leader>{"] = { desc = "" }
   -- maps.n["<Leader>}"] = { desc = "" }
