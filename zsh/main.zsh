@@ -70,6 +70,7 @@ alias vimgit="vi ${HOME}/.gitconfig"
 alias vimng="vi /usr/local/etc/nginx/nginx.conf"
 alias vimtmux="vi ${HOME}/.tmux.conf"
 
+alias vimnvim="vi ${HOME}/.dotfiles/nvim/astronvim_v4/"
 alias vimvi="vi ${HOME}/.vimrc.after"
 alias vimvilocal="vi ${HOME}/.vimrc.local"
 
