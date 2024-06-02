@@ -546,10 +546,7 @@ local function enhance_maps(maps)
 
   maps.n["<Leader>d"] = { "<Leader>d", desc = ui.get_icon("Debugger", 1, true) .. "Debugger Menu" }
 
-  maps.n["<Leader>e"] = {
-    function() require("nvim-tree.api").tree.toggle { find_file = true, focus = true } end,
-    desc = "Explorer Toggle",
-  }
+  maps.n["<Leader>e"] = { ":Neotree toggle<cr>", desc = "Explorer Toggle" }
 
   -- Find Menu
 
