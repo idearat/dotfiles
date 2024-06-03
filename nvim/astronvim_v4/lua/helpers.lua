@@ -16,8 +16,12 @@ M.eval = function()
   end)
 end
 
-M.get_session_name = function()
+M.get_session_name = function(git)
   local name = vim.fn.getcwd()
+  if not git then
+    return name
+  end
+
   local branch = vim.fn.system("git branch --show-current")
   if vim.v.shell_error == 0 then
     return name .. '-' .. vim.trim(branch --[[@as string]])

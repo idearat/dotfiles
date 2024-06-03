@@ -35,7 +35,8 @@ return {
         -- allow "write" messages etc. to be visible in the status line
         cmdheight = 1,
 
-        hidden = false,
+        -- allow moving between buffers without saving
+        hidden = true,
 
         -- hard wrap
         textwidth = 80,
@@ -43,6 +44,8 @@ return {
         colorcolumn = "81",
 
         formatexpr = "",
+        -- note often overridden by ft plugins. use :verbose set formatoptions
+        -- to see where it's being set
         formatoptions = "tjcroq",
 
         -- soft wrap

@@ -1,3 +1,10 @@
+-- Check if there are words before the cursor. Used by the cmp plugin to control
+-- how to handle things like Tab/Shift-Tab when no chars precede insert point.
+local function has_words_before()
+  local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+end
+
 return {
   {
     "hrsh7th/nvim-cmp",
@@ -44,8 +51,8 @@ return {
       opts.sources = utils.extend_tbl(
         opts.sources,
         cmp.config.sources {
-          { name = "copilot", priority = 1250 },
-          { name = "codeium", priority = 1500 },
+          { name = "copilot", priority = 1500 },
+          { name = "codeium", priority = 1250 },
         }
       )
 
