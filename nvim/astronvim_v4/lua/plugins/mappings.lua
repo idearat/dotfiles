@@ -20,7 +20,7 @@ local function enhance_maps(maps)
   -- notify "user.mappings executed"
 
   local function dismiss()
-    notify.dismiss {}
+    require("notify").dismiss {}
     vim.cmd "CloseFloatingWindows"
   end
 
@@ -585,15 +585,13 @@ local function enhance_maps(maps)
   maps.n["<Leader>gg"] = {
     function()
       local term = require "FTerm"
-  -- TODO: git was removed for v4 of AstroNvim... find a replacement here.
-      local worktree = require("astrocore.git").file_worktree()
+      local worktree = require("astrocore").file_worktree()
       local flags = worktree
           and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
         or ""
       term.scratch {
         cmd = "lazygit " .. flags,
         auto_close = true,
-        on_exit = function() term.close() end,
       }
     end,
     desc = "lazygit Terminal",

@@ -3,6 +3,9 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local telescope = require("telescope")
+local ui = require("astroui")
+
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -81,20 +84,34 @@ return {
     -- mappings to be set up on attaching of a language server
     mappings = {
       n = {
-        -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
-        gD = {
-          function() vim.lsp.buf.declaration() end,
-          desc = "Declaration of current symbol",
-          cond = "textDocument/declaration",
-        },
-        ["<Leader>uY"] = {
-          function() require("astrolsp.toggles").buffer_semantic_tokens() end,
-          desc = "Toggle LSP semantic highlight (buffer)",
-          cond = function(client)
-            return client.supports_method "textDocument/semanticTokens/full"
-              and vim.lsp.semantic_tokens
-          end,
-        },
+
+        -- LOWERCASE
+        g = { "g", desc = "Go Operator" },
+        s = { "<Plug>(leap-forward-to)", desc = "Leap Ahead To chch ³" },
+
+        -- UPPERCASE
+        K = { function() vim.lsp.buf.hover() end, desc = "Keyword Help ³" },
+        S = { "<Plug>(leap-backward-to)", desc = "Reverse s ³" },
+
+        -- SYMBOLS
+        -- fix up description so it's not just 'prefix' in which-key
+        ["["] = { desc = "Previous n {...} ¹" },
+        ["]"] = { desc = "Next n {...} ¹" },
+
+        ["<C-q>"] = false, -- unmap AstroNvim's save & quit
+        ["<C-s>"] = { ":w!<cr>", desc = "Save! File ³" },
+
+        -- TODO: remappable
+        ["<C-x>"] = false, -- unmap AstroNvim's save & quit
+
+        ["<C-/>"] = { function() telescope.current_buffer_fuzzy_find() end, desc = "Find In Buffer ³" },
+
+        -- disable AstroNvim mapping to allow tab traversals to work
+        ["gT"] = false,
+
+        ["<Leader>c"] = { "<Leader>c", desc = ui.get_icon("DiagnosticHint", 1, true) .. "Chat/AI Menu" },
+        ["<Leader>l"] = { "<Leader>l", desc = ui.get_icon("ActiveLSP", 1, true) .. "LSP Menu" },
+        ["<Leader>u"] = { "<Leader>u", desc = ui.get_icon("Window", 1, true) .. "UI Menu" },
       },
     },
     -- A custom `on_attach` function to be run after the default `on_attach` function

@@ -84,11 +84,11 @@ return {
 
         FloatBorder = { bg = "#000000", fg = palette.gold, blend=0 },
         TelescopeBorder = { bg = "#000000", fg = palette.gold, blend=0 },
-        TelescopeNormal = { bg = "#000000" },
+        TelescopeNormal = { bg = "#000000", fg = palette.text, blend=0 },
 
         TelescopeSelectionCaret = { bg = "#000000", fg = palette.gold, blend=0 },
         TelescopeSelection = { bg = "#000000", fg = palette.gold, blend=50 },
-        TelescopeMatching = { bg = "#000000", fg = palette.love, blend=50 },
+        TelescopeMatching = { bg = "#000000", fg = palette.love, blend=70 },
 
         TelescopePreviewLine = { fg = "#000000", bg = palette.love, blend=50 },
         TelescopeResultsLineNr = { fg = "#000000", bg = palette.love, blend=50 },
