@@ -70,7 +70,6 @@ alias vimgit="vi ${HOME}/.gitconfig"
 alias vimng="vi /usr/local/etc/nginx/nginx.conf"
 alias vimtmux="vi ${HOME}/.tmux.conf"
 
-alias vimnvim="vi ${HOME}/.dotfiles/nvim/astronvim_v4/"
 alias vimvi="vi ${HOME}/.vimrc.after"
 alias vimvilocal="vi ${HOME}/.vimrc.local"
 
@@ -556,6 +555,10 @@ if exists nvim; then
   # neovim
   export VIMRUNTIME="/opt/homebrew/share/nvim/runtime"
   export VISUAL=nvim
+
+  export NVIM_DIR="$HOME/.dotfiles/nvim/astronvim_v4"
+  alias cdnvim="cd ${NVIM_DIR}"
+  alias vimnvim="vi ${NVIM_DIR}"
 
   # per https://github.com/elijahmanor/dotfiles/blob/master/zsh/.zshrc
   alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
