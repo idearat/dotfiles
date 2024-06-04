@@ -2,16 +2,43 @@ local M = {}
 
 local Terminal = require("toggleterm.terminal").Terminal
 local worktree = require("astrocore").file_worktree()
-local flags = worktree
-and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
+
+local dockerflags = worktree
+and ("%s"):format(worktree.toplevel)
 or ""
-local lazygit = Terminal:new {
-  cmd = "lazygit " .. flags,
+
+local lazydocker = Terminal:new {
+  cmd = "lazydocker" .. dockerflags,
   direction = "float",
   hidden = true,
   count = 1,
   float_opts = { border = "single" },
 }
+
+local gitflags = worktree
+and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
+or ""
+
+local lazygit = Terminal:new {
+  cmd = "lazygit " .. gitflags,
+  direction = "float",
+  hidden = true,
+  count = 1,
+  float_opts = { border = "single" },
+}
+
+local npmflags = worktree
+and ("%s"):format(worktree.toplevel)
+or ""
+
+local lazynpm = Terminal:new {
+  cmd = "lazynpm" .. npmflags,
+  direction = "float",
+  hidden = true,
+  count = 1,
+  float_opts = { border = "single" },
+}
+
 
 local zshterm = Terminal:new {
   direction = "float",
@@ -20,8 +47,16 @@ local zshterm = Terminal:new {
   float_opts = { border = "single" },
 }
 
+M.toggleLazyDocker = function()
+  lazydocker:toggle()
+end
+
 M.toggleLazyGit = function()
   lazygit:toggle()
+end
+
+M.toggleLazyNpm = function()
+  lazynpm:toggle()
 end
 
 M.toggleZsh = function()

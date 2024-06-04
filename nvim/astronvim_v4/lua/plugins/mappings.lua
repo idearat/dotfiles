@@ -7,7 +7,9 @@
 -- what keys make the most sense for remapping and how the remapping may
 -- relate functionally or mnemonically to the original key.
 
+local toggleLazyDocker = require("helpers").toggleLazyDocker
 local toggleLazyGit = require("helpers").toggleLazyGit
+local toggleLazyNpm = require("helpers").toggleLazyNpm
 local toggleZsh = require("helpers").toggleZsh
 
 local function enhance_maps(maps)
@@ -585,7 +587,7 @@ local function enhance_maps(maps)
   maps.n["<Leader>gt"] =
     { function() telescope.git_status { use_file_path = true } end, desc = "Git status" }
 
-  maps.n["<Leader>gg"] = { toggleLazyGit, desc = "lazygit Terminal" }
+  maps.n["<Leader>gg"] = { toggleLazyGit, desc = "Toggle LazyGit" }
 
   -- ---
 
@@ -648,7 +650,12 @@ local function enhance_maps(maps)
 
   -- ---
 
-  maps.n["<Leader>v"] = { function() notify " ??? " end, desc = "???" }
+  maps.n["<Leader>v"] = { "<Leader>v", desc = ui.get_icon("Window", 1, true) .. "Visual Menu" }
+
+  maps.n["<Leader>vd"] = { toggleLazyDocker, desc = "Toggle LazyDocker" }
+  maps.n["<Leader>vg"] = { toggleLazyGit, desc = "Toggle LazyGit" }
+--  maps.n["<Leader>vk"] = { function() notify " lazykube " end, desc = "Toggle LazyKube" }
+  maps.n["<Leader>vn"] = { toggleLazyNpm, desc = "Toggle LazyNpm" }
 
   -- maps.n["<Leader>w"] = { desc = "Save (AstroNvim) }
   maps.n["<Leader>w"] = { ":w<cr>", desc = "Write File" }
