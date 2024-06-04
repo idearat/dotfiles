@@ -7,6 +7,9 @@
 -- what keys make the most sense for remapping and how the remapping may
 -- relate functionally or mnemonically to the original key.
 
+local toggleLazyGit = require("helpers").toggleLazyGit
+local toggleZsh = require("helpers").toggleZsh
+
 local function enhance_maps(maps)
 
   local core = require "astrocore"
@@ -424,8 +427,8 @@ local function enhance_maps(maps)
   -- NOTE: this doesn't work as expected, it just uses the '\' mapping.
   -- maps.n["<C-|>"] = { desc = "" }
 
-  maps.n["<C-\\>"] = { function() require("FTerm").toggle() end, desc = "Terminal Toggle ³" }
-  maps.t["<C-\\>"] = { function() require("FTerm").toggle() end, desc = "Terminal Toggle ³" }
+  maps.n["<C-\\>"] = { toggleZsh, desc = "Terminal Toggle ³" }
+  maps.t["<C-\\>"] = { toggleZsh, desc = "Terminal Toggle ³" }
 
   -- NOTE: this doesn't work as expected, it just uses the ';' mapping.
   -- maps.n["<C-:>"] = { desc = "" }
@@ -582,20 +585,7 @@ local function enhance_maps(maps)
   maps.n["<Leader>gt"] =
     { function() telescope.git_status { use_file_path = true } end, desc = "Git status" }
 
-  maps.n["<Leader>gg"] = {
-    function()
-      local term = require "FTerm"
-      local worktree = require("astrocore").file_worktree()
-      local flags = worktree
-          and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
-        or ""
-      term.scratch {
-        cmd = "lazygit " .. flags,
-        auto_close = true,
-      }
-    end,
-    desc = "lazygit Terminal",
-  }
+  maps.n["<Leader>gg"] = { toggleLazyGit, desc = "lazygit Terminal" }
 
   -- ---
 

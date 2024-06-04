@@ -1,5 +1,33 @@
 local M = {}
 
+local Terminal = require("toggleterm.terminal").Terminal
+local worktree = require("astrocore").file_worktree()
+local flags = worktree
+and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
+or ""
+local lazygit = Terminal:new {
+  cmd = "lazygit " .. flags,
+  direction = "float",
+  hidden = true,
+  count = 1,
+  float_opts = { border = "single" },
+}
+
+local zshterm = Terminal:new {
+  direction = "float",
+  hidden = true,
+  count = 0,
+  float_opts = { border = "single" },
+}
+
+M.toggleLazyGit = function()
+  lazygit:toggle()
+end
+
+M.toggleZsh = function()
+  zshterm:toggle()
+end
+
 vim.api.nvim_create_user_command("CloseFloatingWindows", function(opts)
   for _, window_id in ipairs(vim.api.nvim_list_wins()) do
     -- If window is floating
