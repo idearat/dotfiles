@@ -14,14 +14,17 @@ alias vimit='vim ~/.dotfiles/zsh/main.zsh'
 
 # Rebuild "user" path to inject PG and other custom elements into full path.
 # NOTE: base and post are defined in ~/.zshrc
-export PATH_USER="opt/homebrew/opt/postgresql@15/bin:/usr/local/bin/araxis"
+export PATH_USER="opt/homebrew/opt/postgresql@15/bin:/usr/local/bin/araxis:${HOME}/.natster/bin"
 export PATH="${PATH_BASE}:${PATH_USER}:${PATH_POST}"
+
 
 export MANPATH=".:${HOME}/man:/usr/local/man:/usr/local/share/man:/usr/man:\
   /usr/bin/man:/usr/share/man:/usr/share/locale/en/man:/usr/X11R6/man"
 
 export DEVL_HOME="${HOME}/dev"
 export NGINX_HOME="/usr/local/etc/nginx"
+
+export GOBIN="${HOME}/bin"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -450,15 +453,6 @@ if exists gvm; then
   gvm use go1.21.4
 fi
 
-# HTTP requests with xh!
-if exists xh; then
-  alias http="xh"
-else
-  echo 'xh not found'
-  echo 'install xh via:';echo
-  echo 'brew install xh'
-fi
-
 if exists kubectl; then
   export KUBECONFIG=~/.kube/config
   alias k="kubectl"
@@ -672,6 +666,15 @@ else
   echo 'brew install tree'
 fi
 
+# HTTP requests with xh!
+if exists xh; then
+  alias http="xh"
+else
+  echo 'xh not found'
+  echo 'install xh via:';echo
+  echo 'brew install xh'
+fi
+
 # ---
 # /Applications
 # ---
@@ -726,6 +729,11 @@ framework/Versions/A/Resources/jsc"
 
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 export PUPPETEER_EXECUTABLE_PATH=`which chromium`
+
+# ---
+# nats
+# ---
+
 
 # ---
 # ruby
@@ -811,6 +819,29 @@ bindkey '^l' vi-forward-word        # originally clear-screen
 # NOTE: C-y is one of only a few keys that'll also work within vim for this.
 # and using iTerm2 to map C-CR to send 0x19 means we can use C-CR to complete.
 bindkey '^y' autosuggest-execute    # originally self-insert
+
+# ---
+# vfox (runtime management for nodejs, golang, etc)
+# ---
+
+if exists vfox; then
+  eval "$(vfox activate zsh)"
+
+  vfox use nodejs@20.15.0 >/dev/null 2>&1
+  vfox use golang@1.22.5 >/dev/null 2>&1
+fi
+
+# ---
+# Databases
+# ---
+
+export MYSQL_HOME="/opt/homebrew/Cellar/mysql/8.3.0_1"
+export MYSQL_BIN="${MYSQL_HOME}/bin"
+
+alias mysqlstart="${MYSQL_BIN}/mysql.server start"
+alias mysqlstop="${MYSQL_BIN}/mysql.server stop"
+alias mysqlrestart="${MYSQL_BIN}/mysql.server restart"
+alias mysqlstatus="${MYSQL_BIN}/mysql.server status"
 
 
 # ---
