@@ -4,10 +4,12 @@ return {
     opts = function(opts)
       local utils = require "astrocore"
       opts = utils.extend_tbl(opts, {
+        preset = "modern",
         icons = { group = vim.g.icons_enabled and "" or "", separator = "" },
-        key_labels = { ["<C-i>"] = "<C-I>" }, -- sadly this doesn't work :(
-        layout = { height = { min = 5, max = 50 } },
-        window = { border = "single", winblend = 0, rounded = true },
+        layout = {
+          height = { min = 5, max = 50 },
+          win = { border = "single", winblend = 0, rounded = true },
+        }
       })
       return opts
     end,

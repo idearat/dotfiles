@@ -3,7 +3,7 @@ return {
   opts = function(_, opts)
     --    opts.open_automatic = true
     opts.layout = {
-      min_width = 40,
+      min_width = 32,
     }
   end,
 }

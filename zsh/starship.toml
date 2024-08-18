@@ -1,4 +1,5 @@
-format = "$hostname$directory$fill$all$sudo$username$character"
+format = "$hostname$directory$fill$git_branch$git_commit$git_state$git_status$git_metrics$line_break$sudo$username$character"
+right_format="$all"
 
 # ---
 # Nerd Fonts Preset (Subset)
@@ -44,6 +45,8 @@ symbol = " "
 
 [memory_usage]
 symbol = "󰍛 "
+
+[nats]
 
 [nix_shell]
 symbol = " "

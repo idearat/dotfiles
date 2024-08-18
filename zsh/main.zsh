@@ -447,10 +447,21 @@ else
   echo 'brew install git'
 fi
 
+# ---
+# vfox (runtime management for nodejs, golang, etc)
+# ---
+
+# if exists vfox; then
+#   eval "$(vfox activate zsh)"
+#
+#   vfox use golang@1.22.5
+#   vfox use nodejs@20.15.0
+# fi
+#
 # Go
 if exists gvm; then
   source ~/.gvm/scripts/gvm > /dev/null 2>&1
-  gvm use go1.21.4
+  gvm use go1.22.5
 fi
 
 if exists kubectl; then
@@ -821,21 +832,11 @@ bindkey '^l' vi-forward-word        # originally clear-screen
 bindkey '^y' autosuggest-execute    # originally self-insert
 
 # ---
-# vfox (runtime management for nodejs, golang, etc)
-# ---
-
-if exists vfox; then
-  eval "$(vfox activate zsh)"
-
-  vfox use nodejs@20.15.0 >/dev/null 2>&1
-  vfox use golang@1.22.5 >/dev/null 2>&1
-fi
-
-# ---
 # Databases
 # ---
 
-export MYSQL_HOME="/opt/homebrew/Cellar/mysql/8.3.0_1"
+export MYSQL_HOME="/opt/homebrew/Cellar/mysql/9.0.1"
+# export MYSQL_HOME="/opt/homebrew/Cellar/mysql@8.0/8.0.39_1"
 export MYSQL_BIN="${MYSQL_HOME}/bin"
 
 alias mysqlstart="${MYSQL_BIN}/mysql.server start"
@@ -843,6 +844,7 @@ alias mysqlstop="${MYSQL_BIN}/mysql.server stop"
 alias mysqlrestart="${MYSQL_BIN}/mysql.server restart"
 alias mysqlstatus="${MYSQL_BIN}/mysql.server status"
 
+export PATH=${PATH}:${MYSQL_BIN}
 
 # ---
 # if it's below this it's probably injected by some install script :)

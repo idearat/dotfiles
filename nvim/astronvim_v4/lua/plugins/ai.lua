@@ -103,7 +103,7 @@ Start fresh using `%s` or :%sChatNew.
 
         toggle_target = "split",
 
-        whisper_rec_cmd = { "sox", "-c", "1", "-d", "rec.wav", "trim", "0", "3600" },
+        whisper = { rec_cmd = {"sox", "-c", "1", "-d", "rec.wav", "trim", "0", "3600" }},
       })
     end
   },

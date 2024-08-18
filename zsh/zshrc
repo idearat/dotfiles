@@ -85,7 +85,7 @@ export STARSHIP_CONFIG=~/.dotfiles/oh-my-zsh/custom/starship.toml
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aliases git-commit multipass nats redis-cli starship vi-mode you-should-use zoxide zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(aliases autoupdate git-commit multipass nats redis-cli starship vi-mode you-should-use zoxide zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
