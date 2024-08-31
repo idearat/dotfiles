@@ -7,9 +7,20 @@ return {
         preset = "modern",
         icons = { group = vim.g.icons_enabled and "" or "", separator = "" },
         layout = {
+          width = { min = 20 },
+          spacing = 3,
+        },
+        win = {
+          border = "single",
           height = { min = 5, max = 50 },
-          win = { border = "single", winblend = 0, rounded = true },
-        }
+        },
+        keys = {
+          scroll_down = "<c-down>", -- binding to scroll down inside the popup
+          scroll_up = "<c-up>", -- binding to scroll up inside the popup
+        },
+        sort = {
+          "alphanum", "order", "mod"
+        },
       })
       return opts
     end,
