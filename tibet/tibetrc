@@ -42,6 +42,7 @@ base
 
 alias cdeventual='cd ${CODERATS_HOME}/products/eventualdb'
 alias cdflow='cd ${CODERATS_HOME}/products/cmdflow'
+alias cdrats='cd ${CODERATS_HOME}/products/RATS'
 alias cdresearch='cd ${CODERATS_HOME}/products/research'
 alias cdsherpa='cd ${CODERATS_HOME}/products/sherpa'
 
@@ -54,7 +55,8 @@ alias cdpocket='cdparts; cd pocketbase'
 alias cdwails='cd ${CODERATS_HOME}/parts/wails'
 alias cdv3='cdwails; cd v3'
 
-alias cdsite='cd ${CODERATS_HOME}/domains/coderats-llc'
+alias cddocs='cd ${CODERATS_HOME}/domains/docs.coderats.io'
+alias cdsite='cd ${CODERATS_HOME}/domains/coderats.io'
 alias site='cdsite;clear'
 alias sitedoc='cdsite;cd doc/sources;clear'
 alias tpi='cdtpi;clear'
@@ -66,7 +68,7 @@ alias pizza='examples; cd pizza'
 
 alias cddbsa='cd ${DEVL_HOME}/DBSA'
 alias cdtpi='cd ${TPI_HOME}'
-alias cdrats='cd ${CODERATS_HOME}'
+alias cdcr='cd ${CODERATS_HOME}'
 
 alias dbtest='cd ~/temporary/examples/dbtest'
 alias d2d='cd ~/temporary/examples/d2d'
