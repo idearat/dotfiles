@@ -462,9 +462,9 @@ fi
 # fi
 #
 # Go
+source ~/.gvm/scripts/gvm > /dev/null 2>&1
 if exists gvm; then
-  source ~/.gvm/scripts/gvm > /dev/null 2>&1
-  gvm use go1.22.5
+  gvm use go1.23.3
 fi
 
 if exists kubectl; then
