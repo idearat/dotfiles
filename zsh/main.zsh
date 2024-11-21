@@ -442,7 +442,8 @@ if exists git; then
     echo 'Updating git submodules...'
     git submodule init
     git submodule update --recursive --force
-    git submodule foreach 'git fetch origin; git checkout master; git pull'
+    git submodule foreach "git checkout $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'); git pull"
+    # git submodule foreach 'git fetch origin; git checkout master; git pull'
   }
 
 else
