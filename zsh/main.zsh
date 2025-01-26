@@ -365,7 +365,7 @@ if exists bat; then
 fi
 
 # Deno
-export DENO_INSTALL="/Users/ss/.deno"
+export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # Docker and Docker Compose
@@ -545,7 +545,7 @@ fi
 if exists nvm; then
   source ~/.nvm/nvm.sh > /dev/null 2>&1
 
-  nvm use --silent v18
+  nvm use --silent v20
 
   export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/versions/node/${NODE_VERSION}/lib/node_modules"
