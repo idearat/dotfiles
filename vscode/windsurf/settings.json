@@ -1,0 +1,267 @@
+{
+  /* ===========================================================================
+   * Make VSCode Awesome
+   * ------------------------------------------------------------------------ */
+
+  /*
+   * Better Defaults
+   */
+  "editor.copyWithSyntaxHighlighting": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.emptySelectionClipboard": false,
+  "workbench.editor.enablePreview": false,
+  "window.newWindowDimensions": "inherit",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "files.trimTrailingWhitespace": true,
+  "diffEditor.renderSideBySide": false,
+  "editor.snippetSuggestions": "top",
+  "editor.detectIndentation": false,
+  "window.nativeFullScreen": false,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "workbench.editor.showTabs": "multiple",
+  "editor.minimap.enabled": false,
+	"editor.lineNumbers": "on",
+
+  /*
+   * Silence The Noise
+   */
+  "breadcrumbs.enabled": false,
+  "scm.diffDecorations": "none",
+  "editor.hover.enabled": false,
+  "editor.matchBrackets": "never",
+  "workbench.tips.enabled": false,
+  "editor.colorDecorators": false,
+  "git.decorations.enabled": false,
+  "workbench.startupEditor": "none",
+  "editor.lightbulb.enabled": "off",
+  "editor.selectionHighlight": false,
+  "editor.overviewRulerBorder": false,
+  "editor.renderLineHighlight": "none",
+  "editor.occurrencesHighlight": "off",
+  "problems.decorations.enabled": false,
+  "editor.renderControlCharacters": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.gotoLocation.multipleReferences": "goto",
+  "editor.gotoLocation.multipleDefinitions": "goto",
+  "editor.gotoLocation.multipleDeclarations": "goto",
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "editor.gotoLocation.multipleImplementations": "goto",
+  "editor.gotoLocation.multipleTypeDefinitions": "goto",
+
+  /*
+   * Typography
+   */
+  "workbench.colorTheme": "Rosé Pine",
+  "editor.fontFamily": "'Fira Code Nerd Font Propo', 'InconsolataGo Nerd Font Propo', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 16,
+  "editor.lineHeight": 1.5,
+  "editor.suggestFontSize": 16,
+  "editor.suggestLineHeight": 24,
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.lineHeight": 1.5,
+
+  /*
+   * Find
+   */
+  "search.useIgnoreFiles": false,
+  "search.exclude": {
+      // TODO: review this
+      // Hide everything in /vendor, except the "laravel" and "livewire" folder.
+      "**/vendor/{[^l],?[^ai]}*": true,
+      // TODO: review this
+      // Hide everything in /public, except "index.php"
+      "**/public/{[^i],?[^n]}*": true,
+      "**/node_modules": true,
+      "**/dist": true,
+      // "**/_ide_helper.php": true,
+      "**/composer.lock": true,
+      "**/package-lock.json": true,
+      "storage": true,
+      // ".phpunit.result.cache": true
+  },
+
+  /*
+   * Code
+   */
+  // Include "-" in word selection.
+  "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
+  "emmet.includeLanguages": {
+  },
+  "files.associations": {
+  },
+
+  /*
+   * Prettier
+   */
+  "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
+  },
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
+
+  /* ===========================================================================
+   * My Settings
+   * ------------------------------------------------------------------------ */
+
+  "atlascode.jira.jqlList": [
+    {
+      "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
+      "enabled": true,
+      "name": "My discounttire Issues",
+      "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+      "siteId": "4897d307-327f-4624-8413-009ff77cda88",
+      "monitor": true
+    }
+  ],
+  "atlascode.jira.lastCreateSiteAndProject": {
+    "siteId": "4897d307-327f-4624-8413-009ff77cda88",
+    "projectKey": "CAVA"
+  },
+  "atlascode.jira.statusbar.enabled": true,
+  "atlascode.bitbucket.statusbar.enabled": true,
+
+  "chat.editor.fontSize": 14,
+
+  "debug.console.fontSize": 14,
+
+  "editor.cursorSurroundingLines": 3,
+  "editor.smoothScrolling": true,
+  "editor.renderWhitespace": "selection",
+  "editor.scrollBeyondLastLine": true,
+  "editor.wordBasedSuggestions": "matchingDocuments",
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.rulers": [80, 100],
+
+  "find-it-faster.advanced.useEditorSelectionAsQuery": true,
+  "find-it-faster.general.killTerminalAfterUse": false,
+  "find-it-faster.general.hideTerminalAfterFail": true,
+  "find-it-faster.general.hideTerminalAfterSuccess": true,
+
+  "gitlens.currentLine.enabled": false,
+  "gitlens.graph.dimMergeCommits": true,
+  "gitlens.graph.minimap.enabled": false,
+  "gitlens.launchpad.indicator.enabled": false,
+  "gitlens.mode.active": "review",
+  "gitlens.views.scm.grouped.views": {
+    "commits": true,
+    "branches": true,
+    "remotes": true,
+    "stashes": true,
+    "tags": true,
+    "worktrees": true,
+    "contributors": true,
+    "repositories": false,
+    "searchAndCompare": false,
+    "launchpad": true
+  },
+
+  "gopls": {
+    "ui.semanticTokens": false
+  },
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "keyboard.dispatch": "keyCode",
+
+  "markdown-preview-enhanced.codeBlockTheme": "darcula.css",
+  "markdown-preview-enhanced.previewTheme": "github-dark.css",
+
+  "redhat.telemetry.enabled": false,
+
+  "rewrap.wrappingColumn": 80,
+
+  "rust-analyzer.testExplorer": true,
+
+  "scm.inputFontSize": 14,
+
+  "terminal.external.osxExec": "iTerm2v3.app",
+
+  "vim.insertModeKeyBindings": [
+      {
+          "before": ["j", "j"],
+          "after": ["<Esc>"]
+      }
+  ],
+  "vim.normalModeKeyBindings": [
+      {
+          "before": ["r"],
+          "after": ["R"]
+      },
+      {
+          "before": ["Y"],
+          "after": ["y", "$"]
+      },
+      {
+          "before": ["Q"],
+          "after": ["@", "q"]
+      },
+      {
+          "before": ["U"],
+          "after": ["g", "~", "i", "w"]
+      }
+  ],
+  "vim.cursorStylePerMode.normal": "block",
+  "vim.useSystemClipboard": true,
+  "vim.highlightedyank.enable": false,
+  "vim.statusBarColorControl": false,
+  "vim.searchHighlightColor": "rgba(255, 255, 0, 0.3)",
+
+  "windsurf.autocompleteSpeed": "fast",
+  "windsurf.cascadeWebSearchDisabled": true,
+  "windsurf.enableConfig": {
+    "*": true
+  },
+
+  "window.nativeTabs": true,
+  "window.titleBarStyle": "native",
+
+  "workbench.activityBar.location": "top",
+  "workbench.auxiliaryActivityBar.location": "top",
+  "workbench.colorCustomizations": {},
+  "workbench.editor.splitInGroupLayout": "vertical",
+  "workbench.settings.openDefaultKeybindings": true,
+  "workbench.settings.useSplitJSON": true,
+
+  "yaml.customTags": [
+      "!And",
+      "!And sequence",
+      "!If",
+      "!If sequence",
+      "!Not",
+      "!Not sequence",
+      "!Equals",
+      "!Equals sequence",
+      "!Or",
+      "!Or sequence",
+      "!FindInMap",
+      "!FindInMap sequence",
+      "!Base64",
+      "!Join",
+      "!Join sequence",
+      "!Cidr",
+      "!Ref",
+      "!Sub",
+      "!Sub sequence",
+      "!GetAtt",
+      "!GetAZs",
+      "!ImportValue",
+      "!ImportValue sequence",
+      "!Select",
+      "!Select sequence",
+      "!Split",
+      "!Split sequence"
+  ],
+  "yaml.schemas": {
+    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.2.3-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+},
+
+  "zenMode.fullScreen": false,
+  "zenMode.hideLineNumbers": false,
+  "zenMode.hideStatusBar": false,
+  "zenMode.showTabs": "single",
+}

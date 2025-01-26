@@ -1,0 +1,1580 @@
+/** ============================================================================
+ * @file keybindings.json
+ * @overview Keybindings for Windsurf - a Vim-like user experience for VSCode.
+ * @copyright 2025 Scott H. Shattuck
+ * @license MIT
+ * -------------------------------------------------------------------------- */
+
+/*
+ * This file augments the default keybindings of the VSCode Vim plugin. This
+ * augmentation focuses on AI, command palette, and git access; file, panel,
+ * and window management; and other aspects of the Vim user experience.
+ *
+ * REQUIRED:
+ *   VSCode Vim plugin (Vim-like keybindings, primarly for text editor)
+ *
+ * RECOMMENDED:
+ *   VSCode Atlassian extension (easy Bitbucket and Jira integration)
+ *   VSCode GitLens extension (more powerful git integration tools)
+ *   VSCode FindItFaster extension (search via rg, fzf, bat, et al)
+ *   VSCode Rewrap extension (easier wrapping of comment text etc.)
+ *
+ * A settings.json file accompanying this file can be used to configure
+ * additional behavior such as configuring 'jj' to send <ESC> etc. The
+ * settings.json file also has config options for recommended extensions.
+ */
+
+[
+  // ===========================================================================
+  // Make VSCode Awesome - keybindings
+  // ---------------------------------------------------------------------------
+
+  // NOTE: the settings below focus largely on the 'cmd' key and are built with
+  // the expectation that the accompanying settings.json file properties will
+  // have turned off / disabled a number of VSCode UI doodads.
+
+  /*
+   * Panels
+   */
+  {
+    "key": "cmd+k cmd+e",
+    "command": "workbench.view.explorer"
+  },
+  {
+    "key": "cmd+k cmd+g",
+    "command": "workbench.view.scm"
+  },
+  {
+    "key": "cmd+k cmd+d",
+    "command": "workbench.view.debug"
+  },
+  {
+    "key": "cmd+k cmd+x",
+    "command": "workbench.extensions.action.showEnabledExtensions"
+  },
+  {
+    "key": "cmd+k cmd+b",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "cmd+e",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.terminal.toggleTerminal"
+  },
+
+  /*
+   * Toggle Font Size
+   */
+  {
+    "key": "cmd+k cmd+k",
+    "command": "toggle",
+    "when": "editorTextFocus",
+    "args": {
+      "id": "fontSize",
+      "value": [
+        {
+          "editor.fontSize": 16,
+          "editor.lineHeight":32
+        },
+        {
+          "editor.fontSize": 14,
+          "editor.lineHeight": 0
+        }
+      ]
+    }
+  },
+
+  /*
+   * Fold/Unfold
+   */
+  {
+    "key": "shift+cmd+[",
+    "command": "editor.fold",
+    "when": "editorFocus"
+  },
+  {
+    "key": "shift+cmd+]",
+    "command": "editor.unfold",
+    "when": "editorFocus"
+  },
+
+  /*
+   * Line Manipulation
+   */
+  {
+    "key": "cmd+l",
+    "command": "editor.action.copyLinesDownAction",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+j",
+    "command": "editor.action.joinLines",
+    "when": "editorTextFocus"
+  },
+
+  /*
+   * File Explorer
+   */
+  {
+    "key": "cmd+d",
+    "command": "duplicate.execute",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+  },
+  {
+    "key": "cmd+n",
+    "command": "explorer.newFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+cmd+n",
+    "command": "explorer.newFolder",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+
+  /*
+   * Multi-Cursor
+   */
+  {
+    "key": "cmd+backspace",
+    "command": "editor.action.moveSelectionToPreviousFindMatch",
+    "when": "editorFocus && editorHasMultipleSelections"
+  },
+  {
+    "key": "cmd+k cmd+d",
+    "command": "editor.action.moveSelectionToNextFindMatch",
+    "when": "editorFocus && editorHasMultipleSelections"
+  },
+  {
+    "key": "cmd+right",
+    "command": "editor.action.insertCursorAtEndOfEachLineSelected",
+    "when": "editorFocus && editorHasSelection"
+  },
+
+  /*
+   * Split Panels
+   */
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.joinAllGroups",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.splitEditor",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "workbench.action.evenEditorWidths",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+shift+=",
+    "command": "workbench.action.increaseViewSize",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "workbench.action.decreaseViewSize",
+    "when": "editorFocus"
+  },
+
+
+  /*
+   * Terminal Split Panel
+   */
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.terminal.split",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+
+  /*
+   * Emmet
+   */
+  {
+    "key": "cmd+m cmd+i",
+    "command": "editor.emmet.action.balanceIn",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+m cmd+o",
+    "command": "editor.emmet.action.balanceOut",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+m cmd+w",
+    "command": "editor.emmet.action.wrapWithAbbreviation",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+m cmd+m",
+    "command": "editor.emmet.action.matchTag",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+m cmd+e",
+    "command": "editor.action.smartSelect.expand",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+m cmd+r",
+    "command": "editor.emmet.action.updateTag",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+m cmd+backspace",
+    "command": "editor.emmet.action.removeTag",
+    "when": "editorTextFocus"
+  },
+
+  /*
+   * amVim Finder Fix
+   */
+  {
+    "key": "enter",
+    "command": "editor.action.nextMatchFindAction",
+    "when": "findWidgetVisible"
+  },
+  {
+    "key": "shift+enter",
+    "command": "editor.action.previousMatchFindAction",
+    "when": "findWidgetVisible"
+  },
+
+  /*
+   * IntelliSense
+   */
+  {
+    "key": "cmd+r",
+    "command": "workbench.action.gotoSymbol"
+},
+{
+  "key": "cmd+shift+r",
+  "command": "workbench.action.showAllSymbols"
+},
+{
+  "key": "cmd+k cmd+enter",
+  "command": "editor.action.goToDeclaration",
+  "when": "editorTextFocus"
+},
+{
+  "key": "cmd+k cmd+i",
+  "command": "namespaceResolver.import"
+},
+
+/*
+ * Project Switching
+ */
+{
+  "key": "cmd+;",
+  "command": "workbench.action.switchWindow",
+  "when": "! config.simple-project-switcher.present"
+},
+{
+  "key": "alt+cmd+right",
+  "command": "workbench.action.showNextWindowTab"
+},
+{
+  "key": "alt+cmd+left",
+  "command": "workbench.action.showPreviousWindowTab"
+},
+
+  /*
+   * Open DevTools
+   */
+  {
+    "key": "alt+cmd+i",
+    "command": "workbench.action.toggleDevTools"
+  },
+
+  /*
+   * Hide Toaster Notifications
+   */
+  {
+    "key": "escape",
+    "command": "notifications.hideToasts",
+    "when": "notificationToastsVisible"
+  },
+
+  // ===========================================================================
+  // My Keybindings
+  // ---------------------------------------------------------------------------
+
+  // ---------------------------------------------------------------------------
+  // VIM Plugin Settings
+  // ---
+
+  // NOTE: the settings.json file which augments this file is responsible for
+  // keybindings specific to overridding/repairing the Vim plugin's bindings.
+  //
+  // For example:
+  //
+  // - "r"  -> "R"   (normal mode) repair glitch where Vim plugin fails to set
+  //                "r" binding to "Replace" mode (it retains "Normal" mode).
+  //
+  // - "jj" -> "esc" (insert mode) a quicker, easier esc on some keyboards.
+
+  // ---------------------------------------------------------------------------
+  // VIM Command keys (ala ':' but for vscode command palette access)
+  // ---
+
+  // In Vim 'shift+:' is used to show command line, this shortcut similarly
+  // shows the command palette in VSCode as a quick way to access commands.
+  {
+    "key": ";",
+    "command": "workbench.action.showCommands",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ; (command palette)"
+  },
+
+  // NOTE: this one is live all the time, there's no "when" clause.
+  {
+    "key": "ctrl+;",
+    "command": "workbench.action.showCommands",
+    "comment": "vim: ctrl+; (command palette)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // VIM leader mappings
+  // ---
+
+  // ---
+  // Leader key (vim: leader)
+  // ---
+
+  {
+    "key": "space",
+    "command": "nothing",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>"
+  },
+
+  // If there was a "telescope" for VSCode that'd be mapped here. The next
+  // best thing is the command palette without any pre-selection.
+  {
+    "key": "space space",
+    "command": "workbench.action.quickOpen",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>space (command palette)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Atlassian operations
+  // ---
+
+  // These are pretty limited... but searching for a Jira issue comes in handy
+  // when you're coding and a PM asks about one :).
+
+  {
+    "key": "space a a",
+    "command": "workbench.view.extension.atlascode-drawer",
+    "when": "viewContainer.workbench.view.extension.atlascode-drawer.enabled && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>aa (show Atlassian drawer)"
+  },
+
+  // NOTE: the search fails if the drawer hasn't been opened at least once, so
+  // the approach here simply opens the drawer prior to searching.
+  {
+    "key": "space a f",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.view.extension.atlascode-drawer",
+        "atlascode.jira.searchIssues"
+      ]
+    },
+    "when": "viewContainer.workbench.view.extension.atlascode-drawer.enabled && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>af (find Jira issue)"
+  },
+
+  {
+    "key": "space a i",
+    "command": "atlascode.jira.createIssue",
+    "when": "viewContainer.workbench.view.extension.atlascode-drawer.enabled && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>ai (create Jira issue)"
+  },
+
+  {
+    "key": "space a o",
+    "command": "atlascode.jira.showIssueForKey",
+    "when": "viewContainer.workbench.view.extension.atlascode-drawer.enabled && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>ao (open Jira issue)"
+  },
+
+  {
+    "key": "space a p",
+    "command": "atlascode.bb.createPullRequest",
+    "when": "viewContainer.workbench.view.extension.atlascode-drawer.enabled && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>ap (create bitbucket pr)"
+  },
+
+  {
+    "key": "space a s",
+    "command": "atlascode.showConfigPage",
+    "when": "viewContainer.workbench.view.extension.atlascode-drawer.enabled && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>as (Atlassian settings)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Buffer/Editor operations (vim: leader + b prefix)
+  // ---
+
+  {
+    "key": "space b c",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>bc (close buffer)"
+  },
+
+  {
+    "key": "space b shift+c",
+    "command": "workbench.action.revertAndCloseActiveEditor",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>bC (force close buffer)"
+  },
+
+  {
+    "key": "space b f",
+    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>bf (find buffer)"
+  },
+
+  {
+    "key": "space b n",
+    "command": "workbench.action.nextEditorInGroup",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>bn (next buffer)"
+  },
+
+  {
+    "key": "space b shift+n",
+    "command": "workbench.action.files.newUntitledFile",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>bN (new buffer)"
+  },
+
+  {
+    "key": "space b o",
+    "command": "workbench.action.closeOtherEditors",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>bo (close other buffers)"
+  },
+
+  {
+    "key": "space b p",
+    "command": "workbench.action.previousEditorInGroup",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>bp (previous buffer)"
+  },
+
+  {
+    "key": "space b r",
+    "command": "workbench.action.reopenClosedEditor",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>br (reopen buffer)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Codeium / Cascade AI
+  // ---
+
+  // NOTE: there are additional keybindings for accepting/rejecting suggestions
+  // from Windsurf's AI assistant in the "Suggestions" section toward the end of
+  // this file (e.g. alt+a, alt+r, etc).
+
+  {
+    "key": "space c c",
+    "command": "windsurf.prioritized.chat.open",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>cc (cascade chat)"
+  },
+
+  {
+    "key": "space c d",
+    "command": "windsurf.openDocs",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>cd (cascade docs)"
+  },
+
+  {
+    "key": "space c e",
+    "command": "windsurf.prioritized.explainProblem",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>ce (cascade explain)"
+  },
+
+  {
+    "key": "space c f",
+    "command": "windsurf.openFeedback",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>cf (cascade feedback)"
+  },
+
+  {
+    "key": "space c g",
+    "command": "windsurf.openGlobalRules",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>cg (cascade global rules)"
+  },
+
+  {
+    "key": "space c i",
+    "command": "windsurf.prioritized.command.open",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>ci (cascade instruct)"
+  },
+
+  {
+    "key": "space c n",
+    "command": "windsurf.prioritized.chat.openNewConversation",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>cn (cascade new chat)"
+  },
+
+  {
+    "key": "space c s",
+    "command": "windsurf.openQuickSettingsPanel",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>cs (cascade settings)"
+  },
+
+  {
+    "key": "space c w",
+    "command": "windsurf.openWorkspaceRules",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>cw (cascade workspace rules)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Debug
+  // ---
+
+  {
+    "key": "space d",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.view.debug",
+        "workbench.panel.repl.view.focus"
+      ]
+    },
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>d (debug)"
+  },
+
+  // TODO: add ctrl keys when focused in debug console?
+
+  // ---------------------------------------------------------------------------
+  // Explorer
+  // ---
+
+  {
+    "key": "space e",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.view.explorer",
+        "workbench.files.action.focusFilesExplorer"
+      ]
+    },
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual') && viewContainer.workbench.view.explorer.enabled",
+    "comment": "vim: <leader>e (focus explorer)"
+  },
+
+  {
+    "key": "/",
+    "command": "list.find",
+    "when": "listFocus && !inputFocus",
+    "comment": "vim: / (find in list)"
+  },
+
+  {
+    "key": "ctrl+n",
+    "command": "list.focusDown",
+    "when": "explorerViewletFocus",
+    "comment": "vim: <C-n> (next item)"
+  },
+
+  {
+    "key": "ctrl+p",
+    "command": "list.focusUp",
+    "when": "explorerViewletFocus",
+    "comment": "vim: <C-p> (prev item)"
+  },
+
+  // NOTE: for the following commands to work you need to enter <ESC> to close
+  // the search field; once closed you can open or rename the target file.
+
+  {
+    "key": "enter",
+    "command": "list.select",
+    "when": "explorerViewletFocus && !inputFocus",
+    "comment": "open file"
+  },
+
+  {
+    "key": "shift+enter",
+    "command": "renameFile",
+    "when": "explorerViewletFocus && !inputFocus",
+    "comment": "rename file"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Find operations (vim: leader + f prefix)
+  // ---
+
+  {
+    "key": "space f b",
+    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>fb (find buffer)"
+  },
+
+  {
+    "key": "space f f",
+    "command": "find-it-faster.findFiles",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>ff (find file(s))"
+  },
+
+  {
+    "key": "space f shift+f",
+    "command": "find-it-faster.findFilesWithType",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>fF (find file(s) of type)"
+  },
+
+  {
+    "key": "space f w",
+    "command": "find-it-faster.findWithinFiles",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>fW (word in files)"
+  },
+
+  {
+    "key": "space f shift+w",
+    "command": "find-it-faster.findWithinFilesWithType",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>fW (word in files of type)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Git operations
+  // ---
+
+  {
+    "key": "space g ;",
+    "command": "gitlens.gitCommands",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual') && !gitlens:disabled && config.gitlens.keymap == 'chorded'",
+    "comment": "vim: <leader>; (git commands)"
+  },
+
+  {
+    "key": "space g b",
+    "command": "gitlens.showBranchesView",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gb (git branches)"
+  },
+
+  {
+    "key": "space g c",
+    "command": "gitlens.showCommitsView",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gc (git commits)"
+  },
+
+  {
+    "key": "space g d",
+    "command": "gitlens.diffWithPrevious",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gd (git diff w/ previous)"
+  },
+
+  {
+    "key": "space g shift+d",
+    "command": "gitlens.diffWithWorking",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gD (git diff with working)"
+  },
+
+  {
+    "key": "space g g",
+    "command": "gitlens.showGraphView",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gg (git graph)"
+  },
+
+  {
+    "key": "space g h",
+    "command": "gitlens.views.home.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gh (git home)"
+  },
+
+  {
+    "key": "space g i",
+    "command": "gitlens.showCommitDetailsView",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gi (git inspect)"
+  },
+
+  {
+    "key": "space g l",
+    "command": "gitlens.pullRepositories",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gl (git pull)"
+  },
+
+  {
+    "key": "space g p",
+    "command": "gitlens.pushRepositories",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gp (git push)"
+  },
+
+  {
+    "key": "space g s",
+    "command": "gitlens.showQuickRepoStatus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gs (git status)"
+  },
+
+  {
+    "key": "space g t",
+    "command": "gitlens.toggleFileChanges",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gt (git toggle changes)"
+  },
+
+  {
+    "key": "space g w",
+    "command": "gitlens.showWorktreesView",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gw (git worktrees)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Help
+  // ---
+
+  {
+    "key": "space h",
+    "command": "vscode.open",
+    "args": "https://docs.codeium.com/windsurf/getting-started",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>h (help - windsurf)"
+  },
+
+  {
+    "key": "space shift+h",
+    "command": "vscode.open",
+    "args": "https://code.visualstudio.com/docs/",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>h (help - vscode)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // I ???
+  // ---
+
+  // TODO: add I ???
+  {
+    "key": "space i",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>i (???)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // JSON
+  // ---
+
+  {
+    "key": "space j k",
+    "command": "workbench.action.openGlobalKeybindingsFile",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>jk (show json keybindings)"
+  },
+
+  {
+    "key": "space j s",
+    "command": "workbench.action.openSettingsJson",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>js (show json settings)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Keybindings
+  // ---
+
+  {
+    "key": "space k",
+    "command": "workbench.action.openGlobalKeybindings",
+    "args": "space",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>k (show keybindings)"
+  },
+
+  {
+    "key": "space shift+k",
+    "command": "workbench.action.openGlobalKeybindingsFile",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>K (show keybindings file)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // L ???
+  // ---
+
+  // TODO: add L ???
+  {
+    "key": "space l",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>l (???)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Markdown
+  // ---
+
+  {
+    "key": "space m p",
+    "command": "markdown-preview-enhanced.openPreview",
+    "when": "editorLangId == 'markdown' && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>m (markdown preview open)"
+  },
+
+  {
+    "key": "space m s",
+    "command": "markdown-preview-enhanced.openPreviewToTheSide",
+    "when": "editorLangId == 'markdown' && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>m (markdown preview side)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Notifications
+  // ---
+
+  {
+    "key": "space n",
+    "command": "notifications.toggleList",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>n (show notifications)"
+  },
+
+  {
+    "key": "space shift+n",
+    "command": "notifications.clearAll",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>N (clear notifications)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // O ???
+  // ---
+
+  // TODO: add O ???
+  {
+    "key": "space o",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>o (???)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // P ???
+  // ---
+
+  // TODO: add P ???
+  {
+    "key": "space p",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>p (???)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Quit operations
+  // ---
+
+  {
+    "key": "space q",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>q (quit buffer)"
+  },
+
+  {
+    "key": "space shift+q",
+    "command": "workbench.action.revertAndCloseActiveEditor",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>Q (force quit buffer)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Reopen
+  // ---
+
+  {
+    "key": "space r",
+    "command": "workbench.action.reopenClosedEditor",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>r (reopen editor)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // S ???
+  // ---
+
+  {
+    "key": "space s",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>s (???)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Test Panel
+  // ---
+
+  {
+    "key": "space t",
+    "command": "workbench.view.testing.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>t (testing)"
+  },
+
+  // TODO: add ctrl keys specific to testing panel?
+
+  // ---------------------------------------------------------------------------
+  // UI
+  // ---
+
+  {
+    "key": "space u c",
+    "command": "workbench.action.customizeLayout",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>uc (ui config)"
+  },
+
+  {
+    "key": "space u d",
+    "command": "workbench.panel.repl.view.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>ud (debug console)"
+  },
+
+  {
+    "key": "space u o",
+    "command": "workbench.panel.output.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>uo (output panel)"
+  },
+
+  {
+    "key": "space u p",
+    "command": "workbench.panel.markers.view.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>up (problem panel)"
+  },
+
+  {
+    "key": "space u s",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>us (toggle sidebar)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Vimrc
+  // ---
+
+  {
+    "key": "space v",
+    "command": "vim.editVimrc",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>v (edit vimrc)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Write
+  // ---
+
+  {
+    "key": "space w",
+    "command": "workbench.action.files.save",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>w (save)"
+  },
+
+  {
+    "key": "space shift+w",
+    "command": "workbench.action.files.saveAll",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>W (save all)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // X (write and close)
+  // ---
+
+  {
+    "key": "space x",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.files.save",
+        "workbench.action.closeActiveEditor"
+      ]
+    },
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>x (save and close)"
+  },
+
+  {
+    "key": "space shift+x",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.files.saveAll",
+        "workbench.action.closeAllEditors"
+      ]
+    },
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>X (save and close all)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Y ???
+  // ---
+
+  // TODO: add Y ???
+  {
+    "key": "space y",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>y (???)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Zen mode toggle
+  // ---
+
+  // TODO: ???
+  {
+    "key": "space z",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>z (???)"
+  },
+
+  // ===========================================================================
+  // Custom Keybindings
+  // ---------------------------------------------------------------------------
+
+  // ---------------------------------------------------------------------------
+  // Make VSCode Awesome - overrides
+  // ---
+
+  // focus on sidebar
+  {
+    "key": "cmd+b",
+    "command": "workbench.view.sidebar.focus"
+  },
+
+  {
+    "key": "ctrl+n",
+    "command": "-workbench.action.splitEditor",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.terminal.newInActiveWorkspace",
+    "when": "terminalFocus"
+  },
+
+  {
+    "key": "ctrl+l",
+    "command": "-workbench.action.navigateRight",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "-workbench.action.navigateLeft",
+    "when": "editorFocus"
+  },
+
+  {
+    "key": "ctrl+l",
+    "command": "-workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "-workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Buffer / Tab Navigation
+  // ---
+
+  // SEE ALSO: the <leader>f keybindings for "find buffer" etc.
+
+  // remap ctrl+tab/shift+tab to next/previous tab... you can use space+f+b to
+  // bring up "find buffer" dialog to switch the default ctrl+tab/shift+tab way.
+  // NOTE: you can also use cmd+alt+right and cmd+alt+left for tab navigation
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.nextEditor",
+    "when": "!terminalFocus",
+    "comment": "iterm2v3: (next tab)"
+  },
+
+  {
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.previousEditor",
+    "when": "!terminalFocus",
+    "comment": "iterm2v3: (previous tab)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Letters / Symbols
+  // ---
+
+  // NOTE: the settings.json file which augments this file is responsible for
+  // some of the keybindings which augment the Vim plugin's keybindings, e.g.:
+
+  /*
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "j"],
+            "after": ["<Esc>"]
+        }
+    ],
+  */
+
+  // NOTE: this toggles line blame for the file...if scrolling seems janky it's
+  // best to toggle it on/off per line as you are curious re: a specific line.
+  {
+    "key": "shift+b",
+    "command": "gitlens.toggleLineBlame",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: B (toggle line blame)"
+  },
+
+  {
+    "key": "shift+e",
+    "command": "code-runner.run",
+    "when": "editorTextFocus && editor.hasSelection",
+    "comment": "vim: E (evaluate selection)"
+  },
+
+  {
+    "key": "shift+h",
+    "command": "editor.action.showHover",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: H (hover help)"
+  },
+
+  {
+    "key": "shift+k",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: K (???)"
+  },
+
+  {
+    "key": "g l",
+    "command": "editor.action.marker.next",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: L (next diagnostic)"
+  },
+
+  {
+    "key": "shift+m",
+    "command": "editor.action.inspectTMScopes",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: M (highlight mapping)"
+  },
+
+  /* SEE: settings.json for implementation
+  {
+    "key": "shift+q",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: Q (re-run last @q)"
+  },
+  */
+
+  /* SEE: settings.json for implementation
+  {
+    "key": "shift+u",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: U (toggle case)"
+  },
+  */
+
+  {
+    "key": "shift+w",
+    "command": "references-view.find",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: W (where in workspace)"
+  },
+
+  /* SEE: settings.json for implementation
+  {
+    "key": "shift+y",
+    "command": "y$",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: Y (yank to eol)"
+  },
+  */
+
+  {
+    "key": "\\",
+    "command": "workbench.action.toggleZenMode",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: \\ (toggle zen mode)"
+  },
+
+  {
+    "key": "shift+-",
+    "command": "editor.action.marker.next",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: _ (next marker)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Ctrl Keys
+  // ---
+
+  {
+    "key": "ctrl+,",
+    "command": "editor.action.inlineSuggest.acceptNextWord",
+    "when": "editorTextFocus && inlineSuggestionVisible",
+    "comment": "vim: ctrl+, (accept next word)"
+  },
+
+  {
+    "key": "ctrl+.",
+    "command": "editor.action.inlineSuggest.acceptNextLine",
+    "when": "editorTextFocus && inlineSuggestionVisible",
+    "comment": "vim: ctrl+. (accept next line)"
+  },
+
+  {
+    "key": "ctrl+shift+8",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "editor.action.addSelectionToNextFindMatch",
+        "workbench.action.findInFiles"
+      ]
+    },
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ctrl+shift+8 (find all references)"
+  },
+
+  // {
+  //   "key": "ctrl+=",
+  //   "command": "editor.action.formatDocument",
+  //   "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+  //   "comment": "vim: ctrl+= (format buffer)"
+  // },
+
+  {
+    "key": "ctrl+\\",
+    "command": "workbench.action.togglePanel",
+    "comment": "vim: ctrl+\\ (toggle panel)"
+  },
+
+  {
+    "key": "ctrl+n",
+    "command": "editor.action.marker.nextInFiles",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ctrl+n (next error)"
+  },
+
+  {
+    "key": "ctrl+p",
+    "command": "editor.action.marker.prevInFiles",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ctrl+p (prev error)"
+  },
+
+  // TODO: ???
+  {
+    "key": "ctrl+s",
+    "command": "???",
+    "when": "editorTextFocus",
+    "comment": "vim: ctrl+s (???)"
+  },
+
+  {
+    "key": "ctrl+t",
+    "command": "todo-tree-view.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ctrl+t (focus todo tree)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Search Panel
+  // ---
+
+  // find word in workspac (built-in)
+  {
+    "key": "ctrl+/",
+    "command": "filesExplorer.findInWorkspace",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>fW (find word in files)"
+  },
+
+  // find word in files (built-in)
+  {
+    "key": "ctrl+]",
+    "command": "workbench.action.findInFiles",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ^] (find word in files)"
+  },
+
+  {
+    "key": "ctrl+n",
+    "command": "search.action.focusNextSearchResult",
+    "when": "hasSearchResult && searchViewletVisible",
+    "comment": "next search result"
+  },
+
+  {
+    "key": "ctrl+p",
+    "command": "search.action.focusPreviousSearchResult",
+    "when": "hasSearchResult && searchViewletVisible",
+    "comment": "previous search result"
+  },
+
+  // close on escape, then move back to editor
+  {
+    "key": "escape",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.files.action.focusFilesExplorer",
+        "workbench.action.focusActiveEditorGroup"
+      ]
+    },
+    "when": "searchViewletVisible",
+    "comment": "vim: <Esc> (close search and move back to editor)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Split Management
+  // ---
+
+  {
+    "key": "ctrl+shift+d",
+    "command": "workbench.action.splitEditorDown",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "iterm2v3: (split vertically)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Suggestions
+  // ---
+
+  // NOTE: alt+{key} is tricky on Mac since alt is a special key... the mappings
+  // here stick to special keys to avoid triggering issues.
+
+  {
+    "key": "alt+shift+enter",
+    "command": "windsurf.suggestions.cascadeAcceptAllInFile",
+    "when": "windsurf.hasAnySuggestionsInFile",
+    "comment": "Accept all suggestions in current file"
+  },
+
+  {
+    "key": "alt+shift+ctrl+enter",
+    "command": "windsurf.suggestions.cascadeAcceptAll",
+    "when": "windsurf.hasAnySuggestions",
+    "comment": "Accept all suggestions in all files"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Terminal
+  // ---
+
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>tt (toggle terminal)"
+  },
+
+  // NOTE: you can also use cmd+shift+] and cmd+shift+[ for terminal groups
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus",
+    "comment": "iterm2v3: (next tab)"
+  },
+
+  {
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus",
+    "comment": "iterm2v3: (previous tab)"
+  },
+
+  {
+    "key": "cmd+shift+d",
+    "command": "workbench.action.terminal.split",
+    "when": "terminalFocus",
+    "comment": "iterm: cmd+shift+d (split terminal)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Window / Pane Navigation
+  // ---
+
+  // Top-level project tab navigation
+
+  {
+    "key": "alt+cmd+right",
+    "command": "workbench.action.showNextWindowTab"
+  },
+
+  {
+    "key": "alt+cmd+left",
+    "command": "workbench.action.showPreviousWindowTab"
+  },
+
+  // Navigation between sidebar, editor groups, and panels
+
+  // ---
+  // Panel <- Left
+  // ---
+
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "!sideBarFocus && !editorFocus && !panelFocus" // secondary sidebar
+  },
+
+  // {
+  //   "key": "ctrl+h",
+  //   "command": "workbench.action.focusPreviousGroup",
+  //   "when": "editorFocus && activeEditorGroupCount > 1"
+  // },
+
+  // {
+  //   "key": "ctrl+h",
+  //   "command": "workbench.action.focusSideBar",
+  //   "when": "editorTextFocus"
+  // },
+
+  // {
+  //   "key": "ctrl+h",
+  //   "command": "workbench.action.terminal.focusPreviousPane",
+  //   "when": "terminalFocus"
+  // },
+
+  // ---
+  // Panel -> Right
+  // ---
+
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "sideBarFocus"
+  },
+
+  // {
+  //   "key": "ctrl+l",
+  //   "command": "windsurf.prioritized.chat.open",
+  //   "when": "editorTextFocus"
+  // },
+
+  // {
+  //   "key": "ctrl+l",
+  //   "command": "workbench.action.focusNextGroup",
+  //   "when": "editorFocus && activeEditorGroupCount > 1"
+  // },
+
+  // {
+  //   "key": "ctrl+l",
+  //   "command": "workbench.action.terminal.focusNextPane",
+  //   "when": "terminalFocus"
+  // },
+
+  // ---
+  // Panel Up/Down
+  // ---
+
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "panelFocus",
+    "comment": "quick escape to editor"
+  },
+
+  // The above option works... most of the time... unless you have an editor
+  // with a horizontal split. In that case we want to jump to the next group
+  // instead of the next panel... unless we're at the bottom of the split.
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusPreviousGroup",
+    "when": "editorFocus && !activeEditorIsFirstInGroup"
+  },
+
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.focusPanel",
+    "when": "!panelFocus",
+    "comment": "quick jump to panel"
+  },
+
+  // The above option works... most of the time... unless you have an editor
+  // with a horizontal split. In that case we want to jump to the next group
+  // instead of the next panel... unless we're at the bottom of the split.
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.focusNextGroup",
+    "when": "editorFocus && activeEditorIsLastInGroup"
+  },
+
+]
+
+/* -----------------------------------------------------------------------------
+ * end
+ * ========================================================================== */

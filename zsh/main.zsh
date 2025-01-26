@@ -807,6 +807,8 @@ alias unlock='rm -rf package-lock.json'
 
 eval "$(zoxide init zsh)"
 
+[[ -s ./windsurf.zsh ]] && source ./windsurf.zsh > /dev/null 2>&1
+
 [[ -s ${HOME}/.tibetrc ]] && source ${HOME}/.tibetrc > /dev/null 2>&1
 [[ -s ${HOME}/.localrc ]] && source ${HOME}/.localrc > /dev/null 2>&1
 
