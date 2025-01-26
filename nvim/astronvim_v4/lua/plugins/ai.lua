@@ -1,30 +1,85 @@
 return {
-  -- This thing is just too darn buggy. I'm not going to use it.
-  -- {
-  --   "jackMort/ChatGPT.nvim",
-  --   lazy = true,
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-telescope/telescope.nvim",
-  --   },
-  --   opts = {
-  --     api_key_cmd = "op read op://Personal/openai_api_neovim/key --no-newline",
-  --     extra_curl_params = {
-  --       "-H",
-  --       "User-Agent: ChatGPT.nvim",
-  --     },
-  --     openai_params = {
-  --       model = "gpt-4",
-  --       frequency_penalty = 0,
-  --       presence_penalty = 0,
-  --       max_tokens = 500,
-  --       temperature = 0,
-  --       top_p = 1,
-  --       n = 1,
-  --     },
-  --   },
-  -- },
+
+  {
+    "idearat/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
+    opts = {
+      providers = {
+        'copilot',
+        'anthropic',
+      },
+      anthropic = {
+        api_key = os.getenv("ANTHROPIC_API_KEY"),
+      },
+      completion = {
+        enabled = false,  -- disable Avante's completion to avoid Claude API costs
+        trigger_characters = {},  -- empty to prevent automatic triggers
+      },
+      ui = {
+        code = {
+          show_language = true,
+          copy_code_button = true,
+          style = 'markdown',
+        },
+        messages = {
+          show_timestamps = true,
+        },
+        input_window = {
+          style = 'minimal',
+          border = 'rounded',
+          win_options = {
+            winblend = 0,
+          },
+        },
+      },
+      keymaps = {
+        toggle = '<leader>aa',
+        submit = '<C-s>',
+        close = '<C-c>',
+        clear = '<C-l>',
+        switch_window = '<Tab>',
+      },
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  },
 
   {
     "Exafunction/codeium.nvim",
@@ -32,22 +87,11 @@ return {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
     },
-    config = function ()
-      require("codeium").setup {
-      }
-    end,
-  },
-
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
     config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end
+      require("codeium").setup()
+    end,
+  cmd = "Codeium",
+  event = "BufEnter",
   },
 
   {
@@ -56,8 +100,35 @@ return {
       "zbirenbaum/copilot.lua"
     },
     config = function()
-      require("copilot_cmp").setup()
-    end,
+      require("copilot").setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          debounce = 75, -- Lower debounce for faster response
+          filter_disallowed = false, -- Show suggestions in more contexts
+          keymap = {
+            accept = "<C-l>",
+            next = "<C-n>",
+            prev = "<C-p>",
+            dismiss = "<C-[>",
+          },
+        },
+        panel = {
+          enabled = true,
+          auto_refresh = true
+        },
+        filetypes = {
+          markdown = true,
+          gitcommit = true,
+          gitrebase = true,
+          ["."] = true,
+        -- Disable in certain contexts where AI completion might not be helpful
+        TelescopePrompt = false,
+        help = false,
+        dashboard = false,
+        },
+      })
+    end
   },
 
   {

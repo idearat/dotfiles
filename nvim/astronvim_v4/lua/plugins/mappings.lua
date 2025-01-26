@@ -391,9 +391,12 @@ local function enhance_maps(maps)
   -- maps.n["<C-6>"] = { desc = "Prior Buffer" }
   maps.n["<C-^>"] = { "<C-^>", desc = "Prior Buffer" }
 
-  -- maps.n["<C-[7-0]>"] = { desc = "" }
+  -- maps.n["<C-7]>"] = { desc = "" }
 
-  maps.n["<C-*>"] = { function() telescope.grep_string() end, desc = "Find All @ Cursor" }
+  -- NOTE: would have preferred <C-*> but it doesn't work as expected.
+  maps.n["<C-8>"] = { function() telescope.grep_string() end, desc = "Find All @ Cursor" }
+
+  -- maps.n["<C-[9-0]>"] = { desc = "" }
 
   maps.n["<C-->"] = {
     function() require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1) end,
@@ -479,7 +482,7 @@ local function enhance_maps(maps)
   -- Leader Keys
   -- -----------
 
-  maps.n["<Leader>a"] = { ":AerialToggle<cr>", desc = "Aerial Toggle" }
+  -- maps.n["<Leader>a"] = { ":AerialToggle<cr>", desc = "Aerial Toggle" }
 
   -- Buffer Menu
 
