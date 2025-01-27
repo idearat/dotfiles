@@ -1373,15 +1373,18 @@
 
   // TODO: some way to say "stop suggesting" for a while?
 
-  // TODO: reconfigure 'Tab' so it just inserts a tab when in insert mode and
-  // ctrl+l handles accepting the full suggestion.
-
+  // Provide a way to insert a tab when in insert mode
   {
-    "key": "tab",
-    "command": "-editor.action.inlineSuggest.commit",
-    "when": "inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus || cursorAtInlineEdit && inlineEditIsVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus || cursorAtInlineEdit && inlineEditIsVisible && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus"
+    "key": "ctrl+]",
+    "command": "type",
+    "args": {
+      "text": "\t"
+    },
+    "when": "editorTextFocus && vim.active && vim.mode === 'Insert'",
+    "comment": "vim: ctrl+] (insert tab)"
   },
 
+  // Match my neovim config (where Tab just inserts a tab).
   {
     "key": "ctrl+l",
     "command": "editor.action.inlineSuggest.commit",
