@@ -77,7 +77,7 @@
       "value": [
         {
           "editor.fontSize": 16,
-          "editor.lineHeight":32
+          "editor.lineHeight": 32
         },
         {
           "editor.fontSize": 14,
@@ -161,6 +161,7 @@
     "command": "workbench.action.joinAllGroups",
     "when": "editorFocus"
   },
+  /*
   {
     "key": "ctrl+n",
     "command": "workbench.action.splitEditor",
@@ -178,11 +179,6 @@
   },
   {
     "key": "ctrl+=",
-    "command": "workbench.action.evenEditorWidths",
-    "when": "editorFocus"
-  },
-  {
-    "key": "ctrl+shift+=",
     "command": "workbench.action.increaseViewSize",
     "when": "editorFocus"
   },
@@ -191,16 +187,20 @@
     "command": "workbench.action.decreaseViewSize",
     "when": "editorFocus"
   },
-
+  */
 
   /*
    * Terminal Split Panel
    */
+
+  /*
   {
     "key": "ctrl+n",
     "command": "workbench.action.terminal.split",
     "when": "terminalFocus"
   },
+  */
+
   {
     "key": "ctrl+l",
     "command": "workbench.action.terminal.focusNextPane",
@@ -276,37 +276,37 @@
   {
     "key": "cmd+r",
     "command": "workbench.action.gotoSymbol"
-},
-{
-  "key": "cmd+shift+r",
-  "command": "workbench.action.showAllSymbols"
-},
-{
-  "key": "cmd+k cmd+enter",
-  "command": "editor.action.goToDeclaration",
-  "when": "editorTextFocus"
-},
-{
-  "key": "cmd+k cmd+i",
-  "command": "namespaceResolver.import"
-},
+  },
+  {
+    "key": "cmd+shift+r",
+    "command": "workbench.action.showAllSymbols"
+  },
+  {
+    "key": "cmd+k cmd+enter",
+    "command": "editor.action.goToDeclaration",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+k cmd+i",
+    "command": "namespaceResolver.import"
+  },
 
-/*
- * Project Switching
- */
-{
-  "key": "cmd+;",
-  "command": "workbench.action.switchWindow",
-  "when": "! config.simple-project-switcher.present"
-},
-{
-  "key": "alt+cmd+right",
-  "command": "workbench.action.showNextWindowTab"
-},
-{
-  "key": "alt+cmd+left",
-  "command": "workbench.action.showPreviousWindowTab"
-},
+  /*
+   * Project Switching
+   */
+  {
+    "key": "cmd+;",
+    "command": "workbench.action.switchWindow",
+    "when": "! config.simple-project-switcher.present"
+  },
+  {
+    "key": "alt+cmd+right",
+    "command": "workbench.action.showNextWindowTab"
+  },
+  {
+    "key": "alt+cmd+left",
+    "command": "workbench.action.showPreviousWindowTab"
+  },
 
   /*
    * Open DevTools
@@ -340,23 +340,15 @@
   //
   // - "r"  -> "R"   (normal mode) repair glitch where Vim plugin fails to set
   //                "r" binding to "Replace" mode (it retains "Normal" mode).
-  //
-  // - "jj" -> "esc" (insert mode) a quicker, easier esc on some keyboards.
 
   // ---------------------------------------------------------------------------
   // VIM Command keys (ala ':' but for vscode command palette access)
   // ---
 
-  // In Vim 'shift+:' is used to show command line, this shortcut similarly
-  // shows the command palette in VSCode as a quick way to access commands.
-  {
-    "key": ";",
-    "command": "workbench.action.showCommands",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: ; (command palette)"
-  },
+  // NOTE: ';' is mapped to ':' in the settings.json file as a shortcut for
+  // accessing the Vim command line.
 
-  // NOTE: this one is live all the time, there's no "when" clause.
+  // Access VSCode command palette from anywhere.
   {
     "key": "ctrl+;",
     "command": "workbench.action.showCommands",
@@ -592,8 +584,6 @@
     "comment": "vim: <leader>d (debug)"
   },
 
-  // TODO: add ctrl keys when focused in debug console?
-
   // ---------------------------------------------------------------------------
   // Explorer
   // ---
@@ -816,21 +806,14 @@
   },
 
   // ---------------------------------------------------------------------------
-  // JSON
+  // JSON ???
   // ---
 
   {
-    "key": "space j k",
-    "command": "workbench.action.openGlobalKeybindingsFile",
+    "key": "space j",
+    "command": "???",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>jk (show json keybindings)"
-  },
-
-  {
-    "key": "space j s",
-    "command": "workbench.action.openSettingsJson",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>js (show json settings)"
+    "comment": "vim: <leader>j (???)"
   },
 
   // ---------------------------------------------------------------------------
@@ -840,14 +823,16 @@
   {
     "key": "space k",
     "command": "workbench.action.openGlobalKeybindings",
-    "args": "space",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: <leader>k (show keybindings)"
   },
 
   {
     "key": "space shift+k",
-    "command": "workbench.action.openGlobalKeybindingsFile",
+    "command": "vscode.open",
+    "args": {
+      "uri": "/Users/ss/Library/Application Support/Windsurf/User/keybindings.json"
+    },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: <leader>K (show keybindings file)"
   },
@@ -954,14 +939,21 @@
   },
 
   // ---------------------------------------------------------------------------
-  // S ???
+  // Settings
   // ---
 
   {
     "key": "space s",
-    "command": "???",
+    "command": "workbench.action.openGlobalSettings",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>s (???)"
+    "comment": "vim: <leader>s (user settings)"
+  },
+
+  {
+    "key": "space shift+s",
+    "command": "workbench.action.openSettingsJson",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>js (json settings)"
   },
 
   // ---------------------------------------------------------------------------
@@ -1107,42 +1099,22 @@
   // Make VSCode Awesome - overrides
   // ---
 
-  // focus on sidebar
+  // toggle sidebar
   {
     "key": "cmd+b",
     "command": "workbench.view.sidebar.focus"
   },
 
+  // toggle status bar
   {
-    "key": "ctrl+n",
-    "command": "-workbench.action.splitEditor",
-    "when": "editorFocus"
+    "key": "cmd+k cmd+s",
+    "command": "workbench.action.toggleStatusbarVisibility"
   },
+
+  // new terminal
   {
-    "key": "ctrl+n",
+    "key": "ctrl+shift+n",
     "command": "workbench.action.terminal.newInActiveWorkspace",
-    "when": "terminalFocus"
-  },
-
-  {
-    "key": "ctrl+l",
-    "command": "-workbench.action.navigateRight",
-    "when": "editorFocus"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "-workbench.action.navigateLeft",
-    "when": "editorFocus"
-  },
-
-  {
-    "key": "ctrl+l",
-    "command": "-workbench.action.terminal.focusNextPane",
-    "when": "terminalFocus"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "-workbench.action.terminal.focusPreviousPane",
     "when": "terminalFocus"
   },
 
@@ -1282,20 +1254,6 @@
   // ---
 
   {
-    "key": "ctrl+,",
-    "command": "editor.action.inlineSuggest.acceptNextWord",
-    "when": "editorTextFocus && inlineSuggestionVisible",
-    "comment": "vim: ctrl+, (accept next word)"
-  },
-
-  {
-    "key": "ctrl+.",
-    "command": "editor.action.inlineSuggest.acceptNextLine",
-    "when": "editorTextFocus && inlineSuggestionVisible",
-    "comment": "vim: ctrl+. (accept next line)"
-  },
-
-  {
     "key": "ctrl+shift+8",
     "command": "runCommands",
     "args": {
@@ -1308,12 +1266,12 @@
     "comment": "vim: ctrl+shift+8 (find all references)"
   },
 
-  // {
-  //   "key": "ctrl+=",
-  //   "command": "editor.action.formatDocument",
-  //   "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-  //   "comment": "vim: ctrl+= (format buffer)"
-  // },
+  {
+    "key": "ctrl+=",
+    "command": "editor.action.formatSelection.multiple",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ctrl+= (format buffer)"
+  },
 
   {
     "key": "ctrl+\\",
@@ -1413,21 +1371,36 @@
   // Suggestions
   // ---
 
-  // NOTE: alt+{key} is tricky on Mac since alt is a special key... the mappings
-  // here stick to special keys to avoid triggering issues.
+  // TODO: some way to say "stop suggesting" for a while?
+
+  // TODO: reconfigure 'Tab' so it just inserts a tab when in insert mode and
+  // ctrl+l handles accepting the full suggestion.
 
   {
-    "key": "alt+shift+enter",
-    "command": "windsurf.suggestions.cascadeAcceptAllInFile",
-    "when": "windsurf.hasAnySuggestionsInFile",
-    "comment": "Accept all suggestions in current file"
+    "key": "tab",
+    "command": "-editor.action.inlineSuggest.commit",
+    "when": "inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus || cursorAtInlineEdit && inlineEditIsVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus || cursorAtInlineEdit && inlineEditIsVisible && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus"
   },
 
   {
-    "key": "alt+shift+ctrl+enter",
-    "command": "windsurf.suggestions.cascadeAcceptAll",
-    "when": "windsurf.hasAnySuggestions",
-    "comment": "Accept all suggestions in all files"
+    "key": "ctrl+l",
+    "command": "editor.action.inlineSuggest.commit",
+    "when": "editorTextFocus && inlineSuggestionVisible",
+    "comment": "vim: ctrl+l (accept suggestion)"
+  },
+
+  {
+    "key": "ctrl+,",
+    "command": "editor.action.inlineSuggest.acceptNextWord",
+    "when": "editorTextFocus && inlineSuggestionVisible",
+    "comment": "vim: ctrl+, (accept next word)"
+  },
+
+  {
+    "key": "ctrl+.",
+    "command": "editor.action.inlineSuggest.acceptNextLine",
+    "when": "editorTextFocus && inlineSuggestionVisible",
+    "comment": "vim: ctrl+. (accept next line)"
   },
 
   // ---------------------------------------------------------------------------
@@ -1491,24 +1464,6 @@
     "when": "!sideBarFocus && !editorFocus && !panelFocus" // secondary sidebar
   },
 
-  // {
-  //   "key": "ctrl+h",
-  //   "command": "workbench.action.focusPreviousGroup",
-  //   "when": "editorFocus && activeEditorGroupCount > 1"
-  // },
-
-  // {
-  //   "key": "ctrl+h",
-  //   "command": "workbench.action.focusSideBar",
-  //   "when": "editorTextFocus"
-  // },
-
-  // {
-  //   "key": "ctrl+h",
-  //   "command": "workbench.action.terminal.focusPreviousPane",
-  //   "when": "terminalFocus"
-  // },
-
   // ---
   // Panel -> Right
   // ---
@@ -1518,24 +1473,6 @@
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "sideBarFocus"
   },
-
-  // {
-  //   "key": "ctrl+l",
-  //   "command": "windsurf.prioritized.chat.open",
-  //   "when": "editorTextFocus"
-  // },
-
-  // {
-  //   "key": "ctrl+l",
-  //   "command": "workbench.action.focusNextGroup",
-  //   "when": "editorFocus && activeEditorGroupCount > 1"
-  // },
-
-  // {
-  //   "key": "ctrl+l",
-  //   "command": "workbench.action.terminal.focusNextPane",
-  //   "when": "terminalFocus"
-  // },
 
   // ---
   // Panel Up/Down
