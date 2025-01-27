@@ -21,7 +21,7 @@
   "files.trimFinalNewlines": true,
   "workbench.editor.showTabs": "multiple",
   "editor.minimap.enabled": false,
-	"editor.lineNumbers": "on",
+  "editor.lineNumbers": "on",
 
   /*
    * Silence The Noise
@@ -52,7 +52,7 @@
   /*
    * Typography
    */
-  "workbench.colorTheme": "Rosé Pine",
+  "workbench.colorTheme": "Rich Black (no italics)",
   "editor.fontFamily": "'Fira Code Nerd Font Propo', 'InconsolataGo Nerd Font Propo', Menlo, Monaco, 'Courier New', monospace",
   "editor.fontSize": 16,
   "editor.lineHeight": 1.5,
@@ -66,40 +66,31 @@
    */
   "search.useIgnoreFiles": false,
   "search.exclude": {
-      // TODO: review this
-      // Hide everything in /vendor, except the "laravel" and "livewire" folder.
-      "**/vendor/{[^l],?[^ai]}*": true,
-      // TODO: review this
-      // Hide everything in /public, except "index.php"
-      "**/public/{[^i],?[^n]}*": true,
-      "**/node_modules": true,
-      "**/dist": true,
-      // "**/_ide_helper.php": true,
-      "**/composer.lock": true,
-      "**/package-lock.json": true,
-      "storage": true,
-      // ".phpunit.result.cache": true
+    "**/vendor/{[^l],?[^ai]}*": true,
+    "**/public/{[^i],?[^n]}*": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/composer.lock": true,
+    "**/package-lock.json": true,
+    "storage": true
   },
 
   /*
    * Code
    */
-  // Include "-" in word selection.
   "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
-  "emmet.includeLanguages": {
-  },
-  "files.associations": {
-  },
+  "emmet.includeLanguages": {},
+  "files.associations": {},
 
   /*
    * Prettier
    */
   "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
   },
-  "prettier.requireConfig": true,
-  "prettier.useEditorConfig": false,
+  "prettier.requireConfig": false,
+  "prettier.useEditorConfig": true,
 
   /* ===========================================================================
    * My Settings
@@ -182,28 +173,32 @@
   "terminal.external.osxExec": "iTerm2v3.app",
 
   "vim.insertModeKeyBindings": [
-      {
-          "before": ["j", "j"],
-          "after": ["<Esc>"]
-      }
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
   ],
   "vim.normalModeKeyBindings": [
-      {
-          "before": ["r"],
-          "after": ["R"]
-      },
-      {
-          "before": ["Y"],
-          "after": ["y", "$"]
-      },
-      {
-          "before": ["Q"],
-          "after": ["@", "q"]
-      },
-      {
-          "before": ["U"],
-          "after": ["g", "~", "i", "w"]
-      }
+    {
+      "before": [";"],
+      "after": [":"]
+    },
+    {
+      "before": ["r"],
+      "after": ["R"]
+    },
+    {
+      "before": ["Y"],
+      "after": ["y", "$"]
+    },
+    {
+      "before": ["Q"],
+      "after": ["@", "q"]
+    },
+    {
+      "before": ["U"],
+      "after": ["g", "~", "i", "w"]
+    }
   ],
   "vim.cursorStylePerMode.normal": "block",
   "vim.useSystemClipboard": true,
@@ -228,33 +223,33 @@
   "workbench.settings.useSplitJSON": true,
 
   "yaml.customTags": [
-      "!And",
-      "!And sequence",
-      "!If",
-      "!If sequence",
-      "!Not",
-      "!Not sequence",
-      "!Equals",
-      "!Equals sequence",
-      "!Or",
-      "!Or sequence",
-      "!FindInMap",
-      "!FindInMap sequence",
-      "!Base64",
-      "!Join",
-      "!Join sequence",
-      "!Cidr",
-      "!Ref",
-      "!Sub",
-      "!Sub sequence",
-      "!GetAtt",
-      "!GetAZs",
-      "!ImportValue",
-      "!ImportValue sequence",
-      "!Select",
-      "!Select sequence",
-      "!Split",
-      "!Split sequence"
+    "!And",
+    "!And sequence",
+    "!If",
+    "!If sequence",
+    "!Not",
+    "!Not sequence",
+    "!Equals",
+    "!Equals sequence",
+    "!Or",
+    "!Or sequence",
+    "!FindInMap",
+    "!FindInMap sequence",
+    "!Base64",
+    "!Join",
+    "!Join sequence",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!Sub sequence",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!ImportValue sequence",
+    "!Select",
+    "!Select sequence",
+    "!Split",
+    "!Split sequence"
   ],
   "yaml.schemas": {
     "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.2.3-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
@@ -263,5 +258,5 @@
   "zenMode.fullScreen": false,
   "zenMode.hideLineNumbers": false,
   "zenMode.hideStatusBar": false,
-  "zenMode.showTabs": "single",
+  "zenMode.showTabs": "single"
 }
