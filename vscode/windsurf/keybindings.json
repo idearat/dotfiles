@@ -502,7 +502,7 @@
 
   // NOTE: there are additional keybindings for accepting/rejecting suggestions
   // from Windsurf's AI assistant in the "Suggestions" section toward the end of
-  // this file (e.g. alt+a, alt+r, etc).
+  // this file.
 
   {
     "key": "space c c",
@@ -1123,6 +1123,11 @@
   // ---
 
   // SEE ALSO: the <leader>f keybindings for "find buffer" etc.
+  {
+    "key": "ctrl+tab",
+    "command": "-workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+    "when": "!activeEditorGroupEmpty"
+  },
 
   // remap ctrl+tab/shift+tab to next/previous tab... you can use space+f+b to
   // bring up "find buffer" dialog to switch the default ctrl+tab/shift+tab way.
@@ -1443,16 +1448,26 @@
   // Window / Pane Navigation
   // ---
 
-  // Top-level project tab navigation
+  // Navigation between sidebar, editor groups, and panels
 
   {
-    "key": "alt+cmd+right",
-    "command": "workbench.action.showNextWindowTab"
+    "key": "ctrl+alt+down",
+    "command": "workbench.action.closePanel",
   },
 
   {
-    "key": "alt+cmd+left",
-    "command": "workbench.action.showPreviousWindowTab"
+    "key": "ctrl+alt+up",
+    "command": "workbench.action.focusPanel",
+  },
+
+  {
+    "key": "ctrl+alt+right",
+    "command": "workbench.action.nextPanelView",
+  },
+
+  {
+    "key": "ctrl+alt+left",
+    "command": "workbench.action.previousPanelView",
   },
 
   // Navigation between sidebar, editor groups, and panels
@@ -1464,7 +1479,7 @@
   {
     "key": "ctrl+h",
     "command": "workbench.action.focusActiveEditorGroup",
-    "when": "!sideBarFocus && !editorFocus && !panelFocus" // secondary sidebar
+    "when": "sideBarFocus"
   },
 
   // ---
@@ -1474,7 +1489,7 @@
   {
     "key": "ctrl+l",
     "command": "workbench.action.focusActiveEditorGroup",
-    "when": "sideBarFocus"
+    "when": "!sideBarFocus && !editorFocus && !panelFocus" // secondary sidebar
   },
 
   // ---
@@ -1488,13 +1503,10 @@
     "comment": "quick escape to editor"
   },
 
-  // The above option works... most of the time... unless you have an editor
-  // with a horizontal split. In that case we want to jump to the next group
-  // instead of the next panel... unless we're at the bottom of the split.
   {
-    "key": "ctrl+k",
-    "command": "workbench.action.focusPreviousGroup",
-    "when": "editorFocus && !activeEditorIsFirstInGroup"
+    "key": "ctrl+j",
+    "command": "-editor.action.joinLines",
+    "when": "editorTextFocus && !editorReadonly"
   },
 
   {
@@ -1502,15 +1514,6 @@
     "command": "workbench.action.focusPanel",
     "when": "!panelFocus",
     "comment": "quick jump to panel"
-  },
-
-  // The above option works... most of the time... unless you have an editor
-  // with a horizontal split. In that case we want to jump to the next group
-  // instead of the next panel... unless we're at the bottom of the split.
-  {
-    "key": "ctrl+j",
-    "command": "workbench.action.focusNextGroup",
-    "when": "editorFocus && activeEditorIsLastInGroup"
   },
 
 ]
