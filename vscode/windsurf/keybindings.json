@@ -72,6 +72,7 @@
   /*
    * Toggle Font Size
    */
+  /*
   {
     "key": "cmd+k cmd+k",
     "command": "toggle",
@@ -90,6 +91,7 @@
       ]
     }
   },
+  */
 
   /*
    * Fold/Unfold
@@ -1105,6 +1107,12 @@
   // Make VSCode Awesome - overrides / additions
   // ---
 
+  {
+    "key": "cmd+k cmd+k",
+    "command": "workbench.action.terminal.clear",
+    "when": "terminalFocus && terminalHasBeenCreated"
+  },
+
   // toggle status bar
   {
     "key": "cmd+k cmd+s",
@@ -1288,6 +1296,12 @@
     "key": "ctrl+\\",
     "command": "workbench.action.togglePanel",
     "comment": "vim: ctrl+\\ (toggle panel)"
+  },
+
+  {
+    "key": "ctrl+cmd+\\",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "comment": "vim: ctrl+cmd+\\ (toggle sidebar)"
   },
 
   {
