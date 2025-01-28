@@ -1271,10 +1271,23 @@
     "comment": "vim: ctrl+shift+8 (find all references)"
   },
 
+  // disable navigate back via ctrl+-
+  {
+    "key": "ctrl+-",
+    "command": "-workbench.action.navigateBack",
+  },
+
+  {
+    "key": "ctrl+-",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ctrl+- (toggle commenting)"
+  },
+
   {
     "key": "ctrl+=",
-    "command": "editor.action.formatSelection.multiple",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "command": "editor.action.formatSelection",
+    "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly && editor.hasSelection",
     "comment": "vim: ctrl+= (format buffer)"
   },
 
@@ -1452,22 +1465,22 @@
 
   {
     "key": "ctrl+alt+down",
-    "command": "workbench.action.closePanel",
+    "command": "workbench.action.closePanel"
   },
 
   {
     "key": "ctrl+alt+up",
-    "command": "workbench.action.focusPanel",
+    "command": "workbench.action.focusPanel"
   },
 
   {
     "key": "ctrl+alt+right",
-    "command": "workbench.action.nextPanelView",
+    "command": "workbench.action.nextPanelView"
   },
 
   {
     "key": "ctrl+alt+left",
-    "command": "workbench.action.previousPanelView",
+    "command": "workbench.action.previousPanelView"
   },
 
   // Navigation between sidebar, editor groups, and panels
@@ -1514,8 +1527,7 @@
     "command": "workbench.action.focusPanel",
     "when": "!panelFocus",
     "comment": "quick jump to panel"
-  },
-
+  }
 ]
 
 /* -----------------------------------------------------------------------------
