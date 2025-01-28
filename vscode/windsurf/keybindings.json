@@ -1511,7 +1511,7 @@
   },
 
   // ---
-  // Panel Up/Down
+  // Panel Down
   // ---
 
   // {
@@ -1532,6 +1532,10 @@
     "when": "!editorFocus && !sidebarFocus && !panelFocus"
   },
 
+  // ---
+  // Panel Up
+  // ---
+
   {
   "key": "ctrl+k",
   "command": "-deleteAllRight",
@@ -1547,7 +1551,13 @@
   {
     "key": "ctrl+k",
     "command": "workbench.action.navigateUp",
-    "when": "!editorFocus && !sidebarFocus || (inputFocus && !panelFocus)"
+    "when": "(!editorTextFocus && !sidebarFocus) || (inputFocus && !panelFocus)"
+  },
+
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "!editorFocus && !sidebarFocus && !panelFocus && !inputFocus"
   },
 
 ]
