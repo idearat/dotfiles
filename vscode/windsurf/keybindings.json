@@ -6,9 +6,13 @@
  * -------------------------------------------------------------------------- */
 
 /*
- * This file augments the default keybindings of the VSCode Vim plugin. This
- * augmentation focuses on AI, command palette, and git access; file, panel,
+ * This file augments the default keybindings of VSCode and its Vim plugin.
+ * Augmentation focuses on AI, command palette, and git access; file, panel,
  * and window management; and other aspects of the Vim user experience.
+ *
+ * NOTE: The keybindings/settings here leverage the foundation provided by
+ * Caleb Porzio's "Make VSCode Awesome" VSCode upgrade course. You can support
+ * his work by visiting https://makevscodeawesome.com/.
  *
  * REQUIRED:
  *   VSCode Vim plugin (Vim-like keybindings, primarly for text editor)
@@ -167,6 +171,7 @@
     "command": "workbench.action.splitEditor",
     "when": "editorFocus"
   },
+  */
   {
     "key": "ctrl+l",
     "command": "workbench.action.navigateRight",
@@ -177,6 +182,7 @@
     "command": "workbench.action.navigateLeft",
     "when": "editorFocus"
   },
+  /*
   {
     "key": "ctrl+=",
     "command": "workbench.action.increaseViewSize",
@@ -326,7 +332,7 @@
   },
 
   // ===========================================================================
-  // My Keybindings
+  // Idearat Keybindings
   // ---------------------------------------------------------------------------
 
   // ---------------------------------------------------------------------------
@@ -1096,26 +1102,13 @@
   // ---------------------------------------------------------------------------
 
   // ---------------------------------------------------------------------------
-  // Make VSCode Awesome - overrides
+  // Make VSCode Awesome - overrides / additions
   // ---
-
-  // toggle sidebar
-  {
-    "key": "cmd+b",
-    "command": "workbench.view.sidebar.focus"
-  },
 
   // toggle status bar
   {
     "key": "cmd+k cmd+s",
     "command": "workbench.action.toggleStatusbarVisibility"
-  },
-
-  // new terminal
-  {
-    "key": "ctrl+shift+n",
-    "command": "workbench.action.terminal.newInActiveWorkspace",
-    "when": "terminalFocus"
   },
 
   // ---------------------------------------------------------------------------
@@ -1280,14 +1273,14 @@
   {
     "key": "ctrl+-",
     "command": "editor.action.commentLine",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "when": "editorTextFocus && !editorReadonly && editor.hasSelection",
     "comment": "vim: ctrl+- (toggle commenting)"
   },
 
   {
     "key": "ctrl+=",
     "command": "editor.action.formatSelection",
-    "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly && editor.hasSelection",
+    "when": "editorTextFocus && !editorReadonly && editor.hasSelection",
     "comment": "vim: ctrl+= (format buffer)"
   },
 
@@ -1495,6 +1488,12 @@
     "when": "sideBarFocus"
   },
 
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "!editorFocus && !sidebarFocus && !panelFocus"
+  },
+
   // ---
   // Panel -> Right
   // ---
@@ -1502,32 +1501,55 @@
   {
     "key": "ctrl+l",
     "command": "workbench.action.focusActiveEditorGroup",
-    "when": "!sideBarFocus && !editorFocus && !panelFocus" // secondary sidebar
+    "when": "sideBarFocus"
+  },
+
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "!editorFocus && !sidebarFocus && !panelFocus"
   },
 
   // ---
   // Panel Up/Down
   // ---
 
+  // {
+  //   "key": "ctrl+j",
+  //   "command": "-editor.action.joinLines",
+  //   "when": "editorTextFocus && !editorReadonly"
+  // },
+
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown",
+    "when": "editorFocus"
+  },
+
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown",
+    "when": "!editorFocus && !sidebarFocus && !panelFocus"
+  },
+
+  {
+  "key": "ctrl+k",
+  "command": "-deleteAllRight",
+  "when": "textInputFocus && !editorReadonly"
+  },
+
   {
     "key": "ctrl+k",
-    "command": "workbench.action.focusActiveEditorGroup",
-    "when": "panelFocus",
-    "comment": "quick escape to editor"
+    "command": "workbench.action.navigateUp",
+    "when": "editorFocus"
   },
 
   {
-    "key": "ctrl+j",
-    "command": "-editor.action.joinLines",
-    "when": "editorTextFocus && !editorReadonly"
+    "key": "ctrl+k",
+    "command": "workbench.action.navigateUp",
+    "when": "!editorFocus && !sidebarFocus || (inputFocus && !panelFocus)"
   },
 
-  {
-    "key": "ctrl+j",
-    "command": "workbench.action.focusPanel",
-    "when": "!panelFocus",
-    "comment": "quick jump to panel"
-  }
 ]
 
 /* -----------------------------------------------------------------------------
