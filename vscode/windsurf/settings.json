@@ -216,11 +216,11 @@
   "window.titleBarStyle": "native",
 
   "workbench.activityBar.location": "top",
-  "workbench.auxiliaryActivityBar.location": "top",
   "workbench.colorCustomizations": {},
   "workbench.editor.splitInGroupLayout": "vertical",
   "workbench.settings.openDefaultKeybindings": true,
   "workbench.settings.useSplitJSON": true,
+  "workbench.sideBar.location": "right",
 
   "yaml.customTags": [
     "!And",
