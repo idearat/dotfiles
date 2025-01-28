@@ -162,6 +162,8 @@
   "markdown-preview-enhanced.codeBlockTheme": "darcula.css",
   "markdown-preview-enhanced.previewTheme": "github-dark.css",
 
+  "peacock.affectSideBarBorder": true,
+
   "redhat.telemetry.enabled": false,
 
   "rewrap.wrappingColumn": 80,
@@ -217,6 +219,9 @@
 
   "workbench.activityBar.location": "top",
   "workbench.colorCustomizations": {},
+  "workbench.editor.closeOnFileDelete": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.restoreViewState": true,
   "workbench.editor.splitInGroupLayout": "vertical",
   "workbench.settings.openDefaultKeybindings": true,
   "workbench.settings.useSplitJSON": true,
@@ -258,5 +263,5 @@
   "zenMode.fullScreen": false,
   "zenMode.hideLineNumbers": false,
   "zenMode.hideStatusBar": false,
-  "zenMode.showTabs": "single"
+  "zenMode.showTabs": "multiple"
 }
