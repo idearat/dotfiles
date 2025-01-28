@@ -6,53 +6,52 @@
   /*
    * Better Defaults
    */
-  "editor.copyWithSyntaxHighlighting": false,
   "diffEditor.ignoreTrimWhitespace": false,
-  "editor.emptySelectionClipboard": false,
-  "workbench.editor.enablePreview": false,
-  "window.newWindowDimensions": "inherit",
-  "editor.multiCursorModifier": "ctrlCmd",
-  "files.trimTrailingWhitespace": true,
   "diffEditor.renderSideBySide": false,
-  "editor.snippetSuggestions": "top",
+  "editor.copyWithSyntaxHighlighting": false,
   "editor.detectIndentation": false,
-  "window.nativeFullScreen": false,
+  "editor.emptySelectionClipboard": false,
+  "editor.lineNumbers": "on",
+  "editor.minimap.enabled": false,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.snippetSuggestions": "top",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "window.nativeFullScreen": false,
+  "window.newWindowDimensions": "inherit",
+  "workbench.editor.enablePreview": false,
   "workbench.editor.showTabs": "multiple",
-  "editor.minimap.enabled": false,
-  "editor.lineNumbers": "on",
 
   /*
    * Silence The Noise
    */
   "breadcrumbs.enabled": false,
-  "scm.diffDecorations": "none",
-  "editor.hover.enabled": false,
-  "editor.matchBrackets": "never",
-  "workbench.tips.enabled": false,
   "editor.colorDecorators": false,
-  "git.decorations.enabled": false,
-  "workbench.startupEditor": "none",
-  "editor.lightbulb.enabled": "off",
-  "editor.selectionHighlight": false,
-  "editor.overviewRulerBorder": false,
-  "editor.renderLineHighlight": "none",
-  "editor.occurrencesHighlight": "off",
-  "problems.decorations.enabled": false,
-  "editor.renderControlCharacters": false,
-  "editor.hideCursorInOverviewRuler": true,
-  "editor.gotoLocation.multipleReferences": "goto",
-  "editor.gotoLocation.multipleDefinitions": "goto",
   "editor.gotoLocation.multipleDeclarations": "goto",
-  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "editor.gotoLocation.multipleDefinitions": "goto",
   "editor.gotoLocation.multipleImplementations": "goto",
+  "editor.gotoLocation.multipleReferences": "goto",
   "editor.gotoLocation.multipleTypeDefinitions": "goto",
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.hover.enabled": false,
+  "editor.lightbulb.enabled": "off",
+  "editor.matchBrackets": "never",
+  "editor.occurrencesHighlight": "off",
+  "editor.overviewRulerBorder": false,
+  "editor.renderControlCharacters": false,
+  "editor.renderLineHighlight": "none",
+  "editor.selectionHighlight": false,
+  "git.decorations.enabled": false,
+  "problems.decorations.enabled": false,
+  "scm.diffDecorations": "none",
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false,
 
   /*
    * Typography
    */
-  "workbench.colorTheme": "Rich Black (no italics)",
   "editor.fontFamily": "'Fira Code Nerd Font Propo', 'InconsolataGo Nerd Font Propo', Menlo, Monaco, 'Courier New', monospace",
   "editor.fontSize": 16,
   "editor.lineHeight": 1.5,
@@ -60,11 +59,11 @@
   "editor.suggestLineHeight": 24,
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.lineHeight": 1.5,
+  "workbench.colorTheme": "Rich Black (no italics)",
 
   /*
    * Find
    */
-  "search.useIgnoreFiles": false,
   "search.exclude": {
     "**/vendor/{[^l],?[^ai]}*": true,
     "**/public/{[^i],?[^n]}*": true,
@@ -74,6 +73,7 @@
     "**/package-lock.json": true,
     "storage": true
   },
+  "search.useIgnoreFiles": false,
 
   /*
    * Code
@@ -96,14 +96,16 @@
    * My Settings
    * ------------------------------------------------------------------------ */
 
-  "atlascode.jira.jqlList": [{
-    "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
-    "enabled": true,
-    "name": "My discounttire Issues",
-    "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
-    "siteId": "4897d307-327f-4624-8413-009ff77cda88",
-    "monitor": true
-  }],
+  "atlascode.jira.jqlList": [
+    {
+      "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
+      "enabled": true,
+      "name": "My discounttire Issues",
+      "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+      "siteId": "4897d307-327f-4624-8413-009ff77cda88",
+      "monitor": true
+    }
+  ],
   "atlascode.jira.lastCreateSiteAndProject": {
     "siteId": "4897d307-327f-4624-8413-009ff77cda88",
     "projectKey": "CAVA"
@@ -201,10 +203,10 @@
     }
   ],
   "vim.cursorStylePerMode.normal": "block",
-  "vim.useSystemClipboard": true,
   "vim.highlightedyank.enable": false,
-  "vim.statusBarColorControl": false,
   "vim.searchHighlightColor": "rgba(255, 255, 0, 0.3)",
+  "vim.statusBarColorControl": false,
+  "vim.useSystemClipboard": true,
 
   "windsurf.autocompleteSpeed": "fast",
   "windsurf.cascadeWebSearchDisabled": true,
@@ -256,7 +258,7 @@
   ],
   "yaml.schemas": {
     "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.2.3-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-},
+  },
 
   "zenMode.fullScreen": false,
   "zenMode.hideLineNumbers": false,
