@@ -1,33 +1,38 @@
 {
-  /* ===========================================================================
-   * Make VSCode Awesome
-   * ------------------------------------------------------------------------ */
+  "atlascode.bitbucket.statusbar.enabled": true,
+  "atlascode.jira.statusbar.enabled": true,
+  "atlascode.jira.jqlList": [
+    {
+        "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
+        "enabled": true,
+        "name": "My discounttire Issues",
+        "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+        "siteId": "4897d307-327f-4624-8413-009ff77cda88",
+        "monitor": true
+    }
+],
+  "atlascode.jira.lastCreateSiteAndProject": {
+    "siteId": "4897d307-327f-4624-8413-009ff77cda88",
+    "projectKey": "CAVA"
+  },
 
-  /*
-   * Better Defaults
-   */
+  "breadcrumbs.enabled": false,
+
+  "chat.editor.fontSize": 14,
+
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": false,
+
+  "debug.console.fontSize": 14,
+
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.colorDecorators": false,
   "editor.copyWithSyntaxHighlighting": false,
+  "editor.cursorSurroundingLines": 3,
   "editor.detectIndentation": false,
   "editor.emptySelectionClipboard": false,
-  "editor.lineNumbers": "on",
-  "editor.minimap.enabled": false,
-  "editor.multiCursorModifier": "ctrlCmd",
-  "editor.snippetSuggestions": "top",
-  "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
-  "window.nativeFullScreen": false,
-  "window.newWindowDimensions": "inherit",
-  "workbench.editor.enablePreview": false,
-  "workbench.editor.showTabs": "multiple",
-
-  /*
-   * Silence The Noise
-   */
-  "breadcrumbs.enabled": false,
-  "editor.colorDecorators": false,
+  "editor.fontFamily": "'Fira Code Nerd Font Propo', 'InconsolataGo Nerd Font Propo', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 16,
   "editor.gotoLocation.multipleDeclarations": "goto",
   "editor.gotoLocation.multipleDefinitions": "goto",
   "editor.gotoLocation.multipleImplementations": "goto",
@@ -36,99 +41,37 @@
   "editor.hideCursorInOverviewRuler": true,
   "editor.hover.enabled": false,
   "editor.lightbulb.enabled": "off",
+  "editor.lineHeight": 1.5,
+  "editor.lineNumbers": "on",
   "editor.matchBrackets": "never",
+  "editor.minimap.enabled": false,
+  "editor.multiCursorModifier": "ctrlCmd",
   "editor.occurrencesHighlight": "off",
   "editor.overviewRulerBorder": false,
   "editor.renderControlCharacters": false,
   "editor.renderLineHighlight": "none",
+  "editor.renderWhitespace": "selection",
+  "editor.rulers": [80, 100],
+  "editor.scrollBeyondLastLine": true,
   "editor.selectionHighlight": false,
-  "git.decorations.enabled": false,
-  "problems.decorations.enabled": false,
-  "scm.diffDecorations": "none",
-  "workbench.editor.enablePreviewFromQuickOpen": false,
-  "workbench.startupEditor": "none",
-  "workbench.tips.enabled": false,
-
-  /*
-   * Typography
-   */
-  "editor.fontFamily": "'Fira Code Nerd Font Propo', 'InconsolataGo Nerd Font Propo', Menlo, Monaco, 'Courier New', monospace",
-  "editor.fontSize": 16,
-  "editor.lineHeight": 1.5,
+  "editor.smoothScrolling": true,
+  "editor.snippetSuggestions": "top",
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.suggestFontSize": 16,
   "editor.suggestLineHeight": 24,
-  "terminal.integrated.fontSize": 16,
-  "terminal.integrated.lineHeight": 1.5,
-  "workbench.colorTheme": "Rich Black (no italics)",
-
-  /*
-   * Find
-   */
-  "search.exclude": {
-    "**/build": true,
-    "**/dist": true,
-    "**/node_modules": true,
-    "**/package-lock.json": true,
-    "**/public": true,
-    "**/vendor": true
-  },
-  "search.useIgnoreFiles": false,
-
-  /*
-   * Code
-   */
-  "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
-  "emmet.includeLanguages": {},
-  "files.associations": {},
-
-  /*
-   * Prettier
-   */
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": false
-  },
-  "prettier.requireConfig": false,
-  "prettier.useEditorConfig": true,
-
-  /* ===========================================================================
-   * Idearat Settings
-   * ------------------------------------------------------------------------ */
-
-  "atlascode.jira.jqlList": [
-    {
-      "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
-      "enabled": true,
-      "name": "My discounttire Issues",
-      "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
-      "siteId": "4897d307-327f-4624-8413-009ff77cda88",
-      "monitor": true
-    }
-],
-  "atlascode.jira.lastCreateSiteAndProject": {
-    "siteId": "4897d307-327f-4624-8413-009ff77cda88",
-    "projectKey": "CAVA"
-  },
-  "atlascode.jira.statusbar.enabled": true,
-  "atlascode.bitbucket.statusbar.enabled": true,
-
-  "chat.editor.fontSize": 14,
-
-  "debug.console.fontSize": 14,
-
-  "editor.cursorSurroundingLines": 3,
-  "editor.smoothScrolling": true,
-  "editor.renderWhitespace": "selection",
-  "editor.scrollBeyondLastLine": true,
   "editor.wordBasedSuggestions": "matchingDocuments",
-  "editor.suggest.snippetsPreventQuickSuggestions": false,
-  "editor.acceptSuggestionOnCommitCharacter": false,
-  "editor.rulers": [80, 100],
+  "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
+
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
 
   "find-it-faster.advanced.useEditorSelectionAsQuery": true,
-  "find-it-faster.general.killTerminalAfterUse": false,
   "find-it-faster.general.hideTerminalAfterFail": true,
   "find-it-faster.general.hideTerminalAfterSuccess": true,
+  "find-it-faster.general.killTerminalAfterUse": false,
+
+  "git.decorations.enabled": false,
 
   "gitlens.currentLine.enabled": false,
   "gitlens.graph.dimMergeCommits": true,
@@ -152,6 +95,11 @@
     "ui.semanticTokens": false
   },
 
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
+  },
+
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -162,6 +110,12 @@
   "markdown-preview-enhanced.previewTheme": "github-dark.css",
 
   "peacock.affectSideBarBorder": true,
+  "peacock.affectStatusBar": false,
+
+  "prettier.requireConfig": false,
+  "prettier.useEditorConfig": true,
+
+  "problems.decorations.enabled": false,
 
   "redhat.telemetry.enabled": false,
 
@@ -169,9 +123,24 @@
 
   "rust-analyzer.testExplorer": true,
 
+  "scm.diffDecorations": "none",
   "scm.inputFontSize": 14,
 
+  "search.exclude": {
+    "**/build": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/package-lock.json": true,
+    "**/public": true,
+    "**/vendor": true
+  },
+  "search.useIgnoreFiles": false,
+
+  "telemetry.telemetryLevel": "crash",
+
   "terminal.external.osxExec": "iTerm2v3.app",
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.lineHeight": 1.5,
 
   "vim.insertModeKeyBindings": [
     {
@@ -209,22 +178,31 @@
 
   "windsurf.autocompleteSpeed": "fast",
   "windsurf.cascadeWebSearchDisabled": true,
+  //"windsurf.enableAutocomplete": false,
   "windsurf.enableConfig": {
     "*": true
   },
 
+  "window.nativeFullScreen": false,
   "window.nativeTabs": true,
+  "window.newWindowDimensions": "inherit",
   "window.titleBarStyle": "native",
 
   "workbench.activityBar.location": "top",
   "workbench.colorCustomizations": {},
+  "workbench.colorTheme": "Rich Black (no italics)",
   "workbench.editor.closeOnFileDelete": true,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.restoreViewState": true,
+  "workbench.editor.showTabs": "multiple",
   "workbench.editor.splitInGroupLayout": "vertical",
   "workbench.settings.openDefaultKeybindings": true,
-  "workbench.settings.useSplitJSON": true,
+  "workbench.settings.useSplitJSON": false,
   "workbench.sideBar.location": "right",
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false,
 
   "yaml.customTags": [
     "!And",
@@ -260,9 +238,9 @@
 },
 
   "zenMode.fullScreen": false,
-  "zenMode.hideLineNumbers": false,
-  "zenMode.hideStatusBar": true,
-  "zenMode.silentNotifications": true,
   "zenMode.hideActivityBar": true,
-  "zenMode.showTabs": "multiple"
+  "zenMode.hideLineNumbers": false,
+  "zenMode.hideStatusBar": false,
+  "zenMode.showTabs": "multiple",
+  "zenMode.silentNotifications": true
 }
