@@ -65,13 +65,12 @@
    * Find
    */
   "search.exclude": {
-    "**/vendor/{[^l],?[^ai]}*": true,
-    "**/public/{[^i],?[^n]}*": true,
-    "**/node_modules": true,
+    "**/build": true,
     "**/dist": true,
-    "**/composer.lock": true,
+    "**/node_modules": true,
     "**/package-lock.json": true,
-    "storage": true
+    "**/public": true,
+    "**/vendor": true
   },
   "search.useIgnoreFiles": false,
 
@@ -93,17 +92,17 @@
   "prettier.useEditorConfig": true,
 
   /* ===========================================================================
-   * My Settings
+   * Idearat Settings
    * ------------------------------------------------------------------------ */
 
   "atlascode.jira.jqlList": [
     {
-        "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
-        "enabled": true,
-        "name": "My discounttire Issues",
-        "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
-        "siteId": "4897d307-327f-4624-8413-009ff77cda88",
-        "monitor": true
+      "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
+      "enabled": true,
+      "name": "My discounttire Issues",
+      "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+      "siteId": "4897d307-327f-4624-8413-009ff77cda88",
+      "monitor": true
     }
 ],
   "atlascode.jira.lastCreateSiteAndProject": {
@@ -258,10 +257,12 @@
   ],
   "yaml.schemas": {
     "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.2.3-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-  },
+},
 
   "zenMode.fullScreen": false,
   "zenMode.hideLineNumbers": false,
-  "zenMode.hideStatusBar": false,
+  "zenMode.hideStatusBar": true,
+  "zenMode.silentNotifications": true,
+  "zenMode.hideActivityBar": true,
   "zenMode.showTabs": "multiple"
 }
