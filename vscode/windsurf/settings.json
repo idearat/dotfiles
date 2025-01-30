@@ -40,6 +40,8 @@
   "editor.gotoLocation.multipleTypeDefinitions": "goto",
   "editor.hideCursorInOverviewRuler": true,
   "editor.hover.enabled": false,
+  "editor.inlayHints.enabled": "on",
+  "editor.inlineSuggest.enabled": true,
   "editor.lightbulb.enabled": "off",
   "editor.lineHeight": 1.5,
   "editor.lineNumbers": "on",
@@ -56,9 +58,13 @@
   "editor.selectionHighlight": false,
   "editor.smoothScrolling": true,
   "editor.snippetSuggestions": "top",
+  "editor.suggest.preview": true,
+  "editor.suggest.showStatusBar": true,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.suggestFontSize": 16,
   "editor.suggestLineHeight": 24,
+  "editor.suggestSelection": "first",
+  "editor.tokenColorCustomizations": { "comments": "#8b949e" },
   "editor.wordBasedSuggestions": "matchingDocuments",
   "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
 
@@ -189,7 +195,12 @@
   "window.titleBarStyle": "native",
 
   "workbench.activityBar.location": "top",
-  "workbench.colorCustomizations": {},
+  "workbench.colorCustomizations": {
+    "editorSuggestWidget.background": "#2d333b",
+    "editorSuggestWidget.border": "#444c56",
+    "editorSuggestWidget.selectedBackground": "#444c56",
+    "editorSuggestWidget.highlightForeground": "#539bf5"
+  },
   "workbench.colorTheme": "Rich Black (no italics)",
   "workbench.editor.closeOnFileDelete": true,
   "workbench.editor.enablePreview": false,
