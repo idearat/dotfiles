@@ -10,345 +10,28 @@
  * Augmentation focuses on AI, command palette, and git access; file, panel,
  * and window management; and other aspects of the Vim user experience.
  *
- * NOTE: The keybindings/settings here leverage the foundation provided by
- * Caleb Porzio's "Make VSCode Awesome" VSCode upgrade course. You can support
- * his work by visiting https://makevscodeawesome.com/.
- *
  * REQUIRED:
+ *   Windsurf / Cascade (fork of VSCode)
  *   VSCode Vim plugin (Vim-like keybindings, primarly for text editor)
  *
  * RECOMMENDED:
- *   VSCode Atlassian extension (easy Bitbucket and Jira integration)
- *   VSCode GitLens extension (more powerful git integration tools)
  *   VSCode FindItFaster extension (search via rg, fzf, bat, et al)
  *   VSCode Rewrap extension (easier wrapping of comment text etc.)
+ *
+ * OPTIONAL:
+ *   VSCode Atlassian extension (easy Bitbucket and Jira integration)
+ *   VSCode GitLens extension (more powerful git integration tools)
  *
  * A settings.json file accompanying this file can be used to configure
  * additional behavior such as configuring 'jj' to send <ESC> etc. The
  * settings.json file also has config options for recommended extensions.
  */
 
+// HINT: you might want to drag the Cascade, Search, and SCM views into the
+// lower panel for more convenient access and less sidebar clutter. I find
+// keeping the top in Zen Mode and the panel open works best for my workflow.
+
 [
-  // ===========================================================================
-  // Make VSCode Awesome - keybindings
-  // ---------------------------------------------------------------------------
-
-  // NOTE: the settings below focus largely on the 'cmd' key and are built with
-  // the expectation that the accompanying settings.json file properties will
-  // have turned off / disabled a number of VSCode UI doodads.
-
-  /*
-   * Panels
-   */
-  {
-    "key": "cmd+k cmd+e",
-    "command": "workbench.view.explorer"
-  },
-  {
-    "key": "cmd+k cmd+g",
-    "command": "workbench.view.scm"
-  },
-  {
-    "key": "cmd+k cmd+d",
-    "command": "workbench.view.debug"
-  },
-  {
-    "key": "cmd+k cmd+x",
-    "command": "workbench.extensions.action.showEnabledExtensions"
-  },
-  {
-    "key": "cmd+k cmd+b",
-    "command": "workbench.action.toggleSidebarVisibility"
-  },
-  {
-    "key": "cmd+e",
-    "command": "workbench.action.focusActiveEditorGroup"
-  },
-  {
-    "key": "cmd+t",
-    "command": "workbench.action.terminal.toggleTerminal"
-  },
-
-  /*
-   * Toggle Font Size
-   */
-  /*
-  {
-    "key": "cmd+k cmd+k",
-    "command": "toggle",
-    "when": "editorTextFocus",
-    "args": {
-      "id": "fontSize",
-      "value": [
-        {
-          "editor.fontSize": 16,
-          "editor.lineHeight": 32
-        },
-        {
-          "editor.fontSize": 14,
-          "editor.lineHeight": 0
-        }
-      ]
-    }
-  },
-  */
-
-  /*
-   * Fold/Unfold
-   */
-  {
-    "key": "shift+cmd+[",
-    "command": "editor.fold",
-    "when": "editorFocus"
-  },
-  {
-    "key": "shift+cmd+]",
-    "command": "editor.unfold",
-    "when": "editorFocus"
-  },
-
-  /*
-   * Line Manipulation
-   */
-  {
-    "key": "cmd+l",
-    "command": "editor.action.copyLinesDownAction",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+j",
-    "command": "editor.action.joinLines",
-    "when": "editorTextFocus"
-  },
-
-  /*
-   * File Explorer
-   */
-  {
-    "key": "cmd+d",
-    "command": "duplicate.execute",
-    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
-  },
-  {
-    "key": "cmd+n",
-    "command": "explorer.newFile",
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
-  },
-  {
-    "key": "shift+cmd+n",
-    "command": "explorer.newFolder",
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
-  },
-
-  /*
-   * Multi-Cursor
-   */
-  {
-    "key": "cmd+backspace",
-    "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "editorFocus && editorHasMultipleSelections"
-  },
-  {
-    "key": "cmd+k cmd+d",
-    "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "editorFocus && editorHasMultipleSelections"
-  },
-  {
-    "key": "cmd+right",
-    "command": "editor.action.insertCursorAtEndOfEachLineSelected",
-    "when": "editorFocus && editorHasSelection"
-  },
-
-  /*
-   * Split Panels
-   */
-  {
-    "key": "ctrl+w",
-    "command": "workbench.action.joinAllGroups",
-    "when": "editorFocus"
-  },
-  /*
-  {
-    "key": "ctrl+n",
-    "command": "workbench.action.splitEditor",
-    "when": "editorFocus"
-  },
-  */
-  {
-    "key": "ctrl+l",
-    "command": "workbench.action.navigateRight",
-    "when": "editorFocus"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "workbench.action.navigateLeft",
-    "when": "editorFocus"
-  },
-  /*
-  {
-    "key": "ctrl+=",
-    "command": "workbench.action.increaseViewSize",
-    "when": "editorFocus"
-  },
-  {
-    "key": "ctrl+-",
-    "command": "workbench.action.decreaseViewSize",
-    "when": "editorFocus"
-  },
-  */
-
-  /*
-   * Terminal Split Panel
-   */
-
-  /*
-  {
-    "key": "ctrl+n",
-    "command": "workbench.action.terminal.split",
-    "when": "terminalFocus"
-  },
-  */
-
-  {
-    "key": "ctrl+l",
-    "command": "workbench.action.terminal.focusNextPane",
-    "when": "terminalFocus"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "workbench.action.terminal.focusPreviousPane",
-    "when": "terminalFocus"
-  },
-  {
-    "key": "ctrl+w",
-    "command": "workbench.action.terminal.kill",
-    "when": "terminalFocus"
-  },
-
-  /*
-   * Emmet
-   */
-  {
-    "key": "cmd+m cmd+i",
-    "command": "editor.emmet.action.balanceIn",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+o",
-    "command": "editor.emmet.action.balanceOut",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+w",
-    "command": "editor.emmet.action.wrapWithAbbreviation",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+m",
-    "command": "editor.emmet.action.matchTag",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+e",
-    "command": "editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+r",
-    "command": "editor.emmet.action.updateTag",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+backspace",
-    "command": "editor.emmet.action.removeTag",
-    "when": "editorTextFocus"
-  },
-
-  /*
-   * amVim Finder Fix
-   */
-  {
-    "key": "enter",
-    "command": "editor.action.nextMatchFindAction",
-    "when": "findWidgetVisible"
-  },
-  {
-    "key": "shift+enter",
-    "command": "editor.action.previousMatchFindAction",
-    "when": "findWidgetVisible"
-  },
-
-  /*
-   * IntelliSense
-   */
-  {
-    "key": "cmd+r",
-    "command": "workbench.action.gotoSymbol"
-  },
-  {
-    "key": "cmd+shift+r",
-    "command": "workbench.action.showAllSymbols"
-  },
-  {
-    "key": "cmd+k cmd+enter",
-    "command": "editor.action.goToDeclaration",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+k cmd+i",
-    "command": "namespaceResolver.import"
-  },
-
-  /*
-   * Project Switching
-   */
-  {
-    "key": "cmd+;",
-    "command": "workbench.action.switchWindow",
-    "when": "! config.simple-project-switcher.present"
-  },
-  {
-    "key": "alt+cmd+right",
-    "command": "workbench.action.showNextWindowTab"
-  },
-  {
-    "key": "alt+cmd+left",
-    "command": "workbench.action.showPreviousWindowTab"
-  },
-
-  /*
-   * Open DevTools
-   */
-  {
-    "key": "alt+cmd+i",
-    "command": "workbench.action.toggleDevTools"
-  },
-
-  /*
-   * Hide Toaster Notifications
-   */
-  {
-    "key": "escape",
-    "command": "notifications.hideToasts",
-    "when": "notificationToastsVisible"
-  },
-
-  // ===========================================================================
-  // Idearat Keybindings
-  // ---------------------------------------------------------------------------
-
-  // ---------------------------------------------------------------------------
-  // VIM Plugin Settings
-  // ---
-
-  // NOTE: the settings.json file which augments this file is responsible for
-  // keybindings specific to overridding/repairing the Vim plugin's bindings.
-  //
-  // For example:
-  //
-  // - "r"  -> "R"   (normal mode) repair glitch where Vim plugin fails to set
-  //                "r" binding to "Replace" mode (it retains "Normal" mode).
-
   // ---------------------------------------------------------------------------
   // VIM Command keys (ala ':' but for vscode command palette access)
   // ---
@@ -358,9 +41,9 @@
 
   // Access VSCode command palette from anywhere.
   {
-    "key": "ctrl+;",
+    "key": "cmd+;",
     "command": "workbench.action.showCommands",
-    "comment": "vim: ctrl+; (command palette)"
+    "comment": "vim: cmd+; (command palette)"
   },
 
   // ---------------------------------------------------------------------------
@@ -421,13 +104,6 @@
     "command": "atlascode.jira.createIssue",
     "when": "viewContainer.workbench.view.extension.atlascode-drawer.enabled && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: <leader>ai (create Jira issue)"
-  },
-
-  {
-    "key": "space a o",
-    "command": "atlascode.jira.showIssueForKey",
-    "when": "viewContainer.workbench.view.extension.atlascode-drawer.enabled && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>ao (open Jira issue)"
   },
 
   {
@@ -505,7 +181,7 @@
   },
 
   // ---------------------------------------------------------------------------
-  // Codeium / Cascade AI
+  // Cascade AI
   // ---
 
   // NOTE: there are additional keybindings for accepting/rejecting suggestions
@@ -630,19 +306,30 @@
     "comment": "vim: <C-p> (prev item)"
   },
 
-  // NOTE: for the following commands to work you need to enter <ESC> to close
-  // the search field; once closed you can open or rename the target file.
-
   {
     "key": "enter",
-    "command": "list.select",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "list.closeFind",
+        "list.select",
+        "explorer.openAndPassFocus",
+      ]
+    },
     "when": "explorerViewletFocus && !inputFocus",
     "comment": "open file"
   },
 
   {
     "key": "shift+enter",
-    "command": "renameFile",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "list.closeFind",
+        "list.select",
+        "renameFile",
+      ]
+    },
     "when": "explorerViewletFocus && !inputFocus",
     "comment": "rename file"
   },
@@ -687,98 +374,40 @@
   },
 
   // ---------------------------------------------------------------------------
-  // Git operations
+  // Git (scm)
   // ---
+
+  // NOTE: this section relies on built-in SCM git features. GitLens keybindings
+  // are mapped to 'space l *' and offer quite a few additional features.
 
   {
     "key": "space g ;",
-    "command": "gitlens.gitCommands",
+    "command": "workbench.action.quickOpen",
+    "args": "> git ",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual') && !gitlens:disabled && config.gitlens.keymap == 'chorded'",
-    "comment": "vim: <leader>; (git commands)"
-  },
-
-  {
-    "key": "space g b",
-    "command": "gitlens.showBranchesView",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gb (git branches)"
-  },
-
-  {
-    "key": "space g c",
-    "command": "gitlens.showCommitsView",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gc (git commits)"
-  },
-
-  {
-    "key": "space g d",
-    "command": "gitlens.diffWithPrevious",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gd (git diff w/ previous)"
-  },
-
-  {
-    "key": "space g shift+d",
-    "command": "gitlens.diffWithWorking",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gD (git diff with working)"
-  },
-
-  {
-    "key": "space g g",
-    "command": "gitlens.showGraphView",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gg (git graph)"
+    "comment": "vim: <leader>g; (git commands)"
   },
 
   {
     "key": "space g h",
-    "command": "gitlens.views.home.focus",
+    // show source control repositories in panel viewer
+    "command": "workbench.view.scm",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: <leader>gh (git home)"
   },
 
   {
-    "key": "space g i",
-    "command": "gitlens.showCommitDetailsView",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gi (git inspect)"
-  },
-
-  {
     "key": "space g l",
-    "command": "gitlens.pullRepositories",
+    "command": "git.pullFrom",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: <leader>gl (git pull)"
   },
 
   {
     "key": "space g p",
-    "command": "gitlens.pushRepositories",
+    "command": "git.pushTo",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: <leader>gp (git push)"
-  },
-
-  {
-    "key": "space g s",
-    "command": "gitlens.showQuickRepoStatus",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gs (git status)"
-  },
-
-  {
-    "key": "space g t",
-    "command": "gitlens.toggleFileChanges",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gt (git toggle changes)"
-  },
-
-  {
-    "key": "space g w",
-    "command": "gitlens.showWorktreesView",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>gw (git worktrees)"
   },
 
   // ---------------------------------------------------------------------------
@@ -846,15 +475,77 @@
   },
 
   // ---------------------------------------------------------------------------
-  // L ???
+  // L(ens) aka GitLens
   // ---
 
-  // TODO: add L ???
   {
-    "key": "space l",
-    "command": "???",
+    "key": "space l ;",
+    "command": "gitlens.gitCommands",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual') && !gitlens:disabled && config.gitlens.keymap == 'chorded'",
+    "comment": "vim: <leader>l; (lens commands)"
+  },
+
+  {
+    "key": "space l d",
+    "command": "gitlens.diffWithPrevious",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>l (???)"
+    "comment": "vim: <leader>ld lens diff w/ previous)"
+  },
+
+  {
+    "key": "space l shift+d",
+    "command": "gitlens.diffWithWorking",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>lD (lens diff with working)"
+  },
+
+  {
+    "key": "space l g",
+    "command": "gitlens.showGraphView",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>lg (lens graph)"
+  },
+
+  {
+    "key": "space l h",
+    "command": "gitlens.views.home.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>lh (lens home)"
+  },
+
+  {
+    "key": "space l i",
+    "command": "gitlens.showCommitDetailsView",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>li (lens inspect)"
+  },
+
+  {
+    "key": "space l l",
+    "command": "gitlens.pullRepositories",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gl (lens pull)"
+  },
+
+  {
+    "key": "space l p",
+    "command": "gitlens.pushRepositories",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gp (lens push)"
+  },
+
+  {
+    "key": "space l s",
+    "command": "gitlens.showQuickRepoStatus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>ls (lens status)"
+  },
+
+  {
+    "key": "space l t",
+    "command": "gitlens.toggleFileChanges",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>gt (lens toggle changes)"
   },
 
   // ---------------------------------------------------------------------------
@@ -862,17 +553,17 @@
   // ---
 
   {
-    "key": "space m p",
-    "command": "markdown-preview-enhanced.openPreview",
+    "key": "space m",
+    "command": "markdown-preview-enhanced.openPreviewToTheSide",
     "when": "editorLangId == 'markdown' && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>m (markdown preview open)"
+    "comment": "vim: <leader>m (markdown preview)"
   },
 
   {
-    "key": "space m s",
-    "command": "markdown-preview-enhanced.openPreviewToTheSide",
+    "key": "space shift+m",
+    "command": "markdown-preview-enhanced.openPreview",
     "when": "editorLangId == 'markdown' && editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>m (markdown preview side)"
+    "comment": "vim: <leader>m (markdown preview)"
   },
 
   // ---------------------------------------------------------------------------
@@ -978,53 +669,74 @@
   // TODO: add ctrl keys specific to testing panel?
 
   // ---------------------------------------------------------------------------
-  // UI
+  // Update(s)
   // ---
 
   {
-    "key": "space u c",
-    "command": "workbench.action.customizeLayout",
+    "key": "space u w",
+    "command": "windsurf.checkForUpdates",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>uc (ui config)"
+    "comment": "vim: <leader>uw (windsurf updates)"
   },
 
   {
-    "key": "space u d",
-    "command": "workbench.panel.repl.view.focus",
+    "key": "space u x",
+    "command": "workbench.extensions.action.checkForUpdates",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>ud (debug console)"
-  },
-
-  {
-    "key": "space u o",
-    "command": "workbench.panel.output.focus",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>uo (output panel)"
-  },
-
-  {
-    "key": "space u p",
-    "command": "workbench.panel.markers.view.focus",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>up (problem panel)"
-  },
-
-  {
-    "key": "space u s",
-    "command": "workbench.action.toggleSidebarVisibility",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>us (toggle sidebar)"
+    "comment": "vim: <leader>ux (extension updates)"
   },
 
   // ---------------------------------------------------------------------------
-  // Vimrc
+  // View {x}
   // ---
 
   {
-    "key": "space v",
-    "command": "vim.editVimrc",
+    "key": "space v b",
+    "command": "workbench.action.toggleSidebarVisibility",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>v (edit vimrc)"
+    "comment": "vim: <leader>vb (toggle sidebar)"
+  },
+
+  {
+    "key": "space v c",
+    "command": "workbench.action.customizeLayout",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>vc (ui config)"
+  },
+
+  {
+    "key": "space v o",
+    "command": "workbench.panel.output.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>vo (output panel)"
+  },
+
+  {
+    "key": "space v p",
+    "command": "workbench.panel.markers.view.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>vp (problem panel)"
+  },
+
+  {
+    "key": "space v s",
+    "command": "workbench.action.toggleStatusbarVisibility",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>vs (toggle statusbar)"
+  },
+
+  {
+    "key": "space v t",
+    "command": "workbench.action.terminal.focus",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>vt (terminal)"
+  },
+
+  {
+    "key": "space v x",
+    "command": "workbench.extensions.action.showEnabledExtensions",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>vx (view extensions)"
   },
 
   // ---------------------------------------------------------------------------
@@ -1088,39 +800,103 @@
   },
 
   // ---------------------------------------------------------------------------
-  // Zen mode toggle
+  // Fold/Unfold
   // ---
 
-  // TODO: ???
+  // Lowercase version of vim 'zM' for fold all (for convenience)
   {
-    "key": "space z",
-    "command": "???",
+    "key": "space z m",
+    "command": "editor.fold",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: <leader>z (???)"
+    "comment": "vim: <leader>zm (fold)"
+  },
+  {
+    "key": "space z shift+m",
+    "command": "editor.fold",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>zM (fold)"
+  },
+
+  // Lowercase version of vim 'zR' for unfold all (for convenience)
+  {
+    "key": "space z r",
+    "command": "editor.unfold",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>zr (unfold)"
+  },
+  {
+    "key": "space z shift+r",
+    "command": "editor.unfold",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: <leader>zR (unfold)"
   },
 
   // ===========================================================================
-  // Custom Keybindings
-  // ---------------------------------------------------------------------------
 
   // ---------------------------------------------------------------------------
-  // Make VSCode Awesome - overrides / additions
+  // Cmd Keys
   // ---
 
+  // Quick open of explorer
+  {
+    "key": "cmd+e",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.view.explorer",
+        "workbench.files.action.focusFilesExplorer"
+      ]
+    },
+    "comment": "vim: <C-e> (editor)"
+  },
+
+  // Quick reset to "main" view
+  {
+    "key": "cmd+m",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.closeSidebar",
+        "workbench.action.terminal.focus",
+        "workbench.action.exitZenMode",
+        "workbench.action.toggleZenMode",
+        "workbench.action.focusActiveEditorGroup",
+      ]
+    },
+    "comment": "vim: <C-m> (main)"
+  },
+
+  // Quick open of task runner
+  {
+    "key": "cmd+r",
+    "command": "workbench.action.tasks.runTask",
+    "comment": "vim: <C-r> (run task)"
+  },
+
+  // Quick focus on a terminal
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.terminal.focus",
+    "comment": "vim: <C-t> (terminal)"
+  },
+
+  // Quick open of dev tools
+  {
+    "key": "cmd+k cmd+i",
+    "command": "workbench.action.toggleDevTools",
+    "comment": "vim: <C-k><C-i> (dev tools)"
+  },
+
+  // Cmd+K is typical in iterm2v3 et. al., here we double it to clear terminal
   {
     "key": "cmd+k cmd+k",
     "command": "workbench.action.terminal.clear",
-    "when": "terminalFocus && terminalHasBeenCreated"
-  },
-
-  // toggle status bar
-  {
-    "key": "cmd+k cmd+s",
-    "command": "workbench.action.toggleStatusbarVisibility"
+    "when": "terminalFocus && terminalHasBeenCreated",
+    "comment": "iterm2v3: <C-k><C-k> (clear terminal)"
   },
 
   // ---------------------------------------------------------------------------
-  // Buffer / Tab Navigation
+  // Ctrl Keys
   // ---
 
   // SEE ALSO: the <leader>f keybindings for "find buffer" etc.
@@ -1137,127 +913,15 @@
     "key": "ctrl+tab",
     "command": "workbench.action.nextEditor",
     "when": "!terminalFocus",
-    "comment": "iterm2v3: (next tab)"
+    "comment": "iterm2v3: <C-tab> (next tab)"
   },
 
   {
     "key": "ctrl+shift+tab",
     "command": "workbench.action.previousEditor",
     "when": "!terminalFocus",
-    "comment": "iterm2v3: (previous tab)"
+    "comment": "iterm2v3: <C-shift-tab> (previous tab)"
   },
-
-  // ---------------------------------------------------------------------------
-  // Letters / Symbols
-  // ---
-
-  // NOTE: the settings.json file which augments this file is responsible for
-  // some of the keybindings which augment the Vim plugin's keybindings, e.g.:
-
-  /*
-    "vim.insertModeKeyBindings": [
-        {
-            "before": ["j", "j"],
-            "after": ["<Esc>"]
-        }
-    ],
-  */
-
-  // NOTE: this toggles line blame for the file...if scrolling seems janky it's
-  // best to toggle it on/off per line as you are curious re: a specific line.
-  {
-    "key": "shift+b",
-    "command": "gitlens.toggleLineBlame",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: B (toggle line blame)"
-  },
-
-  {
-    "key": "shift+e",
-    "command": "code-runner.run",
-    "when": "editorTextFocus && editor.hasSelection",
-    "comment": "vim: E (evaluate selection)"
-  },
-
-  {
-    "key": "shift+h",
-    "command": "editor.action.showHover",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: H (hover help)"
-  },
-
-  {
-    "key": "shift+k",
-    "command": "???",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: K (???)"
-  },
-
-  {
-    "key": "g l",
-    "command": "editor.action.marker.next",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: L (next diagnostic)"
-  },
-
-  {
-    "key": "shift+m",
-    "command": "editor.action.inspectTMScopes",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: M (highlight mapping)"
-  },
-
-  /* SEE: settings.json for implementation
-  {
-    "key": "shift+q",
-    "command": "???",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: Q (re-run last @q)"
-  },
-  */
-
-  /* SEE: settings.json for implementation
-  {
-    "key": "shift+u",
-    "command": "???",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: U (toggle case)"
-  },
-  */
-
-  {
-    "key": "shift+w",
-    "command": "references-view.find",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: W (where in workspace)"
-  },
-
-  /* SEE: settings.json for implementation
-  {
-    "key": "shift+y",
-    "command": "y$",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: Y (yank to eol)"
-  },
-  */
-
-  {
-    "key": "\\",
-    "command": "workbench.action.toggleZenMode",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: \\ (toggle zen mode)"
-  },
-
-  {
-    "key": "shift+-",
-    "command": "editor.action.marker.next",
-    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
-    "comment": "vim: _ (next marker)"
-  },
-
-  // ---------------------------------------------------------------------------
-  // Ctrl Keys
-  // ---
 
   {
     "key": "ctrl+shift+8",
@@ -1299,9 +963,9 @@
   },
 
   {
-    "key": "ctrl+cmd+\\",
+    "key": "ctrl+shift+\\",
     "command": "workbench.action.toggleSidebarVisibility",
-    "comment": "vim: ctrl+cmd+\\ (toggle sidebar)"
+    "comment": "vim: ctrl+shift+\\ (toggle sidebar)"
   },
 
   {
@@ -1318,7 +982,6 @@
     "comment": "vim: ctrl+p (prev error)"
   },
 
-  // TODO: ???
   {
     "key": "ctrl+s",
     "command": "???",
@@ -1331,6 +994,106 @@
     "command": "todo-tree-view.focus",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: ctrl+t (focus todo tree)"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Letters / Symbols
+  // ---
+
+  // NOTE: the settings.json file which augments this file is responsible for
+  // some of the keybindings which augment the Vim plugin's keybindings.
+
+  // NOTE: this toggles line blame for the file...if scrolling seems janky it's
+  // best to toggle it on/off per line as you are curious re: a specific line.
+  {
+    "key": "shift+b",
+    "command": "gitlens.toggleLineBlame",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: B (toggle line blame)"
+  },
+
+  {
+    "key": "shift+e",
+    "command": "code-runner.run",
+    "when": "editorTextFocus && editor.hasSelection",
+    "comment": "vim: E (evaluate selection)"
+  },
+
+  {
+    "key": "shift+h",
+    "command": "editor.action.showHover",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: H (hover help)"
+  },
+
+  {
+    "key": "shift+k",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: K (???)"
+  },
+
+  {
+    "key": "shift+l",
+    "command": "???",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: L (???)"
+  },
+
+  {
+    "key": "g l",
+    "command": "editor.action.marker.next",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: L (next diagnostic)"
+  },
+
+  {
+    "key": "shift+m",
+    "command": "editor.action.inspectTMScopes",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: M (highlight mapping)"
+  },
+
+  /* SEE: settings.json for implementation
+  {
+    "key": "shift+q",
+    "comment": "vim: Q (re-run last @q)"
+  },
+  */
+
+  /* SEE: settings.json for implementation
+  {
+    "key": "shift+u",
+    "comment": "vim: U (toggle case)"
+  },
+  */
+
+  {
+    "key": "shift+w",
+    "command": "references-view.find",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: W (where)"
+  },
+
+  /* SEE: settings.json for implementation
+  {
+    "key": "shift+y",
+    "comment": "vim: Y (yank to eol)"
+  },
+  */
+
+  {
+    "key": "\\",
+    "command": "workbench.action.toggleZenMode",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: \\ (toggle zen mode)"
+  },
+
+  {
+    "key": "shift+-",
+    "command": "editor.action.marker.next",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: _ (next marker)"
   },
 
   // ---------------------------------------------------------------------------
@@ -1377,7 +1140,7 @@
         "workbench.action.focusActiveEditorGroup"
       ]
     },
-    "when": "searchViewletVisible",
+    "when": "!editorFocus && searchViewletVisible",
     "comment": "vim: <Esc> (close search and move back to editor)"
   },
 
@@ -1390,6 +1153,12 @@
     "command": "workbench.action.splitEditorDown",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "iterm2v3: (split vertically)"
+  },
+
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.joinAllGroups",
+    "when": "editorFocus"
   },
 
   // ---------------------------------------------------------------------------
@@ -1409,12 +1178,27 @@
     "comment": "vim: ctrl+] (insert tab)"
   },
 
-  // Match my neovim config (where Tab just inserts a tab).
+  // Select the next inline suggestion
   {
-    "key": "ctrl+l",
+    "key": "ctrl+n",
+    "command": "editor.action.inlineSuggest.next",
+    "when": "editorTextFocus && inlineSuggestionVisible",
+    "comment": "vim: ctrl+n (next suggestion)"
+  },
+
+  // Select the previous inline suggestion
+  {
+    "key": "ctrl+p",
+    "command": "editor.action.inlineSuggest.prev",
+    "when": "editorTextFocus && inlineSuggestionVisible",
+    "comment": "vim: ctrl+p (prev suggestion)"
+  },
+
+  {
+    "key": "ctrl+;",
     "command": "editor.action.inlineSuggest.commit",
     "when": "editorTextFocus && inlineSuggestionVisible",
-    "comment": "vim: ctrl+l (accept suggestion)"
+    "comment": "vim: ctrl+; (accept suggestion)"
   },
 
   {
@@ -1464,11 +1248,40 @@
     "comment": "iterm: cmd+shift+d (split terminal)"
   },
 
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus"
+  },
+
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus"
+  },
+
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+
   // ---------------------------------------------------------------------------
   // Window / Pane Navigation
   // ---
 
-  // Navigation between sidebar, editor groups, and panels
+  // Project / Workspace
+
+  {
+    "key": "alt+cmd+right",
+    "command": "workbench.action.showNextWindowTab"
+  },
+  {
+    "key": "alt+cmd+left",
+    "command": "workbench.action.showPreviousWindowTab"
+  },
+
+  // Panel Pane Navigation
 
   {
     "key": "ctrl+alt+down",
@@ -1490,11 +1303,15 @@
     "command": "workbench.action.previousPanelView"
   },
 
-  // Navigation between sidebar, editor groups, and panels
-
   // ---
   // Panel <- Left
   // ---
+
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "editorFocus"
+  },
 
   {
     "key": "ctrl+h",
@@ -1514,6 +1331,12 @@
 
   {
     "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "editorFocus"
+  },
+
+  {
+    "key": "ctrl+l",
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "sideBarFocus"
   },
@@ -1527,12 +1350,6 @@
   // ---
   // Panel Down
   // ---
-
-  // {
-  //   "key": "ctrl+j",
-  //   "command": "-editor.action.joinLines",
-  //   "when": "editorTextFocus && !editorReadonly"
-  // },
 
   {
     "key": "ctrl+j",
@@ -1573,7 +1390,6 @@
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "!editorFocus && !sidebarFocus && !panelFocus && !inputFocus"
   },
-
 ]
 
 /* -----------------------------------------------------------------------------

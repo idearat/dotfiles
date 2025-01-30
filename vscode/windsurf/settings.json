@@ -77,7 +77,7 @@
   "gitlens.graph.dimMergeCommits": true,
   "gitlens.graph.minimap.enabled": false,
   "gitlens.launchpad.indicator.enabled": false,
-  "gitlens.mode.active": "review",
+  "gitlens.outputLevel": "debug",
   "gitlens.views.scm.grouped.views": {
     "commits": true,
     "branches": true,
