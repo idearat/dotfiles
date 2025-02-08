@@ -39,6 +39,13 @@
   // NOTE: ';' is mapped to ':' in the settings.json file as a shortcut for
   // accessing the Vim command line.
 
+  {
+    "key": "ctrl+;",
+    "command": "workbench.action.showCommands",
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
+    "comment": "vim: ctrl+; (command palette)"
+  },
+
   // Access VSCode command palette from anywhere.
   {
     "key": "cmd+;",
