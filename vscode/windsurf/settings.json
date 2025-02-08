@@ -1,20 +1,21 @@
 {
   "atlascode.bitbucket.statusbar.enabled": true,
-  "atlascode.jira.statusbar.enabled": true,
   "atlascode.jira.jqlList": [
     {
-        "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
-        "enabled": true,
-        "name": "My discounttire Issues",
-        "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
-        "siteId": "4897d307-327f-4624-8413-009ff77cda88",
-        "monitor": true
+      "id": "b9f523da-0ffd-4732-b10b-f60aa98a49cc",
+      "enabled": true,
+      "name": "My discounttire Issues",
+      "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+      "siteId": "4897d307-327f-4624-8413-009ff77cda88",
+      "monitor": true
     }
-],
+  ],
   "atlascode.jira.lastCreateSiteAndProject": {
     "siteId": "4897d307-327f-4624-8413-009ff77cda88",
     "projectKey": "CAVA"
   },
+  "atlascode.jira.statusbar.enabled": true,
+  "atlascode.jira.todoIssues.enabled": false,
 
   "breadcrumbs.enabled": false,
 
@@ -183,8 +184,8 @@
   "vim.useSystemClipboard": true,
 
   "windsurf.autocompleteSpeed": "fast",
+  "windsurf.autoExecutionPolicy": "off",
   "windsurf.cascadeWebSearchDisabled": true,
-  //"windsurf.enableAutocomplete": false,
   "windsurf.enableConfig": {
     "*": true
   },
@@ -245,7 +246,7 @@
     "!Split sequence"
   ],
   "yaml.schemas": {
-    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.2.3-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.4.3-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
   },
 
   "zenMode.fullScreen": false,
