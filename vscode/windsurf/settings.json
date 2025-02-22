@@ -27,6 +27,7 @@
   "debug.console.fontSize": 14,
 
   "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.codeLens": false,
   "editor.colorDecorators": false,
   "editor.copyWithSyntaxHighlighting": false,
   "editor.cursorSurroundingLines": 3,
@@ -69,6 +70,11 @@
   "editor.wordBasedSuggestions": "matchingDocuments",
   "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
 
+  "files.exclude": {
+    "**/obsolete/**": true,
+    "obsolete/**": true,
+    "obsolete": true
+  },
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
@@ -123,6 +129,11 @@
   "prettier.useEditorConfig": true,
 
   "problems.decorations.enabled": false,
+  "problems.excludes": {
+    "**/obsolete/**": true,
+    "obsolete/**": true,
+    "obsolete": true
+  },
 
   "redhat.telemetry.enabled": false,
 
@@ -138,10 +149,13 @@
     "**/dist": true,
     "**/node_modules": true,
     "**/package-lock.json": true,
+    "**/obsolete/**": true,
+    "obsolete/**": true,
+    "obsolete": true,
     "**/public": true,
     "**/vendor": true
   },
-  "search.useIgnoreFiles": false,
+  "search.useIgnoreFiles": true,
 
   "telemetry.telemetryLevel": "crash",
 
@@ -185,10 +199,17 @@
 
   "windsurf.autocompleteSpeed": "fast",
   "windsurf.autoExecutionPolicy": "off",
-  "windsurf.cascadeWebSearchDisabled": true,
+  "windsurf.cascadeWebSearchDisabled": false,
+  "windsurf.enableAutocomplete": true,
+  "windsurf.enableSupercomplete": false,
+  "windsurf.enableTabToJump": true,
   "windsurf.enableConfig": {
     "*": true
   },
+  "windsurf.explainAndFixInCurrentConversation": true,
+  "windsurf.showExplainProblemInlayHint": false,
+  "windsurf.showInlayHintShortcuts": false,
+  "windsurf.showSelectionActions": false,
 
   "window.nativeFullScreen": false,
   "window.nativeTabs": true,
@@ -246,7 +267,7 @@
     "!Split sequence"
   ],
   "yaml.schemas": {
-    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.4.3-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.4.7-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
   },
 
   "zenMode.fullScreen": false,

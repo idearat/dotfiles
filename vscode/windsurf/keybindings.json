@@ -266,10 +266,7 @@
     "key": "space d",
     "command": "runCommands",
     "args": {
-      "commands": [
-        "workbench.view.debug",
-        "workbench.panel.repl.view.focus"
-      ]
+      "commands": ["workbench.view.debug", "workbench.panel.repl.view.focus"]
     },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: <leader>d (debug)"
@@ -317,11 +314,7 @@
     "key": "enter",
     "command": "runCommands",
     "args": {
-      "commands": [
-        "list.closeFind",
-        "list.select",
-        "explorer.openAndPassFocus",
-      ]
+      "commands": ["list.closeFind", "list.select", "explorer.openAndPassFocus"]
     },
     "when": "explorerViewletFocus && !inputFocus",
     "comment": "open file"
@@ -331,11 +324,7 @@
     "key": "shift+enter",
     "command": "runCommands",
     "args": {
-      "commands": [
-        "list.closeFind",
-        "list.select",
-        "renameFile",
-      ]
+      "commands": ["list.closeFind", "list.select", "renameFile"]
     },
     "when": "explorerViewletFocus && !inputFocus",
     "comment": "rename file"
@@ -473,10 +462,7 @@
 
   {
     "key": "space shift+k",
-    "command": "vscode.open",
-    "args": {
-      "uri": "/Users/ss/Library/Application Support/Windsurf/User/keybindings.json"
-    },
+    "command": "workbench.action.openGlobalKeybindingsFile",
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Visual')",
     "comment": "vim: <leader>K (show keybindings file)"
   },
@@ -867,7 +853,7 @@
         "workbench.action.terminal.focus",
         "workbench.action.exitZenMode",
         "workbench.action.toggleZenMode",
-        "workbench.action.focusActiveEditorGroup",
+        "workbench.action.focusActiveEditorGroup"
       ]
     },
     "comment": "vim: <C-m> (main)"
@@ -946,7 +932,7 @@
   // disable navigate back via ctrl+-
   {
     "key": "ctrl+-",
-    "command": "-workbench.action.navigateBack",
+    "command": "-workbench.action.navigateBack"
   },
 
   {
@@ -1202,6 +1188,13 @@
   },
 
   {
+    "key": "ctrl+l",
+    "command": "editor.action.inlineSuggest.commit",
+    "when": "editorTextFocus && inlineSuggestionVisible",
+    "comment": "vim: ctrl+l (accept suggestion)"
+  },
+
+  {
     "key": "ctrl+;",
     "command": "editor.action.inlineSuggest.commit",
     "when": "editorTextFocus && inlineSuggestionVisible",
@@ -1339,7 +1332,7 @@
   {
     "key": "ctrl+l",
     "command": "workbench.action.navigateRight",
-    "when": "editorFocus"
+    "when": "editorFocus && vim.mode == 'Normal'"
   },
 
   {
@@ -1375,9 +1368,9 @@
   // ---
 
   {
-  "key": "ctrl+k",
-  "command": "-deleteAllRight",
-  "when": "textInputFocus && !editorReadonly"
+    "key": "ctrl+k",
+    "command": "-deleteAllRight",
+    "when": "textInputFocus && !editorReadonly"
   },
 
   {
@@ -1396,7 +1389,7 @@
     "key": "ctrl+k",
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "!editorFocus && !sidebarFocus && !panelFocus && !inputFocus"
-  },
+  }
 ]
 
 /* -----------------------------------------------------------------------------
