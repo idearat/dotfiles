@@ -527,7 +527,7 @@ local function enhance_maps(maps)
   maps.n["<Leader>cr"] = { "<cmd>CopilotChatReset<cr>", desc = "Reset Chat" }
   maps.n["<Leader>cs"] = { "<cmd>CopilotChatSave<cr>", desc = "Save Chat" }
   maps.n["<Leader>cl"] = { "<cmd>CopilotChatLoad<cr>", desc = "Load Chat" }
-  
+
   -- Visual mode mappings for CopilotChat
   maps.v["<Leader>c"] = { "<Leader>c", desc = ui.get_icon("DiagnosticHint", 1, true) .. "Chat/AI Menu" }
   maps.v["<Leader>cf"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
@@ -538,7 +538,7 @@ local function enhance_maps(maps)
 
   -- GPChat Menu (under cg prefix)
   maps.n["<Leader>cg"] = { "<Leader>cg", desc = "GPChat Commands" }
-  
+
   maps.n["<Leader>cga"] = { ":GpAppend<cr>", desc = "Append" }
   maps.n["<Leader>cgA"] = { ":GpWhisperAppend<cr>", desc = "Whisper Append" }
 
@@ -871,6 +871,9 @@ local function enhance_maps(maps)
 
   -- insert special characters
   maps.i["<C-v>"] = { "<C-v>", desc = "Insert Ctrl Char" }
+
+  -- Add mapping for Copilot accept in insert mode using the completion_accept function
+  maps.i["<C-;>"] = { function() require("user.completion_accept")() end, desc = "Accept Completion" }
 
   -- navigate display lines
   maps.i["<Down>"] = { "<esc>gja" }

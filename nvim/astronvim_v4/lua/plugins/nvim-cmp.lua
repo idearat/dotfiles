@@ -60,13 +60,63 @@ return {
         codeium = 1,
       })
 
+      -- Enhanced source setup with better formatting
       opts.sources = utils.extend_tbl(
         opts.sources,
         cmp.config.sources {
-          { name = "copilot", priority = 1500 },
-          { name = "codeium", priority = 1250 },
+          { name = "copilot", priority = 1500, max_item_count = 3 },
+          { name = "codeium", priority = 1450, max_item_count = 3 },
+          -- Keep LSP and other sources at lower priorities
+          { name = "nvim_lsp", priority = 1000 },
+          { name = "luasnip", priority = 750 },
+          { name = "buffer", priority = 500 },
+          { name = "path", priority = 250 },
         }
       )
+
+      -- Set up formatting to show source labels ONLY at the end of suggestions
+      opts.formatting = utils.extend_tbl(opts.formatting or {}, {
+        format = function(entry, vim_item)
+          -- Call the existing formatter with modified settings
+          local format = require("lspkind").cmp_format({
+            mode = "symbol_text",
+            maxwidth = 50,
+            ellipsis_char = "...",
+            show_labeldetails = false, -- Disable source labels in lspkind
+            with_text = true,
+            menu = {},
+          })
+          
+          if format then
+            vim_item = format(entry, vim_item)
+          end
+          
+          -- Clean up any existing menu/source text that might be leftover
+          vim_item.menu = nil
+          
+          -- Append source name at the end of menu item
+          local source = entry.source.name
+          local menu_text = ""
+          
+          if source == "copilot" then
+            menu_text = " (Copilot)"
+          elseif source == "codeium" then
+            menu_text = " (Codeium)"
+          elseif source == "nvim_lsp" then
+            menu_text = " (LSP)"
+          elseif source == "buffer" then
+            menu_text = " (Buffer)"
+          elseif source == "path" then
+            menu_text = " (Path)"
+          elseif source then
+            menu_text = " (" .. source .. ")"
+          end
+          
+          vim_item.menu = menu_text
+          
+          return vim_item
+        end
+      })
 
       return opts
     end,

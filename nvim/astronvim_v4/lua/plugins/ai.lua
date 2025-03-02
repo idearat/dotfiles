@@ -1,87 +1,5 @@
 return {
 
-  -- Commenting out Avante as it's not being used
-  -- {
-  --   "idearat/avante.nvim",
-  --   event = "VeryLazy",
-  --   lazy = false,
-  --   version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
-  --   opts = {
-  --     providers = {
-  --       "copilot",
-  --       "anthropic",
-  --     },
-  --     anthropic = {
-  --       api_key = os.getenv "ANTHROPIC_API_KEY",
-  --     },
-  --     completion = {
-  --       enabled = false, -- disable Avante's completion to avoid Claude API costs
-  --       trigger_characters = {}, -- empty to prevent automatic triggers
-  --     },
-  --     ui = {
-  --       code = {
-  --         show_language = true,
-  --         copy_code_button = true,
-  --         style = "markdown",
-  --       },
-  --       messages = {
-  --         show_timestamps = true,
-  --       },
-  --       input_window = {
-  --         style = "minimal",
-  --         border = "rounded",
-  --         win_options = {
-  --           winblend = 0,
-  --         },
-  --       },
-  --     },
-  --     keymaps = {
-  --       toggle = "<leader>aa",
-  --       submit = "<C-s>",
-  --       close = "<C-c>",
-  --       clear = "<C-l>",
-  --       switch_window = "<Tab>",
-  --     },
-  --   },
-  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  --   build = "make",
-  --   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-  --   dependencies = {
-  --     "stevearc/dressing.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --     --- The below dependencies are optional,
-  --     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-  --     "zbirenbaum/copilot.lua", -- for providers='copilot'
-  --     {
-  --       -- support for image pasting
-  --       "HakonHarnes/img-clip.nvim",
-  --       event = "VeryLazy",
-  --       opts = {
-  --         -- recommended settings
-  --         default = {
-  --           embed_image_as_base64 = false,
-  --           prompt_for_file_name = false,
-  --           drag_and_drop = {
-  --             insert_mode = true,
-  --           },
-  --           -- required for Windows users
-  --           use_absolute_path = true,
-  --         },
-  --       },
-  --     },
-  --     {
-  --       -- Make sure to set this up properly if you have lazy=true
-  --       "MeanderingProgrammer/render-markdown.nvim",
-  --       opts = {
-  --         file_types = { "markdown", "Avante" },
-  --       },
-  --       ft = { "markdown", "Avante" },
-  --     },
-  --   },
-  -- },
-
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
@@ -92,9 +10,10 @@ return {
       require("CopilotChat").setup({
         window = {
           layout = "horizontal", -- Change to horizontal layout
-          height = 20, -- Fixed height of 20 lines
+          height = 18, -- Fixed height of 18 lines
           width = 1, -- Take full width
         },
+        -- Simple setup with default keymaps
       })
     end,
   },
@@ -107,33 +26,22 @@ return {
     },
     config = function()
       require("codeium").setup({
-        -- Simple configuration to avoid errors
         enable_chat = false,
-        disable_bindings = true
+        disable_bindings = true, -- Don't use default keybindings
       })
+      -- Don't try to manually register the source - it's done automatically
     end,
-    cmd = "Codeium",
-    event = "BufEnter",
+    event = {"InsertEnter", "BufEnter"}, -- Load during insert mode and buffer enter
   },
 
   {
-    "zbirenbaum/copilot-cmp",
-    dependencies = {
-      "zbirenbaum/copilot.lua",
-    },
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = { "InsertEnter" },
     config = function()
+      -- Configure using minimal settings - we'll let copilot-cmp handle the integration
       require("copilot").setup({
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          debounce = 75,
-          keymap = {
-            accept = "<C-l>",
-            next = "<C-n>",
-            prev = "<C-p>",
-            dismiss = "<C-[>",
-          },
-        },
+        suggestion = { enabled = false },  -- Disable native suggestions as we'll use copilot-cmp
         panel = { enabled = false },  -- We're using CopilotChat instead
         filetypes = {
           markdown = true,
@@ -146,6 +54,27 @@ return {
         },
       })
     end,
+  },
+
+  {
+    "zbirenbaum/copilot-cmp",
+    dependencies = {
+      "zbirenbaum/copilot.lua",
+      "hrsh7th/nvim-cmp",
+    },
+    config = function()
+      -- Setup copilot-cmp - direct approach that doesn't rely on auto-loading
+      local copilot_cmp = require("copilot_cmp")
+      copilot_cmp.setup({
+        method = "getCompletionsCycling",
+        formatters = {
+          label = require("copilot_cmp.format").format_label_text,
+          insert_text = require("copilot_cmp.format").format_insert_text,
+          preview = require("copilot_cmp.format").deindent,
+        },
+      })
+    end,
+    event = {"InsertEnter", "LspAttach"}, -- Load during both insert mode and when LSP attaches
   },
 
   {
@@ -195,4 +124,5 @@ Start fresh using `%s` or :%sChatNew.
       }
     end,
   },
+
 }
