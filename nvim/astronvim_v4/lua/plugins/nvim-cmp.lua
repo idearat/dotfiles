@@ -41,6 +41,18 @@ return {
             fallback()
           end
         end, { "i", "s" }),
+        
+        -- Add explicit Escape key handling to ensure it closes the completion menu
+        -- and exits insert mode immediately with a single press
+        ["<Esc>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.abort()
+            -- Force exit insert mode after closing completion menu
+            vim.cmd([[call feedkeys("\<Esc>", 'n')]])
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
       })
 
       opts.duplicates = utils.extend_tbl(opts.duplicates, {

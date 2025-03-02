@@ -482,7 +482,7 @@ local function enhance_maps(maps)
   -- Leader Keys
   -- -----------
 
-  -- maps.n["<Leader>a"] = { ":AerialToggle<cr>", desc = "Aerial Toggle" }
+  maps.n["<Leader>a"] = { ":AerialToggle<cr>", desc = "Aerial Toggle" }
 
   -- Buffer Menu
 
@@ -511,44 +511,67 @@ local function enhance_maps(maps)
   maps.n["<Leader>bp"] = { "<Leader>bp", desc = "Previous Buffer" }
   maps.n["<Leader>br"] = { "<Leader>br", desc = "Close All To Right" }
 
-  -- Chat Menu
+  -- Chat/AI Menu
 
   maps.n["<Leader>c"] =
     { "<Leader>c", desc = ui.get_icon("DiagnosticHint", 1, true) .. "Chat/AI Menu" }
 
-  maps.n["<Leader>ca"] = { ":GpAppend<cr>", desc = "Append" }
-  maps.n["<Leader>cA"] = { ":GpWhisperAppend<cr>", desc = "Whisper Append" }
+  -- CopilotChat Commands (primary AI interface)
+  maps.n["<Leader>cc"] = { "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat Toggle" }
+  maps.n["<Leader>cf"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
+  maps.n["<Leader>ce"] = { "<cmd>CopilotChatExplain<cr>", desc = "Explain Code" }
+  maps.n["<Leader>ct"] = { "<cmd>CopilotChatTests<cr>", desc = "Generate Tests" }
+  maps.n["<Leader>co"] = { "<cmd>CopilotChatOptimize<cr>", desc = "Optimize Code" }
+  maps.n["<Leader>cd"] = { "<cmd>CopilotChatDocs<cr>", desc = "Document Code" }
+  maps.n["<Leader>cm"] = { "<cmd>CopilotChatCommit<cr>", desc = "Generate Commit" }
+  maps.n["<Leader>cr"] = { "<cmd>CopilotChatReset<cr>", desc = "Reset Chat" }
+  maps.n["<Leader>cs"] = { "<cmd>CopilotChatSave<cr>", desc = "Save Chat" }
+  maps.n["<Leader>cl"] = { "<cmd>CopilotChatLoad<cr>", desc = "Load Chat" }
+  
+  -- Visual mode mappings for CopilotChat
+  maps.v["<Leader>c"] = { "<Leader>c", desc = ui.get_icon("DiagnosticHint", 1, true) .. "Chat/AI Menu" }
+  maps.v["<Leader>cf"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
+  maps.v["<Leader>ce"] = { "<cmd>CopilotChatExplain<cr>", desc = "Explain Code" }
+  maps.v["<Leader>ct"] = { "<cmd>CopilotChatTests<cr>", desc = "Generate Tests" }
+  maps.v["<Leader>co"] = { "<cmd>CopilotChatOptimize<cr>", desc = "Optimize Code" }
+  maps.v["<Leader>cd"] = { "<cmd>CopilotChatDocs<cr>", desc = "Document Code" }
 
-  maps.n["<Leader>cb"] = { ":GpEnew<cr>", desc = "Buffer" }
-  maps.n["<Leader>cB"] = { ":GpWhisperEnew<cr>", desc = "Whisper Buffer" }
+  -- GPChat Menu (under cg prefix)
+  maps.n["<Leader>cg"] = { "<Leader>cg", desc = "GPChat Commands" }
+  
+  maps.n["<Leader>cga"] = { ":GpAppend<cr>", desc = "Append" }
+  maps.n["<Leader>cgA"] = { ":GpWhisperAppend<cr>", desc = "Whisper Append" }
 
-  maps.n["<Leader>cc"] = { ":GpChatNew<cr>", desc = "Chat (new)" }
+  maps.n["<Leader>cgb"] = { ":GpEnew<cr>", desc = "Buffer" }
+  maps.n["<Leader>cgB"] = { ":GpWhisperEnew<cr>", desc = "Whisper Buffer" }
 
-  maps.n["<Leader>cd"] = { ":GpChatDelete<cr>", desc = "Delete Chat" }
+  maps.n["<Leader>cgc"] = { ":GpChatNew<cr>", desc = "Chat (new)" }
 
-  maps.n["<Leader>cf"] = { ":GpChatFinder<cr>", desc = "Find Chat" }
+  maps.n["<Leader>cgd"] = { ":GpChatDelete<cr>", desc = "Delete Chat" }
 
-  maps.n["<Leader>ch"] = { ":GpChatNew split<cr>", desc = "H-Split" }
-  maps.n["<Leader>cH"] = { ":GpWhisperNew split<cr>", desc = "Whisper H-Split" }
+  maps.n["<Leader>cgf"] = { ":GpChatFinder<cr>", desc = "Find Chat" }
 
-  maps.n["<Leader>cn"] = { ":GpAgentNext<cr>", desc = "Next Agent" }
+  maps.n["<Leader>cgh"] = { ":GpChatNew split<cr>", desc = "H-Split" }
+  maps.n["<Leader>cgH"] = { ":GpWhisperNew split<cr>", desc = "Whisper H-Split" }
 
-  maps.n["<Leader>cp"] = { ":GpPrepend<cr>", desc = "Prepend" }
-  maps.n["<Leader>cP"] = { ":GpWhisperPrepend<cr>", desc = "Whisper Prepend" }
+  maps.n["<Leader>cgn"] = { ":GpAgentNext<cr>", desc = "Next Agent" }
 
-  maps.n["<Leader>cr"] = { ":GpRewrite<cr>", desc = "Rewrite" }
-  maps.n["<Leader>cR"] = { ":GpWhisperRewrite<cr>", desc = "Whisper Rewrite" }
+  maps.n["<Leader>cgp"] = { ":GpPrepend<cr>", desc = "Prepend" }
+  maps.n["<Leader>cgP"] = { ":GpWhisperPrepend<cr>", desc = "Whisper Prepend" }
 
-  maps.n["<Leader>cs"] = { ":GpStop<cr>", desc = "Stop All" }
+  maps.n["<Leader>cgr"] = { ":GpRewrite<cr>", desc = "Rewrite" }
+  maps.n["<Leader>cgR"] = { ":GpWhisperRewrite<cr>", desc = "Whisper Rewrite" }
 
-  maps.n["<Leader>ct"] = { ":GpChatToggle split<cr>", desc = "Toggle Chat" }
+  maps.n["<Leader>cgs"] = { ":GpStop<cr>", desc = "Stop All" }
 
-  maps.n["<Leader>cv"] = { ":GpChatNew vsplit<cr>", desc = "V-Split" }
-  maps.n["<Leader>cV"] = { ":GpWhisperNew vsplit<cr>", desc = "Whisper V-Split" }
+  maps.n["<Leader>cgt"] = { ":GpChatToggle split<cr>", desc = "Toggle Chat" }
 
-  maps.n["<Leader>cw"] = { ":GpWhisper<cr>", desc = "Whisper" }
+  maps.n["<Leader>cgv"] = { ":GpChatNew vsplit<cr>", desc = "V-Split" }
+  maps.n["<Leader>cgV"] = { ":GpWhisperNew vsplit<cr>", desc = "Whisper V-Split" }
 
-  maps.n["<Leader>cx"] = { ":GpContext<cr>", desc = "Toggle Context" }
+  maps.n["<Leader>cgw"] = { ":GpWhisper<cr>", desc = "Whisper" }
+
+  maps.n["<Leader>cgx"] = { ":GpContext<cr>", desc = "Toggle Context" }
 
   -- Debugger Menu
 
