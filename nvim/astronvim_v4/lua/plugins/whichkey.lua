@@ -4,32 +4,59 @@ return {
     opts = function(opts)
       local utils = require "astrocore"
       opts = utils.extend_tbl(opts, {
-        preset = "modern",
-        icons = { group = vim.g.icons_enabled and "" or "", separator = "" },
+        preset = "classic",
+        delay = 200,
+        timeout = 0, -- Disable timeout completely
+        triggers = {
+          { "<auto>", mode = "nxsot", loop = true }, -- Add loop to auto triggers
+        },
+        defer = function(ctx)
+          return false -- Never auto-close, force manual Esc
+        end,
+        icons = {
+          breadcrumb = "",
+          separator = "",
+          group = "",
+          ellipsis = "...",
+          mappings = false, -- No icons at all
+        },
         layout = {
-          width = { min = 20 },
-          spacing = 3,
         },
         win = {
           border = "single",
-          height = { min = 5, max = 50 },
+          no_overlap = false, -- Allow full screen usage
+          width = { min = 20 },
+          height = { min = 4, max = 50 }, -- Even taller max
+          padding = { 2, 4 }, -- More padding for better spacing
+          title = false, -- No title bar
+          wo = {
+            winblend = 5, -- More opaque (less transparent)
+          },
         },
         keys = {
-          scroll_down = "<C-Down>", -- binding to scroll down inside the popup
-          scroll_up = "<C-Up>", -- binding to scroll up inside the popup
+          scroll_down = "<c-d>",
+          scroll_up = "<c-u>",
         },
-        sort = {
-          "alphanum", "order", "mod"
-        },
+        sort = { "alphanum" },
+        filter = function(mapping)
+          return true
+        end,
       })
       return opts
     end,
     config = function(_, opts)
       require("which-key").setup(opts)
-      
-      -- Ensure the keys are unmapped globally to avoid conflicts with which-key scrolling
-      pcall(vim.keymap.del, "n", "<C-Up>")
-      pcall(vim.keymap.del, "n", "<C-Down>")
+
+      -- Clean grayscale theme - darker background closer to black
+      vim.cmd([[
+        highlight WhichKeyFloat guibg=#1a1a1a guifg=#d0d0d0
+        highlight WhichKeyBorder guibg=#1a1a1a guifg=#808080
+        highlight WhichKeyNormal guibg=#1a1a1a guifg=#d0d0d0
+        highlight WhichKeyDesc guifg=#a0a0a0
+        highlight WhichKeyGroup guifg=#808080
+        highlight WhichKeySeparator guifg=#606060
+        highlight WhichKeyValue guifg=#c0c0c0
+      ]])
     end,
   },
 }

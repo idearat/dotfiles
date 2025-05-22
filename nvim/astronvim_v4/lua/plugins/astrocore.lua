@@ -27,7 +27,7 @@ return {
       opt = { -- vim.opt.<key>
 
         -- seems about right balance for which-key vs responsiveness
-        timeoutlen = 250,
+        timeoutlen = 200,
 
         -- keep cursor in the middle of the screen most of the time
         -- scrolloff = 99999,
