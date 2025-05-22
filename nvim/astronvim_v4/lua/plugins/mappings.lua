@@ -674,6 +674,7 @@ local function enhance_maps(maps)
 
   maps.n["<Leader>u"] = { "<Leader>u", desc = ui.get_icon("Window", 1, true) .. "UI Menu" }
   maps.n["<Leader>ut"] = { ":TransparentToggle<cr>", desc = "Toggle transparency" }
+  maps.n["<Leader>uw"] = { ":ToggleWrapMode<cr>", desc = "Toggle wrap mode" }
 
   -- ---
 

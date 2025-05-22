@@ -8,7 +8,7 @@ return {
         delay = 200,
         timeout = 0, -- Disable timeout completely
         triggers = {
-          { "<auto>", mode = "nxsot", loop = true }, -- Add loop to auto triggers
+          { "<auto>", mode = "nxsot" }, -- Add loop to auto triggers
         },
         defer = function(ctx)
           return false -- Never auto-close, force manual Esc
@@ -24,7 +24,7 @@ return {
         },
         win = {
           border = "single",
-          no_overlap = false, -- Allow full screen usage
+          no_overlap = true,
           width = { min = 20 },
           height = { min = 4, max = 50 }, -- Even taller max
           padding = { 2, 4 }, -- More padding for better spacing
