@@ -47,6 +47,40 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      rust_analyzer = {
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+              loadOutDirsFromCheck = true,
+              runBuildScripts = true,
+            },
+            -- Add clippy lints for Rust
+            checkOnSave = true,
+            check = {
+              allFeatures = true,
+              command = "check", -- Use "clippy" for more lints
+              extraArgs = { "--no-deps" },
+            },
+            procMacro = {
+              enable = true,
+              ignored = {
+                ["async-trait"] = { "async_trait" },
+                ["napi-derive"] = { "napi" },
+                ["async-recursion"] = { "async_recursion" },
+              },
+            },
+            diagnostics = {
+              -- Reduce diagnostic noise
+              enable = true,
+              experimental = {
+                enable = false,
+              },
+              disabled = { "unresolved-proc-macro" },
+            },
+          },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {

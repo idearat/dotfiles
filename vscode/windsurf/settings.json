@@ -15,12 +15,12 @@
 
   "breadcrumbs.enabled": false,
 
-  "chat.editor.fontSize": 14,
+  "chat.editor.fontSize": 16,
 
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": false,
 
-  "debug.console.fontSize": 14,
+  "debug.console.fontSize": 16,
 
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.codeLens": false,
@@ -138,7 +138,7 @@
   "rust-analyzer.testExplorer": true,
 
   "scm.diffDecorations": "none",
-  "scm.inputFontSize": 14,
+  "scm.inputFontSize": 16,
 
   "search.exclude": {
     "**/build": true,
@@ -192,12 +192,12 @@
   "vim.searchHighlightColor": "rgba(255, 255, 0, 0.3)",
   "vim.statusBarColorControl": false,
   "vim.useSystemClipboard": true,
-  "vim.handleEsc": true,  // Ensure Vim handles Escape key with priority
+  "vim.handleEsc": true, // Ensure Vim handles Escape key with priority
 
-  "editor.acceptSuggestionOnEnter": "off",  // Prevent suggestions from intercepting Enter
-  "editor.suggestEscapeCharacters": false,  // Prevent suggestions from intercepting Escape
+  "editor.acceptSuggestionOnEnter": "off", // Prevent suggestions from intercepting Enter
+  "editor.suggestEscapeCharacters": false, // Prevent suggestions from intercepting Escape
 
-  "windsurf.autocompleteSpeed": "fast",
+  "windsurf.autocompleteSpeed": "default",
   "windsurf.autoExecutionPolicy": "off",
   "windsurf.cascadeWebSearchDisabled": false,
   "windsurf.enableAutocomplete": true,
@@ -232,8 +232,7 @@
   "workbench.editor.showTabs": "multiple",
   "workbench.editor.splitInGroupLayout": "vertical",
   "workbench.settings.openDefaultKeybindings": true,
-  "workbench.settings.useSplitJSON": false,
-  "workbench.sideBar.location": "right",
+"workbench.settings.useSplitJSON": false,
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
 
@@ -267,13 +266,24 @@
     "!Split sequence"
   ],
   "yaml.schemas": {
-    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.4.11-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-  },
+    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.6.0-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+},
 
   "zenMode.fullScreen": false,
   "zenMode.hideActivityBar": true,
   "zenMode.hideLineNumbers": false,
   "zenMode.hideStatusBar": false,
   "zenMode.showTabs": "multiple",
-  "zenMode.silentNotifications": true
+"zenMode.silentNotifications": true,
+"markdown.preview.fontSize": 16,
+"windsurf.chatFontSize": "default",
+"windsurf.rememberLastModelSelection": true,
+"windsurf.openRecentConversation": true,
+"windsurf.autoOpenEditedFiles": false,
+"workbench.editorAssociations": {},
+"explorer.confirmDelete": false,
+"explorer.confirmDragAndDrop": false,
+"gitlens.advanced.messages": {
+    "suppressDebugLoggingWarning": true
+}
 }

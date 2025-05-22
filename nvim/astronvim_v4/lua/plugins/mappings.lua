@@ -473,8 +473,9 @@ local function enhance_maps(maps)
   maps.n["<S-Left>"] = { ":vertical resize +2<cr>", desc = "Resize Split Left ³" }
   maps.n["<S-Right>"] = { ":vertical resize -2<cr>", desc = "Resize Split Right ³" }
 
-  maps.n["<C-Up>"] = { function() notify "TODO - ??? ³" end, desc = "??? ³" }
-  maps.n["<C-Down>"] = { function() notify "TODO - ??? ³" end, desc = "??? ³" }
+  -- Explicitly remove any conflicting mappings for which-key scrolling
+  helpers.removekey(maps.n, "<C-Up>")   -- Reserved for which-key scrolling
+  helpers.removekey(maps.n, "<C-Down>") -- Reserved for which-key scrolling
   maps.n["<C-Left>"] = { function() notify "TODO - ??? ³" end, desc = "??? ³" }
   maps.n["<C-Right>"] = { function() notify "TODO - ??? ³" end, desc = "??? ³" }
 

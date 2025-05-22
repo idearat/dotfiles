@@ -114,3 +114,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Added by Windsurf - Next
+export PATH="/Users/ss/.codeium/windsurf/bin:$PATH"
+
+[[ -s "/Users/ss/.gvm/scripts/gvm" ]] && source "/Users/ss/.gvm/scripts/gvm"

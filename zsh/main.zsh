@@ -462,10 +462,15 @@ fi
 # fi
 #
 # Go
-source ~/.gvm/scripts/gvm > /dev/null 2>&1
-if exists gvm; then
-  gvm use go1.24.0 > /dev/null 2>&1
-fi
+# source ~/.gvm/scripts/gvm > /dev/null 2>&1
+# if exists gvm; then
+#   gvm use go1.24.0 > /dev/null 2>&1
+# fi
+
+# asdf (tool version manager for Golang et. al.)
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+asdf set golang 1.24.3
+
 
 if exists kubectl; then
   export KUBECONFIG=~/.kube/config
@@ -528,8 +533,12 @@ else
   echo 'brew install jesseduffield/lazynpm/lazynpm'
 fi
 
+if exists local-ai; then
+  export MODELS_PATH="${HOME}/.dotfiles/ai/local_ai/models/"
+fi
+
 if exists mods; then
-  alias aikey='export OPENAI_API_KEY=$(op read op://Personal/openai_api_mods/key --no-newline)'
+  alias aikey='export OPENAI_API_KEY=$(op item get "OpenAI - mods sk" --fields text)'
   alias aikeyclear="unset OPENAI_API_KEY"
   alias openai="aikey && mods --model gpt-4"
 else

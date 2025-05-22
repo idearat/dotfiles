@@ -56,7 +56,6 @@ return {
       })
 
       opts.duplicates = utils.extend_tbl(opts.duplicates, {
-        copilot = 1,
         codeium = 1,
       })
 
@@ -64,8 +63,7 @@ return {
       opts.sources = utils.extend_tbl(
         opts.sources,
         cmp.config.sources {
-          { name = "copilot", priority = 1500, max_item_count = 3 },
-          { name = "codeium", priority = 1450, max_item_count = 3 },
+          { name = "codeium", priority = 1500, max_item_count = 3 },
           -- Keep LSP and other sources at lower priorities
           { name = "nvim_lsp", priority = 1000 },
           { name = "luasnip", priority = 750 },
