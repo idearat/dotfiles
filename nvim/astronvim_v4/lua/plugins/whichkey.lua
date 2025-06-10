@@ -5,7 +5,7 @@ return {
       local utils = require "astrocore"
       opts = utils.extend_tbl(opts, {
         preset = "classic",
-        delay = 200,
+        delay = 250,
         timeout = 0, -- Disable timeout completely
         triggers = {
           { "<auto>", mode = "nxsot" }, -- Add loop to auto triggers

@@ -43,10 +43,12 @@ return {
             "yarn.lock",
             "package%-lock.json",
             "lazy-lock.json",
-            "build/.*",
+            "^build/.*",
             ".git/.*",
             ".storybook/.*",
             "storybook%-static/.*",
+            "target/.*",
+            "dhat%-heap%.json",
           },
         },
         extensions = {

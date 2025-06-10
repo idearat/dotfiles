@@ -2,6 +2,9 @@
 -- things like custom filetypes. This just pure lua so anything that doesn't
 -- fit in the normal config locations above can go here
 
+-- Load debug utilities
+require("utils.test_copilot_keys")
+
 vim.cmd("hi! link AlphaHeader @text.literal")
 vim.cmd("hi! link AlphaButton @text.note")
 vim.cmd("hi! link AlphaButtonShortcut @text.literal")

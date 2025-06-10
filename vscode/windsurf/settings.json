@@ -266,7 +266,7 @@
     "!Split sequence"
   ],
   "yaml.schemas": {
-    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.6.0-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    "file:///Users/ss/.windsurf/extensions/atlassian.atlascode-3.8.3-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
 },
 
   "zenMode.fullScreen": false,

@@ -72,11 +72,16 @@ return {
             },
             diagnostics = {
               -- Reduce diagnostic noise
-              enable = true,
+              -- enable = true,
               experimental = {
                 enable = false,
               },
               disabled = { "unresolved-proc-macro" },
+            },
+            -- Ensure rustfmt is used for formatting
+            rustfmt = {
+              extraArgs = { "+nightly" },
+              enableRangeFormatting = true,
             },
           },
         },
@@ -88,7 +93,7 @@ return {
       -- function(server, opts) require("lspconfig")[server].setup(opts) end
 
       -- the key is the server that is being setup with `lspconfig`
-      -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
+      rust_analyzer = false, -- Let rustacean.vim handle rust_analyzer
       -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
     },
     -- Configure buffer local auto commands to add when attaching a language server

@@ -355,7 +355,9 @@ local function enhance_maps(maps)
   -- maps.n["<C-q>"] = { desc = "(== <C-v>)" }
   helpers.removekey(maps.n, "<C-q>") -- unmap AstroNvim's quit
 
-  maps.n["<C-r>"] = { "<C-r>", desc = "Redo n Undos" }
+  -- maps.n["<C-r>"] = { "<C-r>", desc = "Redo n Undos" }
+  maps.n["<C-r>"] = { ":CmdFlowProcess<cr>", desc = "CmdFlow Process Runes" }
+  maps.v["<C-r>"] = { ":CmdFlowProcess<cr>", desc = "CmdFlow Process Runes" }
 
   -- SEE lsp/mappings.lua
   -- maps.n["<C-s>"] = { desc = "" }
@@ -420,11 +422,9 @@ local function enhance_maps(maps)
   -- default is "find tag" so mapped to find across files.
   maps.n["<C-]>"] = {
     function()
-      telescope.live_grep {
-        additional_args = function(args)
-          return vim.list_extend(args, { hidden = false, no_ignore = false })
-        end,
-      }
+      telescope.live_grep({
+        additional_args = { "--hidden", "--no-ignore" }
+      })
     end,
     desc = "Find Text In All ³",
   }
@@ -447,7 +447,7 @@ local function enhance_maps(maps)
 
   -- NOTE: this key superceded by iTerm2 mapping (when set) to send 0x19 ^y
   -- to support autocompletion (or simply scrolling up/down in normal mode).
-  maps.n["<C-CR>"] = { "C-y", desc = "C-y ³" }
+  -- maps.n["<C-CR>"] = { "C-y", desc = "C-y ³" }
 
   maps.n["<C-S-CR>"] = { dismiss, desc = "Dismiss Notices ³" }
 
@@ -483,7 +483,156 @@ local function enhance_maps(maps)
   -- Leader Keys
   -- -----------
 
-  maps.n["<Leader>a"] = { ":AerialToggle<cr>", desc = "Aerial Toggle" }
+  -- AI Menu (CopilotChat)
+  maps.n["<Leader>a"] = { "<Leader>a", desc = ui.get_icon("DiagnosticHint", 1, true) .. "AI Menu" }
+  
+  -- CopilotChat Commands (primary AI interface)
+  maps.n["<Leader>aa"] = { "<cmd>CopilotChatToggle<cr>", desc = "AI Chat Toggle" }
+  maps.n["<Leader>af"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
+  maps.n["<Leader>ae"] = { "<cmd>CopilotChatExplain<cr>", desc = "Explain Code" }
+  maps.n["<Leader>at"] = { "<cmd>CopilotChatTests<cr>", desc = "Generate Tests" }
+  maps.n["<Leader>ao"] = { "<cmd>CopilotChatOptimize<cr>", desc = "Optimize Code" }
+  maps.n["<Leader>ad"] = { "<cmd>CopilotChatDocs<cr>", desc = "Document Code" }
+  maps.n["<Leader>am"] = { "<cmd>CopilotChatCommit<cr>", desc = "Generate Commit" }
+  maps.n["<Leader>ar"] = { "<cmd>CopilotChatReset<cr>", desc = "Reset Chat" }
+  maps.n["<Leader>as"] = { "<cmd>CopilotChatSave<cr>", desc = "Save Chat" }
+  maps.n["<Leader>al"] = { "<cmd>CopilotChatLoad<cr>", desc = "Load Chat" }
+  maps.n["<Leader>ab"] = { "<cmd>CopilotChatBuffer<cr>", desc = "Explain Buffer" }
+  
+  -- AI Status and Configuration
+  maps.n["<Leader>aD"] = { 
+    function()
+      -- Try to get debug info from CopilotChat
+      local ok, chat = pcall(require, "CopilotChat")
+      if ok then
+        vim.notify("CopilotChat loaded successfully", vim.log.levels.INFO)
+        -- Show available commands
+        vim.cmd("filter /Copilot/ command")
+      else
+        vim.notify("CopilotChat not loaded", vim.log.levels.ERROR)
+      end
+    end,
+    desc = "Debug Info" 
+  }
+  maps.n["<Leader>aM"] = { 
+    function()
+      local chat_ok, chat = pcall(require, "CopilotChat")
+      if not chat_ok then
+        vim.notify("CopilotChat not loaded", vim.log.levels.ERROR)
+        return
+      end
+      
+      -- Models available with GitHub Copilot (as per docs)
+      local models = {
+        -- Copilot Pro models
+        "claude-3.5-sonnet",      -- Claude 3.5 Sonnet
+        "o1-preview",             -- OpenAI o1-preview
+        "o1-mini",                -- OpenAI o1-mini
+        "gpt-4o",                 -- GPT-4 Optimized
+        "gpt-4",                  -- GPT-4
+        -- Standard models
+        "gpt-3.5-turbo",          -- GPT-3.5 Turbo
+      }
+      
+      vim.ui.select(models, {
+        prompt = "Select AI Model:",
+        format_item = function(item)
+          return item
+        end,
+      }, function(choice)
+        if choice then
+          -- Try to update the model
+          local config_ok, config = pcall(chat.config)
+          if config_ok and config then
+            config.model = choice
+            vim.notify("Model set to: " .. choice, vim.log.levels.INFO)
+          else
+            -- Try alternative approach
+            vim.notify("Attempting to set model to: " .. choice, vim.log.levels.INFO)
+            -- You might need to restart the chat or reinitialize
+          end
+        end
+      end)
+    end,
+    desc = "Select Model" 
+  }
+  maps.n["<Leader>aS"] = { "<cmd>Copilot status<cr>", desc = "Copilot Status" }
+  maps.n["<Leader>aV"] = { "<cmd>Copilot version<cr>", desc = "Copilot Version" }
+  maps.n["<Leader>aP"] = { "<cmd>Copilot panel<cr>", desc = "Copilot Panel" }
+  maps.n["<Leader>aF"] = { "<cmd>Copilot feedback<cr>", desc = "Send Feedback" }
+  
+  -- Quick question/prompt
+  maps.n["<Leader>aq"] = { 
+    function()
+      local input = vim.fn.input("AI Question: ")
+      if input ~= "" then
+        vim.cmd("CopilotChat " .. input)
+      end
+    end, 
+    desc = "Quick Question" 
+  }
+  
+  -- Show current configuration
+  maps.n["<Leader>aC"] = {
+    function()
+      local chat_ok, chat = pcall(require, "CopilotChat")
+      local copilot_ok, copilot = pcall(require, "copilot.client")
+      
+      local info = {}
+      table.insert(info, "=== AI Configuration ===")
+      table.insert(info, "")
+      
+      -- Try to get CopilotChat config
+      if chat_ok then
+        local has_config = false
+        -- Try to access the config in different ways
+        if chat.config then
+          has_config = true
+          local config_fn = type(chat.config) == "function" and chat.config() or chat.config
+          if config_fn then
+            table.insert(info, "CopilotChat:")
+            table.insert(info, "  Model: " .. tostring(config_fn.model or "claude-opus-4"))
+            table.insert(info, "  Temperature: " .. tostring(config_fn.temperature or "0.1"))
+            if config_fn.window then
+              table.insert(info, "  Window: " .. tostring(config_fn.window.layout or "float"))
+            end
+          end
+        end
+        
+        if not has_config then
+          -- Try to get from setup options
+          table.insert(info, "CopilotChat: Loaded (config not accessible)")
+        end
+      else
+        table.insert(info, "CopilotChat: Not loaded")
+      end
+      
+      table.insert(info, "")
+      table.insert(info, "Completion Sources:")
+      table.insert(info, "  Copilot: " .. (copilot_ok and "Enabled" or "Disabled"))
+      
+      -- Check if Codeium is loaded
+      local codeium_ok = pcall(require, "codeium")
+      table.insert(info, "  Codeium: " .. (codeium_ok and "Enabled" or "Disabled"))
+      
+      -- Show available Copilot commands
+      table.insert(info, "")
+      table.insert(info, "Run :filter /Copilot/ command to see all commands")
+      
+      vim.notify(table.concat(info, "\n"), vim.log.levels.INFO)
+    end,
+    desc = "Show AI Config"
+  }
+  
+  -- Visual mode mappings for CopilotChat
+  maps.v["<Leader>a"] = { "<Leader>a", desc = ui.get_icon("DiagnosticHint", 1, true) .. "AI Menu" }
+  maps.v["<Leader>af"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
+  maps.v["<Leader>ae"] = { "<cmd>CopilotChatExplain<cr>", desc = "Explain Code" }
+  maps.v["<Leader>at"] = { "<cmd>CopilotChatTests<cr>", desc = "Generate Tests" }
+  maps.v["<Leader>ao"] = { "<cmd>CopilotChatOptimize<cr>", desc = "Optimize Code" }
+  maps.v["<Leader>ad"] = { "<cmd>CopilotChatDocs<cr>", desc = "Document Code" }
+  maps.v["<Leader>av"] = { ":CopilotChatVisual ", desc = "AI Chat Visual" }
+  maps.v["<Leader>ai"] = { ":CopilotChatInPlace<cr>", desc = "AI Chat In-place" }
 
   -- Buffer Menu
 
@@ -512,67 +661,20 @@ local function enhance_maps(maps)
   maps.n["<Leader>bp"] = { "<Leader>bp", desc = "Previous Buffer" }
   maps.n["<Leader>br"] = { "<Leader>br", desc = "Close All To Right" }
 
-  -- Chat/AI Menu
+  -- CmdFlow Menu
 
   maps.n["<Leader>c"] =
-    { "<Leader>c", desc = ui.get_icon("DiagnosticHint", 1, true) .. "Chat/AI Menu" }
+    { "<Leader>c", desc = ui.get_icon("Workflow", 1, true) .. "CmdFlow Menu" }
 
-  -- CopilotChat Commands (primary AI interface)
-  maps.n["<Leader>cc"] = { "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat Toggle" }
-  maps.n["<Leader>cf"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
-  maps.n["<Leader>ce"] = { "<cmd>CopilotChatExplain<cr>", desc = "Explain Code" }
-  maps.n["<Leader>ct"] = { "<cmd>CopilotChatTests<cr>", desc = "Generate Tests" }
-  maps.n["<Leader>co"] = { "<cmd>CopilotChatOptimize<cr>", desc = "Optimize Code" }
-  maps.n["<Leader>cd"] = { "<cmd>CopilotChatDocs<cr>", desc = "Document Code" }
-  maps.n["<Leader>cm"] = { "<cmd>CopilotChatCommit<cr>", desc = "Generate Commit" }
-  maps.n["<Leader>cr"] = { "<cmd>CopilotChatReset<cr>", desc = "Reset Chat" }
-  maps.n["<Leader>cs"] = { "<cmd>CopilotChatSave<cr>", desc = "Save Chat" }
-  maps.n["<Leader>cl"] = { "<cmd>CopilotChatLoad<cr>", desc = "Load Chat" }
-
-  -- Visual mode mappings for CopilotChat
-  maps.v["<Leader>c"] = { "<Leader>c", desc = ui.get_icon("DiagnosticHint", 1, true) .. "Chat/AI Menu" }
-  maps.v["<Leader>cf"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
-  maps.v["<Leader>ce"] = { "<cmd>CopilotChatExplain<cr>", desc = "Explain Code" }
-  maps.v["<Leader>ct"] = { "<cmd>CopilotChatTests<cr>", desc = "Generate Tests" }
-  maps.v["<Leader>co"] = { "<cmd>CopilotChatOptimize<cr>", desc = "Optimize Code" }
-  maps.v["<Leader>cd"] = { "<cmd>CopilotChatDocs<cr>", desc = "Document Code" }
-
-  -- GPChat Menu (under cg prefix)
-  maps.n["<Leader>cg"] = { "<Leader>cg", desc = "GPChat Commands" }
-
-  maps.n["<Leader>cga"] = { ":GpAppend<cr>", desc = "Append" }
-  maps.n["<Leader>cgA"] = { ":GpWhisperAppend<cr>", desc = "Whisper Append" }
-
-  maps.n["<Leader>cgb"] = { ":GpEnew<cr>", desc = "Buffer" }
-  maps.n["<Leader>cgB"] = { ":GpWhisperEnew<cr>", desc = "Whisper Buffer" }
-
-  maps.n["<Leader>cgc"] = { ":GpChatNew<cr>", desc = "Chat (new)" }
-
-  maps.n["<Leader>cgd"] = { ":GpChatDelete<cr>", desc = "Delete Chat" }
-
-  maps.n["<Leader>cgf"] = { ":GpChatFinder<cr>", desc = "Find Chat" }
-
-  maps.n["<Leader>cgh"] = { ":GpChatNew split<cr>", desc = "H-Split" }
-  maps.n["<Leader>cgH"] = { ":GpWhisperNew split<cr>", desc = "Whisper H-Split" }
-
-  maps.n["<Leader>cgn"] = { ":GpAgentNext<cr>", desc = "Next Agent" }
-
-  maps.n["<Leader>cgp"] = { ":GpPrepend<cr>", desc = "Prepend" }
-  maps.n["<Leader>cgP"] = { ":GpWhisperPrepend<cr>", desc = "Whisper Prepend" }
-
-  maps.n["<Leader>cgr"] = { ":GpRewrite<cr>", desc = "Rewrite" }
-  maps.n["<Leader>cgR"] = { ":GpWhisperRewrite<cr>", desc = "Whisper Rewrite" }
-
-  maps.n["<Leader>cgs"] = { ":GpStop<cr>", desc = "Stop All" }
-
-  maps.n["<Leader>cgt"] = { ":GpChatToggle split<cr>", desc = "Toggle Chat" }
-
-  maps.n["<Leader>cgv"] = { ":GpChatNew vsplit<cr>", desc = "V-Split" }
-  maps.n["<Leader>cgV"] = { ":GpWhisperNew vsplit<cr>", desc = "Whisper V-Split" }
-
-  maps.n["<Leader>cgw"] = { ":GpWhisper<cr>", desc = "Whisper" }
-
-  maps.n["<Leader>cgx"] = { ":GpContext<cr>", desc = "Toggle Context" }
+  -- CmdFlow commands (from cmdflow.lua plugin)
+  maps.n["<Leader>cc"] = { "<cmd>CmdFlowConnect<cr>", desc = "Connect to CmdFlow" }
+  maps.n["<Leader>cd"] = { "<cmd>CmdFlowDisconnect<cr>", desc = "Disconnect from CmdFlow" }
+  maps.n["<Leader>cs"] = { "<cmd>CmdFlowStatus<cr>", desc = "CmdFlow Status" }
+  maps.n["<Leader>ct"] = { "<cmd>CmdFlowTest<cr>", desc = "Test CmdFlow" }
+  maps.n["<Leader>cr"] = { "<cmd>CmdFlowReloadPlugin<cr>", desc = "Reload CmdFlow Plugin" }
+  maps.n["<Leader>cR"] = { "<cmd>CmdFlowReload<cr>", desc = "Reload CmdFlow Server" }
+  maps.n["<Leader>ch"] = { "<cmd>CmdFlowChat<cr>", desc = "CmdFlow Chat (new)" }
+  maps.n["<Leader>ce"] = { "<cmd>CmdFlowSend<cr>", desc = "Send to CmdFlow" }
 
   -- Debugger Menu
 
@@ -673,6 +775,7 @@ local function enhance_maps(maps)
   -- UI Menu
 
   maps.n["<Leader>u"] = { "<Leader>u", desc = ui.get_icon("Window", 1, true) .. "UI Menu" }
+  maps.n["<Leader>ua"] = { ":AerialToggle<cr>", desc = "Aerial Toggle" }
   maps.n["<Leader>ut"] = { ":TransparentToggle<cr>", desc = "Toggle transparency" }
   maps.n["<Leader>uw"] = { ":ToggleWrapMode<cr>", desc = "Toggle wrap mode" }
 

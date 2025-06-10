@@ -765,6 +765,12 @@ export PUPPETEER_EXECUTABLE_PATH=`which chromium`
 export RAILS_ENV="development"
 
 # ---
+# rust
+# ---
+
+alias dh_view="open ${HOME}/dev/tools/valgrind/dhat/dh_view.html"
+
+# ---
 # vi / vim / nvim
 # ---
 
