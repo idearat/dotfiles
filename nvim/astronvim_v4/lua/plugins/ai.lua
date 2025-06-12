@@ -140,10 +140,20 @@ When asked about the current file, analyze the context carefully.]],
       "hrsh7th/nvim-cmp",
     },
     config = function()
+      -- Set vim globals BEFORE setup
+      vim.g.codeium_no_map_tab = 1
+      vim.g.codeium_disable_bindings = 1
+      
       require("codeium").setup({
         enable_chat = false,
         disable_bindings = true, -- Don't use default keybindings
       })
+      
+      -- Double-check after setup
+      vim.defer_fn(function()
+        vim.g.codeium_no_map_tab = 1
+        vim.g.codeium_disable_bindings = 1
+      end, 100)
     end,
     event = "InsertEnter", -- Load only on insert mode for better performance
   },

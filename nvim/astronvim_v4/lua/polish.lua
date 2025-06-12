@@ -38,3 +38,24 @@ vim.api.nvim_create_autocmd("InsertLeave", {
     end)
   end,
 })
+
+-- Force disable Tab for Codeium after everything loads
+vim.api.nvim_create_autocmd("VimEnter", {
+  pattern = "*",
+  callback = function()
+    -- Disable Codeium's default Tab mapping
+    vim.g.codeium_no_map_tab = 1
+    vim.g.codeium_disable_bindings = 1
+    
+    -- Also try to unmap Tab if it exists
+    pcall(function()
+      vim.api.nvim_del_keymap('i', '<Tab>')
+    end)
+    
+    -- Re-establish our Tab behavior
+    vim.keymap.set('i', '<Tab>', function()
+      -- Just insert a tab character
+      return '\t'
+    end, { expr = true, noremap = true, silent = true, desc = "Insert Tab character" })
+  end,
+})

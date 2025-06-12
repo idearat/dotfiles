@@ -14,13 +14,24 @@ return {
       local luasnip = require "luasnip"
       local utils = require "astrocore"
 
-      opts.mapping = utils.extend_tbl(opts.mapping, {
-        ["<Tab>"] = { i = cmp.config.disable, s = cmp.config.disable, c = cmp.config.disable },
-        ["<S-Tab>"] = { i = cmp.config.disable, s = cmp.config.disable, c = cmp.config.disable },
-        ["<CR>"] = { i = cmp.config.disable, s = cmp.config.disable, c = cmp.config.disable },
+      -- Override the entire mapping to ensure our settings take precedence
+      opts.mapping = {
+        -- Explicitly disable Tab to prevent it from accepting completions
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          fallback() -- Just pass through the Tab key
+        end, { "i", "s", "c" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          fallback() -- Just pass through Shift-Tab
+        end, { "i", "s", "c" }),
+        ["<CR>"] = cmp.mapping(function(fallback)
+          fallback() -- Pass through Enter key
+        end, { "i", "s", "c" }),
         -- NOTE: matches bindkey ^y for consistency with zsh autocompletion.
         -- and with iTerm2 mapping C-CR to send 0x19 we can use C-CR in vim.
         ["<C-y>"] = cmp.mapping.confirm { select = false },
+        -- Add Ctrl-l as the primary accept key
+        ["<C-l>"] = cmp.mapping.confirm { select = true },
+        -- Keep existing navigation mappings
         ["<C-n>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
@@ -53,7 +64,12 @@ return {
             fallback()
           end
         end, { "i", "s" }),
-      })
+        -- Standard cmp navigation
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+      }
 
       opts.duplicates = utils.extend_tbl(opts.duplicates, {
         copilot = 1,
