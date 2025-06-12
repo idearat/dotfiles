@@ -19,43 +19,12 @@ vim.keymap.set("n", "<C-Down>", function()
   print("C-Down received - which-key should handle this in popup") 
 end, { desc = "Test C-Down" })
 
--- Explicit handling of escape key to ensure it works properly with AI completion tools
--- Use a simple mapping that first checks if completion is visible
-vim.api.nvim_set_keymap('i', '<Esc>', [[pumvisible() ? "\<C-e>\<Esc>" : "\<Esc>"]], { noremap = true, expr = true, silent = true })
-
--- We're handling Ctrl-; directly in the Copilot plugin configuration
-
--- Ensure InsertLeave autocmd for clearing any pending suggestions
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = "*",
+-- Kill any ghost text that appears
+vim.api.nvim_create_autocmd({"InsertEnter", "TextChangedI"}, {
   callback = function()
-    -- Clear any pending AI suggestions
+    -- Dismiss Copilot suggestions
     pcall(function()
-      -- Try to clear Codeium suggestions
-      if vim.fn.exists("*codeium#Clear") == 1 then
-        vim.fn["codeium#Clear"]()
-      end
+      require("copilot.suggestion").dismiss()
     end)
-  end,
-})
-
--- Force disable Tab for Codeium after everything loads
-vim.api.nvim_create_autocmd("VimEnter", {
-  pattern = "*",
-  callback = function()
-    -- Disable Codeium's default Tab mapping
-    vim.g.codeium_no_map_tab = 1
-    vim.g.codeium_disable_bindings = 1
-    
-    -- Also try to unmap Tab if it exists
-    pcall(function()
-      vim.api.nvim_del_keymap('i', '<Tab>')
-    end)
-    
-    -- Re-establish our Tab behavior
-    vim.keymap.set('i', '<Tab>', function()
-      -- Just insert a tab character
-      return '\t'
-    end, { expr = true, noremap = true, silent = true, desc = "Insert Tab character" })
   end,
 })

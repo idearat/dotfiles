@@ -14,81 +14,31 @@ return {
       local luasnip = require "luasnip"
       local utils = require "astrocore"
 
-      -- Override the entire mapping to ensure our settings take precedence
-      opts.mapping = {
-        -- Explicitly disable Tab to prevent it from accepting completions
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          fallback() -- Just pass through the Tab key
-        end, { "i", "s", "c" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          fallback() -- Just pass through Shift-Tab
-        end, { "i", "s", "c" }),
-        ["<CR>"] = cmp.mapping(function(fallback)
-          fallback() -- Pass through Enter key
-        end, { "i", "s", "c" }),
-        -- NOTE: matches bindkey ^y for consistency with zsh autocompletion.
-        -- and with iTerm2 mapping C-CR to send 0x19 we can use C-CR in vim.
-        ["<C-y>"] = cmp.mapping.confirm { select = false },
-        -- Add Ctrl-l as the primary accept key
-        ["<C-l>"] = cmp.mapping.confirm { select = true },
-        -- Keep existing navigation mappings
-        ["<C-n>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          elseif has_words_before() then
-            cmp.complete()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<C-p>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        
-        -- Add explicit Escape key handling to ensure it closes the completion menu
-        -- and exits insert mode immediately with a single press
-        ["<Esc>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.abort()
-            -- Force exit insert mode after closing completion menu
-            vim.cmd([[call feedkeys("\<Esc>", 'n')]])
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        -- Standard cmp navigation
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.abort(),
-      }
-
-      opts.duplicates = utils.extend_tbl(opts.duplicates, {
-        copilot = 1,
-        codeium = 1,
+      -- AI-only completion sources
+      opts.sources = cmp.config.sources({
+        { name = "copilot", priority = 1000, max_item_count = 5 },
+        { name = "codeium", priority = 900, max_item_count = 5 },
       })
-
-      -- Enhanced source setup with better formatting
-      opts.sources = utils.extend_tbl(
-        opts.sources,
-        cmp.config.sources {
-          { name = "copilot", priority = 1600, max_item_count = 3 },
-          { name = "codeium", priority = 1500, max_item_count = 3 },
-          -- Keep LSP and other sources at lower priorities
-          { name = "nvim_lsp", priority = 1000 },
-          { name = "luasnip", priority = 750 },
-          { name = "buffer", priority = 500 },
-          { name = "path", priority = 250 },
-        }
-      )
+      
+      -- Simple, clean mappings for AI completions
+      opts.mapping = {
+        ["<C-l>"] = cmp.mapping.confirm({ select = true }),
+        ["<C-y>"] = cmp.mapping.confirm({ select = false }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          fallback()  -- Just pass through Tab
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          fallback()  -- Just pass through Shift-Tab
+        end, { "i", "s" }),
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<Esc>"] = cmp.mapping(function(fallback)
+          cmp.close()
+          vim.cmd("stopinsert")  -- Exit insert mode immediately
+        end),
+        ["<C-Space>"] = cmp.mapping.complete(),
+      }
 
       -- Set up formatting to show source labels ONLY at the end of suggestions
       opts.formatting = utils.extend_tbl(opts.formatting or {}, {

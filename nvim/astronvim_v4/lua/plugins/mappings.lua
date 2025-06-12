@@ -977,8 +977,7 @@ local function enhance_maps(maps)
   -- insert special characters
   maps.i["<C-v>"] = { "<C-v>", desc = "Insert Ctrl Char" }
 
-  -- Add mapping for Copilot accept in insert mode using the completion_accept function
-  maps.i["<C-;>"] = { function() require("user.completion_accept")() end, desc = "Accept Completion" }
+  -- Removed custom completion mappings - using defaults
 
   -- navigate display lines
   maps.i["<Down>"] = { "<esc>gja" }

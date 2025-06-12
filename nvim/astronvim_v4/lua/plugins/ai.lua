@@ -94,6 +94,10 @@ When asked about the current file, analyze the context carefully.]],
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
+      -- Kill ALL Copilot ghost text with extreme prejudice
+      vim.g.copilot_no_tab_map = true
+      vim.g.copilot_assume_mapped = true
+      
       require("copilot").setup({
         suggestion = { 
           enabled = false,
@@ -102,24 +106,16 @@ When asked about the current file, analyze the context carefully.]],
         panel = { 
           enabled = false,
         },
-        filetypes = {
-          markdown = true,
-          gitcommit = true,
-          ["*"] = true,
-        },
       })
       
-      -- Make absolutely sure ghost text is disabled
-      vim.g.copilot_no_tab_map = true
-      vim.g.copilot_assume_mapped = true
-      vim.g.copilot_tab_fallback = ""
-      
-      -- Also disable after a delay to be sure
+      -- Make damn sure suggestions are off
       vim.defer_fn(function()
         pcall(function()
-          require("copilot.suggestion").toggle(false)
+          local suggestion = require("copilot.suggestion")
+          suggestion.dismiss()
+          suggestion.toggle(false)
         end)
-      end, 500)
+      end, 100)
     end,
   },
 
@@ -132,7 +128,7 @@ When asked about the current file, analyze the context carefully.]],
     end,
   },
 
-  -- Keep Codeium as secondary option
+  -- Codeium as secondary AI source
   {
     "Exafunction/codeium.nvim",
     dependencies = {
@@ -140,22 +136,11 @@ When asked about the current file, analyze the context carefully.]],
       "hrsh7th/nvim-cmp",
     },
     config = function()
-      -- Set vim globals BEFORE setup
-      vim.g.codeium_no_map_tab = 1
-      vim.g.codeium_disable_bindings = 1
-      
       require("codeium").setup({
         enable_chat = false,
-        disable_bindings = true, -- Don't use default keybindings
       })
-      
-      -- Double-check after setup
-      vim.defer_fn(function()
-        vim.g.codeium_no_map_tab = 1
-        vim.g.codeium_disable_bindings = 1
-      end, 100)
     end,
-    event = "InsertEnter", -- Load only on insert mode for better performance
+    event = "InsertEnter",
   },
 
   -- {
