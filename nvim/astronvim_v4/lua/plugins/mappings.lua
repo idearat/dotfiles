@@ -393,8 +393,7 @@ local function enhance_maps(maps)
 
   -- maps.n["<C-7]>"] = { desc = "" }
 
-  -- NOTE: would have preferred <C-*> but it doesn't work as expected.
-  -- maps.n["<C-8>"] = { function() telescope.grep_string() end, desc = "Find All @ Cursor" }
+  maps.n["<C-8>"] = { function() telescope.grep_string() end, desc = "Find All @ Cursor" }
 
   -- maps.n["<C-[9-0]>"] = { desc = "" }
 
