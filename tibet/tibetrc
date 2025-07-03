@@ -27,34 +27,31 @@ alias cdrats='cd ${CODERATS_HOME}'
 
 alias ratdocs='cd ${CODERATS_HOME};cd design;clear'
 
-alias cdprojects='cd ${CODERATS_HOME}/projects'
-alias cdresearch='cd ${CODERATS_HOME}/products/research'
+alias cdresearch='cd ${CODERATS_HOME}/products/apps/research'
 
 alias re='cdresearch'
-alias rex='cdprojects; cd research'
+alias rex='cdproducts; cd research'
 alias redocs='cd ${CODERATS_HOME};cd design/research;clear'
 
 
-alias cdflow='cd ${CODERATS_HOME}/products/cmdflow'
+alias cdflow='cd ${CODERATS_HOME}/products/apps/cmdflow'
 alias flowcli='cdflow; cd cmdflow-cli'
 alias flowdesk='cdflow; cd cmdflow-desktop'
 alias flowengine='cdflow; cd cmdflow-engine'
 alias flowserver='cdflow; cd cmdflow-server'
 alias cdsherpa='flowdesk'
 
-alias cdrunica='cd ${CODERATS_HOME}/products/runica'
+alias cdrunica='cd ${CODERATS_HOME}/products/apps/runica'
 alias rux='cdrunica; cd runica-extension'
 
 alias cdarchive='cd ${CODERATS_HOME}/archives'
 alias cddesign='cd ${CODERATS_HOME}/design'
 alias cddomains='cd ${CODERATS_HOME}/domains'
-alias cdparts='cd ${CODERATS_HOME}/parts'
 alias cdproducts='cd ${CODERATS_HOME}/products'
-alias cdtemplates='cd ${CODERATS_HOME}/templates'
+alias cdspikes='cd ${CODERATS_HOME}/spikes'
 
-alias cdchecks='cdprojects; cd js-checks; clear'
-alias cdtibetjs='cdprojects; cd tibetjs; clear'
-alias cdtui='cdprojects; cd tui; clear'
+alias crux='cd ${CODERATS_HOME}/products/libs/cr-ux'
+alias cdcrux='cd ${CODERATS_HOME}/products/libs/cr-ux'
 
 alias cdsite='cd ${CODERATS_HOME}/domains/coderats.io'
 alias sitedoc='cdsite;cd doc/sources;clear'

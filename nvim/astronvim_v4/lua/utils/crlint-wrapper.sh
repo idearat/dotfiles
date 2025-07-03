@@ -1,4 +1,4 @@
 #!/bin/bash
-# Wrapper to capture both stdout and stderr from cflint
+# Wrapper to capture both stdout and stderr from crlint
 cd "$1" 2>/dev/null || cd "$(dirname "$1")" 2>/dev/null || true
-cflint . 2>&1
+crlint . 2>&1

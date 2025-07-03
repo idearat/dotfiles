@@ -3,14 +3,14 @@ local null_ls = require("null-ls")
 local helpers = require("null-ls.helpers")
 
 return helpers.make_builtin({
-  name = "cflint",
+  name = "crlint",
   meta = {
-    description = "Cmdflow linter (cflint)",
+    description = "Cmdflow linter (crlint)",
   },
   method = null_ls.methods.DIAGNOSTICS,
   filetypes = { "rust" },
   generator = helpers.generator_factory({
-    command = "cflint",
+    command = "crlint",
     args = { "-v", "$FILENAME" },
     to_stdin = false,
     format = "line",
@@ -27,28 +27,28 @@ return helpers.make_builtin({
       if line == "" or line:match("^===") or line:match("^%s*→") then
         return nil
       end
-      
-      -- Pattern for cflint verbose output: /path/to/file.rs:10:5 warning [no-print] Found println! macro
+
+      -- Pattern for crlint verbose output: /path/to/file.rs:10:5 warning [no-print] Found println! macro
       local file, row, col, severity = line:match("^(.-):(%d+):(%d+)%s+(%w+)")
-      
+
       if file and row and col then
         -- Extract the message part
         local message = line:match("^.-:%d+:%d+%s+%w+%s+(.*)$") or ""
-        
+
         -- Skip if it's not for our current file
         if not params.bufname:match(file:gsub("^.*/", "")) then
           return nil
         end
-        
+
         return {
           row = tonumber(row),
           col = tonumber(col),
           severity = severity == "error" and 1 or 2,
           message = message,
-          source = "cflint",
+          source = "crlint",
         }
       end
-      
+
       return nil
     end,
   }),

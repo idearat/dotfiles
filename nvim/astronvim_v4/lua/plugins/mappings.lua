@@ -352,12 +352,10 @@ local function enhance_maps(maps)
   }
 
   -- SEE lsp/mappings.lua
-  -- maps.n["<C-q>"] = { desc = "(== <C-v>)" }
+  maps.n["<C-q>"] = { false, desc = "(== <C-v>)" }
   helpers.removekey(maps.n, "<C-q>") -- unmap AstroNvim's quit
 
-  -- maps.n["<C-r>"] = { "<C-r>", desc = "Redo n Undos" }
-  maps.n["<C-r>"] = { ":CmdFlowProcess<cr>", desc = "CmdFlow Process Runes" }
-  maps.v["<C-r>"] = { ":CmdFlowProcess<cr>", desc = "CmdFlow Process Runes" }
+  maps.n["<C-r>"] = { "<C-r>", desc = "Redo n Undos" }
 
   -- SEE lsp/mappings.lua
   -- maps.n["<C-s>"] = { desc = "" }
@@ -396,7 +394,7 @@ local function enhance_maps(maps)
   -- maps.n["<C-7]>"] = { desc = "" }
 
   -- NOTE: would have preferred <C-*> but it doesn't work as expected.
-  maps.n["<C-8>"] = { function() telescope.grep_string() end, desc = "Find All @ Cursor" }
+  -- maps.n["<C-8>"] = { function() telescope.grep_string() end, desc = "Find All @ Cursor" }
 
   -- maps.n["<C-[9-0]>"] = { desc = "" }
 
@@ -479,13 +477,16 @@ local function enhance_maps(maps)
   maps.n["<C-Left>"] = { function() notify "TODO - ??? ³" end, desc = "??? ³" }
   maps.n["<C-Right>"] = { function() notify "TODO - ??? ³" end, desc = "??? ³" }
 
+  maps.n["<C-Space>"] = { ":CmdFlowProcess<cr>", desc = "CmdFlow Process Runes" }
+  maps.v["<C-Space>"] = { ":CmdFlowProcess<cr>", desc = "CmdFlow Process Runes" }
+
   -- -----------
   -- Leader Keys
   -- -----------
 
   -- AI Menu (CopilotChat)
   maps.n["<Leader>a"] = { "<Leader>a", desc = ui.get_icon("DiagnosticHint", 1, true) .. "AI Menu" }
-  
+
   -- CopilotChat Commands (primary AI interface)
   maps.n["<Leader>aa"] = { "<cmd>CopilotChatToggle<cr>", desc = "AI Chat Toggle" }
   maps.n["<Leader>af"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
@@ -498,9 +499,9 @@ local function enhance_maps(maps)
   maps.n["<Leader>as"] = { "<cmd>CopilotChatSave<cr>", desc = "Save Chat" }
   maps.n["<Leader>al"] = { "<cmd>CopilotChatLoad<cr>", desc = "Load Chat" }
   maps.n["<Leader>ab"] = { "<cmd>CopilotChatBuffer<cr>", desc = "Explain Buffer" }
-  
+
   -- AI Status and Configuration
-  maps.n["<Leader>aD"] = { 
+  maps.n["<Leader>aD"] = {
     function()
       -- Try to get debug info from CopilotChat
       local ok, chat = pcall(require, "CopilotChat")
@@ -512,16 +513,16 @@ local function enhance_maps(maps)
         vim.notify("CopilotChat not loaded", vim.log.levels.ERROR)
       end
     end,
-    desc = "Debug Info" 
+    desc = "Debug Info"
   }
-  maps.n["<Leader>aM"] = { 
+  maps.n["<Leader>aM"] = {
     function()
       local chat_ok, chat = pcall(require, "CopilotChat")
       if not chat_ok then
         vim.notify("CopilotChat not loaded", vim.log.levels.ERROR)
         return
       end
-      
+
       -- Models available with GitHub Copilot (as per docs)
       local models = {
         -- Copilot Pro models
@@ -533,7 +534,7 @@ local function enhance_maps(maps)
         -- Standard models
         "gpt-3.5-turbo",          -- GPT-3.5 Turbo
       }
-      
+
       vim.ui.select(models, {
         prompt = "Select AI Model:",
         format_item = function(item)
@@ -554,34 +555,34 @@ local function enhance_maps(maps)
         end
       end)
     end,
-    desc = "Select Model" 
+    desc = "Select Model"
   }
   maps.n["<Leader>aS"] = { "<cmd>Copilot status<cr>", desc = "Copilot Status" }
   maps.n["<Leader>aV"] = { "<cmd>Copilot version<cr>", desc = "Copilot Version" }
   maps.n["<Leader>aP"] = { "<cmd>Copilot panel<cr>", desc = "Copilot Panel" }
   maps.n["<Leader>aF"] = { "<cmd>Copilot feedback<cr>", desc = "Send Feedback" }
-  
+
   -- Quick question/prompt
-  maps.n["<Leader>aq"] = { 
+  maps.n["<Leader>aq"] = {
     function()
       local input = vim.fn.input("AI Question: ")
       if input ~= "" then
         vim.cmd("CopilotChat " .. input)
       end
-    end, 
-    desc = "Quick Question" 
+    end,
+    desc = "Quick Question"
   }
-  
+
   -- Show current configuration
   maps.n["<Leader>aC"] = {
     function()
       local chat_ok, chat = pcall(require, "CopilotChat")
       local copilot_ok, copilot = pcall(require, "copilot.client")
-      
+
       local info = {}
       table.insert(info, "=== AI Configuration ===")
       table.insert(info, "")
-      
+
       -- Try to get CopilotChat config
       if chat_ok then
         local has_config = false
@@ -598,7 +599,7 @@ local function enhance_maps(maps)
             end
           end
         end
-        
+
         if not has_config then
           -- Try to get from setup options
           table.insert(info, "CopilotChat: Loaded (config not accessible)")
@@ -606,24 +607,24 @@ local function enhance_maps(maps)
       else
         table.insert(info, "CopilotChat: Not loaded")
       end
-      
+
       table.insert(info, "")
       table.insert(info, "Completion Sources:")
       table.insert(info, "  Copilot: " .. (copilot_ok and "Enabled" or "Disabled"))
-      
+
       -- Check if Codeium is loaded
       local codeium_ok = pcall(require, "codeium")
       table.insert(info, "  Codeium: " .. (codeium_ok and "Enabled" or "Disabled"))
-      
+
       -- Show available Copilot commands
       table.insert(info, "")
       table.insert(info, "Run :filter /Copilot/ command to see all commands")
-      
+
       vim.notify(table.concat(info, "\n"), vim.log.levels.INFO)
     end,
     desc = "Show AI Config"
   }
-  
+
   -- Visual mode mappings for CopilotChat
   maps.v["<Leader>a"] = { "<Leader>a", desc = ui.get_icon("DiagnosticHint", 1, true) .. "AI Menu" }
   maps.v["<Leader>af"] = { "<cmd>CopilotChatFix<cr>", desc = "Fix Code" }
@@ -685,6 +686,30 @@ local function enhance_maps(maps)
   -- Find Menu
 
   maps.n["<Leader>f"] = { "<Leader>f", desc = ui.get_icon("Search", 1, true) .. "Find Menu" }
+
+  -- Search pattern and send to quickfix for iteration
+  maps.n["<Leader>fq"] = {
+    function()
+      telescope.live_grep({
+        prompt_title = "Search → Quickfix",
+        additional_args = function() return { "--hidden" } end,
+        attach_mappings = function(prompt_bufnr, map)
+          local actions = require("telescope.actions")
+          -- Override Ctrl-q to send to quickfix and open it
+          map("i", "<C-q>", function()
+            actions.send_to_qflist(prompt_bufnr)
+            actions.open_qflist(prompt_bufnr)
+          end)
+          map("n", "<C-q>", function()
+            actions.send_to_qflist(prompt_bufnr)
+            actions.open_qflist(prompt_bufnr)
+          end)
+          return true
+        end,
+      })
+    end,
+    desc = "Find Pattern → Quickfix ³"
+  }
 
   -- Git Menu
 

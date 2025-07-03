@@ -108,7 +108,7 @@ alias psw='ps auxww'
 alias ql='qlmanage -p 2>/dev/null'
 alias rm='rm -i'
 alias su='sudo -i'
-alias tail="tail -f"
+#alias tail="tail -f"
 alias wget='wget -c'
 
 # ---
@@ -554,7 +554,7 @@ fi
 if exists nvm; then
   source ~/.nvm/nvm.sh > /dev/null 2>&1
 
-  nvm use --silent v20
+  nvm use --silent v22
 
   export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/versions/node/${NODE_VERSION}/lib/node_modules"
@@ -865,6 +865,19 @@ alias mysqlrestart="${MYSQL_BIN}/mysql.server restart"
 alias mysqlstatus="${MYSQL_BIN}/mysql.server status"
 
 export PATH=${PATH}:${MYSQL_BIN}
+
+# ---
+# AI
+# ---
+
+# Claude Code
+
+
+# Gemini CLI
+export GOOGLE_CLOUD_PROJECT="coderats"
+
+
+
 
 # ---
 # if it's below this it's probably injected by some install script :)

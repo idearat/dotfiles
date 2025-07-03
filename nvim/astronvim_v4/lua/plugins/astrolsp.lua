@@ -47,45 +47,6 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
-      rust_analyzer = {
-        settings = {
-          ["rust-analyzer"] = {
-            cargo = {
-              allFeatures = true,
-              loadOutDirsFromCheck = true,
-              runBuildScripts = true,
-            },
-            -- Add clippy lints for Rust
-            checkOnSave = true,
-            check = {
-              allFeatures = true,
-              command = "check", -- Use "clippy" for more lints
-              extraArgs = { "--no-deps" },
-            },
-            procMacro = {
-              enable = true,
-              ignored = {
-                ["async-trait"] = { "async_trait" },
-                ["napi-derive"] = { "napi" },
-                ["async-recursion"] = { "async_recursion" },
-              },
-            },
-            diagnostics = {
-              -- Reduce diagnostic noise
-              -- enable = true,
-              experimental = {
-                enable = false,
-              },
-              disabled = { "unresolved-proc-macro" },
-            },
-            -- Ensure rustfmt is used for formatting
-            rustfmt = {
-              extraArgs = { "+nightly" },
-              enableRangeFormatting = true,
-            },
-          },
-        },
-      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -148,7 +109,7 @@ return {
         -- disable AstroNvim mapping to allow tab traversals to work
         ["gT"] = false,
 
-        ["<Leader>c"] = { "<Leader>c", desc = ui.get_icon("DiagnosticHint", 1, true) .. "Chat/AI Menu" },
+        ["<Leader>c"] = { "<Leader>c", desc = ui.get_icon("DiagnosticHint", 1, true) .. "CmdFlow Menu" },
         ["<Leader>l"] = { "<Leader>l", desc = ui.get_icon("ActiveLSP", 1, true) .. "LSP Menu" },
         ["<Leader>u"] = { "<Leader>u", desc = ui.get_icon("Window", 1, true) .. "UI Menu" },
       },

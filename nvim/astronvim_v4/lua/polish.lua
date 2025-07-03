@@ -28,3 +28,20 @@ vim.api.nvim_create_autocmd({"InsertEnter", "TextChangedI"}, {
     end)
   end,
 })
+
+-- Force disable Ctrl-q after everything loads
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    -- Unmap Ctrl-q in all modes
+    pcall(vim.keymap.del, "n", "<C-q>")
+    pcall(vim.keymap.del, "i", "<C-q>")
+    pcall(vim.keymap.del, "v", "<C-q>")
+    pcall(vim.keymap.del, "x", "<C-q>")
+    
+    -- Also try the api directly
+    pcall(vim.api.nvim_del_keymap, "n", "<C-q>")
+    
+    -- Nuclear option - remap to nothing
+    vim.keymap.set({"n", "i", "v", "x"}, "<C-q>", "<Nop>", { silent = true, desc = "Disabled (was quit)" })
+  end,
+})

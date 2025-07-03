@@ -1,1 +1,1 @@
-/Users/ss/dev/coderats/projects/cmdflow.nvim/example-lazy-config.lua
+/Users/ss/dev/coderats/products/tools/cmdflow.nvim/example-lazy-config.lua

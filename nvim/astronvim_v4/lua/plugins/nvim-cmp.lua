@@ -16,10 +16,10 @@ return {
 
       -- AI-only completion sources
       opts.sources = cmp.config.sources({
+        { name = "codeium", priority = 2000, max_item_count = 5 },
         { name = "copilot", priority = 1000, max_item_count = 5 },
-        { name = "codeium", priority = 900, max_item_count = 5 },
       })
-      
+
       -- Simple, clean mappings for AI completions
       opts.mapping = {
         ["<C-l>"] = cmp.mapping.confirm({ select = true }),
@@ -31,7 +31,9 @@ return {
           fallback()  -- Just pass through Shift-Tab
         end, { "i", "s" }),
         ["<C-n>"] = cmp.mapping.select_next_item(),
+        ["<C-j>"] = cmp.mapping.select_next_item(),
         ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<C-k>"] = cmp.mapping.select_prev_item(),
         ["<C-e>"] = cmp.mapping.abort(),
         ["<Esc>"] = cmp.mapping(function(fallback)
           cmp.close()
@@ -52,18 +54,18 @@ return {
             with_text = true,
             menu = {},
           })
-          
+
           if format then
             vim_item = format(entry, vim_item)
           end
-          
+
           -- Clean up any existing menu/source text that might be leftover
           vim_item.menu = nil
-          
+
           -- Append source name at the end of menu item
           local source = entry.source.name
           local menu_text = ""
-          
+
           if source == "copilot" then
             menu_text = " (Copilot)"
           elseif source == "codeium" then
@@ -77,9 +79,9 @@ return {
           elseif source then
             menu_text = " (" .. source .. ")"
           end
-          
+
           vim_item.menu = menu_text
-          
+
           return vim_item
         end
       })
