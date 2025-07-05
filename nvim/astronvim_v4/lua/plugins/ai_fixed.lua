@@ -60,7 +60,6 @@ When asked about the current file, analyze the context carefully.]],
           
           -- Accept diff with C-;
           vim.keymap.set('i', '<C-;>', '<Cmd>CopilotChatAccept<CR>', opts)
-          vim.keymap.set('i', '<C-l>', '<Cmd>CopilotChatAccept<CR>', opts)
           
           -- Normal mode mappings
           vim.keymap.set('n', '<C-y>', '<Cmd>CopilotChatSubmit<CR>', opts)

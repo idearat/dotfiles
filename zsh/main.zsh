@@ -537,17 +537,6 @@ if exists local-ai; then
   export MODELS_PATH="${HOME}/.dotfiles/ai/local_ai/models/"
 fi
 
-if exists mods; then
-  alias aikey='export OPENAI_API_KEY=$(op item get "OpenAI - mods sk" --fields text)'
-  alias aikeyclear="unset OPENAI_API_KEY"
-  alias openai="aikey && mods --model gpt-4"
-else
-  echo 'mods not found'
-  echo 'install mods via:';echo
-  echo 'brew install charmbracelet/tap/mods'
-  echo '(see: https://github.com/charmbracelet/mods)'
-fi
-
 # Node. Need this to install JS-related packages like JSHint etc.
 
 # test for nvm and initialize it if found
@@ -876,8 +865,18 @@ export PATH=${PATH}:${MYSQL_BIN}
 # Gemini CLI
 export GOOGLE_CLOUD_PROJECT="coderats"
 
+# mods (Charm)
 
-
+if exists mods; then
+  alias aikey='export OPENAI_API_KEY=$(op item get "OpenAI - mods sk" --fields text)'
+  alias aikeyclear="unset OPENAI_API_KEY"
+  alias openai="aikey && mods --model gpt-4"
+else
+  echo 'mods not found'
+  echo 'install mods via:';echo
+  echo 'brew install charmbracelet/tap/mods'
+  echo '(see: https://github.com/charmbracelet/mods)'
+fi
 
 # ---
 # if it's below this it's probably injected by some install script :)

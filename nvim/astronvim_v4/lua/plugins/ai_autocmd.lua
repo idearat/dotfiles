@@ -49,7 +49,6 @@ return {
             
             -- Accept suggestions
             vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-;>', '<Cmd>CopilotChatAccept<CR>', { noremap = true, silent = true })
-            vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-l>', '<Cmd>CopilotChatAccept<CR>', { noremap = true, silent = true })
             
             -- Normal mode mappings
             vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-y>', '<Cmd>CopilotChatSubmit<CR>', { noremap = true, silent = true })

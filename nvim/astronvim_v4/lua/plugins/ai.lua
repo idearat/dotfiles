@@ -124,7 +124,9 @@ When asked about the current file, analyze the context carefully.]],
     "zbirenbaum/copilot-cmp",
     dependencies = "zbirenbaum/copilot.lua",
     config = function()
-      require("copilot_cmp").setup()
+      require("copilot_cmp").setup({
+        accept_key = nil,
+      })
     end,
   },
 
@@ -253,7 +255,9 @@ When asked about the current file, analyze the context carefully.]],
     "zbirenbaum/copilot-cmp",
     dependencies = "zbirenbaum/copilot.lua",
     config = function()
-      require("copilot_cmp").setup()
+      require("copilot_cmp").setup({
+        accept_key = nil,
+      })
     end,
   },
 

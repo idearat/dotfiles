@@ -24,12 +24,7 @@ return {
       opts.mapping = {
         ["<C-l>"] = cmp.mapping.confirm({ select = true }),
         ["<C-y>"] = cmp.mapping.confirm({ select = false }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          fallback()  -- Just pass through Tab
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          fallback()  -- Just pass through Shift-Tab
-        end, { "i", "s" }),
+        
         ["<C-n>"] = cmp.mapping.select_next_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
         ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -40,6 +35,9 @@ return {
           vim.cmd("stopinsert")  -- Exit insert mode immediately
         end),
         ["<C-Space>"] = cmp.mapping.complete(),
+        ["<Tab>"] = function(fallback)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n", true)
+        end,
       }
 
       -- Set up formatting to show source labels ONLY at the end of suggestions
