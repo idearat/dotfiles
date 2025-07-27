@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a heavily customized AstroNvim v4 configuration built on Lazy.nvim. The configuration follows a modular architecture:
 
-- **Entry point**: `init.lua` → `lua/lazy_setup.lua` 
+- **Entry point**: `init.lua` → `lua/lazy_setup.lua`
 - **Core configs**: `lua/community.lua`, `lua/autocmds.lua`, `lua/helpers.lua`, `lua/polish.lua`
 - **Plugin configs**: `lua/plugins/` directory with individual plugin configurations
 - **Specialized configs**: `after/ftplugin/` for filetype-specific settings
@@ -49,7 +49,6 @@ selene lua/
 ### AI Integration
 - Codeium configured as primary AI completion
 - Custom completion acceptance logic that clears suggestions on mode changes
-- Alternative Copilot configurations available but commented
 
 ### UI/UX
 - Rose Pine theme with transparency support

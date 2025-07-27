@@ -44,11 +44,16 @@ return {
             "package%-lock.json",
             "lazy-lock.json",
             "^build/.*",
+            "dist/.*",
             ".git/.*",
             ".storybook/.*",
             "storybook%-static/.*",
             "target/.*",
             "dhat%-heap%.json",
+            ".next/.*",
+            "coverage/.*",
+            "*.min.js",
+            "*.js.map"
           },
         },
         extensions = {

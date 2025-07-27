@@ -131,6 +131,8 @@ alias ......='cd ../../../../..'
 alias cdbin="cd ${HOME}/bin"
 alias cddev="cd ${DEVL_HOME}"
 alias cdtmp="cd ${HOME}/temporary"
+alias cdtools="cd ${DEVL_HOME}/tools"
+
 
 cx() { cd "$@" && l; }
 

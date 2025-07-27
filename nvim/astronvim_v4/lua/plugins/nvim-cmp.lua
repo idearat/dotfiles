@@ -17,14 +17,13 @@ return {
       -- AI-only completion sources
       opts.sources = cmp.config.sources({
         { name = "codeium", priority = 2000, max_item_count = 5 },
-        { name = "copilot", priority = 1000, max_item_count = 5 },
       })
 
       -- Simple, clean mappings for AI completions
       opts.mapping = {
         ["<C-l>"] = cmp.mapping.confirm({ select = true }),
         ["<C-y>"] = cmp.mapping.confirm({ select = false }),
-        
+
         ["<C-n>"] = cmp.mapping.select_next_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
         ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -64,9 +63,7 @@ return {
           local source = entry.source.name
           local menu_text = ""
 
-          if source == "copilot" then
-            menu_text = " (Copilot)"
-          elseif source == "codeium" then
+          if source == "codeium" then
             menu_text = " (Codeium)"
           elseif source == "nvim_lsp" then
             menu_text = " (LSP)"

@@ -8,13 +8,12 @@ return {
       opts = utils.extend_tbl(opts, {
         mode = "symbol",
         menu = {
+          codeium = "[Codeium]",
           path = "[Path]",
           buffer = "[Buffer]",
           luasnip = "[LuaSnip]",
           nvim_lsp = "[LSP]",
           nvim_lua = "[Lua]",
-          codeium = "[Codeium]",
-          copilot = "[Copilot]",
         },
         maxwidth = function() return math.floor(0.65 * vim.o.columns) end,
         ellipsis_char = "...",
