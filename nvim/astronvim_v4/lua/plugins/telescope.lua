@@ -39,6 +39,8 @@ return {
             n = { q = actions.close },
           },
           file_ignore_patterns = {
+            "min.js*",
+            "js.map",
             "node_modules/.*",
             "yarn.lock",
             "package%-lock.json",
@@ -52,8 +54,6 @@ return {
             "dhat%-heap%.json",
             ".next/.*",
             "coverage/.*",
-            "*.min.js",
-            "*.js.map"
           },
         },
         extensions = {

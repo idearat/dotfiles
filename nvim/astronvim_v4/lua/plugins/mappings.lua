@@ -276,15 +276,15 @@ local function enhance_maps(maps)
   maps.n["<F2>"] = { function() notify "<F2>" end, desc = "F2 ³" }
   maps.n["<F3>"] = { function() notify "<F3>" end, desc = "F3 ³" }
   maps.n["<F4>"] = { function() notify "<F4>" end, desc = "F4 ³" }
-  maps.n["<F5>"] = { function() notify "<F5>" end, desc = "F5 ³" }
+  maps.n["<F5>"] = { function() require("dap").continue() end, desc = "Debugger: Continue ³" }
   maps.n["<F6>"] = { function() notify "<F6>" end, desc = "F6 ³" }
   maps.n["<F7>"] = { function() require("dapui").toggle() end, desc = "Debugger: UI ³" }
-  maps.n["<F8>"] = { function() notify "<F8>" end, desc = "F8 ³" }
-  maps.n["<F9>"] = { function() notify "<F9>" end, desc = "F9 ³" }
-  maps.n["<F10>"] = { function() notify "<F10>" end, desc = "F10 ³" }
+  maps.n["<F8>"] = { function() require("dap").terminate() end, desc = "Debugger: Terminate ³" }
+  maps.n["<F9>"] = { function() require("dap").toggle_breakpoint() end, desc = "Debugger: Breakpoint ³" }
+  maps.n["<F10>"] = { function() require("dap").step_over() end, desc = "Debugger: Step Over ³" }
 
-  maps.n["<F11>"] = { function() notify "<F11>" end, desc = "F11 ³" }
-  maps.n["<F12>"] = { function() notify "<F12>" end, desc = "F12 ³" }
+  maps.n["<F11>"] = { function() require("dap").step_into() end, desc = "Debugger: Step Into ³" }
+  maps.n["<F12>"] = { function() require("dap").step_out() end, desc = "Debugger: Step Out ³" }
   maps.n["<F13>"] = { function() notify "<F13>" end, desc = "F13 ³" }
 
   -- NOTE: the following keys are largely ignored / unmappable on my keyboard
@@ -473,8 +473,8 @@ local function enhance_maps(maps)
   -- Explicitly remove any conflicting mappings for which-key scrolling
   helpers.removekey(maps.n, "<C-Up>")   -- Reserved for which-key scrolling
   helpers.removekey(maps.n, "<C-Down>") -- Reserved for which-key scrolling
-  maps.n["<C-Left>"] = { function() notify "TODO - ??? ³" end, desc = "??? ³" }
-  maps.n["<C-Right>"] = { function() notify "TODO - ??? ³" end, desc = "??? ³" }
+  maps.n["<C-Left>"] = { ":vertical resize +2<cr>", desc = "Increase Width ³" }
+  maps.n["<C-Right>"] = { ":vertical resize -2<cr>", desc = "Decrease Width ³" }
 
   maps.n["<C-Space>"] = { ":CmdFlowProcess<cr>", desc = "CmdFlow Process Runes" }
   maps.v["<C-Space>"] = { ":CmdFlowProcess<cr>", desc = "CmdFlow Process Runes" }
@@ -531,6 +531,7 @@ local function enhance_maps(maps)
   -- Debugger Menu
 
   maps.n["<Leader>d"] = { "<Leader>d", desc = ui.get_icon("Debugger", 1, true) .. "Debugger Menu" }
+    maps.n["<Leader>dn"] = { ":DapNew<cr>", desc = "New Session" }
 
   maps.n["<Leader>e"] = { ":Neotree toggle<cr>", desc = "Explorer Toggle" }
 

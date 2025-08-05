@@ -5,7 +5,7 @@ return {
       local utils = require "astrocore"
       opts = utils.extend_tbl(opts, {
         preset = "classic",
-        delay = 200,
+        delay = 1000,
         timeout = 0, -- Disable timeout completely
         triggers = {
           { "<auto>", mode = "nxsot" }, -- Add loop to auto triggers
@@ -78,28 +78,28 @@ return {
       -- Hook into WhichKey's show event directly
       local wk = require("which-key")
       local original_show = wk.show
-      
+
       wk.show = function(...)
         local result = original_show(...)
-        
+
         -- After WhichKey opens, try to fix scrolling
         vim.defer_fn(function()
           -- Find the WhichKey window
           for _, win in ipairs(vim.api.nvim_list_wins()) do
             local buf = vim.api.nvim_win_get_buf(win)
             local win_config = vim.api.nvim_win_get_config(win)
-            
+
             -- Check if it's a floating window (WhichKey uses floating windows)
             if win_config.relative ~= "" then
               print("Found WhichKey floating window, trying to enable scrolling...")
-              
+
               -- Force scrolling to work in this window
               vim.api.nvim_win_call(win, function()
                 -- Override WhichKey's key handling
                 local map_opts = { buffer = buf, nowait = true, silent = true, expr = false }
-                
+
                 -- Use feedkeys to bypass WhichKey's event handling
-                vim.keymap.set("n", "j", function() 
+                vim.keymap.set("n", "j", function()
                   vim.api.nvim_feedkeys("j", "n", false)
                 end, map_opts)
                 vim.keymap.set("n", "k", function()
@@ -115,7 +115,7 @@ return {
             end
           end
         end, 100)
-        
+
         return result
       end
 

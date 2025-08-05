@@ -545,7 +545,7 @@ fi
 if exists nvm; then
   source ~/.nvm/nvm.sh > /dev/null 2>&1
 
-  nvm use --silent v22
+  nvm use --silent v20
 
   export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/versions/node/${NODE_VERSION}/lib/node_modules"

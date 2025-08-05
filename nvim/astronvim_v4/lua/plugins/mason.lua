@@ -11,6 +11,7 @@ return {
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
         "rust_analyzer",
         "lua_ls",
+        "ts_ls",
         -- add more arguments for adding more language servers
       })
     end,
