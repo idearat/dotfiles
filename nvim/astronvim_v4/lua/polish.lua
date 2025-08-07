@@ -32,3 +32,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.keymap.set({"n", "i", "v", "x"}, "<C-q>", "<Nop>", { silent = true, desc = "Disabled (was quit)" })
   end,
 })
+
+-- Setup custom comment formatting for TypeScript/JavaScript
+require('user.comment_format').setup()

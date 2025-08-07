@@ -104,7 +104,7 @@ return {
         -- TODO: remappable
         ["<C-x>"] = false, -- unmap AstroNvim's save & quit
 
-        ["<C-/>"] = { function() telescope.current_buffer_fuzzy_find() end, desc = "Find In Buffer ³" },
+        ["<C-/>"] = { function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Find In Buffer ³" },
 
         -- disable AstroNvim mapping to allow tab traversals to work
         ["gT"] = false,
@@ -119,6 +119,8 @@ return {
     on_attach = function(client, bufnr)
       -- this would disable semanticTokensProvider for all clients
       -- client.server_capabilities.semanticTokensProvider = nil
+      
+      -- TypeScript formatexpr is now handled by custom ftplugin files
     end,
   },
 }
