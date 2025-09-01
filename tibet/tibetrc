@@ -34,7 +34,7 @@ alias rex='cdproducts; cd research'
 alias redocs='cd ${CODERATS_HOME};cd design/research;clear'
 
 
-alias cdflow='cd ${CODERATS_HOME}/products/apps/cmdflow'
+alias cdflow='cd ${CODERATS_HOME}/products/platforms/cmdflow'
 alias flowcli='cdflow; cd cmdflow-cli'
 alias flowdesk='cdflow; cd cmdflow-desktop'
 alias flowengine='cdflow; cd cmdflow-engine'

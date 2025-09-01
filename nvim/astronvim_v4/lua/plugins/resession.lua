@@ -8,11 +8,10 @@ return {
         interval = 10, -- every 10 seconds
         notify = false, -- don't annoy me
       },
+      -- Extensions
+      extensions = {
+        astrocore = { enable_in_tab = true },
+      },
     },
-    -- buf_filter = function(bufnr)
-    --   local bufname = vim.api.nvim_buf_get_name(bufnr)
-    --   notify("tab_buf_filter", bufname)
-    --   return not bufname:match("Untitled") and not bufname:match("No Name")
-    -- end,
   },
 }

@@ -86,5 +86,9 @@ return {
     mappings = {
       -- (ss) rely on mappings.lua for all mappings here.
     },
+    -- Disable the problematic auto_quit autocmd that was closing buffers
+    autocmds = {
+      auto_quit = false,
+    },
   },
 }

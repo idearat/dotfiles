@@ -471,8 +471,7 @@ fi
 
 # asdf (tool version manager for Golang et. al.)
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-asdf set golang 1.24.3
-
+asdf set golang 1.25.0
 
 if exists kubectl; then
   export KUBECONFIG=~/.kube/config

@@ -15,18 +15,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Prevent Neovim from closing when the last buffer is closed
-vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    if #vim.api.nvim_list_bufs() == 1 and vim.api.nvim_buf_get_name(0):match("NvimTree_") == nil then
-      vim.api.nvim_create_autocmd("BufWinLeave", {
-        once = true,
-        pattern = "*",
-        command = "silent! Alpha",
-      })
-    end
-  end,
-})
 
 -- -- set up mappings etc. for GpChat buffers
 -- vim.api.nvim_create_autocmd("BufEnter", {

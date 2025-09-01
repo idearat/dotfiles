@@ -45,6 +45,12 @@ local function load_last_session()
     get_session_name(),
     { dir = "dirsession", reset = true, silence_errors = true }
   )
+  -- Reopen Neo-tree after session load, then focus back on main editor
+  vim.defer_fn(function()
+    vim.cmd("Neotree filesystem reveal left")
+    -- Focus back on the main editor window
+    vim.cmd("wincmd l")
+  end, 100)
 end
 
 
