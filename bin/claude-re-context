@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# Script to read recent Claude conversation transcript
+# Usage: ./read-recent-chat.sh [hours]
+
+HOURS=${1:-1}  # Default to 1 hour if not specified
+PROJECT_DIR="$HOME/.claude/projects"
+
+# Convert current working directory to Claude project format
+PWD_FORMATTED=$(pwd | sed 's/\//-/g')
+
+# Find the transcript directory
+TRANSCRIPT_DIR="$PROJECT_DIR/$PWD_FORMATTED"
+
+if [ ! -d "$TRANSCRIPT_DIR" ]; then
+    echo "No transcripts found for project: $PWD_FORMATTED"
+    echo "Looking in: $TRANSCRIPT_DIR"
+    exit 1
+fi
+
+# Find most recent .jsonl file
+LATEST_FILE=$(find "$TRANSCRIPT_DIR" -name "*.jsonl" -type f \
+    -exec stat -f "%m %N" {} \; 2>/dev/null | \
+    sort -rn | head -1 | cut -d' ' -f2-)
+
+if [ -z "$LATEST_FILE" ]; then
+    echo "No transcript files found in $TRANSCRIPT_DIR"
+    exit 1
+fi
+
+echo "Reading messages from last $HOURS hour(s)"
+echo "File: $(basename $LATEST_FILE)"
+
+# Calculate cutoff timestamp (N hours ago) in seconds
+CUTOFF_SECONDS=$(echo "$HOURS * 3600" | bc | cut -d. -f1)
+NOW_EPOCH=$(date +%s)
+CUTOFF_EPOCH=$((NOW_EPOCH - CUTOFF_SECONDS))
+
+echo "Showing messages after: $(date -r $CUTOFF_EPOCH '+%Y-%m-%d %H:%M:%S')"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# Collect matching lines first
+TEMP_FILE=$(mktemp)
+
+# Read through file and filter by timestamp
+cat "$LATEST_FILE" | while IFS= read -r line; do
+    if command -v jq &> /dev/null; then
+        # Extract ISO timestamp
+        timestamp=$(echo "$line" | jq -r '.timestamp // empty' 2>/dev/null)
+
+        if [ -n "$timestamp" ]; then
+            # Convert ISO to epoch (handle both formats)
+            # Remove milliseconds and Z suffix
+            clean_ts="${timestamp%.*}"
+            clean_ts="${clean_ts%Z}"
+
+            # Try GNU date first, then BSD date
+            msg_epoch=$(date -d "$clean_ts" +%s 2>/dev/null || \
+                       date -jf "%Y-%m-%dT%H:%M:%S" "$clean_ts" +%s 2>/dev/null)
+
+            # Only include if within time range
+            if [ -n "$msg_epoch" ] && [ "$msg_epoch" -ge "$CUTOFF_EPOCH" ]; then
+                echo "$line" >> "$TEMP_FILE"
+            fi
+        fi
+    fi
+done
+
+# Now display the filtered messages
+if [ -s "$TEMP_FILE" ]; then
+    cat "$TEMP_FILE" | while IFS= read -r line; do
+        # Extract message details
+        has_message=$(echo "$line" | jq -r 'has("message")' 2>/dev/null)
+
+        if [ "$has_message" = "true" ]; then
+            role=$(echo "$line" | jq -r '.message.role // empty' 2>/dev/null)
+            timestamp=$(echo "$line" | jq -r '.timestamp // empty' 2>/dev/null)
+
+            # Format timestamp for display
+            clean_ts="${timestamp%.*}"
+            clean_ts="${clean_ts%Z}"
+            time_str=$(date -d "$clean_ts" '+%H:%M:%S' 2>/dev/null || \
+                      date -jf "%Y-%m-%dT%H:%M:%S" "$clean_ts" '+%H:%M:%S' 2>/dev/null)
+
+            # Extract content
+            content=$(echo "$line" | jq -r '
+                if .message.content | type == "string" then
+                    .message.content
+                elif .message.content | type == "array" then
+                    .message.content | map(
+                        if .type == "text" then .text
+                        elif .type == "tool_use" then "🔧 Tool: " + .name
+                        elif .type == "tool_result" then "📊 Result (truncated)"
+                        else .type
+                        end
+                    ) | join("\n")
+                else empty
+                end' 2>/dev/null)
+
+            if [ -n "$role" ] && [ -n "$content" ]; then
+                if [ "$role" = "human" ]; then
+                    echo -e "\n━━━ [USER] $time_str ━━━"
+                    echo "$content" | head -c 1000
+                    if [ ${#content} -gt 1000 ]; then
+                        echo -e "\n... (truncated)"
+                    fi
+                elif [ "$role" = "assistant" ]; then
+                    echo -e "\n━━━ [ASSISTANT] $time_str ━━━"
+                    echo "$content" | head -c 500
+                    if [ ${#content} -gt 500 ]; then
+                        echo -e "\n... (truncated)"
+                    fi
+                fi
+            fi
+        fi
+    done
+else
+    echo "No messages found in the last $HOURS hour(s)"
+fi
+
+# Clean up
+rm -f "$TEMP_FILE"
+
+echo -e "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "End of messages from last $HOURS hour(s)"
+echo ""
+echo "Usage: $0 [hours]"
+echo "Example: $0 2    # Show messages from last 2 hours"
+echo "Example: $0 0.5  # Show messages from last 30 minutes"
+echo "Example: $0 24   # Show messages from last day"

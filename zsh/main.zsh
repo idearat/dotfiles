@@ -544,7 +544,7 @@ fi
 if exists nvm; then
   source ~/.nvm/nvm.sh > /dev/null 2>&1
 
-  nvm use --silent v20
+  nvm use --silent v24
 
   export NODE_VERSION=`node --version`
   alias cdnvm="cd ${NVM_DIR}/versions/node/${NODE_VERSION}/lib/node_modules"
@@ -860,8 +860,11 @@ export PATH=${PATH}:${MYSQL_BIN}
 # AI
 # ---
 
-# Claude Code
-
+# Claude Code - Using macOS Keychain (no fingerprint prompts!)
+alias anthrokey='export ANTHROPIC_API_KEY=$(security find-generic-password -s anthropic-api -w 2>/dev/null)'
+alias claudekey='export CLAUDE_CODE_OAUTH_TOKEN=$(security find-generic-password -s claude-oauth -w 2>/dev/null)'
+anthrokey
+claudekey
 
 # Gemini CLI
 export GOOGLE_CLOUD_PROJECT="coderats"
@@ -869,7 +872,7 @@ export GOOGLE_CLOUD_PROJECT="coderats"
 # mods (Charm)
 
 if exists mods; then
-  alias aikey='export OPENAI_API_KEY=$(op item get "OpenAI - mods sk" --fields text)'
+  alias aikey='export OPENAI_API_KEY=$(security find-generic-password -s openai-api -w 2>/dev/null)'
   alias aikeyclear="unset OPENAI_API_KEY"
   alias openai="aikey && mods --model gpt-4"
 else
