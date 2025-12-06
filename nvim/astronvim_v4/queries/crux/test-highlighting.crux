@@ -1,0 +1,78 @@
+// Test file for CR:UX tree-sitter highlighting
+
+// GLOBALS declaration
+GLOBALS: console, process;
+
+// $.fn pattern with $.doc
+$.fn($, 'test_function', $.doc`
+  @desc This is a test function
+  @arg {String} name - The name parameter
+  @shape {Object} Returns an object
+`, (name) => {
+  // Arrow function with block body
+  const greeting = `Hello, ${name}`;
+
+  // JSVM block
+  JSVM: {
+    console.log('This is JavaScript');
+    const legacy = new Date(); // allowed in JSVM
+  }
+
+  // Standard CR:UX code
+  const result = {
+    message: greeting,
+    timestamp: Date.now(),
+  };
+
+  // Conditionals
+  if (name?.length > 0) {
+    result.valid = true;
+  } else {
+    result.valid = false;
+  }
+
+  // Loops
+  for (let i = 0; i < 10; i++) {
+    // Do something
+  }
+
+  return result;
+});
+
+// These should highlight as errors:
+// var x = 1;        // forbidden
+// class Foo {}      // forbidden
+// new Object()      // forbidden
+// this.value        // forbidden
+
+// Array operations
+const items = [1, 2, 3];
+const filtered = items.filter((item) => {
+  return item > 1;
+});
+
+// Object destructuring
+const { message, timestamp } = $.oc({
+  message: 'test',
+  timestamp: 123,
+});
+
+// Optional chaining (should work now!)
+const value = obj?.prop?.nested;
+
+// Switch statement
+switch (value) {
+  case 'foo':
+    break;
+  case 'bar':
+    break;
+  default:
+    break;
+}
+
+// Try-catch
+try {
+  throw $.err('test-error', { detail: 'test' });
+} catch (error) {
+  $.log(error);
+}

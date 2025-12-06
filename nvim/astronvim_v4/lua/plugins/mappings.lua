@@ -343,8 +343,8 @@ local function enhance_maps(maps)
 
   -- maps.n["<C-n>"] = { desc = "(== j)" }
   maps.n["<C-n>"] = {
-    ":lua vim.diagnostic.goto_next({float = true, severity = vim.diagnostic.severity.ERROR})<cr>",
-    desc = "Next Error ³",
+    ":lua vim.diagnostic.goto_next({float = true})<cr>",
+    desc = "Next Diagnostic ³",
   }
 
   -- maps.n["<C-o>"] = { desc = "Jump List" }
@@ -352,8 +352,8 @@ local function enhance_maps(maps)
 
   -- maps.n["<C-p>"] = { desc = "(== k)" }
   maps.n["<C-p>"] = {
-    ":lua vim.diagnostic.goto_prev({float = true, severity = vim.diagnostic.severity.ERROR})<cr>",
-    desc = "Previous Error ³",
+    ":lua vim.diagnostic.goto_prev({float = true})<cr>",
+    desc = "Previous Diagnostic ³",
   }
 
   -- SEE lsp/mappings.lua

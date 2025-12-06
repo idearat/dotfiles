@@ -1,8 +1,6 @@
--- CR:UX language support
--- Uses vim syntax highlighting (after/syntax/crux.vim)
+-- CR:UX language support with tree-sitter
 
 return {
-  -- Just ensure .crux files get crux filetype
   {
     "AstroNvim/astrocore",
     opts = {
@@ -12,13 +10,82 @@ return {
         },
       },
       autocmds = {
-        crux_setup = {
+        crux_treesitter = {
+          {
+            event = {"BufEnter", "BufWinEnter"},
+            pattern = "*.crux",
+            callback = function()
+              vim.cmd("syntax off")
+              vim.api.nvim_set_hl(0, "@error", {
+                fg = "#ff0000",
+                bold = true,
+                underline = true,
+              })
+              vim.api.nvim_set_hl(0, "@warning", {
+                fg = "#ff8800",
+                bold = true,
+                underline = true,
+              })
+              vim.treesitter.start()
+            end,
+          },
           {
             event = "FileType",
             pattern = "crux",
             callback = function()
-              -- Just use JavaScript syntax, no custom highlighting
-              vim.bo.syntax = "javascript"
+              vim.cmd("syntax off")
+              vim.api.nvim_set_hl(0, "@error", {
+                fg = "#ff0000",
+                bold = true,
+                underline = true,
+              })
+              vim.api.nvim_set_hl(0, "@warning", {
+                fg = "#ff8800",
+                bold = true,
+                underline = true,
+              })
+              vim.treesitter.start()
+            end,
+          },
+        },
+      },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      local parser_config = require("nvim-treesitter.parsers")
+        .get_parser_configs()
+
+      parser_config.crux = {
+        install_info = {
+          url = "/Users/ss/dev/coderats/repos/coderats-platform/tools/tars/grammars/crux",
+          files = {"src/parser.c"},
+        },
+        filetype = "crux",
+      }
+
+      return opts
+    end,
+  },
+  {
+    "AstroNvim/astrocore",
+    opts = {
+      autocmds = {
+        crux_colors = {
+          {
+            event = "ColorScheme",
+            callback = function()
+              vim.api.nvim_set_hl(0, "@error", {
+                fg = "#ff0000",
+                bold = true,
+                underline = true,
+              })
+              vim.api.nvim_set_hl(0, "@warning", {
+                fg = "#ff8800",
+                bold = true,
+                underline = true,
+              })
             end,
           },
         },
