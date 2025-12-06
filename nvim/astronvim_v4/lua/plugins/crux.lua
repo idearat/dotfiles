@@ -57,10 +57,11 @@ return {
       local parser_config = require("nvim-treesitter.parsers")
         .get_parser_configs()
 
+      -- Use custom CR:UX parser (fork of JavaScript)
       parser_config.crux = {
         install_info = {
           url = "/Users/ss/dev/coderats/repos/coderats-platform/tools/tars/grammars/crux",
-          files = {"src/parser.c"},
+          files = {"src/parser.c", "src/scanner.c"},
         },
         filetype = "crux",
       }
