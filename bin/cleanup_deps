@@ -1,0 +1,113 @@
+#!/bin/bash
+
+# Script to find and remove node_modules and Rust target directories
+# Usage: ./cleanup_deps.sh [directory]
+# If no directory specified, uses current directory
+
+set -e
+
+SEARCH_DIR="${1:-.}"
+DRY_RUN=true
+
+echo "Searching for dependencies in: $SEARCH_DIR"
+echo "================================================"
+echo ""
+
+# Find node_modules directories
+echo "Finding node_modules directories..."
+NODE_MODULES_DIRS=$(find "$SEARCH_DIR" -type d -name "node_modules" \
+  2>/dev/null || true)
+
+# Find Rust target directories
+echo "Finding Rust target directories..."
+TARGET_DIRS=$(find "$SEARCH_DIR" -type d -name "target" \
+  -path "*/Cargo.toml" -o -name "target" \
+  2>/dev/null | while read dir; do
+    # Check if parent or grandparent has Cargo.toml
+    parent=$(dirname "$dir")
+    if [ -f "$parent/Cargo.toml" ] || \
+       [ -f "$parent/../Cargo.toml" ]; then
+      echo "$dir"
+    fi
+  done || true)
+
+# Count and size
+NODE_COUNT=0
+NODE_SIZE=0
+TARGET_COUNT=0
+TARGET_SIZE=0
+
+if [ -n "$NODE_MODULES_DIRS" ]; then
+  echo ""
+  echo "node_modules directories found:"
+  echo "-------------------------------"
+  while IFS= read -r dir; do
+    if [ -d "$dir" ]; then
+      size=$(du -sh "$dir" 2>/dev/null | cut -f1)
+      echo "  $dir ($size)"
+      NODE_COUNT=$((NODE_COUNT + 1))
+    fi
+  done <<< "$NODE_MODULES_DIRS"
+fi
+
+if [ -n "$TARGET_DIRS" ]; then
+  echo ""
+  echo "Rust target directories found:"
+  echo "------------------------------"
+  while IFS= read -r dir; do
+    if [ -d "$dir" ]; then
+      size=$(du -sh "$dir" 2>/dev/null | cut -f1)
+      echo "  $dir ($size)"
+      TARGET_COUNT=$((TARGET_COUNT + 1))
+    fi
+  done <<< "$TARGET_DIRS"
+fi
+
+TOTAL_COUNT=$((NODE_COUNT + TARGET_COUNT))
+
+echo ""
+echo "================================================"
+echo "Summary:"
+echo "  - node_modules directories: $NODE_COUNT"
+echo "  - target directories: $TARGET_COUNT"
+echo "  - Total directories: $TOTAL_COUNT"
+echo ""
+
+if [ $TOTAL_COUNT -eq 0 ]; then
+  echo "No directories found to clean up."
+  exit 0
+fi
+
+# Confirm deletion
+read -p "Delete these directories? (yes/no): " confirm
+
+if [ "$confirm" != "yes" ]; then
+  echo "Aborted."
+  exit 0
+fi
+
+echo ""
+echo "Deleting directories..."
+
+# Delete node_modules
+if [ -n "$NODE_MODULES_DIRS" ]; then
+  while IFS= read -r dir; do
+    if [ -d "$dir" ]; then
+      echo "  Removing: $dir"
+      rm -rf "$dir"
+    fi
+  done <<< "$NODE_MODULES_DIRS"
+fi
+
+# Delete target directories
+if [ -n "$TARGET_DIRS" ]; then
+  while IFS= read -r dir; do
+    if [ -d "$dir" ]; then
+      echo "  Removing: $dir"
+      rm -rf "$dir"
+    fi
+  done <<< "$TARGET_DIRS"
+fi
+
+echo ""
+echo "Done! Directories removed: $TOTAL_COUNT"

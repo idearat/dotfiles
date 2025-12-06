@@ -1,0 +1,290 @@
+#!/bin/bash
+
+# Dev-aware disk cleanup tool
+# Finds and removes rebuildable artifacts, caches, and cruft
+
+set -e
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+SEARCH_DIR="${1:-.}"
+
+# Helper to get directory size safely
+get_size() {
+  local path="$1"
+  if [ -e "$path" ]; then
+    du -sh "$path" 2>/dev/null | cut -f1
+  else
+    echo "0B"
+  fi
+}
+
+# Helper to get total size of find results
+get_total_size() {
+  local paths="$1"
+  if [ -z "$paths" ]; then
+    echo "0"
+    return
+  fi
+
+  local total=0
+  while IFS= read -r path; do
+    if [ -d "$path" ]; then
+      size=$(du -sk "$path" 2>/dev/null | cut -f1)
+      total=$((total + size))
+    fi
+  done <<< "$paths"
+
+  # Convert KB to human readable
+  if [ $total -gt 1048576 ]; then
+    echo "$((total / 1048576))GB"
+  elif [ $total -gt 1024 ]; then
+    echo "$((total / 1024))MB"
+  else
+    echo "${total}KB"
+  fi
+}
+
+echo -e "${BLUE}==================================${NC}"
+echo -e "${BLUE}Dev Cleanup Tool${NC}"
+echo -e "${BLUE}==================================${NC}"
+echo ""
+
+# Arrays to store findings
+declare -a CATEGORIES
+declare -a SIZES
+declare -a PATHS
+declare -a COUNTS
+
+# 1. Find node_modules
+echo -e "${YELLOW}Scanning for node_modules...${NC}"
+NODE_MODULES=$(find "$SEARCH_DIR" -type d -name "node_modules" \
+  2>/dev/null || true)
+NODE_COUNT=$(echo "$NODE_MODULES" | grep -c . || echo "0")
+NODE_SIZE=$(get_total_size "$NODE_MODULES")
+
+# 2. Find Rust target directories
+echo -e "${YELLOW}Scanning for Rust target dirs...${NC}"
+TARGET_DIRS=$(find "$SEARCH_DIR" -type d -name "target" 2>/dev/null | \
+  while read dir; do
+    parent=$(dirname "$dir")
+    if [ -f "$parent/Cargo.toml" ] || \
+       [ -f "$parent/../Cargo.toml" ]; then
+      echo "$dir"
+    fi
+  done || true)
+TARGET_COUNT=$(echo "$TARGET_DIRS" | grep -c . || echo "0")
+TARGET_SIZE=$(get_total_size "$TARGET_DIRS")
+
+# 3. Python caches
+echo -e "${YELLOW}Scanning for Python caches...${NC}"
+PY_CACHE=$(find "$SEARCH_DIR" -type d -name "__pycache__" \
+  -o -name ".pytest_cache" -o -name ".mypy_cache" 2>/dev/null || true)
+PY_COUNT=$(echo "$PY_CACHE" | grep -c . || echo "0")
+PY_SIZE=$(get_total_size "$PY_CACHE")
+
+# 4. Build directories
+echo -e "${YELLOW}Scanning for build dirs...${NC}"
+BUILD_DIRS=$(find "$SEARCH_DIR" -type d \( -name "dist" -o \
+  -name "build" -o -name ".next" -o -name "out" \) \
+  2>/dev/null || true)
+BUILD_COUNT=$(echo "$BUILD_DIRS" | grep -c . || echo "0")
+BUILD_SIZE=$(get_total_size "$BUILD_DIRS")
+
+# 5. Cargo cache
+echo -e "${YELLOW}Checking Cargo cache...${NC}"
+CARGO_REGISTRY_SIZE=$(get_size ~/.cargo/registry)
+CARGO_GIT_SIZE=$(get_size ~/.cargo/git)
+
+# 6. NPM/Yarn cache
+echo -e "${YELLOW}Checking package manager caches...${NC}"
+NPM_CACHE_SIZE=$(get_size ~/.npm)
+YARN_CACHE_SIZE=$(get_size ~/.yarn)
+
+# 7. Homebrew cache
+echo -e "${YELLOW}Checking Homebrew cache...${NC}"
+BREW_CACHE_SIZE=$(get_size ~/Library/Caches/Homebrew)
+
+# 8. Docker
+echo -e "${YELLOW}Checking Docker...${NC}"
+DOCKER_SIZE="N/A"
+if command -v docker &> /dev/null; then
+  DOCKER_SIZE=$(docker system df 2>/dev/null | \
+    grep "Total" | awk '{print $4}' || echo "N/A")
+fi
+
+# 9. Xcode DerivedData
+echo -e "${YELLOW}Checking Xcode caches...${NC}"
+XCODE_SIZE=$(get_size ~/Library/Developer/Xcode/DerivedData)
+
+# 10. IDE caches
+echo -e "${YELLOW}Checking IDE caches...${NC}"
+VSCODE_SIZE=$(get_size ~/Library/Caches/com.microsoft.VSCode)
+IDEA_SIZE=$(get_size ~/Library/Caches/JetBrains)
+
+echo ""
+echo -e "${BLUE}==================================${NC}"
+echo -e "${BLUE}Cleanup Report${NC}"
+echo -e "${BLUE}==================================${NC}"
+echo ""
+
+# Project artifacts (in search dir)
+echo -e "${GREEN}Project Artifacts (in $SEARCH_DIR):${NC}"
+echo "  [1] node_modules: $NODE_COUNT dirs ($NODE_SIZE)"
+echo "  [2] Rust target/: $TARGET_COUNT dirs ($TARGET_SIZE)"
+echo "  [3] Python caches: $PY_COUNT dirs ($PY_SIZE)"
+echo "  [4] Build dirs: $BUILD_COUNT dirs ($BUILD_SIZE)"
+echo ""
+
+# Global caches
+echo -e "${GREEN}Global Caches:${NC}"
+echo "  [5] Cargo registry: $CARGO_REGISTRY_SIZE"
+echo "  [6] Cargo git: $CARGO_GIT_SIZE"
+echo "  [7] NPM cache: $NPM_CACHE_SIZE"
+echo "  [8] Yarn cache: $YARN_CACHE_SIZE"
+echo "  [9] Homebrew cache: $BREW_CACHE_SIZE"
+echo " [10] Docker: $DOCKER_SIZE"
+echo " [11] Xcode DerivedData: $XCODE_SIZE"
+echo " [12] VS Code cache: $VSCODE_SIZE"
+echo " [13] JetBrains cache: $IDEA_SIZE"
+echo ""
+
+echo -e "${BLUE}==================================${NC}"
+echo ""
+echo "What would you like to clean?"
+echo "  Enter numbers (e.g., '1 2 5' or '1-4' or 'all')"
+echo "  Enter 'q' to quit"
+echo ""
+read -p "Selection: " selection
+
+if [ "$selection" = "q" ]; then
+  echo "Aborted."
+  exit 0
+fi
+
+# Parse selection
+declare -a TO_CLEAN
+
+if [ "$selection" = "all" ]; then
+  TO_CLEAN=(1 2 3 4 5 6 7 8 9 10 11 12 13)
+else
+  # Handle ranges and individual numbers
+  for item in $selection; do
+    if [[ $item == *-* ]]; then
+      start=$(echo $item | cut -d'-' -f1)
+      end=$(echo $item | cut -d'-' -f2)
+      for ((i=start; i<=end; i++)); do
+        TO_CLEAN+=($i)
+      done
+    else
+      TO_CLEAN+=($item)
+    fi
+  done
+fi
+
+echo ""
+echo -e "${RED}WARNING: This will permanently delete files!${NC}"
+read -p "Continue? (yes/no): " confirm
+
+if [ "$confirm" != "yes" ]; then
+  echo "Aborted."
+  exit 0
+fi
+
+echo ""
+echo -e "${YELLOW}Cleaning...${NC}"
+echo ""
+
+for num in "${TO_CLEAN[@]}"; do
+  case $num in
+    1)
+      echo "Removing node_modules..."
+      if [ -n "$NODE_MODULES" ]; then
+        while IFS= read -r dir; do
+          [ -d "$dir" ] && rm -rf "$dir" && echo "  ✓ $dir"
+        done <<< "$NODE_MODULES"
+      fi
+      ;;
+    2)
+      echo "Removing Rust target dirs..."
+      if [ -n "$TARGET_DIRS" ]; then
+        while IFS= read -r dir; do
+          [ -d "$dir" ] && rm -rf "$dir" && echo "  ✓ $dir"
+        done <<< "$TARGET_DIRS"
+      fi
+      ;;
+    3)
+      echo "Removing Python caches..."
+      if [ -n "$PY_CACHE" ]; then
+        while IFS= read -r dir; do
+          [ -d "$dir" ] && rm -rf "$dir" && echo "  ✓ $dir"
+        done <<< "$PY_CACHE"
+      fi
+      ;;
+    4)
+      echo "Removing build dirs..."
+      if [ -n "$BUILD_DIRS" ]; then
+        while IFS= read -r dir; do
+          [ -d "$dir" ] && rm -rf "$dir" && echo "  ✓ $dir"
+        done <<< "$BUILD_DIRS"
+      fi
+      ;;
+    5)
+      echo "Cleaning Cargo registry..."
+      [ -d ~/.cargo/registry ] && rm -rf ~/.cargo/registry/* && \
+        echo "  ✓ Cleared"
+      ;;
+    6)
+      echo "Cleaning Cargo git cache..."
+      [ -d ~/.cargo/git ] && rm -rf ~/.cargo/git/* && \
+        echo "  ✓ Cleared"
+      ;;
+    7)
+      echo "Cleaning NPM cache..."
+      [ -d ~/.npm ] && npm cache clean --force 2>/dev/null && \
+        echo "  ✓ Cleared"
+      ;;
+    8)
+      echo "Cleaning Yarn cache..."
+      [ -d ~/.yarn ] && yarn cache clean 2>/dev/null && \
+        echo "  ✓ Cleared"
+      ;;
+    9)
+      echo "Cleaning Homebrew cache..."
+      command -v brew &> /dev/null && brew cleanup -s && \
+        echo "  ✓ Cleared"
+      ;;
+    10)
+      echo "Cleaning Docker..."
+      command -v docker &> /dev/null && \
+        docker system prune -a -f --volumes && \
+        echo "  ✓ Cleared"
+      ;;
+    11)
+      echo "Cleaning Xcode DerivedData..."
+      [ -d ~/Library/Developer/Xcode/DerivedData ] && \
+        rm -rf ~/Library/Developer/Xcode/DerivedData/* && \
+        echo "  ✓ Cleared"
+      ;;
+    12)
+      echo "Cleaning VS Code cache..."
+      [ -d ~/Library/Caches/com.microsoft.VSCode ] && \
+        rm -rf ~/Library/Caches/com.microsoft.VSCode/* && \
+        echo "  ✓ Cleared"
+      ;;
+    13)
+      echo "Cleaning JetBrains cache..."
+      [ -d ~/Library/Caches/JetBrains ] && \
+        rm -rf ~/Library/Caches/JetBrains/* && \
+        echo "  ✓ Cleared"
+      ;;
+  esac
+done
+
+echo ""
+echo -e "${GREEN}Done!${NC}"

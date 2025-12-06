@@ -1,0 +1,166 @@
+#!/bin/bash
+
+# Rust build artifact finder - efficient single-pass version
+# Uses fd for fast scanning
+
+set -e
+
+SEARCH_DIR="${1:-$HOME/Documents}"
+
+echo "Scanning for Rust build artifacts in: $SEARCH_DIR"
+echo "================================================"
+echo ""
+
+# Single fd pass to find all relevant files
+echo "Scanning (single pass)..."
+
+# Find all artifacts in one go
+ALL_FILES=$(fd -t f -H \
+  -E node_modules -E .git -E .npm -E .cargo/registry \
+  '(libapp_lib\.a$|liblibrocksdb|libobjc2_app_kit|libv8-|
+    librusty_v8|\.rlib$|\.rmeta$|\.rcgu\.o$|
+    (Sherpa|scabbard|cmdflow|crux|[rR]unica|
+      re[sS]EARCH)-[0-9a-f]{16})' \
+  "$SEARCH_DIR" 2>/dev/null || true)
+
+if [ -z "$ALL_FILES" ]; then
+  echo "No artifacts found."
+  exit 0
+fi
+
+# Categorize and accumulate stats in single pass
+declare -A CAT_COUNT
+declare -A CAT_SIZE_KB
+declare -A CAT_FILES
+
+echo "Analyzing..."
+
+while IFS= read -r file; do
+  [ ! -f "$file" ] && continue
+
+  basename=$(basename "$file")
+  cat=""
+
+  # Categorize
+  if [[ "$basename" == "libapp_lib.a" ]]; then
+    cat="libapp_lib.a"
+  elif [[ "$basename" == liblibrocksdb* ]]; then
+    cat="librocksdb*"
+  elif [[ "$basename" == libobjc2_app_kit* ]]; then
+    cat="libobjc2_app_kit*"
+  elif [[ "$basename" == libv8-* ]]; then
+    cat="libv8-*"
+  elif [[ "$basename" == librusty_v8* ]]; then
+    cat="librusty_v8*"
+  elif [[ "$basename" =~ ^Sherpa-[0-9a-f]{16} ]]; then
+    cat="Sherpa-*"
+  elif [[ "$basename" =~ ^scabbard-[0-9a-f]{16} ]]; then
+    cat="scabbard-*"
+  elif [[ "$basename" =~ ^cmdflow-[0-9a-f]{16} ]]; then
+    cat="cmdflow-*"
+  elif [[ "$basename" =~ ^crux-[0-9a-f]{16} ]]; then
+    cat="crux-*"
+  elif [[ "$basename" =~ ^[rR]unica-[0-9a-f]{16} ]]; then
+    cat="runica-*"
+  elif [[ "$basename" =~ ^re[sS]EARCH-[0-9a-f]{16} ]]; then
+    cat="research-*"
+  elif [[ "$basename" == *.rlib ]]; then
+    cat="*.rlib"
+  elif [[ "$basename" == *.rmeta ]]; then
+    cat="*.rmeta"
+  elif [[ "$basename" == *.rcgu.o ]]; then
+    cat="*.rcgu.o"
+  else
+    cat="other"
+  fi
+
+  # Accumulate stats
+  size=$(du -k "$file" 2>/dev/null | cut -f1 || echo "0")
+  CAT_COUNT[$cat]=$((${CAT_COUNT[$cat]:-0} + 1))
+  CAT_SIZE_KB[$cat]=$((${CAT_SIZE_KB[$cat]:-0} + size))
+
+  # Store first 3 examples per category
+  current="${CAT_FILES[$cat]}"
+  count=${CAT_COUNT[$cat]}
+  if [ $count -le 3 ]; then
+    CAT_FILES[$cat]="${current}${current:+$'\n'}${file}"
+  fi
+done <<< "$ALL_FILES"
+
+# Format size helper
+fmt_size() {
+  local kb=$1
+  if [ $kb -gt 1048576 ]; then
+    echo "$((kb / 1048576))GB"
+  elif [ $kb -gt 1024 ]; then
+    echo "$((kb / 1024))MB"
+  else
+    echo "${kb}KB"
+  fi
+}
+
+# Display results
+echo ""
+echo "================================================"
+echo "Results:"
+echo "================================================"
+echo ""
+
+TOTAL_COUNT=0
+TOTAL_KB=0
+
+for cat in "${!CAT_COUNT[@]}"; do
+  count=${CAT_COUNT[$cat]}
+  size_kb=${CAT_SIZE_KB[$cat]}
+  size_str=$(fmt_size $size_kb)
+
+  echo "$cat: $count files ($size_str)"
+
+  # Show examples
+  if [ -n "${CAT_FILES[$cat]}" ]; then
+    while IFS= read -r ex; do
+      fsize=$(du -h "$ex" 2>/dev/null | cut -f1)
+      echo "    $ex ($fsize)"
+    done <<< "${CAT_FILES[$cat]}"
+    if [ $count -gt 3 ]; then
+      echo "    ... and $((count - 3)) more"
+    fi
+  fi
+  echo ""
+
+  TOTAL_COUNT=$((TOTAL_COUNT + count))
+  TOTAL_KB=$((TOTAL_KB + size_kb))
+done
+
+TOTAL_SIZE=$(fmt_size $TOTAL_KB)
+
+echo "================================================"
+echo "TOTAL: $TOTAL_COUNT files ($TOTAL_SIZE)"
+echo "================================================"
+echo ""
+
+echo "These are Rust build artifacts that can be rebuilt."
+echo ""
+read -p "Delete all these files? (yes/no): " confirm
+
+if [ "$confirm" != "yes" ]; then
+  echo "Aborted."
+  exit 0
+fi
+
+echo ""
+echo "Deleting..."
+
+deleted=0
+while IFS= read -r file; do
+  if [ -f "$file" ]; then
+    rm -f "$file" && deleted=$((deleted + 1))
+    # Progress every 500 files
+    if [ $((deleted % 500)) -eq 0 ]; then
+      echo "  $deleted files deleted..."
+    fi
+  fi
+done <<< "$ALL_FILES"
+
+echo ""
+echo "Done! Deleted $deleted files (~$TOTAL_SIZE)"

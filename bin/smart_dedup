@@ -1,0 +1,177 @@
+#!/bin/bash
+
+# Smart deduplication - priority-based, fast version
+
+set -e
+
+REPORT="${1:-$HOME/dup_report.txt}"
+
+if [ ! -f "$REPORT" ]; then
+  echo "Error: Report file not found: $REPORT"
+  exit 1
+fi
+
+echo "Smart Dedup - Fast version"
+echo "=========================="
+echo ""
+
+# Create temp processing script
+TMPDIR=$(mktemp -d)
+trap "rm -rf $TMPDIR" EXIT
+
+cat > "$TMPDIR/process.awk" <<'AWK'
+BEGIN {
+  group_num = 0
+  in_group = 0
+}
+
+# Empty line = end of group
+/^$/ {
+  if (in_group) {
+    # Process group - find best file
+    best = ""
+    best_pri = -1
+
+    for (i = 1; i <= n; i++) {
+      pri = get_priority(files[i])
+      if (pri > best_pri) {
+        best_pri = pri
+        best = files[i]
+      }
+    }
+
+    # Print files to delete
+    for (i = 1; i <= n; i++) {
+      if (files[i] != best) {
+        print files[i]
+      }
+    }
+
+    n = 0
+    in_group = 0
+  }
+  next
+}
+
+# Non-empty line = file in group
+{
+  in_group = 1
+  n++
+  files[n] = $0
+}
+
+END {
+  # Process last group
+  if (in_group && n > 1) {
+    best = ""
+    best_pri = -1
+
+    for (i = 1; i <= n; i++) {
+      pri = get_priority(files[i])
+      if (pri > best_pri) {
+        best_pri = pri
+        best = files[i]
+      }
+    }
+
+    for (i = 1; i <= n; i++) {
+      if (files[i] != best) {
+        print files[i]
+      }
+    }
+  }
+}
+
+function get_priority(path) {
+  if (path ~ /\/coderats\/repos\//) return 100
+  if (path ~ /\/Clients\/DiscountTire\//) return 95
+  if (path ~ /\/Clients\//) return 90
+  if (path ~ /\/coderats\/parts\//) return 85
+  if (path ~ /\/coderats\/design\//) return 50
+  if (path ~ /\/coderats\/spikes\//) return 45
+  if (path ~ /\/idearat\//) {
+    if (path ~ /\/forks\//) return 2
+    return 40
+  }
+  if (path ~ /\/ARCHIVE\//) return 5
+  if (path ~ /\/archives\//) return 5
+  if (path ~ /\/Reference\//) return 3
+  if (path ~ /\/forks\//) return 2
+  return 10
+}
+AWK
+
+echo "Processing duplicates..."
+
+# Use awk for speed
+awk -f "$TMPDIR/process.awk" "$REPORT" > "$TMPDIR/to_delete.txt"
+
+num_files=$(wc -l < "$TMPDIR/to_delete.txt" | tr -d ' ')
+
+if [ "$num_files" -eq 0 ]; then
+  echo "No duplicates to remove!"
+  exit 0
+fi
+
+# Calculate space (sample first 10k files for estimate)
+echo "Calculating space savings..."
+sample_size=$(head -10000 "$TMPDIR/to_delete.txt" | wc -l | tr -d ' ')
+sample_bytes=0
+
+head -10000 "$TMPDIR/to_delete.txt" | while read file; do
+  if [ -f "$file" ]; then
+    size=$(stat -f%z "$file" 2>/dev/null || echo "0")
+    echo "$size"
+  fi
+done | awk '{s+=$1} END {print s}' > "$TMPDIR/sample_size"
+
+sample_bytes=$(cat "$TMPDIR/sample_size")
+avg_size=$((sample_bytes / sample_size))
+total_bytes=$((avg_size * num_files))
+
+# Format
+if [ $total_bytes -gt 1073741824 ]; then
+  space_str="$((total_bytes / 1073741824))GB"
+elif [ $total_bytes -gt 1048576 ]; then
+  space_str="$((total_bytes / 1048576))MB"
+else
+  space_str="$((total_bytes / 1024))KB"
+fi
+
+echo ""
+echo "=========================="
+echo "Files to delete: $num_files"
+echo "Estimated space: ~$space_str"
+echo "=========================="
+echo ""
+
+echo "Sample files (first 20):"
+head -20 "$TMPDIR/to_delete.txt"
+if [ $num_files -gt 20 ]; then
+  echo "... and $((num_files - 20)) more"
+fi
+
+echo ""
+read -p "Delete these duplicates? (yes/no): " confirm
+
+if [ "$confirm" != "yes" ]; then
+  echo "Aborted."
+  exit 0
+fi
+
+echo ""
+echo "Deleting..."
+
+deleted=0
+while read file; do
+  if [ -f "$file" ]; then
+    rm -f "$file" && deleted=$((deleted + 1))
+
+    if [ $((deleted % 1000)) -eq 0 ]; then
+      echo "  Deleted $deleted/$num_files files..."
+    fi
+  fi
+done < "$TMPDIR/to_delete.txt"
+
+echo ""
+echo "Done! Deleted $deleted files (~$space_str freed)"

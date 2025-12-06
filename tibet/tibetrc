@@ -20,6 +20,8 @@ export CODERATS_HOME="${DEVL_HOME}/coderats"
 
 export CODERATS_PLATFORM="${CODERATS_HOME}/repos/coderats-platform"
 export CODERATS_PRODUCTS="${CODERATS_HOME}/repos/coderats-products"
+export CODERATS_RELEASES="${CODERATS_HOME}/repos/coderats-releases"
+export CODERATS_SITES="${CODERATS_HOME}/repos/coderats-sites"
 
 # ---
 # coderats
@@ -27,9 +29,12 @@ export CODERATS_PRODUCTS="${CODERATS_HOME}/repos/coderats-products"
 
 alias cdcr='cd ${CODERATS_HOME}'
 alias cdrats='cd ${CODERATS_HOME}'
+alias cdrepos='cd ${CODERATS_HOME}/repos'
 
 alias cdplatform='cd ${CODERATS_HOME}/repos/coderats-platform'
 alias cdproducts='cd ${CODERATS_HOME}/repos/coderats-products'
+alias cdreleases='cd ${CODERATS_HOME}/repos/coderats-releases'
+alias cdsites='cd ${CODERATS_HOME}/repos/coderats-sites'
 
 alias ratdocs='cd ${CODERATS_HOME};cd design;clear'
 
@@ -58,9 +63,9 @@ alias cddesign='cd ${CODERATS_HOME}/design'
 alias cddomains='cd ${CODERATS_HOME}/domains'
 alias cdspikes='cd ${CODERATS_HOME}/spikes'
 
-alias cdcrux='cd ${CODERATS_PLATFORM}/crux'
+alias cdcrux='cd ${CODERATS_PLATFORM}/runtimes/crux'
 
-alias cdsite='cd ${CODERATS_HOME}/domains/coderats.io'
+alias cdsite='cd ${CODERATS_SITES}/coderats-llc'
 alias sitedoc='cdsite;cd doc/sources;clear'
 
 # ---
