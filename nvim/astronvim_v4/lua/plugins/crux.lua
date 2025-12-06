@@ -18,12 +18,12 @@ return {
               vim.cmd("syntax off")
               vim.api.nvim_set_hl(0, "@error", {
                 fg = "#ff0000",
-                bold = true,
+                -- bold = true,
                 underline = true,
               })
               vim.api.nvim_set_hl(0, "@warning", {
                 fg = "#ff8800",
-                bold = true,
+                -- bold = true,
                 underline = true,
               })
               vim.treesitter.start()
@@ -36,12 +36,12 @@ return {
               vim.cmd("syntax off")
               vim.api.nvim_set_hl(0, "@error", {
                 fg = "#ff0000",
-                bold = true,
+                -- bold = true,
                 underline = true,
               })
               vim.api.nvim_set_hl(0, "@warning", {
                 fg = "#ff8800",
-                bold = true,
+                -- bold = true,
                 underline = true,
               })
               vim.treesitter.start()
@@ -79,12 +79,12 @@ return {
             callback = function()
               vim.api.nvim_set_hl(0, "@error", {
                 fg = "#ff0000",
-                bold = true,
+                -- bold = true,
                 underline = true,
               })
               vim.api.nvim_set_hl(0, "@warning", {
                 fg = "#ff8800",
-                bold = true,
+                -- bold = true,
                 underline = true,
               })
             end,

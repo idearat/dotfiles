@@ -58,8 +58,21 @@
  ] @constant
  (#match? @constant "^[A-Z_][A-Z\\d_]+$"))
 
+; CR:UX: Forbidden identifiers
+((identifier) @error
+ (#eq? @error "eval"))
+
+; CR:UX: Contextual identifiers (JSVM only)
+; These are "internet JS" - visually mark them as not CR:UX
+; Match both standalone identifiers and property access
+([
+  (identifier)
+  (property_identifier)
+] @warning
+ (#match? @warning "^(arguments|prototype|__proto__|constructor|getPrototypeOf|setPrototypeOf|__defineGetter__|__defineSetter__|__lookupGetter__|__lookupSetter__|addEventListener|removeEventListener|dispatchEvent|querySelector|querySelectorAll|getElementById|getElementsByClassName|getElementsByTagName|getElementsByName|appendChild|removeChild|replaceChild|innerHTML|outerHTML|insertAdjacentHTML|Function|bind|hasOwnProperty)$"))
+
 ((identifier) @variable.builtin
- (#match? @variable.builtin "^(arguments|module|console|window|document)$"))
+ (#match? @variable.builtin "^(module|console|window|document)$"))
 
 ((identifier) @function.builtin
  (#eq? @function.builtin "require"))
