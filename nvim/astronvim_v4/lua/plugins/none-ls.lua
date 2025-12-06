@@ -11,9 +11,9 @@ return {
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
     config.sources = {
-      -- Add cmdflow linter for Rust files
-      require("utils.cmdflow_diagnostics"),
-      
+      -- Add TARS linter for CR:UX files
+      require("utils.tars_diagnostics"),
+
       -- Add any other formatters/linters you want
       -- null_ls.builtins.formatting.stylua,
       -- null_ls.builtins.formatting.prettier,

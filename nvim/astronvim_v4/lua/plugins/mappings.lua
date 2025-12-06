@@ -137,7 +137,12 @@ local function enhance_maps(maps)
   -- maps.n["L"] = { desc = "(~ yL)" }
   maps.n["L"] = { function() vim.diagnostic.open_float() end, desc = "Lint / Diagnostics ³" }
 
-  maps.n["M"] = { function() notify(ui.get_hlgroup()) end, desc = "Highlight Mapping ³" }
+  maps.n["M"] = {
+    function()
+      vim.cmd("Inspect")
+    end,
+    desc = "Inspect Highlights ³"
+  }
 
   -- maps.n["N"] = { desc = "Reverse n" }
   maps.n["N"] = { "Nzzzv", desc = "Reverse n ¹" }
