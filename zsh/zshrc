@@ -122,3 +122,10 @@ export PATH="/Users/ss/.codeium/windsurf/bin:$PATH"
 
 # Runesh Shell Integration (disabled - was causing shells to hang)
 # eval "$(runesh --init-zsh)"
+
+# bun completions
+[ -s "/Users/ss/.bun/_bun" ] && source "/Users/ss/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

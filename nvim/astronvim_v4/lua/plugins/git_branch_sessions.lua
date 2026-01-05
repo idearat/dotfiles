@@ -36,14 +36,32 @@ return {
         {
           event = "VimLeavePre",
           desc = "Save git branch directory sessions on close",
-          callback = vim.schedule_wrap(function()
-            if require("astrocore.buffer").is_valid_session() then
-              require("resession").save(
-                get_session_name(),
-                { dir = "dirsession", notify = false }
+          callback = function()
+            -- Disable notifications during exit to prevent
+            -- statusline errors
+            local notify_bak = vim.notify
+            vim.notify = function() end
+
+            local ok, err = pcall(function()
+              if require("astrocore.buffer").is_valid_session()
+              then
+                require("resession").save(
+                  get_session_name(),
+                  { dir = "dirsession", notify = false }
+                )
+              end
+            end)
+
+            -- Restore notifications
+            vim.notify = notify_bak
+
+            if not ok then
+              -- Silently log error without triggering UI
+              vim.api.nvim_err_writeln(
+                "Session save error: " .. tostring(err)
               )
             end
-          end),
+          end,
         },
       },
     },

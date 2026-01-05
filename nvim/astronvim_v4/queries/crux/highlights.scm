@@ -62,7 +62,7 @@
 ((identifier) @error
  (#eq? @error "eval"))
 
-; CR:UX: Contextual identifiers (JSVM only)
+; CR:UX: Contextual identifiers (TARS only)
 ; These are "internet JS" - visually mark them as not CR:UX
 ; Match both standalone identifiers and property access
 ([
@@ -230,7 +230,7 @@
 ; CR:UX: Special labels (RED - forbidden in normal code)
 (labeled_statement
   label: (statement_identifier) @error
-  (#match? @error "^(JSVM|GLOBALS)$"))
+  (#match? @error "^(TARS|GLOBALS)$"))
 
 ; CR:UX: Contextual constructs (ORANGE)
 (contextual_let) @warning

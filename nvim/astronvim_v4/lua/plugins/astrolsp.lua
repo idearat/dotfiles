@@ -55,6 +55,19 @@ return {
 
       -- the key is the server that is being setup with `lspconfig`
       rust_analyzer = false, -- Let rustacean.vim handle rust_analyzer
+      -- Disable ts_ls for .crux.js files
+      ts_ls = function(_, opts)
+        opts.root_dir = function(fname)
+          -- Don't attach to *.crux.js files
+          if fname:match("%.crux%.js$") then
+            return nil
+          end
+          return require("lspconfig.util").root_pattern(
+            "package.json", "tsconfig.json"
+          )(fname)
+        end
+        require("lspconfig").ts_ls.setup(opts)
+      end,
       -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
     },
     -- Configure buffer local auto commands to add when attaching a language server
@@ -119,8 +132,20 @@ return {
     on_attach = function(client, bufnr)
       -- this would disable semanticTokensProvider for all clients
       -- client.server_capabilities.semanticTokensProvider = nil
-      
-      -- TypeScript formatexpr is now handled by custom ftplugin files
+
+      -- Detach ts_ls from .crux.js files
+      local filename = vim.api.nvim_buf_get_name(bufnr)
+      if client.name == "ts_ls" and filename:match("%.crux%.js$") then
+        vim.lsp.stop_client(client.id)
+        return
+      end
+
+      -- Disable formatexpr for JS/TS/crux to allow gq text wrapping
+      local ft = vim.bo[bufnr].filetype
+      if ft == "javascript" or ft == "typescript" or
+         ft == "typescriptreact" or ft == "crux" then
+        vim.bo[bufnr].formatexpr = ""
+      end
     end,
   },
 }

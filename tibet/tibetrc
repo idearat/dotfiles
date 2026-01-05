@@ -18,10 +18,10 @@ alias srctibet="source $HOME/.tibetrc"
 export TPI_HOME="${DEVL_HOME}/TPI"
 export CODERATS_HOME="${DEVL_HOME}/coderats"
 
-export CODERATS_PLATFORM="${CODERATS_HOME}/repos/coderats-platform"
-export CODERATS_PRODUCTS="${CODERATS_HOME}/repos/coderats-products"
-export CODERATS_RELEASES="${CODERATS_HOME}/repos/coderats-releases"
-export CODERATS_SITES="${CODERATS_HOME}/repos/coderats-sites"
+export CODERATS_PLATFORM="${CODERATS_HOME}/repos/platform"
+export CODERATS_PRODUCTS="${CODERATS_HOME}/repos/products"
+export CODERATS_RELEASES="${CODERATS_HOME}/repos/releases"
+export CODERATS_SITES="${CODERATS_HOME}/repos/websites"
 
 # ---
 # coderats
@@ -31,31 +31,31 @@ alias cdcr='cd ${CODERATS_HOME}'
 alias cdrats='cd ${CODERATS_HOME}'
 alias cdrepos='cd ${CODERATS_HOME}/repos'
 
-alias cdplatform='cd ${CODERATS_HOME}/repos/coderats-platform'
-alias cdproducts='cd ${CODERATS_HOME}/repos/coderats-products'
-alias cdreleases='cd ${CODERATS_HOME}/repos/coderats-releases'
-alias cdsites='cd ${CODERATS_HOME}/repos/coderats-sites'
+alias cdplatform='cd ${CODERATS_HOME}/repos/platform'
+alias cdproducts='cd ${CODERATS_HOME}/repos/products'
+alias cdreleases='cd ${CODERATS_HOME}/repos/releases'
+alias cdsites='cd ${CODERATS_HOME}/repos/websites'
 
 alias ratdocs='cd ${CODERATS_HOME};cd design;clear'
 
-alias cdresearch='cd ${CODERATS_PRODUCTS}/research'
+alias cdresearch='cd ${CODERATS_PRODUCTS}/apps/research'
 
 alias re='cdresearch'
 alias rex='cdproducts; cd research'
 alias redocs='cd ${CODERATS_HOME};cd design/research;clear'
 
 
-alias cdflow='cd ${CODERATS_PLATFORM}/cmdflow'
+alias cdflow='cd ${CODERATS_PRODUCTS}/services/cmdflow-js'
 alias flowcli='cdflow; cd cmdflow-cli'
 alias flowdesk='cdflow; cd cmdflow-desktop'
 alias flowengine='cdflow; cd cmdflow-engine'
 alias flowserver='cdflow; cd cmdflow-server'
 
-alias cdvalence='cd ${CODERATS_PLATFORM}/valence'
+alias cdvalence='cd ${CODERATS_PRODUCTS}/templates/valence'
 
-alias cdsherpa='cd ${CODERATS_PRODUCTS}/sherpa'
+alias cdsherpa='cd ${CODERATS_PRODUCTS}/apps/sherpa'
 
-alias cdrunica='cd ${CODERATS_PRODUCTS}/runica'
+alias cdrunica='cd ${CODERATS_PRODUCTS}/apps/runica'
 alias rux='cdrunica; cd runica-extension'
 
 alias cdarchive='cd ${CODERATS_HOME}/archives'
@@ -63,7 +63,7 @@ alias cddesign='cd ${CODERATS_HOME}/design'
 alias cddomains='cd ${CODERATS_HOME}/domains'
 alias cdspikes='cd ${CODERATS_HOME}/spikes'
 
-alias cdcrux='cd ${CODERATS_PLATFORM}/runtimes/crux'
+alias cdcrux='cd ${CODERATS_PLATFORM}/crux'
 
 alias cdsite='cd ${CODERATS_SITES}/coderats-llc'
 alias sitedoc='cdsite;cd doc/sources;clear'

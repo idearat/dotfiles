@@ -10,7 +10,7 @@ return {
   opts = {
     -- Configure core features of AstroNvim
     features = {
-      large_buf = { size = 1024 * 1024 * 10, lines = 30000 }, -- set global limits for large files for disabling features like treesitter
+      large_buf = { size = 1024 * 1024 * 10, lines = 50000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
       diagnostics_mode = 2, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
@@ -89,6 +89,21 @@ return {
     -- Disable the problematic auto_quit autocmd that was closing buffers
     autocmds = {
       auto_quit = false,
+      -- Disable indentexpr for JS/TS to fix comment indentation
+      disable_js_indentexpr = {
+        {
+          event = {"FileType", "BufEnter", "BufWinEnter"},
+          pattern = {"*.js", "*.ts", "*.tsx", "*.crux", "*.crux.js"},
+          callback = function()
+            local ft = vim.bo.filetype
+            if ft == "javascript" or ft == "typescript" or
+               ft == "typescriptreact" or ft == "crux" then
+              vim.opt_local.indentexpr = ""
+              vim.opt_local.smartindent = false
+            end
+          end,
+        },
+      },
     },
   },
 }

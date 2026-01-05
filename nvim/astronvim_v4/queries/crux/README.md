@@ -6,16 +6,16 @@ Tree-sitter queries for CR:UX language support in Neovim.
 
 - **highlights.scm** - Syntax highlighting rules
   - Keywords, operators, literals
-  - Special CR:UX constructs (JSVM, GLOBALS, $.fn)
+  - Special CR:UX constructs (TARS, GLOBALS, $.fn)
   - Forbidden keywords highlighted as errors (var, class, new, this)
 
 - **injections.scm** - Language injections
-  - JSVM blocks get JavaScript highlighting
+  - TARS blocks get JavaScript highlighting
   - $.doc template strings get markdown highlighting
 
 - **indents.scm** - Auto-indentation rules
   - Proper indent/dedent for blocks, functions, control flow
-  - JSVM block handling
+  - TARS block handling
 
 - **locals.scm** - Semantic scope tracking
   - Variable definitions and references
@@ -59,10 +59,10 @@ You may need to adjust them based on your actual grammar structure:
 
 ## CR:UX-Specific Features
 
-### JSVM Blocks
+### TARS Blocks
 ```javascript
-JSVM: { /* JavaScript code */ }
-JSVM_warn: { /* suppressed */ }
+TARS: { /* JavaScript code */ }
+TARS_warn: { /* suppressed */ }
 ```
 Highlighted as JavaScript with label annotation.
 
