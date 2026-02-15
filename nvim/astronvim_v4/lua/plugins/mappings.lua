@@ -532,6 +532,7 @@ local function enhance_maps(maps)
   maps.n["<Leader>cR"] = { "<cmd>CmdFlowReload<cr>", desc = "Reload CmdFlow Server" }
   maps.n["<Leader>ch"] = { "<cmd>CmdFlowChat<cr>", desc = "CmdFlow Chat (new)" }
   maps.n["<Leader>ce"] = { "<cmd>CmdFlowSend<cr>", desc = "Send to CmdFlow" }
+  maps.n["<Leader>cv"] = { "<cmd>CmdFlowReview<cr>", desc = "Review (HEAD~1)" }
 
   -- Debugger Menu
 
