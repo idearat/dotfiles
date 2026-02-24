@@ -27,8 +27,33 @@ export NGINX_HOME="/usr/local/etc/nginx"
 export GOBIN="${HOME}/bin"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Lazy-load nvm (only when node/npm/nvm is called)
+_load_nvm() {
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  nvm use --silent v24 2>/dev/null \
+    || nvm use --silent default 2>/dev/null
+  unset -f _load_nvm
+}
+nvm() {
+  unset -f nvm node npm npx
+  _load_nvm
+  nvm "$@"
+}
+node() {
+  unset -f nvm node npm npx
+  _load_nvm
+  node "$@"
+}
+npm() {
+  unset -f nvm node npm npx
+  _load_nvm
+  npm "$@"
+}
+npx() {
+  unset -f nvm node npm npx
+  _load_nvm
+  npx "$@"
+}
 
 # ---
 # shell options
@@ -539,16 +564,7 @@ if exists local-ai; then
 fi
 
 # Node. Need this to install JS-related packages like JSHint etc.
-
-# test for nvm and initialize it if found
-if exists nvm; then
-  source ~/.nvm/nvm.sh > /dev/null 2>&1
-
-  nvm use --silent v24
-
-  export NODE_VERSION=`node --version`
-  alias cdnvm="cd ${NVM_DIR}/versions/node/${NODE_VERSION}/lib/node_modules"
-fi
+# (nvm is lazy-loaded above - no eager initialization needed)
 
 if ! exists node; then
   echo 'node not found'
@@ -631,11 +647,14 @@ fi
 if exists pyenv; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH=${PYENV_ROOT}/shims:$PATH
-
   command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
 
-  pyenv global 3.10.6 2.7.18
+  # Lazy-load pyenv (only when called)
+  pyenv() {
+    unset -f pyenv
+    eval "$(command pyenv init -)"
+    pyenv "$@"
+  }
 else
   echo 'pyenv not found'
   echo 'install pyenv via:';echo
